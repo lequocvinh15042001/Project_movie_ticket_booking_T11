@@ -24,13 +24,18 @@ export default function Carousel() {
   const settings = {
     dots: true,
     infinite: true,
-    autoplaySpeed: 5000, //speed per sence
-    autoplay: false,
-    speed: 500,
-    swipeToSlide: true,
+    // autoplaySpeed: 5000, //speed per sence
+    // autoplay: false,
+    // speed: 500,
+    // swipeToSlide: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    pauseOnHover: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    dotsClass: "slickdotsbanner",
+    // dotsClass: "slickdotsbanner",
   };
 
   useEffect(() => {

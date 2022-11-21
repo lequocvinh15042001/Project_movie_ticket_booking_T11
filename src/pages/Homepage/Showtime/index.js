@@ -118,12 +118,12 @@ export default function SimpleTabs() {
           <Tab
             disableRipple
             className={`${classes.tabButton} ${classes.tabDangChieu}`}
-            label="Đang chiếu"
+            label="Showing!"
           />
           <Tab
             disableRipple
             className={`${classes.tabButton} ${classes.tabSapChieu}`}
-            label="Sắp chiếu"
+            label="Will Show!"
           />
         </Tabs>
       </AppBar>

@@ -242,7 +242,7 @@ export default function CenteredTabs({
     if (!currentUser) {
       // nếu chưa đăng nhập
       Swal.fire({
-        title: "Bạn cần phải đăng nhập",
+        title: "You need to login!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -301,6 +301,7 @@ export default function CenteredTabs({
         timeout={400}
         in={valueTab === (location.state?.comingMovie ? "hide" : 0)}
       >
+        {/* Chỗ này đặt vé nè */}
         <TabPanel
           value={valueTab}
           index={location.state?.comingMovie ? "hide" : 0}

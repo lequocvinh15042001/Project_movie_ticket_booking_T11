@@ -7,7 +7,8 @@ const useStyle = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: "#000",
+    // backgroundColor: theme.palette.background.paper,
   },
 
   fullImg: {
@@ -27,12 +28,12 @@ const useStyle = makeStyles(theme => ({
 
   tabButton: {
     opacity: 1,
-    color: "#000",
+    color: "#fff",
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     '& > span': {
       transition: "all 0.2s",
       '&:hover': {
-        fontSize: "16px",
+        fontSize: "18px",
       },
     }
   },

@@ -10,7 +10,7 @@ import useApiThoiLuongDanhGia from '../../../../../utilities/useApiThoiLuongDanh
 import './movie.scss'
 
 function MovieItem({ movie, comingMovie }) {
-  const classes = useStyles({ bg: movie.largeImageURL, comingMovie });
+  const classes = useStyles({ bg: movie.smallImageURl, comingMovie });
   const history = useHistory();
   const { thoiLuong } = useApiThoiLuongDanhGia(movie.id)
   return (
@@ -24,7 +24,7 @@ function MovieItem({ movie, comingMovie }) {
             <div className="film__overlay" onClick={() => history.push(`/phim/${movie.id}`, { comingMovie })} />
             <div className="play__trailer">
               {/* class play lấy từ Carousel component*/}
-              <BtnPlay cssRoot={"play"} width={48} height={48} urlYoutube={movie.trailer} />
+              <BtnPlay cssRoot={"play"} width={48} height={48} urlYoutube={movie?.trailerURL} />
             </div>
           </div>
           <BlockRating danhGia={10} />
@@ -32,15 +32,15 @@ function MovieItem({ movie, comingMovie }) {
         <div className="film__content">
           <div className={`film__name ${thoiLuong ? "" : "not_hide"}`}>
             <div className="name">
-              <p><span className="c18">{movie.categories}</span>{movie.name}</p>
+              <p><span className="c18">{movie.duration} phút</span>{movie.name}</p>
             </div>
             <p className="pt-2">
-              {thoiLuong ? <span className="text_info">{movie.duration} phút - {movie.rated}</span> : <span className="text_info">Tix {movie.rated}</span>}
+              {thoiLuong ? <span className="text_info">{movie.rated}</span> : <span className="text_info">{movie.rated}</span>}
             </p>
           </div>
           <div className={`film__button`}>
             {/* nếu thoiLuong = undefined => phim hiện không có lịch chiếu */}
-            {(thoiLuong || comingMovie) && <Link style={{ background: comingMovie ? "#60c5ef" : "#fb4226", }} to={{ pathname: `/phim/${movie.id}`, state: { comingMovie } }}>{comingMovie ? "THÔNG TIN PHIM" : "MUA VÉ"}</Link>}
+            {(thoiLuong || comingMovie) && <Link style={{ background: comingMovie ? "#60c5ef" : "#fb4226", }} to={{ pathname: `/phim/${movie.id}`, state: { comingMovie } }}>{comingMovie ? "INFOMATION" : "BOOK NOW!"}</Link>}
           </div>
         </div>
       </div>

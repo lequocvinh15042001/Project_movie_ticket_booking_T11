@@ -33,7 +33,7 @@ export default function Homepage() {
     <div>
       <Carousel />
       <Showtime />
-      <Theaters />
+      {/* <Theaters /> */}
       <News />
       <NewsComponent />
        {/* <HomeApp /> */}

@@ -41,10 +41,10 @@ export default function Mobile({ arrayData, value }) {
         >
           <div
             className={classes.bgImg}
-            style={{ backgroundImage: `url(${item.smallImageURl})` }}
+            style={{ backgroundImage: `url(${item.largeImageURL})` }}
           ></div>
-          <BlockRating danhGia={item?.rated} />
-          <span className={classes.c18}>C18</span>
+          <BlockRating danhGia={10} />
+          <span className={classes.c18}>{item?.name}</span>
         </div>
       </div>
     ));

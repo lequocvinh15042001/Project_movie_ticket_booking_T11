@@ -22,6 +22,7 @@ export default function SearchStickets() {
   const { movieList: movieRender, errorMovieList } = useSelector(
     (state) => state.movieReducer
   );
+  console.log(movieRender);
   const history = useHistory();
   const down992px = useMediaQuery(HIDDEN_SEARCHTICKET);
   const [data, setData] = useState({
@@ -155,19 +156,25 @@ export default function SearchStickets() {
     theatersApi
       .getThongTinLichChieuPhim(phim.id)
       .then((result) => {
+        console.log(result.data);
         setData((data) => ({ ...data, startRequest: false }));
-        const cumRapChieuData = result.data.heThongRapChieu.reduce(
+        const cumRapChieuData= result.data.content.reduce(
           (colect, item) => {
-            return [...colect, ...item.cumRapChieu];
+            console.log(item);
+            return [...colect, ...item];
           },
           []
         );
-        const rapRender = cumRapChieuData.map((item) => item.name);
+        // const cumRapChieuData} = result.data.content;
+        console.log("cumRapChieuData", cumRapChieuData);
+        // const rapRender = cumRapChieuData
+        const rapRender = cumRapChieuData.map((item) => item)
         setData((data) => ({
           ...data,
           rapRender,
           cumRapChieuData,
         }));
+        
       })
       .catch(function (error) {
         if (error.response) {
@@ -177,6 +184,9 @@ export default function SearchStickets() {
         }
       });
   };
+
+  console.log("data",data);
+
   // sau khi click chọn Rạp, cần lấy ra prop lichChieuPhim của Rạp đã chọn > lọc ra ngày chiếu để hiển thị
   // input: tenCumRap, cumRapChieuData
   // output: setRap(tenCumRap), ngayChieuRender(tenCumRap,cumRapChieuData)[ngayChieu], lichChieuPhimData(tenCumRap,cumRapChieuData)[{ngayChieuGioChieu: "2019-01-01T10:10:00"}]
@@ -285,14 +295,14 @@ export default function SearchStickets() {
       <FormControl focused={false} className={classes.itemFirst}>
         <Autocomplete
           options={movieRender}
-          getOptionLabel={(option) => option.tenPhim}
+          getOptionLabel={(option) => option.name}
           style={{ width: 300 }}
           renderInput={(params) => {
             // <SearchIcon />
             return (
               <TextField
                 {...params}
-                label="Tìm phim..."
+                label="Find movie..."
                 variant="standard"
                 className={classes.textField}
               />
@@ -300,7 +310,7 @@ export default function SearchStickets() {
           }}
           renderOption={(phim) => (
             <CustomPopper
-              key={phim.tenPhim}
+              key={phim.name}
               phim={phim}
               setNewPhim={setNewPhim}
               currentPhimPopup={currentPhimPopup}
@@ -323,7 +333,7 @@ export default function SearchStickets() {
           onClose={handleClosePhim}
           onOpen={handleOpenPhim}
           blurOnSelect
-          noOptionsText="Không tìm thấy"
+          noOptionsText="Not found!"
         />
       </FormControl>
 
@@ -337,7 +347,7 @@ export default function SearchStickets() {
           onOpen={handleOpenRap}
           onChange={handleSelectRap}
           value={data.setRap} // tenCumRap
-          renderValue={(value) => `${value ? value : "Rạp"}`} // hiển thị giá trị đã chọn
+          renderValue={(value) => `${value ? value : "Branch"}`} // hiển thị giá trị đã chọn
           displayEmpty
           IconComponent={ExpandMoreIcon}
           MenuProps={menuProps}
@@ -352,10 +362,10 @@ export default function SearchStickets() {
                   data.startRequest
                     ? data.errorCallApi
                       ? data.errorCallApi
-                      : "Đang tìm rạp"
-                    : "Chưa có lịch chiếu, vui lòng chọn phim khác"
+                      : "Finding theater!"
+                    : "No schedule, please choose orther film!"
                 }`
-              : "Vui lòng chọn phim"}
+              : "Please choose film!"}
           </MenuItem>
           {data.rapRender.map((item) => (
             <MenuItem
@@ -382,7 +392,7 @@ export default function SearchStickets() {
           onOpen={handleOpenNgayXem}
           onChange={handleSelectNgayXem}
           value={data.setNgayXem} // ngayChieu
-          renderValue={(value) => `${value ? value : "Ngày xem"}`}
+          renderValue={(value) => `${value ? value : "ShowDate"}`}
           displayEmpty
           IconComponent={ExpandMoreIcon}
           MenuProps={menuProps}
@@ -394,7 +404,7 @@ export default function SearchStickets() {
             }}
             classes={{ root: classes.menu__item }}
           >
-            Vui lòng chọn phim và rạp
+            Please choose film and branch
           </MenuItem>
           {data.ngayChieuRender.map((ngayChieu) => (
             <MenuItem
@@ -422,7 +432,7 @@ export default function SearchStickets() {
           onOpen={handleOpenSuatChieu}
           onChange={handleSelectSuatChieu}
           value={data.setSuatChieu} // suatChieu
-          renderValue={(value) => `${value ? value : "Suất chiếu"}`}
+          renderValue={(value) => `${value ? value : "Showtime"}`}
           displayEmpty
           IconComponent={ExpandMoreIcon}
           MenuProps={menuProps}
@@ -434,7 +444,7 @@ export default function SearchStickets() {
             }}
             classes={{ root: classes.menu__item }}
           >
-            Vui lòng chọn phim, rạp và ngày xem
+            Please choose film, branch and showdate
           </MenuItem>
           {data.suatChieuRender.map((suatChieu) => (
             <MenuItem

@@ -39,17 +39,19 @@ const useStyles = makeStyles(theme => ({
     '& > span': {
       transition: "all 0.2s",
       '&:hover': {
-        fontSize: "24px",
+        fontSize: "20px",
       },
     }
   },
   tabDangChieu: {
-    color: props => props.notDelay ? "#000" : "#fa5238",
-    fontSize: props => props.notDelay ? "20px" : "22px",
+    color: props => props.notDelay ? "#FFFFFF" : "#fa5238",
+    backgroundColor: props => props.notDelay ? "#fa5238" : "#FFFFFF",
+    fontSize: props => props.notDelay ? "15px" : "20px",
   },
   tabSapChieu: {
-    color: props => props.notDelay ? "#fa5238" : "#000",
-    fontSize: props => props.notDelay ? "22px" : "20px",
+    color: props => props.notDelay ? "#fa5238" : "#FFFFFF",
+    backgroundColor: props => props.notDelay ? "#FFFFFF" : "#fa5238",
+    fontSize: props => props.notDelay ? "20px" : "15px",
   },
 
   Arrow: {
