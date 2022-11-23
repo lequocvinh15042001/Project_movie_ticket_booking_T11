@@ -18,12 +18,15 @@ import useStyles from "./styles";
 import formatDate from "../../../../utilities/formatDate";
 import { HIDDEN_SEARCHTICKET } from "../../../../constants/config";
 
-export default function SearchStickets() {
+export default function Choose() {
   const { movieList: movieRender, errorMovieList } = useSelector(
     (state) => state.movieReducer
   );
   console.log(movieRender);
+  const [idPhim, setIdPhim]=useState('');
+  const [idRap, setIdRap]=useState('');
   const history = useHistory();
+  const [branch, setBranch] = useState([]);
   const down992px = useMediaQuery(HIDDEN_SEARCHTICKET);
   const [data, setData] = useState({
     // handleSelectPhim
@@ -153,20 +156,49 @@ export default function SearchStickets() {
       setSuatChieu: "",
       maLichChieu: "",
     }));
-    theatersApi
-      .getThongTinLichChieuPhim(phim.id)
-      .then((result) => {
-        console.log(result?.data);
+    // theatersApi
+    //   .getThongTinLichChieuPhim(phim.id)
+    //   .then((result) => {
+    //     console.log(result?.data);
+    //     setData((data) => ({ ...data, startRequest: false }));
+    //     const cumRapChieuData= result?.data?.content?.reduce(
+    //       (colect, item) => {
+    //         console.log(item);
+    //         return [...colect, item];
+    //       },
+    //       []
+    //     );
+    //     // const cumRapChieuData} = result.data.content;
+    //     console.log("cumRapChieuData", cumRapChieuData);
+    //     // const rapRender = cumRapChieuData
+    //     const rapRender = cumRapChieuData.map((item) => item)
+    //     setData((data) => ({
+    //       ...data,
+    //       rapRender,
+    //       cumRapChieuData,
+    //     }));
+        
+    //   })
+    //   .catch(function (error) {
+    //     if (error.response) {
+    //       setData((data) => ({ ...data, errorCallApi: error.response.data }));
+    //     } else if (error.request) {
+    //       setData((data) => ({ ...data, errorCallApi: error.message }));
+    //     }
+    //   });
+      // lấy rạp
+      theatersApi.getThongTinLichChieuHeThongRap()
+      .then((response) => {
+        console.log("all branch: ",response);
         setData((data) => ({ ...data, startRequest: false }));
-        const cumRapChieuData= result?.data?.content?.reduce(
+        setBranch(response?.data?.content);
+        const cumRapChieuData= response?.data?.content?.reduce(
           (colect, item) => {
             console.log(item);
             return [...colect, item];
           },
           []
         );
-        // const cumRapChieuData} = result.data.content;
-        console.log("cumRapChieuData", cumRapChieuData);
         // const rapRender = cumRapChieuData
         const rapRender = cumRapChieuData.map((item) => item)
         setData((data) => ({
@@ -174,18 +206,13 @@ export default function SearchStickets() {
           rapRender,
           cumRapChieuData,
         }));
-        
       })
-      .catch(function (error) {
-        if (error.response) {
-          setData((data) => ({ ...data, errorCallApi: error.response.data }));
-        } else if (error.request) {
-          setData((data) => ({ ...data, errorCallApi: error.message }));
-        }
+      .catch((err) => {
+        console.log(err);
       });
   };
 
-  console.log("data",data);
+
 
   // sau khi click chọn Rạp, cần lấy ra prop lichChieuPhim của Rạp đã chọn > lọc ra ngày chiếu để hiển thị
   // input: tenCumRap, cumRapChieuData
@@ -205,23 +232,70 @@ export default function SearchStickets() {
       maLichChieu: "",
     }));
     const indexSelect = data.cumRapChieuData.findIndex(
-      (item) => item.tenCumRap === e.target.value
+      (item) => item.name === e.target.value
+      
     ); // lấy ra lichChieuPhimData của một cụm rạp đã chọn, item lichChieuPhimData có thể giống ngày nhưng khác giờ chiếu
-    const lichChieuPhimData = data.cumRapChieuData[indexSelect].lichChieuPhim;
-    const ngayChieuRender = lichChieuPhimData.map((item) => {
-      return item.ngayChieuGioChieu.slice(0, 10); // tạo mảng mới với item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
+    console.log("indexSelect: ", data.cumRapChieuData[indexSelect].id);
+    setIdRap(data.cumRapChieuData[indexSelect].id)
+    console.log("set phim: ", data.setPhim.id);
+    setIdPhim(data.setPhim.id)
+
+    theatersApi.getThongTinLichChieuPhim(data.setPhim.id, data.cumRapChieuData[indexSelect].id)
+    .then((response) => {
+      console.log("all lịch chiếu: ",response.data.content);
+      const lichChieuPhimData = response.data.content
+      const ngayChieuRender = lichChieuPhimData.map((item) => {
+        return item.startDate.slice(0, 10); // tạo mảng mới với item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
+      });
+      const ngayChieuRenderRemoveDuplicates = [...new Set(ngayChieuRender)]; // xóa đi phần tử trùng lặp để hiển thị
+      setData((data) => ({
+        ...data,
+        ngayChieuRender: ngayChieuRenderRemoveDuplicates,
+        lichChieuPhimData,
+      }));
+    })
+    .catch((err) => {
+      console.log(err);
     });
-    const ngayChieuRenderRemoveDuplicates = [...new Set(ngayChieuRender)]; // xóa đi phần tử trùng lặp để hiển thị
-    setData((data) => ({
-      ...data,
-      ngayChieuRender: ngayChieuRenderRemoveDuplicates,
-      lichChieuPhimData,
-    }));
+
+
+    
+
+
   };
+
   // sau khi click chọn ngày, cần lọc ra lịch chiếu tương ứng, thêm giờ để render
   // input: ngayChieu, lichChieuPhimData
   // output: setNgayXem(ngayChieu), suatChieuRender(lichChieuPhimDataSelected)[suatChieu], lichChieuPhimDataSelected(ngayChieu,lichChieuPhimData)[{ngayChieuGioChieu: "2019-01-01T10:10:00", maLichChieu: "16099"}],
   const handleSelectNgayXem = (e) => {
+    // setData((data) => ({
+    //   ...data,
+    //   setNgayXem: e.target.value,
+    //   openCtr: { ...data.openCtr, suatChieu: true },
+    //   // reset
+    //   suatChieuRender: [],
+    //   lichChieuPhimDataSelected: [],
+    //   setSuatChieu: "",
+    //   maLichChieu: "",
+    // }));
+
+    // const lichChieuPhimDataSelected = data.lichChieuPhimData.filter((item) => {
+    //   // lấy tất cả item có ngày chiếu giống với ngày chiếu đã chọn
+    //   if (item.ngayChieuGioChieu.slice(0, 10) === e.target.value) {
+    //     return true;
+    //   }
+    //   return false;
+    // });
+    // const suatChieuRender = lichChieuPhimDataSelected.map((item) => {
+    //   // cắt lấy giờ chiếu trong ngayChieuGioChieu: "2019-01-01T20:00:00" > "20:00"
+    //   return item.ngayChieuGioChieu.slice(11, 16);
+    // });
+    // setData((data) => ({
+    //   ...data,
+    //   suatChieuRender,
+    //   lichChieuPhimDataSelected,
+    // }));
+
     setData((data) => ({
       ...data,
       setNgayXem: e.target.value,
@@ -233,26 +307,37 @@ export default function SearchStickets() {
       maLichChieu: "",
     }));
 
-    const lichChieuPhimDataSelected = data.lichChieuPhimData.filter((item) => {
-      // lấy tất cả item có ngày chiếu giống với ngày chiếu đã chọn
-      if (item.ngayChieuGioChieu.slice(0, 10) === e.target.value) {
-        return true;
-      }
-      return false;
+    const indexSelect = data.lichChieuPhimData.findIndex(
+      (item) => item.startDate === e.target.value
+      
+    ); // lấy ra lichChieuPhimData của một cụm rạp đã chọn, item lichChieuPhimData có thể giống ngày nhưng khác giờ chiếu
+    console.log("indexSelect: ", data.cumRapChieuData[indexSelect].id);
+    console.log("set phim: ", data.setPhim.id);
+
+    theatersApi.getThongTinLichChieuPhim(idPhim, idRap)
+    .then((response) => {
+      console.log("all lịch chiếu: ",response.data.content);
+      const lichChieuPhimDataSelected = response.data.content
+      const suatChieuRender = lichChieuPhimDataSelected.map((item) => {
+        return item.startTime.slice(0, 8);
+      });
+      setData((data) => ({
+        ...data,
+        suatChieuRender,
+        lichChieuPhimDataSelected,
+      }));
+    })
+    .catch((err) => {
+      console.log(err);
     });
-    const suatChieuRender = lichChieuPhimDataSelected.map((item) => {
-      // cắt lấy giờ chiếu trong ngayChieuGioChieu: "2019-01-01T20:00:00" > "20:00"
-      return item.ngayChieuGioChieu.slice(11, 16);
-    });
-    setData((data) => ({
-      ...data,
-      suatChieuRender,
-      lichChieuPhimDataSelected,
-    }));
+
+
   };
 
   // input: suatChieu
   // output: setSuatChieu(suatChieu), maLichChieu(suatChieu)[maLichChieu]
+
+  // Chọn suất chiếu nè--------------
   const handleSelectSuatChieu = (e) => {
     setData((data) => ({
       ...data,
@@ -260,11 +345,17 @@ export default function SearchStickets() {
       // reset
       maLichChieu: "",
     }));
+
+
+
     const indexMaLichChieuSelect = data.lichChieuPhimDataSelected.findIndex(
-      (item) => item.ngayChieuGioChieu.slice(11, 16) === e.target.value
+      (item) => item.startTime.slice(0, 8) === e.target.value
     );
+    // Lấy được cái mã lịch chiếu rồi
+    // Lấy được cái mã lịch chiếu rồi
+    // Lấy được cái mã lịch chiếu rồi
     const maLichChieu =
-      data.lichChieuPhimDataSelected[indexMaLichChieuSelect].maLichChieu;
+      data.lichChieuPhimDataSelected[indexMaLichChieuSelect].id;
     setData((data) => ({ ...data, maLichChieu }));
   };
 
@@ -285,6 +376,8 @@ export default function SearchStickets() {
       horizontal: "left",
     },
   };
+
+  console.log("data",data);
 
   if (errorMovieList) {
     return <p>{errorMovieList}</p>;
@@ -336,7 +429,7 @@ export default function SearchStickets() {
           noOptionsText="Not found!"
         />
       </FormControl>
-
+{/* rạp-------- */}
       <FormControl
         className={`${classes["search__item--next"]} ${classes.search__item}`}
         focused={false}
@@ -369,14 +462,14 @@ export default function SearchStickets() {
           </MenuItem>
           {data?.rapRender?.map((item) => (
             <MenuItem
-              value={item.branch.name}
+              value={item.name}
               key={item.id}
               classes={{
                 root: classes.menu__item,
                 selected: classes["menu__item--selected"],
               }}
             >
-              {item.branch.name}
+              {item.name}
             </MenuItem>
           ))}
         </Select>
@@ -422,6 +515,7 @@ export default function SearchStickets() {
         </Select>
       </FormControl>
 
+{/* Chọn xuất chiếu nè */}
       <FormControl
         className={`${classes["search__item--next"]} ${classes.search__item}`}
         focused={false}
@@ -454,8 +548,8 @@ export default function SearchStickets() {
                 root: classes.menu__item,
                 selected: classes["menu__item--selected"],
               }}
-            >
-              {suatChieu}
+            > 
+              Showtime: {suatChieu}
             </MenuItem>
           ))}
         </Select>
@@ -475,13 +569,13 @@ export default function SearchStickets() {
             )
           }
         >
-          mua vé ngay
+          Book Now
         </Button>
       </FormControl>
     </div>
   );
 }
 
-SearchStickets.propTypes = {
+Choose.propTypes = {
   smDown: PropTypes.bool,
 };

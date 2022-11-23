@@ -25,8 +25,8 @@ export const login = (user) => {
         JSON.stringify({ ...result.data, avtIdUser: result.data.username })
       );
 
-      localStorage.setItem('userInfo', JSON.stringify(result))
-      localStorage.setItem('userLogin', JSON.stringify(result));
+      localStorage.setItem('userInfo', JSON.stringify({user}))
+      localStorage.setItem('userLogin', JSON.stringify({user}));
       dispatch({
         type: LOGIN_SUCCESS,
         payload: {

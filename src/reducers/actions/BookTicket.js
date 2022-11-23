@@ -10,8 +10,10 @@ export const getListSeat = (maLichChieu) => {
     dispatch({
       type: GET_LISTSEAT_REQUEST
     })
+    console.log("getListSeat: ", maLichChieu);
     bookingApi.getDanhSachPhongVe(maLichChieu)
       .then(result => {
+       console.log("data danh sách ghế nè: ", result.data);
         dispatch({
           type: GET_LISTSEAT_SUCCESS,
           payload: { data: result.data }

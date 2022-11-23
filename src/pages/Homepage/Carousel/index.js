@@ -10,10 +10,12 @@ import { useDispatch } from "react-redux";
 
 import homeCarouselData from "../../../constants/homeCarouselData";
 import SearchStickets from "./SearchTickets";
+import Choose from "./Choose";
 import useStyles from "./styles";
 import BtnPlay from "../../../components/BtnPlay";
 import { LOADING_BACKTO_HOME_COMPLETED } from "../../../reducers/constants/Lazy";
 import "./carousel.css";
+import Booking from "./Booking";
 
 export default function Carousel() {
   const dispatch = useDispatch();
@@ -82,7 +84,17 @@ export default function Carousel() {
           );
         })}
       </Slider>
-      <SearchStickets />
+      {/* <div style={{"backgroundColor":"white",
+       "paddingBottom":"5rem",
+        "paddingTop":"2rem",
+         "width":"50rem",
+         "height":"20rem",
+           "left":"0",
+           "bottom":"0"}}>
+      <Booking/>
+      </div> */}
+      {/* <SearchStickets /> */}
+      <Choose/>
     </div>
   );
 }

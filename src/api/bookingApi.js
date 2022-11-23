@@ -2,7 +2,7 @@ import axiosClient from "./axiosClient";
 const bookingApi = {
   //lấy thông tin phòng vé của 1 bộ phim
   getDanhSachPhongVe: (maLichChieu) => {
-    const path = `/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${maLichChieu}`;
+    const path = `/seats?scheduleId=${maLichChieu}`;
     return axiosClient.get(path);
   },
 

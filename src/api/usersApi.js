@@ -15,33 +15,34 @@ const usersApi = {
   },
 
   getDanhSachNguoiDung: () => {
-    const path = "/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP09";
+    const path = "/";
     return axiosClient.get(path);
   },
 
   getDanhSachNguoiDungPhanTrang: (soTrang, soPhanTuTrenTrang) => {
-    const path = "/QuanLyNguoiDung/LayDanhSachNguoiDungPhanTrang?MaNhom=GP09";
+    const path = "/";
     return axiosClient.get(path, { soTrang, soPhanTuTrenTrang });
   },
 
   postThemNguoiDung: (user) => {
-    const path = "/QuanLyNguoiDung/ThemNguoiDung";
+    const path = "/";
 
     return axiosClient.post(path, user);
   },
 
   deleteUser: (taiKhoan) => {
-    const path = `/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`;
+    const path = `/=${taiKhoan}`;
 
     return axiosClient.delete(path);
   },
 
   editTaiKhoan: (user) => {
-    const path = `/QuanLyNguoiDung/CapNhatThongTinNguoiDung`;
+    const path = `/`;
     return axiosClient.put(path, user);
   },
 
   getThongTinTaiKhoan: () => {
+    console.log("username lấy được: ");
     const path = `/user/me`;
     return axiosClient.post(path);
   },

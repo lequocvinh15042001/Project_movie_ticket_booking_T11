@@ -20,10 +20,17 @@ const theatersApi = {
 
   //thông tin của 1 bộ phim, kèm theo thông tin các rạp có chiếu phim đó
   //tạm thời dùng API này
-  getThongTinLichChieuPhim: (maPhim) => {
+  getThongTinLichChieuPhim: (maPhim, branchId) => {
     console.log("mã phim đang xem lịch chiếu: ", maPhim);
-    const path = `schedule/getAll?page=0&size=20&movieId=${maPhim}`;
-    return axiosClient.get(path);
+    console.log("mã rạp đang xem lịch chiếu: ", branchId);
+    if(branchId === undefined){
+      const path = `schedule/getAll?page=0&size=20&movieId=${maPhim}`;
+      return axiosClient.get(path);
+    }
+    else{
+      const path = `schedule/getAll?page=0&size=20&movieId=${maPhim}&branchId=${branchId}`;
+      return axiosClient.get(path);
+    }
   },
 
   //lấy thông tin các cum rap của 1 hệ thống

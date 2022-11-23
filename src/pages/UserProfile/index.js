@@ -156,7 +156,7 @@ export default function Index() {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Cập nhật thành công",
+        title: "Update Successfully",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -166,17 +166,17 @@ export default function Index() {
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const updateUserSchema = yup.object().shape({
-    username: yup.string().required("*Tài khoản không được bỏ trống !"),
-    password: yup.string().required("*Mật khẩu không được bỏ trống !"),
+    username: yup.string().required("*Username not be empty !"),
+    password: yup.string().required("*Password not be empty !"),
     email: yup
       .string()
-      .required("*Email không được bỏ trống !")
-      .email("* Email không hợp lệ "),
+      .required("*Email not be empty !")
+      .email("* Email invalid! "),
     // soDt: yup
     //   .string()
     //   .required("*Số điện thoại không được bỏ trống !")
     //   .matches(phoneRegExp, "Số điện thoại không hợp lệ!"),
-    name: yup.string().required("*Tên không được bỏ trống !"),
+    name: yup.string().required("*Name not be empty !"),
   });
 
   const handleSubmit = (user) => {
@@ -222,33 +222,33 @@ export default function Index() {
                 onClick={() => history.push("/admin/users")}
               >
                 <NavigationIcon className={classes.extendedIcon} />
-                Tới trang quản trị
+                Admin
               </Fab>
             </div>
           )}
           <ul className="list-group">
-            <li className="list-group-item text-muted">Hoạt động</li>
+            <li className="list-group-item text-muted">Activity</li>
             <li className="list-group-item text-right">
               <span className="float-left">
-                <strong>Bình luận</strong>
+                <strong>Comment</strong>
               </span>
               {dataShort.posts}
             </li>
             <li className="list-group-item text-right">
               <span className="float-left">
-                <strong>Bình luận được thích </strong>
+                <strong>Comment be liked </strong>
               </span>
               {dataShort.likePosts}
             </li>
             <li className="list-group-item text-right">
               <span className="float-left">
-                <strong>Số lần thanh toán</strong>
+                <strong>Count</strong>
               </span>
               {dataShort.ticket}
             </li>
             <li className="list-group-item text-right">
               <span className="float-left">
-                <strong>Tổng tiền $</strong>
+                <strong>Total $</strong>
               </span>
               {dataShort.total}
             </li>
@@ -263,7 +263,7 @@ export default function Index() {
                   root: classes.tabButton,
                   selected: classes.tabSelected,
                 }}
-                label="Thông tin tài khoản"
+                label="Profile"
               />
               <Tab
                 disableRipple
@@ -271,7 +271,7 @@ export default function Index() {
                   root: classes.tabButton,
                   selected: classes.tabSelected,
                 }}
-                label="Lịch sử đặt vé"
+                label="History"
               />
             </Tabs>
           </AppBar>
@@ -293,7 +293,7 @@ export default function Index() {
               {(props) => (
                 <Form className={`${classes.field}`}>
                   <div className="form-group">
-                    <label>Tài khoản&nbsp;</label>
+                    <label>Account&nbsp;</label>
                     <ErrorMessage
                       name="username"
                       render={(msg) => (
@@ -309,7 +309,7 @@ export default function Index() {
                     />
                   </div>
                   <div className={`form-group ${classes.password}`}>
-                    <label>Mật khẩu&nbsp;</label>
+                    <label>Password&nbsp;</label>
                     <ErrorMessage
                       name="password"
                       render={(msg) => (
@@ -334,7 +334,7 @@ export default function Index() {
                     </div>
                   </div>
                   <div className="form-group">
-                    <label>Họ và tên&nbsp;</label>
+                    <label>Full name&nbsp;</label>
                     <ErrorMessage
                       name="name"
                       render={(msg) => (
@@ -385,7 +385,7 @@ export default function Index() {
                       className="btn btn-success"
                       disable={loadingUpdateUser.toString()}
                     >
-                      Cập nhật
+                      Update
                     </button>
                     {errorUpdateUser && (
                       <div className="alert alert-danger">
@@ -407,15 +407,15 @@ export default function Index() {
               <table className="table table-striped table-hover table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">Stt</th>
-                    <th scope="col">Tên phim</th>
-                    <th scope="col">Thời lượng phim</th>
-                    <th scope="col">Ngày đặt</th>
-                    <th scope="col">Tên Rạp</th>
-                    <th scope="col">Mã vé</th>
-                    <th scope="col">Tên ghế</th>
-                    <th scope="col">Giá vé(vnđ)</th>
-                    <th scope="col">Tổng tiền(vnđ)</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Film</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Date Booking</th>
+                    <th scope="col">Branch Theater</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Seat</th>
+                    <th scope="col">Cost(vnđ)</th>
+                    <th scope="col">Total(vnđ)</th>
                   </tr>
                 </thead>
                 <tbody>
