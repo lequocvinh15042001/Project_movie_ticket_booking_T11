@@ -144,8 +144,8 @@ export default function Index() {
       setdataShort((data) => ({ ...data, posts, likePosts }));
     }
     if (successInfoUser) {
-      const ticket = successInfoUser.thongTinDatVe.length;
-      const total = successInfoUser.thongTinDatVe.reduce((total, ticket) => {
+      const ticket = successInfoUser?.thongTinDatVe?.length;
+      const total = successInfoUser?.thongTinDatVe?.reduce((total, ticket) => {
         return total + ticket.danhSachGhe.length * ticket.giaVe;
       }, 0);
       setdataShort((data) => ({ ...data, ticket, total }));
@@ -419,8 +419,7 @@ export default function Index() {
                   </tr>
                 </thead>
                 <tbody>
-                  {successInfoUser?.thongTinDatVe
-                    .map((sticket, i) => (
+                  {successInfoUser?.thongTinDatVe?.map((sticket, i) => (
                       <tr key={sticket.maVe} className={classes.td}>
                         <th scope="row">{i + 1}</th>
                         <td>{sticket.tenPhim}</td>

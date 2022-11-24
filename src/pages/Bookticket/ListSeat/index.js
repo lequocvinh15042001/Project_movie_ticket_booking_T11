@@ -18,10 +18,10 @@ export default function ListSeat() {
   const {
     isMobile,
     listSeat,
-    danhSachPhongVe: { thongTinPhim },
+    danhSachPhongVe,
   } = useSelector((state) => state.bookTicketReducer);
   console.log("-------", listSeat);
-  console.log("------sdas-", thongTinPhim);
+  // console.log("------sdas-", thongTinPhim);
   const domToSeatElement = useRef(null);
   const [widthSeat, setWidthSeat] = useState(0);
   const classes = useStyles({
@@ -78,7 +78,7 @@ export default function ListSeat() {
     // cập nhật lại danhSachVe dùng để booking
     const danhSachVe = newListSeat?.reduce((danhSachVe, seat) => {
       if (seat.selected) {
-        return [...danhSachVe, { id: seat.id, giaVe: 70000 }];//giá vé nè thay vô
+        return [...danhSachVe, { id: seat.id}];//giá vé nè thay vô
       }
       return danhSachVe;
     }, []);
@@ -125,19 +125,19 @@ export default function ListSeat() {
       <div className={classes.info_CountDown}>
         <div className={classes.infoTheater}>
           <img
-            src={logoTheater[thongTinPhim?.tenCumRap.slice(0, 3).toUpperCase()]}
+            // src={logoTheater[thongTinPhim?.tenCumRap?.slice(0, 3).toUpperCase()]}
             alt="phim"
             style={{ width: 50, height: 50 }}
           />
           <div className={classes.text}>
-            <TenCumRap tenCumRap={thongTinPhim?.tenCumRap} />
-            <p className={classes.textTime}>{`${
+            {/* <TenCumRap tenCumRap={thongTinPhim?.tenCumRap} /> */}
+            {/* <p className={classes.textTime}>{`${
               thongTinPhim && formatDate(thongTinPhim.ngayChieu).dayToday
-            } - ${thongTinPhim?.gioChieu} - ${thongTinPhim?.tenRap}`}</p>
+            } - ${thongTinPhim?.gioChieu} - ${thongTinPhim?.tenRap}`}</p> */}
           </div>
         </div>
         <div className={classes.countDown}>
-          <p className={classes.timeTitle}>Thời gian giữ ghế</p>
+          <p className={classes.timeTitle}>Time count down</p>
           <Countdown />
         </div>
       </div>

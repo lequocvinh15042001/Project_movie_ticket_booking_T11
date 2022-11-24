@@ -31,6 +31,7 @@ export const getListSeat = (maLichChieu) => {
 }
 
 export const bookTicket = (data) => {
+  console.log("Data đặt vé: ",data);
   return (dispatch) => {
     dispatch({
       type: BOOK_TICKET_REQUEST
@@ -43,6 +44,7 @@ export const bookTicket = (data) => {
             data: result.data,
           }
         })
+        console.log("Kết quả: ",result);
       })
       .catch(
         error => {

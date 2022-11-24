@@ -42,9 +42,15 @@ const usersApi = {
   },
 
   getThongTinTaiKhoan: () => {
-    console.log("username lấy được: ");
-    const path = `/user/me`;
-    return axiosClient.post(path);
+    console.log("Vô get");
+    const path = "/user/me";
+    return axiosClient.get(path);
+  },
+
+  getChiTietTaiKhoan: (username) => {
+    console.log(username);
+    const path = `/users/${username}`;
+    return axiosClient.get(path);
   },
 };
 

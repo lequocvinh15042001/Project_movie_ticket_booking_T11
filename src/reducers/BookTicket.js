@@ -59,6 +59,7 @@ const bookTicketReducer = (state = initialState, action) => {
     case GET_LISTSEAT_SUCCESS: {
       return {
         ...state,
+        // listSeat: action.payload.data,
         danhSachPhongVe: action.payload.data,
         loadingGetListSeat: false,
       }

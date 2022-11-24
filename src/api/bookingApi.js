@@ -7,8 +7,8 @@ const bookingApi = {
   },
 
   postDatVe: (data) => {
-    const path = `/QuanLyDatVe/DatVe`;
-
+    const path = `/bills/create-new-bill`;
+    console.log("Đặt vé thành công!");
     return axiosClient.post(path, data);
   },
 

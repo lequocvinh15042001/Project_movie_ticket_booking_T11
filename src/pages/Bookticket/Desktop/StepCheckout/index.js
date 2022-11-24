@@ -18,7 +18,7 @@ export default function Stepcheckout() {
   const classes = useStyles();
   const activeStep = useSelector((state) => state.bookTicketReducer.activeStep);
   const currentUser = useSelector((state) => state.authReducer.currentUser);
-  const steps = ["CHỌN GHẾ", "THANH TOÁN", "KẾT QUẢ ĐẶT VÉ"];
+  const steps = ["CHOOSE SEAT", "PAYMENT", "TICKET!"];
 
   function StepIcon(props) {
     const { active, completed } = props;
@@ -63,7 +63,7 @@ export default function Stepcheckout() {
       </Stepper>
       <div className={classes.account} onClick={handleUser}>
         <img src={FAKE_AVATAR} alt="avatar" className={classes.avatar} />
-        <p className={classes.hoTen}>{currentUser.hoTen}</p>
+        <p className={classes.hoTen}>{currentUser.name}</p>
       </div>
     </div>
   );
