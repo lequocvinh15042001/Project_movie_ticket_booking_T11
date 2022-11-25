@@ -202,11 +202,11 @@ export default function Index() {
     // dispatch(getListSeat(param.maLichChieu));
     bookingApi.getDanhSachPhongVe(param.maLichChieu)
     .then((response) =>{
-      console.log(response.data);
-      setSeat(response.data);
+      console.log(response.data.data);
+      setSeat(response.data.data);
       dispatch({
         type: GET_LISTSEAT_SUCCESS,
-        payload: { data: response.data }
+        payload: { data: response.data.data }
       })
     })
     .catch((err) => {

@@ -34,11 +34,12 @@ export default function Desktop({ arrayData, value }) {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />
   };
+  console.log("Arr Datta:", arrayData);
   return (
     <div className={classes.container}>
       <Slider {...settings}>
         {value.value === 0 ?
-          arrayData.dailyMovieList?.map((movie) => {
+          arrayData.dailyMovieList?.data?.map((movie) => {
             return (
               <div className="px-1 align-top" key={movie.id}>
                 <MovieItem
@@ -47,7 +48,7 @@ export default function Desktop({ arrayData, value }) {
               </div>
             )
           }) :
-          arrayData.comingMovieList?.map((movie) => {
+          arrayData.dailyMovieList?.data?.map((movie) => {
             return (
               <div className="px-1 align-top" key={movie.id}>
                 <MovieItem

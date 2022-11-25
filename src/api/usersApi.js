@@ -1,7 +1,6 @@
 import axiosClient from "./axiosClient";
 
 const usersApi = {
-  //post user:object gồm taiKhoan, matKhau, email,...
   postDangKy: (user) => {
     const path = "/auth/signup";
     return axiosClient.post(path, user);

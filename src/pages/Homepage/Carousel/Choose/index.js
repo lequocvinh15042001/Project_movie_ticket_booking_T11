@@ -191,8 +191,8 @@ export default function Choose() {
       .then((response) => {
         console.log("all branch: ",response);
         setData((data) => ({ ...data, startRequest: false }));
-        setBranch(response?.data?.content);
-        const cumRapChieuData= response?.data?.content?.reduce(
+        setBranch(response?.data?.data?.content);
+        const cumRapChieuData= response?.data?.data?.content?.reduce(
           (colect, item) => {
             console.log(item);
             return [...colect, item];
@@ -242,8 +242,8 @@ export default function Choose() {
 
     theatersApi.getThongTinLichChieuPhim(data.setPhim.id, data.cumRapChieuData[indexSelect].id)
     .then((response) => {
-      console.log("all lịch chiếu: ",response.data.content);
-      const lichChieuPhimData = response.data.content
+      console.log("all lịch chiếu: ",response.data.data.content);
+      const lichChieuPhimData = response.data.data.content
       const ngayChieuRender = lichChieuPhimData.map((item) => {
         return item.startDate.slice(0, 10); // tạo mảng mới với item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
       });
@@ -316,10 +316,10 @@ export default function Choose() {
 
     theatersApi.getThongTinLichChieuPhim(idPhim, idRap)
     .then((response) => {
-      console.log("all lịch chiếu: ",response.data.content);
-      const lichChieuPhimDataSelected = response.data.content
+      console.log("all lịch chiếu: ",response.data.data.content);
+      const lichChieuPhimDataSelected = response.data.data.content
       const suatChieuRender = lichChieuPhimDataSelected.map((item) => {
-        return item.startTime.slice(0, 8);
+        return item;
       });
       setData((data) => ({
         ...data,
@@ -387,7 +387,7 @@ export default function Choose() {
     <div className={classes.search} id="searchTickets">
       <FormControl focused={false} className={classes.itemFirst}>
         <Autocomplete
-          options={movieRender}
+          options={movieRender.data}
           getOptionLabel={(option) => option.name}
           style={{ width: 300 }}
           renderInput={(params) => {
@@ -542,14 +542,14 @@ export default function Choose() {
           </MenuItem>
           {data.suatChieuRender.map((suatChieu) => (
             <MenuItem
-              value={suatChieu}
-              key={suatChieu}
+              value={suatChieu.startTime}
+              key={suatChieu.id}
               classes={{
                 root: classes.menu__item,
                 selected: classes["menu__item--selected"],
               }}
             > 
-              Showtime: {suatChieu}
+              {suatChieu.room.name}:{suatChieu.startTime}
             </MenuItem>
           ))}
         </Select>

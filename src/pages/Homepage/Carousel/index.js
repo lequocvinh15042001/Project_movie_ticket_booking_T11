@@ -69,7 +69,7 @@ export default function Carousel() {
   return (
     <div id="carousel" className={classes.carousel}>
       <Slider {...settings}>
-        {homeCarouselData.map((banner) => {
+        {homeCarouselData?.map((banner) => {
           return (
             <div key={banner.maPhim} className={classes.itemSlider}>
               <img src={banner?.hinhAnh} alt="banner" className={classes.img} />

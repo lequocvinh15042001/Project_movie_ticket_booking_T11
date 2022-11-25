@@ -200,7 +200,7 @@ export default function Index() {
       .join(", ");
   };
   return (
-    <div className="bootstrap snippet mb-4">
+    <div className="bootstrap snippet mb-5 mx-4" style={{"backgroundColor":"black"}}>
       <br />
       <div className="row">
         <div className="col-sm-3">
@@ -255,7 +255,7 @@ export default function Index() {
           </ul>
         </div>
         <div className={`col-sm-9 py-3 px-0`}>
-          <AppBar className={classes.appBar} position="static">
+          <AppBar className={classes.appBar} position="static" style={{"backgroundColor":"orange","borderRadius":"5px"}}>
             <Tabs value={value} onChange={handleChange} centered={!isDesktop}>
               <Tab
                 disableRipple
@@ -273,6 +273,14 @@ export default function Index() {
                 }}
                 label="History"
               />
+              <Tab
+                disableRipple
+                classes={{
+                  root: classes.tabButton,
+                  selected: classes.tabSelected,
+                }}
+                label="ChangePassword"
+              />
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0}>
@@ -281,9 +289,6 @@ export default function Index() {
                 username: successInfoUser?.username ?? "",
                 password: successInfoUser?.password ?? "",
                 email: successInfoUser?.email ?? "",
-                // soDt: successInfoUser?.soDT ?? "",
-                // maNhom: "GP09",
-                // maLoaiNguoiDung: "KhachHang",
                 name: successInfoUser?.name ?? "",
               }}
               enableReinitialize // cho phép cập nhật giá trị initialValues
@@ -453,6 +458,93 @@ export default function Index() {
                 </tbody>
               </table>
             </div>
+          </TabPanel>
+
+          {/* Đổi mật khẩu */}
+          <TabPanel value={value} index={2}>
+            <Formik
+              initialValues={{
+                username: successInfoUser?.username ?? "",
+                password: successInfoUser?.password ?? "",
+                email: successInfoUser?.email ?? "",
+                // soDt: successInfoUser?.soDT ?? "",
+                // maNhom: "GP09",
+                // maLoaiNguoiDung: "KhachHang",
+                name: successInfoUser?.name ?? "",
+              }}
+              enableReinitialize // cho phép cập nhật giá trị initialValues
+              validationSchema={updateUserSchema}
+              onSubmit={handleSubmit}
+            >
+              {(props) => (
+                <Form className={`${classes.field}`}>
+                  <div className={`form-group ${classes.password}`}>
+                    <label>Password&nbsp;</label>
+                    <ErrorMessage
+                      name="password"
+                      render={(msg) => (
+                        <span className="text-danger">{msg}</span>
+                      )}
+                    />
+                    <Field
+                      name="password"
+                      type={typePassword}
+                      className="form-control"
+                      onChange={props.handleChange}
+                    />
+                    <div
+                      className={classes.eye}
+                      onClick={handleToggleHidePassword}
+                    >
+                      {typePassword !== "password" ? (
+                        <i className="fa fa-eye-slash"></i>
+                      ) : (
+                        <i className="fa fa-eye"></i>
+                      )}
+                    </div>
+                  </div>
+                  <div className={`form-group ${classes.password}`}>
+                    <label>Password&nbsp;</label>
+                    <ErrorMessage
+                      name="password"
+                      render={(msg) => (
+                        <span className="text-danger">{msg}</span>
+                      )}
+                    />
+                    <Field
+                      name="password"
+                      type={typePassword}
+                      className="form-control"
+                      onChange={props.handleChange}
+                    />
+                    <div
+                      className={classes.eye}
+                      onClick={handleToggleHidePassword}
+                    >
+                      {typePassword !== "password" ? (
+                        <i className="fa fa-eye-slash"></i>
+                      ) : (
+                        <i className="fa fa-eye"></i>
+                      )}
+                    </div>
+                  </div>
+                  <div className="text-left">
+                    <button
+                      type="submit"
+                      className="btn btn-success"
+                      disable={loadingUpdateUser.toString()}
+                    >
+                      Update
+                    </button>
+                    {errorUpdateUser && (
+                      <div className="alert alert-danger">
+                        <span>{errorUpdateUser}</span>
+                      </div>
+                    )}
+                  </div>
+                </Form>
+              )}
+            </Formik>
           </TabPanel>
         </div>
       </div>
