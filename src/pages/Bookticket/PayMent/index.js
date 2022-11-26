@@ -58,9 +58,10 @@ export default function PayMent() {
     loadingBookingTicket,
     successBookingTicketMessage,
     errorBookTicketMessage,
+    thongTinPhongVe,
   } = useSelector((state) => state.bookTicketReducer);
   console.log(maLichChieu, danhSachVe, taiKhoanNguoiDung);
-  // console.log(listSeat);
+  console.log("danhSachVe: ",danhSachVe);
   const dispatch = useDispatch();
   const emailRef = useRef();
   const phoneRef = useRef(); // dùng useRef để dom tớ element
@@ -162,12 +163,12 @@ export default function PayMent() {
       //   list.push({id:listSeatIds[i]})
       // }
       let listSeatIds=[]
-      for(var i=0;i<danhSachVe.length;i++){
+      for(var i = 0;i < danhSachVe.length; i++){
         listSeatIds.push(danhSachVe[i].id)
       }
-      console.log("jhsbdfjhsbhs",listSeatIds);
+      console.log("Gửi đi: ",userId, scheduleId, listSeatIds);
     
-      dispatch(bookTicket({ userId, scheduleId, listSeatIds }));
+      dispatch(bookTicket({userId, scheduleId, listSeatIds} ));
       // dispatch(bookTicket({ maLichChieu: 40396, danhSachVe: [{ maGhe: 9122569, giaVe: 75000 }], taiKhoanNguoiDung }))
     }
   };
@@ -177,11 +178,11 @@ export default function PayMent() {
   const onBlur = (e) => {
     setDataFocus({ ...dataFocus, [e.target.name]: false });
   };
-  let listSeatIds = [10,11]
-  let list=[]
-  for(var i=0;i<listSeatIds.length;i++){
-    list.push({id:listSeatIds[i]})
-  }
+  // let listSeatIds = [10,11]
+  // let list=[]
+  // for(var i=0;i<listSeatIds.length;i++){
+  //   list.push({id:listSeatIds[i]})
+  // }
 
 
   return (
@@ -194,11 +195,12 @@ export default function PayMent() {
 
         {/* thông tin phim và rạp */}
         <div className={classes.payMentItem}>
-          <p className={classes.tenPhim}>{thongTinPhim?.tenPhim}</p>
-          <p>{thongTinPhim?.tenCumRap}</p>
-          <p>{`${thongTinPhim && formatDate(thongTinPhim.ngayChieu).dayToday} ${
-            thongTinPhim?.ngayChieu
-          } - ${thongTinPhim?.gioChieu} - ${thongTinPhim?.tenRap}`}</p>
+          <p className={classes.tenPhim}>{thongTinPhongVe?.setPhim.name}</p>
+          <p>{thongTinPhongVe?.setRap}</p>
+          <p>{`${thongTinPhongVe && formatDate(thongTinPhongVe.setNgayXem).dayToday} ${
+            thongTinPhongVe?.ngayChieu
+          } - ${thongTinPhongVe?.setSuatChieu} - ${thongTinPhongVe?.setPhim.duration} Minutes 
+          - ${thongTinPhongVe?.setPhim.categories} - Actors: ${thongTinPhim?.setPhim.actors}`}</p>
         </div>
 
         {/* ghế đã chọn */}

@@ -53,7 +53,7 @@ function App() {
 
             <CheckoutRoute
               exact
-              path="/datve/:maLichChieu"
+              path="/datve/:maLichChieu/:maPhim"
               component={BookTickets}
             />
 

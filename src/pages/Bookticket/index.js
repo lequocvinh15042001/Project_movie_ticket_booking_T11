@@ -17,6 +17,7 @@ import { DISPLAY_MOBILE_BOOKTICKET } from "../../constants/config";
 import Modal from "./Modal";
 import usersApi from "../../api/usersApi";
 import bookingApi from "../../api/bookingApi";
+import moviesApi from "../../api/moviesApi";
 
 export default function Index() {
   // const { isLazy } = useSelector((state) => state.lazyReducer);
@@ -186,16 +187,47 @@ export default function Index() {
     refreshKey,
     timeOut,
     isMobile,
-    danhSachPhongVe: { danhSachGhe },
+    danhSachPhongVe: { thongTinPhim, danhSachGhe },
     errorGetListSeatMessage,
+    thongTinPhongVe,
   } = useSelector((state) => state.bookTicketReducer);
   const { currentUser } = useSelector((state) => state.authReducer);
+
   const param = useParams();
   const dispatch = useDispatch();
   const mediaQuery = useMediaQuery(DISPLAY_MOBILE_BOOKTICKET);
   const loading = isLazy || loadingGetListSeat;
+  const [cUser, setCUser] = useState()
+  const [cPhim, setCPhim] = useState()
+  const [thongTin, setThongTin] = useState({})
+
 
   const [seat, setSeat] = useState([])
+
+  useEffect(() =>{
+    usersApi.getThongTinTaiKhoan()
+    .then((response) =>{
+      console.log(response.data.data);
+      setCUser(response.data.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  },[])
+  
+  console.log(thongTin);
+
+  useEffect(() => {
+    console.log("Mã phim: ", param.maPhim);
+    moviesApi.getThongTinPhim(param.maPhim)
+    .then((response) =>{
+      console.log(response.data.data);
+      setCPhim(response.data.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  },[])
 
   useEffect(() => {
     // lấy thongTinPhim và danhSachGhe
@@ -233,12 +265,14 @@ export default function Index() {
       payload: {
         listSeat: danhSachGheEdit,
         maLichChieu: param?.maLichChieu,
-        taiKhoanNguoiDung: "5",
-        email: "test@gmail.com",
+        hoTen:"Lê Quốc Vinh",
+        taiKhoanNguoiDung: "4",
+        email: "adam@gmail.com",
         phone: "0376621299",
+        thongTinPhongVe: thongTinPhongVe,
       },
     });
-  }, [seat, currentUser, timeOut]);
+  }, [seat, cUser, currentUser, cPhim,  timeOut]);
 
   useEffect(() => {
     dispatch({ type: SET_ISMOBILE, payload: { isMobile: mediaQuery } });
@@ -250,11 +284,11 @@ export default function Index() {
   return (
     <div style={{ display: loading ? "none" : "block", backgroundColor:"white" }}>
       {isMobile ? (
-        <Mobile key={refreshKey} />
+        <Mobile key={refreshKey}/>
       ) : (
-        <Desktop key={refreshKey + 1} />
+        <Desktop key={refreshKey + 1}/>
       )}
-      <Modal />
+      <Modal/>
     </div>
   );
 }

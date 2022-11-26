@@ -66,10 +66,9 @@ export default function Modal() {
         !isBookticket && ( // không thông báo hết giờ khi đã có kết quả đặt vé
           <div className={classes.padding}>
             <p>
-              Đã hết thời gian giữ ghế. Vui lòng thực hiện đơn hàng trong thời
-              hạn 5 phút.
+              Times out! Please booking ticket in 5 minutes.
               <span className={classes.txtClick} onClick={handleTimeOut}>
-                Đặt vé lại
+                Book again!
               </span>
             </p>
           </div>
@@ -84,7 +83,7 @@ export default function Modal() {
                 alt="Post-notification"
               />
             </div>
-            <p className={classes.textOver}>Bạn không thể chọn quá 10 ghế</p>
+            <p className={classes.textOver}>You don't choose over 10 seats</p>
             <Button
               variant="outlined"
               classes={{ root: classes.btnOver }}
@@ -103,14 +102,14 @@ export default function Modal() {
                 classes={{ root: classes.btnResult }}
                 onClick={handleReBooking}
               >
-                {successBookingTicketMessage && "Mua thêm vé phim này"}
-                {errorBookTicketMessage && "Thử mua lại"}
+                {successBookingTicketMessage && "Book this movie again!"}
+                {errorBookTicketMessage && "Try book again"}
               </Button>
               <Button
                 classes={{ root: classes.btnResult }}
                 onClick={handleCombackHome}
               >
-                Quay về trang chủ
+                Go to Homepage
               </Button>
             </div>
           </>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -17,11 +17,16 @@ import theatersApi from "../../../../api/theatersApi";
 import useStyles from "./styles";
 import formatDate from "../../../../utilities/formatDate";
 import { HIDDEN_SEARCHTICKET } from "../../../../constants/config";
+import { INIT_DATA } from "../../../../reducers/constants/BookTicket";
 
 export default function Choose() {
   const { movieList: movieRender, errorMovieList } = useSelector(
     (state) => state.movieReducer
   );
+  const {
+    thongTinPhongVe,
+  } = useSelector((state) => state.bookTicketReducer);
+
   console.log(movieRender);
   const [idPhim, setIdPhim]=useState('');
   const [idRap, setIdRap]=useState('');
@@ -62,8 +67,10 @@ export default function Choose() {
   });
   const [currentPhimPopup, setcurrentPhimPopup] = useState(null);
 
+  const dispatch = useDispatch()
   // popup item phim lật như thế nào(lên hay xuống) thì set các popup khác lật như thế ấy, item phim dùng popper, item còn lại dùng popover
   useEffect(() => {
+
     let mounted = true;
     if (!data.openCtr.phim) {
       return undefined;
@@ -90,7 +97,6 @@ export default function Choose() {
       mounted = false;
     };
   }, [data.openCtr.phim]);
-
 
   const handleOpenPhim = () => {
     setData((data) => ({
@@ -257,11 +263,6 @@ export default function Choose() {
     .catch((err) => {
       console.log(err);
     });
-
-
-    
-
-
   };
 
   // sau khi click chọn ngày, cần lọc ra lịch chiếu tương ứng, thêm giờ để render
@@ -345,9 +346,6 @@ export default function Choose() {
       // reset
       maLichChieu: "",
     }));
-
-
-
     const indexMaLichChieuSelect = data.lichChieuPhimDataSelected.findIndex(
       (item) => item.startTime.slice(0, 8) === e.target.value
     );
@@ -357,6 +355,14 @@ export default function Choose() {
     const maLichChieu =
       data.lichChieuPhimDataSelected[indexMaLichChieuSelect].id;
     setData((data) => ({ ...data, maLichChieu }));
+    
+    dispatch({
+      type: INIT_DATA,
+      payload: {
+        thongTinPhongVe: data,
+      },
+      });
+      console.log(thongTinPhongVe);
   };
 
   const setNewPhim = (maPhim) => {
@@ -564,8 +570,8 @@ export default function Choose() {
           }}
           onClick={() =>
             history.push(
-              `/datve/${data.maLichChieu}`,
-              `/datve/${data.maLichChieu}`
+              `/datve/${data.maLichChieu}/${data.setPhim.id}`,
+              `/datve/${data.maLichChieu}/${data.setPhim.id}`
             )
           }
         >

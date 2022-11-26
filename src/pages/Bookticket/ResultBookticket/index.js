@@ -6,33 +6,34 @@ import useStyles from './style'
 import { colorTheater } from '../../../constants/theaterData'
 
 export default function SuccessBooking() {
-  const { isMobile, amount, email, phone, paymentMethod, listSeatSelected, successBookingTicketMessage, errorBookTicketMessage, danhSachPhongVe: { thongTinPhim } } = useSelector((state) => state.bookTicketReducer)
+  const { isMobile, amount, email, phone, paymentMethod, listSeatSelected, successBookingTicketMessage, errorBookTicketMessage, danhSachPhongVe: { thongTinPhim }, thongTinPhongVe } = useSelector((state) => state.bookTicketReducer)
   const { currentUser } = useSelector((state) => state.authReducer)
-  const classes = useStyles({ thongTinPhim, color: colorTheater[thongTinPhim?.tenCumRap.slice(0, 3).toUpperCase()], isMobile })
+  const classes = useStyles({ thongTinPhongVe, color: colorTheater[thongTinPhongVe?.setRap.slice(0, 3).toUpperCase()], isMobile })
 
   return (
     <div className={classes.resultBookticket}>
       <div className={classes.infoTicked} >
         <div className={classes.infoTicked__img}>
+          <img src={thongTinPhongVe?.setPhim.smallImageURl}/>
         </div>
         <div className={classes.infoTicked__txt}>
           <p className={classes.tenPhim}>
-            {thongTinPhim?.tenPhim}
+            {thongTinPhongVe?.setPhim.name}
           </p>
-          <p className={classes.text__first}><span>{thongTinPhim?.tenCumRap.split("-")[0]}</span><span className={classes.text__second}>-{thongTinPhim?.tenCumRap.split("-")[1]}</span></p>
-          <p className={classes.diaChi} >{thongTinPhim?.diaChi}</p>
+          <p className={classes.text__first}><span>{thongTinPhongVe?.setRap.split("-")[0]}</span><span className={classes.text__second}>-{thongTinPhongVe?.setRap.split("-")[1]}</span></p>
+          <p className={classes.diaChi} >{thongTinPhongVe?.cumRapChieuData[0].address}</p>
           <table className={classes.table}>
             <tbody>
               <tr>
-                <td valign='top' >Suất chiếu:</td>
-                <td valign='top'>{`${thongTinPhim?.gioChieu} ${thongTinPhim?.ngayChieu}`}</td>
+                <td valign='top' >Showtime:</td>
+                <td valign='top'>{`${thongTinPhongVe?.suatChieu} ${thongTinPhongVe?.setNgayXem}`}</td>
               </tr>
               <tr>
-                <td valign='top'>Phòng:</td>
-                <td>{thongTinPhim?.tenRap}</td>
+                <td valign='top'>Room:</td>
+                <td>Phòng 01</td>
               </tr>
               <tr>
-                <td valign='top'>Ghế:</td>
+                <td valign='top'>Seat(s):</td>
                 <td>{listSeatSelected?.join(", ")}</td>
               </tr>
             </tbody>
@@ -41,35 +42,35 @@ export default function SuccessBooking() {
       </div>
       <div>
         <div>
-          <h3 className={classes.infoResult_label}>Thông tin đặt vé</h3>
+          <h3 className={classes.infoResult_label}>Ticket Information</h3>
           <table className={`${classes.table} table`}>
             <tbody>
               <tr>
-                <td valign='top' >Họ tên:</td>
+                <td valign='top' >Name:</td>
                 <td>{currentUser?.hoTen}</td>
               </tr>
-              <tr>
-                <td valign='top'>Điện thoại:</td>
+              {/* <tr>
+                <td valign='top'>Phone:</td>
                 <td valign='top'>{phone}</td>
-              </tr>
+              </tr> */}
               <tr>
                 <td valign='top'>Email:</td>
                 <td>{email}</td>
               </tr>
               <tr>
-                <td valign='top'>Trạng thái:</td>
+                <td valign='top'>Status:</td>
                 <td>
-                  {successBookingTicketMessage && <span>Đặt vé thành công qua <span className={classes.paymentColor}>{paymentMethod}</span></span>}
-                  {errorBookTicketMessage && <span>Đặt vé thất bại: <span className={classes.errorColor}>{errorBookTicketMessage}</span></span>}
+                  {successBookingTicketMessage && <span>Booking ticket Successfully <span className={classes.paymentColor}>{paymentMethod}</span></span>}
+                  {errorBookTicketMessage && <span>Booking ticket Fail: <span className={classes.errorColor}>{errorBookTicketMessage}</span></span>}
                 </td>
               </tr>
               <tr>
-                <td valign='top' >Tổng tiền:</td>
+                <td valign='top' >Total:</td>
                 <td valign='top'><span>{`${amount.toLocaleString('vi-VI')} đ`}</span></td>
               </tr>
             </tbody>
           </table>
-          {successBookingTicketMessage && <p className={classes.noteresult}>Kiểm tra lại vé đã mua trong thông tin tài khoản của bạn !</p>}
+          {successBookingTicketMessage && <p className={classes.noteresult}>Check this ticket into your information!</p>}
         </div>
       </div>
     </div>

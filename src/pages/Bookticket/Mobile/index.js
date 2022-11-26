@@ -16,7 +16,7 @@ import {
 import { getListSeat } from "../../../reducers/actions/BookTicket";
 import { LOADING_BACKTO_HOME } from "../../../reducers/constants/Lazy";
 
-export default function Mobile() {
+export default function Mobile(cPhim) {
   const {
     activeStep,
     isSelectedSeat,

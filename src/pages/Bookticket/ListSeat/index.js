@@ -18,17 +18,18 @@ export default function ListSeat() {
   const {
     isMobile,
     listSeat,
-    danhSachPhongVe,
+    danhSachPhongVe: { thongTinPhim },
+    thongTinPhongVe,
   } = useSelector((state) => state.bookTicketReducer);
   console.log("-------", listSeat);
-  // console.log("------sdas-", thongTinPhim);
+  console.log("------sdas-", thongTinPhongVe);
   const domToSeatElement = useRef(null);
   const [widthSeat, setWidthSeat] = useState(0);
   const classes = useStyles({
-    // color: colorTheater[thongTinPhim?.tenCumRap.slice(0, 3).toUpperCase()],
-    color: "white",
-    // modalLeftImg: thongTinPhim?.hinhAnh,
-    modalLeftImg: poster,
+    color: colorTheater[thongTinPhongVe.setRap.slice(0,3).toUpperCase()],
+    //color: "white",
+    modalLeftImg: thongTinPhongVe.setPhim?.smallImageURl,
+   // modalLeftImg: poster,
     isMobile,
     widthLabel: widthSeat / 2,
   });
@@ -113,7 +114,7 @@ export default function ListSeat() {
     if (seat.selected) {
       color = "#44c020";
     }
-    if (seat.daDat) {
+    if (seat.isOccupied) {
       color = "#99c5ff";
     }
     return color;
@@ -125,15 +126,15 @@ export default function ListSeat() {
       <div className={classes.info_CountDown}>
         <div className={classes.infoTheater}>
           <img
-            // src={logoTheater[thongTinPhim?.tenCumRap?.slice(0, 3).toUpperCase()]}
+            src={thongTinPhongVe?.setPhim.smallImageURl}
             alt="phim"
             style={{ width: 50, height: 50 }}
           />
           <div className={classes.text}>
-            {/* <TenCumRap tenCumRap={thongTinPhim?.tenCumRap} /> */}
-            {/* <p className={classes.textTime}>{`${
-              thongTinPhim && formatDate(thongTinPhim.ngayChieu).dayToday
-            } - ${thongTinPhim?.gioChieu} - ${thongTinPhim?.tenRap}`}</p> */}
+            <TenCumRap tenCumRap={thongTinPhongVe?.setRap} />
+            <p className={classes.textTime}>{`${
+              thongTinPhongVe && formatDate(thongTinPhongVe.setNgayXem).dayToday
+            } - ${thongTinPhongVe?.setNgayXem} - ${thongTinPhongVe?.setPhim.rated}`}</p>
           </div>
         </div>
         <div className={classes.countDown}>
@@ -171,7 +172,7 @@ export default function ListSeat() {
                   </p>
                 )}
                 {/* label ghế đã có người đặt */}
-                {seat.daDat && (
+                {seat.isOccupied === 1 && (
                   <img
                     className={classes.seatLocked}
                     src="/img/bookticket/notchoose.png"
