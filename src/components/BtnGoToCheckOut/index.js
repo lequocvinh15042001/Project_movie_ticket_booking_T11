@@ -2,21 +2,52 @@ import React from 'react'
 import { useHistory } from "react-router-dom";
 import useStyles from './style'
 
-export default function BtnGoToCheckout({ lichChieuTheoPhim }) {
+export default function BtnGoToCheckout({ lichChieuTheoPhim, duration, idLich, maPhim }) {
   const classes = useStyles()
   const history = useHistory()
 
+  function toHoursAndMinutes(totalMinutes) {
+    const minutes = totalMinutes % 60;
+    const hours = Math.floor(totalMinutes / 60);
+  
+    return `${padTo2Digits(hours)}:${padTo2Digits(minutes)}`;
+  }
+  
+  function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+  }
+
+  function convertH2M(timeInHour){
+    var timeParts = timeInHour.split(":");
+    return Number(timeParts[0]) * 60 + Number(timeParts[1]);
+  }
+  
+  // var timeInMinutes = convertH2M("14:30");
+  // console.log(timeInMinutes);
+
+
   const calculateTimeout = (ngayChieuGioChieu) => {
-    const fakeThoiLuong = 120
-    const timeInObj = new Date(ngayChieuGioChieu);
-    const timeOutObj = new Date(timeInObj.getTime() + fakeThoiLuong * 60 * 1000);
-    return timeOutObj.toLocaleTimeString([], { hour12: false }).slice(0, 5)
+    const fakeThoiLuong = duration
+    const timeInObj = ngayChieuGioChieu.slice(0,5).toString();
+    const gioDoi = convertH2M(timeInObj)
+    console.log(gioDoi);
+    const tongGio = new Date(timeInObj + gioDoi).getTime()
+
+    // const timeThem = toHoursAndMinutes(duration)
+    // const timeThem = new Date(duration.getTime() + 30 * 60 * 1000)
+    console.log("tongGio", tongGio);
+
+    const timeOutObj = toHoursAndMinutes(tongGio)
+    // const timeOutObj = timeInObj + fakeThoiLuong * 60 * 1000;
+    console.log("timeOutObj", timeOutObj);
+
+    return timeOutObj
   }
 
   return (
-    <button className={classes.button} onClick={() => history.push(`/datve/${lichChieuTheoPhim.maLichChieu}`, `/datve/${lichChieuTheoPhim.maLichChieu}`)}>
-      <span className={classes.inTime}>{lichChieuTheoPhim.ngayChieuGioChieu.slice(11, 16)}</span>
-      <span className={classes.outTime}>{` ~ ${calculateTimeout(lichChieuTheoPhim.ngayChieuGioChieu)}`}</span>
+    <button className={classes.button} onClick={() => history.push(`/datve/${idLich}/${maPhim}`, `/datve/${idLich}/${maPhim}`)}>
+      <span className={classes.inTime}>From {lichChieuTheoPhim.slice(0, 5)}</span>
+      <span className={classes.outTime}>{` to ${calculateTimeout(lichChieuTheoPhim, duration)}`}</span>
     </button>
   )
 }
