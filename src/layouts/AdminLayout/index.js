@@ -12,7 +12,10 @@ export default function AdminLayout(props) {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const isMobile = useMediaQuery('(max-width:768px)');
   const { currentUser } = useSelector((state) => state.authReducer);
-  if (currentUser?.maLoaiNguoiDung !== "QuanTri") { // nếu không phải tài khoản quản trị thì ẩn đi giao diện AdminLayout, vẫn truyền vào children để hiện thông báo trong children
+  // if (currentUser?.maLoaiNguoiDung !== "QuanTri") { // nếu không phải tài khoản quản trị thì ẩn đi giao diện AdminLayout, vẫn truyền vào children để hiện thông báo trong children
+  //   return <>{props.children}</>
+  // }
+  if (currentUser) { // nếu không phải tài khoản quản trị thì ẩn đi giao diện AdminLayout, vẫn truyền vào children để hiện thông báo trong children
     return <>{props.children}</>
   }
   return (

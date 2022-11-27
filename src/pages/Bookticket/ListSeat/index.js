@@ -26,9 +26,9 @@ export default function ListSeat() {
   const domToSeatElement = useRef(null);
   const [widthSeat, setWidthSeat] = useState(0);
   const classes = useStyles({
-    color: colorTheater[thongTinPhongVe.setRap.slice(0,3).toUpperCase()],
+    color: colorTheater[thongTinPhongVe?.setRap?.slice(0,3).toUpperCase()],
     //color: "white",
-    modalLeftImg: thongTinPhongVe.setPhim?.smallImageURl,
+    modalLeftImg: thongTinPhongVe?.setPhim?.smallImageURl,
    // modalLeftImg: poster,
     isMobile,
     widthLabel: widthSeat / 2,
@@ -126,15 +126,15 @@ export default function ListSeat() {
       <div className={classes.info_CountDown}>
         <div className={classes.infoTheater}>
           <img
-            src={thongTinPhongVe?.setPhim.smallImageURl}
+            src={thongTinPhongVe?.setPhim?.smallImageURl}
             alt="phim"
             style={{ width: 50, height: 50 }}
           />
           <div className={classes.text}>
             <TenCumRap tenCumRap={thongTinPhongVe?.setRap} />
             <p className={classes.textTime}>{`${
-              thongTinPhongVe && formatDate(thongTinPhongVe.setNgayXem).dayToday
-            } - ${thongTinPhongVe?.setNgayXem} - ${thongTinPhongVe?.setPhim.rated}`}</p>
+              thongTinPhongVe && formatDate(thongTinPhongVe?.setNgayXem).dayToday
+            } - ${thongTinPhongVe?.setNgayXem} - ${thongTinPhongVe?.setPhim?.rated}`}</p>
           </div>
         </div>
         <div className={classes.countDown}>

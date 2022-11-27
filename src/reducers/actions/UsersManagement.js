@@ -126,6 +126,7 @@ export const getInfoUser = () => {
     })
     usersApi.getThongTinTaiKhoan()
       .then(result => {
+        console.log("getThongTinTaiKhoan: ", result);
         dispatch({
           type: GET_INFO_USER_SUCCESS,
           payload: {

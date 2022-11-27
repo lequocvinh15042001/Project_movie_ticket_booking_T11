@@ -14,7 +14,7 @@ const usersApi = {
   },
 
   getDanhSachNguoiDung: () => {
-    const path = "/";
+    const path = "/user/getAll";
     return axiosClient.get(path);
   },
 
@@ -30,13 +30,13 @@ const usersApi = {
   },
 
   deleteUser: (taiKhoan) => {
-    const path = `/=${taiKhoan}`;
+    const path = `user/${taiKhoan}`;
 
     return axiosClient.delete(path);
   },
 
   editTaiKhoan: (user) => {
-    const path = `/`;
+    const path = `/user/updateInfo`;
     return axiosClient.put(path, user);
   },
 
@@ -48,7 +48,7 @@ const usersApi = {
 
   getChiTietTaiKhoan: (username) => {
     console.log(username);
-    const path = `/users/${username}`;
+    const path = `/user/${username}`;
     return axiosClient.get(path);
   },
 };

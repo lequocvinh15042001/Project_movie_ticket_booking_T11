@@ -24,6 +24,7 @@ import {
   resetUserList,
 } from "../../reducers/actions/UsersManagement";
 import { getComment } from "../../reducers/actions/MovieDetail";
+import usersApi from "../../api/usersApi";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -101,6 +102,7 @@ export default function Index() {
   const { successInfoUser, loadingInfoUser } = useSelector(
     (state) => state.usersManagementReducer
   );
+  console.log("successInfoUser: ", successInfoUser);
   const { currentUser } = useSelector((state) => state.authReducer);
   console.log(currentUser);
 
@@ -117,6 +119,7 @@ export default function Index() {
   const [value, setValue] = React.useState(0);
   const [typePassword, settypePassword] = useState("password");
 
+  const [image, setImage] = useState()
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -127,13 +130,14 @@ export default function Index() {
     dispatch(getComment());
     return () => dispatch(resetUserList());
   }, []);
+
   useEffect(() => {
     if (commentList) {
       const { posts, likePosts } = commentList.reduce(
         (obj, post) => {
           let posts = obj.posts;
           let likePosts = obj.likePosts;
-          if (post.avtId === currentUser.taiKhoan) {
+          if (post.avtId === successInfoUser?.data?.username) {
             posts++;
             likePosts += post.userLikeThisComment.length;
           }
@@ -199,6 +203,19 @@ export default function Index() {
       }, [])
       .join(", ");
   };
+
+  useEffect(() => {
+    usersApi.getChiTietTaiKhoan(successInfoUser?.data?.username)
+    .then((response) => {
+      console.log("Chi tiết USER: ",response);
+      setImage(response.data?.data?.image)
+    })
+    .catch((err) => {
+      console.log(err);
+      return;
+    })
+  }, []);
+
   return (
     <div className="bootstrap snippet mb-5 mx-4" style={{"backgroundColor":"black"}}>
       <br />
@@ -212,9 +229,9 @@ export default function Index() {
               }`}
               alt="avatar"
             />
-            <h1 className="my-2">{successInfoUser?.username}</h1>
+            <h1 className="my-2">{successInfoUser?.data?.username}</h1>
           </div>
-          {currentUser.roles === "ROLE_ADMIN" && (
+          {successInfoUser?.data?.roles === "[ROLE_ADMIN]" && (
             <div className="text-center mb-2">
               <Fab
                 variant="extended"
@@ -286,10 +303,10 @@ export default function Index() {
           <TabPanel value={value} index={0}>
             <Formik
               initialValues={{
-                username: successInfoUser?.username ?? "",
-                password: successInfoUser?.password ?? "",
-                email: successInfoUser?.email ?? "",
-                name: successInfoUser?.name ?? "",
+                username: successInfoUser?.data?.username ?? "",
+                password: successInfoUser?.data?.password ?? "",
+                email: successInfoUser?.data?.email ?? "",
+                name: successInfoUser?.data?.name ?? "",
               }}
               enableReinitialize // cho phép cập nhật giá trị initialValues
               validationSchema={updateUserSchema}
@@ -307,13 +324,13 @@ export default function Index() {
                     />
                     <Field
                       disabled
-                      name="taiKhoan"
+                      name="username"
                       type="text"
                       className="form-control"
                       onChange={props.handleChange}
                     />
                   </div>
-                  <div className={`form-group ${classes.password}`}>
+                  {/* <div className={`form-group ${classes.password}`}>
                     <label>Password&nbsp;</label>
                     <ErrorMessage
                       name="password"
@@ -337,7 +354,7 @@ export default function Index() {
                         <i className="fa fa-eye"></i>
                       )}
                     </div>
-                  </div>
+                  </div> */}
                   <div className="form-group">
                     <label>Full name&nbsp;</label>
                     <ErrorMessage
@@ -363,6 +380,7 @@ export default function Index() {
                       )}
                     />
                     <Field
+                       disabled
                       name="email"
                       type="email"
                       className="form-control"

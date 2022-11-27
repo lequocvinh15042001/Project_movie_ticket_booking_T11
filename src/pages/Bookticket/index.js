@@ -244,10 +244,10 @@ export default function Index() {
     .catch((err) => {
       console.log(err);
     })
-    // return () => {
-    //   // xóa dữ liệu khi đóng hủy component
-    //   dispatch({ type: RESET_DATA_BOOKTICKET });
-    // };
+    return () => {
+      // xóa dữ liệu khi đóng hủy component
+      dispatch({ type: RESET_DATA_BOOKTICKET });
+    };
   }, []);
 
   useEffect(() => {
@@ -272,7 +272,7 @@ export default function Index() {
         thongTinPhongVe: thongTinPhongVe,
       },
     });
-  }, [seat, cUser, currentUser, cPhim,  timeOut]);
+  }, [seat, cUser, currentUser, cPhim, timeOut]);
 
   useEffect(() => {
     dispatch({ type: SET_ISMOBILE, payload: { isMobile: mediaQuery } });

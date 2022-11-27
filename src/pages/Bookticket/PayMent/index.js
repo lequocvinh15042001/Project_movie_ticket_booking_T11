@@ -72,6 +72,7 @@ export default function PayMent() {
       email: email,
       phone: phone,
       paymentMethod: paymentMethod,
+      thongTinPhongVe: thongTinPhongVe,
     },
     errors: {
       email: "",
@@ -195,12 +196,12 @@ export default function PayMent() {
 
         {/* thông tin phim và rạp */}
         <div className={classes.payMentItem}>
-          <p className={classes.tenPhim}>{thongTinPhongVe?.setPhim.name}</p>
+          <p className={classes.tenPhim}>{thongTinPhongVe?.setPhim?.name}</p>
           <p>{thongTinPhongVe?.setRap}</p>
-          <p>{`${thongTinPhongVe && formatDate(thongTinPhongVe.setNgayXem).dayToday} ${
+          <p>Date show: {`${thongTinPhongVe?.setNgayXem} ${
             thongTinPhongVe?.ngayChieu
-          } - ${thongTinPhongVe?.setSuatChieu} - ${thongTinPhongVe?.setPhim.duration} Minutes 
-          - ${thongTinPhongVe?.setPhim.categories} - Actors: ${thongTinPhim?.setPhim.actors}`}</p>
+          } - ${thongTinPhongVe?.setSuatChieu} - ${thongTinPhongVe?.setPhim?.duration} Minutes 
+          - ${thongTinPhongVe?.setPhim?.categories} - Language: ${thongTinPhongVe?.setPhim?.language}`}</p>
         </div>
 
         {/* ghế đã chọn */}

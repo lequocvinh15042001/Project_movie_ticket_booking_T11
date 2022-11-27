@@ -83,13 +83,12 @@ export default function UsersManagement() {
   const [addUser, setaddUser] = useState({
     data: [
       {
-        id: nanoid(6),
-        taiKhoan: "",
-        matKhau: "",
-        hoTen: "",
+        id: "",
+        username: "",
         email: "",
-        soDt: "",
-        maLoaiNguoiDung: false,
+        name: "",
+        image: "",
+        roles: [],
       },
     ],
     toggle: false,
@@ -110,6 +109,8 @@ export default function UsersManagement() {
       dispatch(getUsersList());
     }
   }, [successDelete, successUpdateUser, btnReFresh, successAddUser]);
+
+
   useEffect(() => {
     if (userListmodified.userListmodified.length || addUser.isFilledIn) {
       dispatch(setStatusIsExistUserModified(true));
@@ -117,6 +118,8 @@ export default function UsersManagement() {
       dispatch(setStatusIsExistUserModified(false));
     }
   }, [userListmodified.userListmodified, addUser.isFilledIn]);
+
+
 
   useEffect(() => {
     // dispatch(getUsersList()) thành công thì thêm props vào item để hiển thị theo yêu cầu DataGrid
@@ -127,26 +130,26 @@ export default function UsersManagement() {
         const userListmodifiedRest = userListmodified.userListmodified;
         newUsersListDisplay = usersList.map(function (userNew) {
           let userModified = this.find(
-            (user) => user.taiKhoan === userNew.taiKhoan
+            (user) => user.roles === userNew.roles
           );
           if (userModified) {
             userModified = { ...userModified };
             delete userModified.maNhom;
             return {
               ...userModified,
-              id: userModified.taiKhoan,
+              id: userModified.username,
               xoa: "",
-              maLoaiNguoiDung:
-                userModified.maLoaiNguoiDung === "QuanTri" ? true : false,
+              roles:
+                userModified.roles === "ROLE_ADMIN" ? true : false,
               ismodify: true,
             };
           }
           return {
             ...userNew,
             xoa: "",
-            id: userNew.taiKhoan,
-            maLoaiNguoiDung:
-              userNew.maLoaiNguoiDung === "QuanTri" ? true : false,
+            id: userNew.username,
+            roles:
+              userNew.roles === "ROLE_ADMIN" ? true : false,
             ismodify: false,
           };
         }, userListmodifiedRest);
@@ -154,8 +157,8 @@ export default function UsersManagement() {
         newUsersListDisplay = usersList.map((user, i) => ({
           ...user,
           xoa: "",
-          id: user.taiKhoan,
-          maLoaiNguoiDung: user.maLoaiNguoiDung === "QuanTri" ? true : false,
+          id: user.username,
+          roles: user.roles === "ROLE_ADMIN" ? true : false,
           ismodify: false,
         })); // id là prop bắt buộc
       }
@@ -209,13 +212,12 @@ export default function UsersManagement() {
     setaddUser({
       data: [
         {
-          id: nanoid(6),
-          taiKhoan: "",
-          matKhau: "",
-          hoTen: "",
+          id: "",
+          username: "",
           email: "",
-          soDt: "",
-          maLoaiNguoiDung: false,
+          name: "",
+          image: "",
+          roles: [],
         },
       ],
       toggle: false,

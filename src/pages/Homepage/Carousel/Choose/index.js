@@ -359,6 +359,7 @@ export default function Choose() {
     dispatch({
       type: INIT_DATA,
       payload: {
+        // ...data,
         thongTinPhongVe: data,
       },
       });
