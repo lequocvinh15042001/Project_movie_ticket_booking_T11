@@ -39,7 +39,7 @@ export default function HeThongRap() {
           value={valueHeThongRap}
           classes={{ indicator: classes.tabs__indicator, root: classes.taps }}
         >
-          {theaterList?.content?.map((theater, index) => (
+          {theaterList?.data?.content?.map((theater, index) => (
             <Tab
               onClick={() => setValueHeThongRap(index)}
               disableRipple
@@ -51,32 +51,32 @@ export default function HeThongRap() {
               label={
                 <img
                   style={{ width: "50px", height: "50px" }}
-                  src={theater?.branch?.imgURL}
+                  src={theater?.imgURL}
                   alt="theaterLogo"
                 />
               }
             />
           ))}
         </Tabs>
-        {theaterList?.content?.map((theater, index2) => (
+        {theaterList?.data?.content?.map((theater, index2) => (
           <div
             hidden={valueHeThongRap !== index2}
             key={theater?.id}
             className={classes.cumRap}
           >
-            {/* {isMobileTheater ? (
-              <MobileLstCumrap lstCumRap={theater.content} />
+            {isMobileTheater ? (
+              <MobileLstCumrap lstCumRap={theater} />
             ) : (
               <LstCumRap
-                lstCumRap={theater.content}
+                lstCumRap={theater}
                 color={
                   colorTheater[
-                    theater.branch?.name?.toUpperCase()
+                    theater.name?.toUpperCase()
                   ]
                 }
                 maHeThongRap={theater.id}
               />
-            )} */}
+            )}
           </div>
         ))}
       </div>

@@ -18,6 +18,11 @@ const theatersApi = {
     return axiosClient.get(path);
   },
 
+  getThongTinLichChieuHeThongRapTheoRap: (branchId) => {
+    const path = `/schedule/getAll?page=0&size=20&branchId=${branchId}`;
+    return axiosClient.get(path);
+  },
+
   //thông tin của 1 bộ phim, kèm theo thông tin các rạp có chiếu phim đó
   //tạm thời dùng API này
   getThongTinLichChieuPhim: (maPhim, branchId) => {

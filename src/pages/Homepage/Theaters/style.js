@@ -6,19 +6,20 @@ const useStyles = makeStyles({
     maxWidth: 940,
     maxHeight: 705,
     margin: "auto",
-    border: "1px solid #ebebec",
-    borderRadius: 4,
+    // border: "1px solid #ebebec",
+    borderRadius: 0,
+    backgroundColor:"white",
   },
   taps: {
     // dường line phần chia khi horizontal
-    borderBottom: "none",
+    // borderBottom: "none",
     minWidth: 92,
   },
   cumRap: {
     minWidth: "calc(100% - 92px)",
   },
   tabs__indicator: {
-    backgroundColor: "transparent",
+    backgroundColor: "white",
   },
   tap: (props) => ({
     padding: 20,
