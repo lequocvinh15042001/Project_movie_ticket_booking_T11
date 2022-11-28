@@ -6,7 +6,7 @@ import BtnGoToCheckOut from '../BtnGoToCheckOut'
 import TenCumRap from '../TenCumRap'
 import { useStyles, Accordion, AccordionSummary, AccordionDetails } from './style'
 
-export default function ItemCumRap({ tenCumRap, maLichChieu, lichChieuPhim, diaChi, defaultExpanded, maPhim }) {
+export default function ItemCumRap({ tenCumRap, maLichChieu, lichChieuPhim, diaChi, defaultExpanded, maPhim, ngayChieu, maPhong, gioChieu, maRap}) {
   const classes = useStyles()
 
   return (
@@ -28,7 +28,14 @@ export default function ItemCumRap({ tenCumRap, maLichChieu, lichChieuPhim, diaC
               </Fragment>
             ))} */}
               <Fragment key={lichChieuPhim.id} >
-                <BtnGoToCheckOut lichChieuTheoPhim={lichChieuPhim?.startTime} duration = {lichChieuPhim?.movie?.duration} idLich={lichChieuPhim.id} maPhim={maPhim}/>
+                <BtnGoToCheckOut lichChieuTheoPhim={lichChieuPhim?.startTime} 
+                duration = {lichChieuPhim?.movie?.duration} 
+                idLich={lichChieuPhim.id} 
+                maPhim={maPhim} 
+                ngayChieu={ngayChieu}
+                maPhong={maPhong}
+                gioChieu={gioChieu}
+                maRap={maRap}/>
               </Fragment>
           </AccordionDetails>
         </Accordion>

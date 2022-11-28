@@ -2,7 +2,7 @@ import React from 'react'
 import { useHistory } from "react-router-dom";
 import useStyles from './style'
 
-export default function BtnGoToCheckout({ lichChieuTheoPhim, duration, idLich, maPhim }) {
+export default function BtnGoToCheckout({ lichChieuTheoPhim, duration, idLich, maPhim, ngayChieu, maPhong, gioChieu, maRap }) {
   const classes = useStyles()
   const history = useHistory()
 
@@ -45,7 +45,7 @@ export default function BtnGoToCheckout({ lichChieuTheoPhim, duration, idLich, m
   }
 
   return (
-    <button className={classes.button} onClick={() => history.push(`/datve/${idLich}/${maPhim}`, `/datve/${idLich}/${maPhim}`)}>
+    <button className={classes.button} onClick={() => history.push(`/datvechitiet/${idLich}/${maRap}/${maPhim}/${ngayChieu}/${maPhong}/${gioChieu}`, `/datvechitiet/${idLich}/${maRap}/${maPhim}/${ngayChieu}${maPhong}/${gioChieu}`)}>
       <span className={classes.inTime}>From {lichChieuTheoPhim.slice(0, 5)}</span>
       <span className={classes.outTime}>{` to ${calculateTimeout(lichChieuTheoPhim, duration)}`}</span>
     </button>

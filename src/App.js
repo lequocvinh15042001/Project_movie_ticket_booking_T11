@@ -21,6 +21,7 @@ const Homepage = lazy(() => import("./pages/Homepage"));
 const MovieDetail = lazy(() => import("./pages/MovieDetail"));
 const UserProfile = lazy(() => import("./pages/UserProfile"));
 const BookTickets = lazy(() => import("./pages/Bookticket"));
+const BookTicketsDetail = lazy(() => import("./pages/BookticketDetail"));
 const UsersManagement = lazy(() => import("./pages/UsersManagement"));
 const MoviesManagement = lazy(() => import("./pages/MoviesManagement"));
 const CreateShowtime = lazy(() => import("./pages/CreateShowtime"));
@@ -55,6 +56,12 @@ function App() {
               exact
               path="/datve/:maLichChieu/:maPhim"
               component={BookTickets}
+            />
+
+            <CheckoutRoute
+              exact
+              path="/datvechitiet/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu"
+              component={BookTicketsDetail}
             />
 
             <Route

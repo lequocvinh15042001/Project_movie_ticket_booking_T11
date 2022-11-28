@@ -6,6 +6,12 @@ const bookingApi = {
     return axiosClient.get(path);
   },
 
+  getLichChieuChiTietHeThong: (movieId, branchId, startDate, startTime, roomId) =>{
+    const path = `/schedule/getAll?page=0&size=20&movieId=${movieId}&branchId=${branchId}&startDate=${startDate}&startTime=${startTime}&roomId=${roomId}`;
+    console.log("Lấy chi tiết lịch thành công!");
+    return axiosClient.get(path);
+  },
+  
   postDatVe: (data) => {
     const path = `/bills/create-new-bill`;
     console.log("Đặt vé thành công!");

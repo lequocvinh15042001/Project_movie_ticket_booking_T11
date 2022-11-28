@@ -136,6 +136,10 @@ export default function RightSection({ branch, idRap }) {
               diaChi={lichChieu?.branch?.address}
               defaultExpanded={true}
               maPhim={param.maPhim}
+              ngayChieu={lichChieu?.startDate}
+              maPhong={lichChieu?.room?.id}
+              gioChieu={lichChieu?.startTime}
+              maRap={lichChieu?.branch?.id}
             />
             {/* {lichChieu?.map((item) => (
               <ItemCumRap
