@@ -354,7 +354,11 @@ export default function Choose() {
     // Lấy được cái mã lịch chiếu rồi
     const maLichChieu =
       data.lichChieuPhimDataSelected[indexMaLichChieuSelect].id;
-    setData((data) => ({ ...data, maLichChieu }));
+
+    const maRap = data.lichChieuPhimDataSelected[indexMaLichChieuSelect].branch.id;
+    const maPhong = data.lichChieuPhimDataSelected[indexMaLichChieuSelect].room.id;
+    console.log("maPhong: ", maPhong);
+    setData((data) => ({ ...data, maLichChieu, maRap, maPhong }));
     
     dispatch({
       type: INIT_DATA,
@@ -571,8 +575,8 @@ export default function Choose() {
           }}
           onClick={() =>
             history.push(
-              `/datve/${data.maLichChieu}/${data.setPhim.id}`,
-              `/datve/${data.maLichChieu}/${data.setPhim.id}`
+              `/datvechitiet/${data?.maLichChieu}/${data?.maRap}/${data?.setPhim?.id}/${data?.setNgayXem}/${data.maPhong}/${data?.setSuatChieu}`,
+              `/datvechitiet/${data?.maLichChieu}/${data?.maRap}/${data?.setPhim?.id}/${data?.setNgayXem}/${data.maPhong}/${data?.setSuatChieu}`
             )
           }
         >
