@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import MovieIcon from '@material-ui/icons/Movie';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
@@ -15,11 +15,13 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import NavItem from './NavItem';
 import { FAKE_AVATAR } from '../../../constants/config';
+import { GET_INFO_USER_FAIL, GET_INFO_USER_REQUEST, GET_INFO_USER_SUCCESS } from '../../../reducers/constants/UsersManagement';
+import usersApi from '../../../api/usersApi';
 
 const items = [
   {
@@ -59,7 +61,37 @@ export default function NavBar({ onMobileClose, openMobile }) {
   const classes = useStyles();
   const location = useLocation();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const [userAdmin, setUserAdmin]= useState();
   const { currentUser } = useSelector((state) => state.authReducer);
+
+  useEffect(() => {
+    dispatch({
+      type: GET_INFO_USER_REQUEST
+    })
+    usersApi.getThongTinTaiKhoan()
+      .then(result => {
+        console.log("getThongTinTaiKhoan: ", result);
+        setUserAdmin(result.data.data)
+        dispatch({
+          type: GET_INFO_USER_SUCCESS,
+          payload: {
+            data: result.data,
+          }
+        })
+      }
+      )
+      .catch(
+        error => {
+          dispatch({
+            type: GET_INFO_USER_FAIL,
+            payload: {
+              error: error.response?.data?.data ? error.response.data?.data : error.message,
+            }
+          })
+        }
+      )
+  },[])
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -71,7 +103,7 @@ export default function NavBar({ onMobileClose, openMobile }) {
   const user = {
     avatar: FAKE_AVATAR,
     jobTitle: 'Senior Developer',
-    name: currentUser?.hoTen,
+    name: userAdmin?.name,
   };
 
   const handleUser = () => {

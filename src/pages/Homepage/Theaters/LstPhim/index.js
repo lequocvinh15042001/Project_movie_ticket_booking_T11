@@ -14,7 +14,7 @@ console.log(props.idRap);
   useEffect(() => {
     theatersApi.getThongTinLichChieuHeThongRapTheoRap(props.idRap)
     .then((response) => {
-      console.log("all phimmmmmm: ",response);
+      // console.log("all phimmmmmm: ",response);
       setDanhSachPhim(response.data.data)
     })
     .catch((err) => {

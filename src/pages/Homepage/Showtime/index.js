@@ -65,7 +65,7 @@ export default function SimpleTabs() {
     (state) => state.movieReducer
   );
 
-  console.log('Selector DS Phim: ', movieList)
+  // console.log('Selector DS Phim: ', movieList)
   const timeout = useRef(null);
   const [arrayData, setarrayData] = useState({
     dailyMovieList: null,

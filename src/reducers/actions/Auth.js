@@ -1,3 +1,4 @@
+import { useState } from "react";
 import usersApi from "../../api/usersApi";
 import {
   LOGIN_REQUEST,
@@ -11,6 +12,7 @@ import {
 } from "../constants/Auth";
 
 export const login = (user) => {
+
   return async (dispatch, getState) => {
     try {
       const stateBefore = getState();
@@ -20,18 +22,25 @@ export const login = (user) => {
         type: LOGIN_REQUEST,
       });
       const result = await usersApi.postDangNhap(user);
+      console.log(result.data);
+      
+      // const setUserLog = await usersApi.getThongTinTaiKhoan();
+      // console.log(setUserLog.data);
+      // localStorage.setItem('userInfo', JSON.stringify({...setUserLog.data}))
+
+      // localStorage.setItem('userLogin', JSON.stringify(...setUserLog.data))
+      
       localStorage.setItem(
         "user",
         JSON.stringify({ ...result.data, avtIdUser: result.data.username })
       );
 
-      localStorage.setItem('userInfo', JSON.stringify(user))
-      localStorage.setItem('userLogin', JSON.stringify(user))
       dispatch({
         type: LOGIN_SUCCESS,
         payload: {
           data: result.data,
         },
+        
       });
 
       const stateAfter = getState();
@@ -40,7 +49,7 @@ export const login = (user) => {
       dispatch({
         type: LOGIN_FAIL,
         payload: {
-          error: error.response?.data ? error.response.data : error.message,
+          error: error.response?.data?.data ? error.response?.data?.data : error.message,
         },
       });
     }

@@ -6,12 +6,13 @@ import AlertCanNotAccess from './alertCanNotAccess';
 
 function AdminRoute(props) {
   const { currentUser } = useSelector((state) => state.authReducer);
+  console.log("Admin: ", currentUser);
   const { component: ComponentAdmin, ...rest } = props;
   let location = useLocation();
   return (
     <Route {...rest} render={(routeProps) => {
       if (currentUser) {
-        if (currentUser.maLoaiNguoiDung === 'QuanTri') {
+        if (currentUser.maLoaiNguoiDung == 'QuanTri') {
           return <ComponentAdmin {...routeProps} />
         }
         return <AlertCanNotAccess />
