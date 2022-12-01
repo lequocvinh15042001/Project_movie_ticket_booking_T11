@@ -1,5 +1,4 @@
 import React from 'react'
-
 import useStyles from './style'
 import ListSeat from '../ListSeat'
 import PayMent from '../PayMent'
