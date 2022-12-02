@@ -22,9 +22,9 @@ export const login = (user) => {
         type: LOGIN_REQUEST,
       });
       const result = await usersApi.postDangNhap(user);
-      console.log(result.data);
+      console.log("User nhập:---------",result.data);
       
-      // const setUserLog = await usersApi.getThongTinTaiKhoan();
+      // const setUserLog = usersApi.getThongTinTaiKhoan();
       // console.log(setUserLog.data);
       // localStorage.setItem('userInfo', JSON.stringify({...setUserLog.data}))
 
