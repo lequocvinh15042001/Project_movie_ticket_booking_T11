@@ -11,45 +11,38 @@ import {
   RESET_ERROR_LOGIN_REGISTER,
 } from "../constants/Auth";
 
-export const login = (user) => {
+export const login = (user) => { // đăng nhập
+  return async (dispatch, getState) => { //     1
+    try {//2
+      const stateBefore = getState();//   3
+      console.log("Todos before dispatch: ", stateBefore.authReducer);  //4
 
-  return async (dispatch, getState) => {
-    try {
-      const stateBefore = getState();
-      console.log("Todos before dispatch: ", stateBefore.authReducer);
-
-      dispatch({
+      dispatch({          //5
         type: LOGIN_REQUEST,
       });
-      const result = await usersApi.postDangNhap(user);
-      console.log("User nhập:---------",result.data);
+      const result = await usersApi.postDangNhap(user);     //6
+      console.log("User nhập:---------",result.data);       //7
       
-      // const setUserLog = usersApi.getThongTinTaiKhoan();
-      // console.log(setUserLog.data);
-      // localStorage.setItem('userInfo', JSON.stringify({...setUserLog.data}))
-
-      // localStorage.setItem('userLogin', JSON.stringify(...setUserLog.data))
-      
-      localStorage.setItem(
+      localStorage.setItem(       //8
         "user",
         JSON.stringify({ ...result.data, avtIdUser: result.data.username })
       );
 
-      dispatch({
+      dispatch({          //9
         type: LOGIN_SUCCESS,
         payload: {
           data: result.data,
         },
         
       });
-
-      const stateAfter = getState();
-      console.log("Todos after dispatch: ", stateAfter.authReducer);
-    } catch (error) {
-      dispatch({
+      const stateAfter = getState();      //10
+      console.log("Todos after dispatch: ", stateAfter.authReducer);      //11
+    } catch (error) {       //12
+      dispatch({        //13
         type: LOGIN_FAIL,
         payload: {
-          error: error.response?.data?.data ? error.response?.data?.data : error.message,
+          // error: error.response?.data?.data ? error.response?.data?.data : error.message,
+          error: "Username, email or password not right!"
         },
       });
     }
@@ -108,10 +101,11 @@ export const register = (user) => {
         });
       })
       .catch((error) => {
+        console.log(error.message);
         dispatch({
           type: REGISTER_FAIL,
           payload: {
-            error: error.response?.data ? error.response.data : error.message,
+            error: "Username or email has been taken!"
           },
         });
       });

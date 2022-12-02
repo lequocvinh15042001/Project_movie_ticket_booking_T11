@@ -9,50 +9,77 @@ import NavBar from './NavBar';
 import TopBar from './TopBar';
 import usersApi from '../../api/usersApi';
 import { GET_INFO_USER_FAIL, GET_INFO_USER_REQUEST, GET_INFO_USER_SUCCESS } from '../../reducers/constants/UsersManagement';
+import { LOGIN_FAIL, LOGIN_SUCCESS } from '../../reducers/constants/Auth';
 
 export default function AdminLayout(props) {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const isMobile = useMediaQuery('(max-width:768px)');
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state) => state.authReducer);
+  // const { currentUser } = useSelector((state) => state.authReducer);
   // const { currentUser } = useSelector((state) => state.usersManagementReducer);
-  console.log(currentUser);
+  // console.log(currentUser);
   const [userAdmin, setUserAdmin]= useState();
   // if (currentUser?.maLoaiNguoiDung !== "QuanTri") { // nếu không phải tài khoản quản trị thì ẩn đi giao diện AdminLayout, vẫn truyền vào children để hiện thông báo trong children
   //   return <>{props.children}</>
   // }
 
+  // useEffect(() => {
+  //   dispatch({
+  //     type: GET_INFO_USER_REQUEST
+  //   })
+  //   usersApi.getThongTinTaiKhoan()
+  //     .then(result => {
+  //       console.log("getThongTinTaiKhoan: ", result);
+  //       setUserAdmin(result.data.data)
+  //       dispatch({
+  //         type: GET_INFO_USER_SUCCESS,
+  //         payload: {
+  //           data: result.data.data,
+  //         }
+  //       })
+  //     }
+  //     )
+  //     .catch(
+  //       error => {
+  //         dispatch({
+  //           type: GET_INFO_USER_FAIL,
+  //           payload: {
+  //             error: error.response?.data?.data ? error.response.data?.data : error.message,
+  //           }
+  //         })
+  //       }
+  //     )
+  // },[])
+  const [cUser , setCUser] = useState();
   useEffect(() => {
-    dispatch({
-      type: GET_INFO_USER_REQUEST
-    })
     usersApi.getThongTinTaiKhoan()
-      .then(result => {
-        console.log("getThongTinTaiKhoan: ", result);
-        setUserAdmin(result.data.data)
-        dispatch({
-          type: GET_INFO_USER_SUCCESS,
-          payload: {
-            data: result.data.data,
-          }
-        })
-      }
-      )
-      .catch(
-        error => {
-          dispatch({
-            type: GET_INFO_USER_FAIL,
-            payload: {
-              error: error.response?.data?.data ? error.response.data?.data : error.message,
-            }
-          })
-        }
-      )
+    .then((response) =>{
+      console.log("AMIN LAYOUT: ", response?.data);
+      setCUser(response?.data);
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: {
+          data: response?.data,
+        },
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: {
+          error: error.response?.data?.data ? error.response?.data?.data : error.message,
+        },
+      });
+    })
+    // console.log(setUserLog.data);
+    // localStorage.setItem('userInfo', JSON.stringify({...cUser}))
+    // localStorage.setItem('userLogin', JSON.stringify(...setUserLog.data))
   },[])
 
-  console.log(userAdmin);
+  console.log(cUser);
   // currentUser = userAdmin;
-  if (userAdmin?.role === "[ROLE_ADMIN]") { // nếu không phải tài khoản quản trị thì ẩn đi giao diện AdminLayout, vẫn truyền vào children để hiện thông báo trong children
+  if (cUser?.data?.role === "[ROLE_ADMIN]") { // nếu không phải tài khoản quản trị thì ẩn đi giao diện AdminLayout, vẫn truyền vào children để hiện thông báo trong children
     return <>{props.children}</>
   }
   return (

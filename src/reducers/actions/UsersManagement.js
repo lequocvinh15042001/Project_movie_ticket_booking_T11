@@ -15,6 +15,7 @@ export const getUsersList = () => {
     })
     usersApi.getDanhSachNguoiDung()
       .then(result => {
+        console.log(result.data);
         dispatch({
           type: GET_USER_LIST_SUCCESS,
           payload: { data: result.data }

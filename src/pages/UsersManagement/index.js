@@ -140,7 +140,7 @@ export default function UsersManagement() {
               id: userModified.username,
               xoa: "",
               roles:
-                userModified.role === "ROLE_ADMIN" ? true : false,
+                userModified.role === "[ROLE_ADMIN]" ? true : false,
               ismodify: true,
             };
           }
@@ -149,7 +149,7 @@ export default function UsersManagement() {
             xoa: "",
             id: userNew.username,
             roles:
-              userNew.roles === "ROLE_ADMIN" ? true : false,
+              userNew.roles === "[ROLE_ADMIN]" ? true : false,
             ismodify: false,
           };
         }, userListmodifiedRest);
@@ -158,7 +158,7 @@ export default function UsersManagement() {
           ...user,
           xoa: "",
           id: user.username,
-          roles: user.role === "ROLE_ADMIN" ? true : false,
+          roles: user.role === "[ROLE_ADMIN]" ? true : false,
           ismodify: false,
         })); // id là prop bắt buộc
       }

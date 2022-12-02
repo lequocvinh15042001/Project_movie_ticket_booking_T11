@@ -23,7 +23,7 @@ export default function Register() {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Bạn đã đăng ký thành công",
+        title: "You have successfully registered",
         showConfirmButton: false,
         timer: 2000,
       });
@@ -39,17 +39,17 @@ export default function Register() {
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const signupUserSchema = yup.object().shape({
-    username: yup.string().required("*Tài khoản không được bỏ trống !"),
-    password: yup.string().required("*Mật khẩu không được bỏ trống !"),
+    username: yup.string().required("*Account cannot be left blank !"),
+    password: yup.string().required("*Passwords can't be escaped !"),
     email: yup
       .string()
-      .required("*Email không được bỏ trống !")
-      .email("* Email không hợp lệ "),
+      .required("*Email can't be escaped !")
+      .email("* Email not valid !"),
     // soDt: yup
     //   .string()
     //   .required("*Số điện thoại không được bỏ trống !")
     //   .matches(phoneRegExp, "Số điện thoại không hợp lệ!"),
-      name: yup.string().required("*Tên không được bỏ trống !"),
+      name: yup.string().required("*Name can't be escaped !"),
   });
 
   const handleSubmit = (user) => {
@@ -63,7 +63,7 @@ export default function Register() {
   return (
     <div className="text-light" style={{ padding: "20px 32px 30px" }}>
       <div className="container">
-        <img
+        {/* <img
           src={logoTix}
           alt="logoTix"
           style={{
@@ -74,9 +74,9 @@ export default function Register() {
             marginLeft: "auto",
             marginRight: "auto",
           }}
-        />
-        <p style={{ textAlign: "center", marginBottom: "10px" }}>
-          Đăng Ký để được nhiều ưu đãi, mua vé và bảo mật thông tin!
+        /> */}
+        <p style={{ textAlign: "center", marginBottom: "20px" }}>
+          Register for more offers, buy tickets and keep your information secure!
         </p>
       </div>
       <Formik
@@ -92,7 +92,7 @@ export default function Register() {
         {(formikProps) => (
           <Form className="col-sm-12">
             <div className="form-group">
-              <label>Tài khoản&nbsp;</label>
+              <label>Username&nbsp;</label>
               <ErrorMessage
                 name="username"
                 render={(msg) => <span className="text-danger">{msg}</span>}
@@ -100,7 +100,7 @@ export default function Register() {
               <Field name="username" type="text" className="form-control" />
             </div>
             <div className="form-group">
-              <label>Mật khẩu&nbsp;</label>
+              <label>Password&nbsp;</label>
               <ErrorMessage
                 name="password"
                 render={(msg) => <span className="text-danger">{msg}</span>}
@@ -108,7 +108,7 @@ export default function Register() {
               <Field name="password" type="password" className="form-control" />
             </div>
             <div className="form-group">
-              <label>Họ và tên&nbsp;</label>
+              <label>Fullname&nbsp;</label>
               <ErrorMessage
                 name="name"
                 render={(msg) => <span className="text-danger">{msg}</span>}
@@ -143,7 +143,7 @@ export default function Register() {
                 className="btn btn-success"
                 disable={loadingRegister.toString()}
               >
-                Đăng Ký
+                Register
               </button>
               {/* error from api */}
               {errorRegister && (

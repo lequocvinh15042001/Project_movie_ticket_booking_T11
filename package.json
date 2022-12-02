@@ -20,7 +20,7 @@
     "formik": "^2.2.6",
     "moment": "^2.29.1",
     "node": "^19.1.0",
-    "notistack": "^1.0.7",
+    "notistack": "^1.0.10",
     "react": "^17.0.1",
     "react-countdown": "^2.3.1",
     "react-dom": "^17.0.1",

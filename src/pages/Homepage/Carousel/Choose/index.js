@@ -141,11 +141,11 @@ export default function Choose() {
   // sau khi click chọn phim, cần duyệt lấy tất cả cumRapChieu lưu vào cumRapChieuData để xử lý
   // input: maPhim
   // output: setPhim(maPhim), rapRender(maPhim)[tenCumRap], cumRapChieuData(maPhim)[{lichChieuPhim}],
-  const handleSelectPhim = (phim) => {
-    if (!phim) {
-      return undefined;
+  const handleSelectPhim = (phim) => {  //1
+    if (!phim) { // 2
+      return undefined;  //3
     }
-    setData((data) => ({
+    setData((data) => ({ //4
       ...data,
       setPhim: phim,
       startRequest: true,
@@ -193,12 +193,12 @@ export default function Choose() {
     //     }
     //   });
       // lấy rạp
-      theatersApi.getThongTinLichChieuHeThongRap()
-      .then((response) => {
-        console.log("all branch: ",response);
-        setData((data) => ({ ...data, startRequest: false }));
-        setBranch(response?.data?.data?.content);
-        const cumRapChieuData= response?.data?.data?.content?.reduce(
+      theatersApi.getThongTinLichChieuHeThongRap()  //5
+      .then((response) => { //6
+        console.log("all branch: ",response); //7
+        setData((data) => ({ ...data, startRequest: false })); //8
+        setBranch(response?.data?.data?.content);//9
+        const cumRapChieuData= response?.data?.data?.content?.reduce( //10
           (colect, item) => {
             console.log(item);
             return [...colect, item];
@@ -206,15 +206,15 @@ export default function Choose() {
           []
         );
         // const rapRender = cumRapChieuData
-        const rapRender = cumRapChieuData.map((item) => item)
-        setData((data) => ({
+        const rapRender = cumRapChieuData.map((item) => item) //11
+        setData((data) => ({ //12
           ...data,
           rapRender,
           cumRapChieuData,
         }));
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((err) => { //13
+        console.log(err); //14
       });
   };
 
