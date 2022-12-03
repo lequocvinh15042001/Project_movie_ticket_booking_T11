@@ -129,16 +129,18 @@ export const updateMovie = (phimObj) => {
     moviesApi
       .postCapNhatPhim(phimObj)
       .then((result) => {
+        console.log(result);
         dispatch({
           type: UPDATE_NONEIMAGE_MOVIE_SUCCESS,
-          payload: { data: result.data },
+          payload: { data: result.data.data },
         });
       })
       .catch((error) => {
         dispatch({
           type: UPDATE_NONEIMAGE_MOVIE_FAIL,
           payload: {
-            error: error.response?.data ? error.response.data : error.message,
+            error: "Update fail!"
+            // error: error.response?.data ? error.response.data : error.message,
           },
         });
       });

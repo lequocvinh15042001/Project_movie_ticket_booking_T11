@@ -14,7 +14,7 @@ function AdminRoute(props) {
   return (
     <Route {...rest} render={(routeProps) => {
       if (currentUser) {
-        if (currentUser?.data?.role === '[ROLE_ADMIN]') {
+        if (currentUser?.data?.role === "[ROLE_ADMIN]") {
           return <ComponentAdmin {...routeProps} />
         }
         return <AlertCanNotAccess />

@@ -27,17 +27,27 @@ const items = [
   {
     href: '/admin/movies',
     icon: MovieIcon,
-    title: 'Quản lý Phim'
+    title: 'Movies Management'
   },
   {
     href: '/admin/users',
     icon: PeopleAltIcon,
-    title: 'Quản lý người dùng'
+    title: 'Users Management'
+  },
+  {
+    href: '#',
+    icon: PostAddIcon,
+    title: 'Reviews Managment'
+  },
+  {
+    href: '#',
+    icon: PostAddIcon,
+    title: 'Categories Managment'
   },
   {
     href: '/admin/showtimes',
     icon: PostAddIcon,
-    title: 'Tạo lịch chiếu'
+    title: 'Create Schedule'
   },
 ];
 
@@ -102,7 +112,7 @@ export default function NavBar({ onMobileClose, openMobile }) {
 
   const user = {
     avatar: FAKE_AVATAR,
-    jobTitle: 'Senior Developer',
+    jobTitle: 'Admin',
     name: userAdmin?.name,
   };
 
@@ -128,7 +138,7 @@ export default function NavBar({ onMobileClose, openMobile }) {
         flexDirection="column"
         p={2} // padding 2
       >
-        <Tooltip title="Thông tin tài khoản">
+        <Tooltip title="User information">
           <Avatar
             className={classes.avatar}
             src={user.avatar}

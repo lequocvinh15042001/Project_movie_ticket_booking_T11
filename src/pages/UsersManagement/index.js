@@ -50,7 +50,7 @@ export default function UsersManagement() {
   const [editRowsModel, setEditRowsModel] = useState({});
   const classes = useStyles();
   const [usersListDisplay, setUsersListDisplay] = useState([]);
-  const { enqueueSnackbar } = useSnackbar();
+  const  enqueueSnackbar  = useSnackbar();
   const [selectionModel, setSelectionModel] = useState([]);
   const [userListDelete, setUserListDelete] = useState({
     triggerDelete: false,
@@ -75,9 +75,10 @@ export default function UsersManagement() {
     successAddUser,
     errorAddUser,
   } = useSelector((state) => state.usersManagementReducer);
+  console.log("usersList:", usersList);
   const dispatch = useDispatch();
   const [btnReFresh, setBtnReFresh] = useState("");
-  const [sortBy, setsortBy] = useState({ field: "taiKhoan", sort: "asc" });
+  const [sortBy, setsortBy] = useState({ field: "username", sort: "asc" });
   const [valueSearch, setValueSearch] = useState("");
   const clearSetSearch = useRef(0);
   const [addUser, setaddUser] = useState({
@@ -88,7 +89,7 @@ export default function UsersManagement() {
         email: "",
         name: "",
         image: "",
-        roles: [],
+        roles: "",
       },
     ],
     toggle: false,
@@ -123,7 +124,7 @@ export default function UsersManagement() {
 
   useEffect(() => {
     // dispatch(getUsersList()) thành công thì thêm props vào item để hiển thị theo yêu cầu DataGrid
-    if (usersList?.length) {
+    if (usersList?.data?.length) {
       let newUsersListDisplay;
       if (userListmodified.userListmodified.length) {
         // nếu nhấn cancel và vẫn còn một số user chưa update thì giữ lại data dang chỉnh sửa
@@ -140,7 +141,7 @@ export default function UsersManagement() {
               id: userModified.username,
               xoa: "",
               roles:
-                userModified.role === "[ROLE_ADMIN]" ? true : false,
+                userModified.roles === "[ROLE_ADMIN]" ? true : false,
               ismodify: true,
             };
           }
@@ -154,11 +155,11 @@ export default function UsersManagement() {
           };
         }, userListmodifiedRest);
       } else {
-        newUsersListDisplay = usersList.map((user, i) => ({
+        newUsersListDisplay = usersList?.data?.map((user, i) => ({
           ...user,
           xoa: "",
-          id: user.username,
-          roles: user.role === "[ROLE_ADMIN]" ? true : false,
+          id: user.id,
+          roles: user.roles === "[ROLE_ADMIN]" ? true : false,
           ismodify: false,
         })); // id là prop bắt buộc
       }
@@ -202,7 +203,7 @@ export default function UsersManagement() {
     // add user xong thì thông báo
     if (successAddUser) {
       enqueueSnackbar(
-        `Đã thêm thành công tài khoản: ${successAddUser.taiKhoan}`,
+        `Đã thêm thành công tài khoản: ${successAddUser.username}`,
         { variant: "success" }
       );
     }
@@ -217,7 +218,7 @@ export default function UsersManagement() {
           email: "",
           name: "",
           image: "",
-          roles: [],
+          roles: "",
         },
       ],
       toggle: false,
@@ -305,30 +306,30 @@ export default function UsersManagement() {
     ({ id, field, props: { value } }) => {
       if (addUser.toggle) {
         const isFilledIn =
-          addUser.data[0].taiKhoan !== "" ||
-          addUser.data[0].matKhau !== "" ||
-          addUser.data[0].hoTen !== "" ||
+          addUser.data[0].username !== "" ||
+          addUser.data[0].createdAt !== "" ||
+          addUser.data[0].name !== "" ||
           addUser.data[0].email !== "" ||
-          addUser.data[0].soDt !== "" ||
-          addUser.data[0].maLoaiNguoiDung === true;
+          // addUser.data[0].soDt !== "" ||
+          addUser.data[0].roles === true;
         const readyAdd =
-          addUser.data[0].taiKhoan !== "" &&
-          addUser.data[0].matKhau !== "" &&
-          addUser.data[0].hoTen !== "" &&
+          addUser.data[0].username !== "" &&
+          addUser.data[0].createdAt !== "" &&
+          addUser.data[0].name !== "" &&
           addUser.data[0].email !== "" &&
-          addUser.data[0].soDt !== "";
+          // addUser.data[0].soDt !== "";
         setaddUser((data) => ({ ...data, readyAdd, isFilledIn }));
         return; // không thực hiệc các việc bên dưới nếu đang ở màn hình addUser
       }
-      const userOriginal = usersList.find((user) => user.taiKhoan === id); // lấy ra phần tử chưa được chỉnh sửa
+      const userOriginal = usersList.find((user) => user.id === id); // lấy ra phần tử chưa được chỉnh sửa
       const valueDisplay = value;
       let valueModified = value;
-      if (field === "maLoaiNguoiDung") {
-        valueModified = value ? "QuanTri" : "KhachHang";
+      if (field === "[ROLE_USER]") {
+        valueModified = value ? "[ROLE_ADMIN]" : "[ROLE_USER]";
       }
       const isChange = userOriginal[field] === valueModified ? false : true; // liệu có thay đổi
       const indexUserExist = userListmodified.userListmodified.findIndex(
-        (user) => user.taiKhoan === id
+        (user) => user.id === id
       ); // user vừa chỉnh có được lưu trước đó?
       if (isChange) {
         // nếu có khác biệt
@@ -346,7 +347,7 @@ export default function UsersManagement() {
           const newUserListmodified = userListmodified.userListmodified.map(
             (user) => {
               // sửa lại phần khác biệt
-              if (user.taiKhoan === id) {
+              if (user.id === id) {
                 return { ...user, [field]: valueModified };
               }
               return user;
@@ -371,16 +372,16 @@ export default function UsersManagement() {
         // nếu không khác biệt và có trong danh sách modify
         let userModified = userListmodified.userListmodified[indexUserExist];
         userModified = { ...userModified, [field]: valueModified };
-        const isMatKhauChange = userModified.matKhau !== userOriginal.matKhau;
+        const isMatKhauChange = userModified.createdAt !== userOriginal.createdAt;
         const isEmailChange = userModified.email !== userOriginal.email;
-        const isSoDtChange = userModified.soDt !== userOriginal.soDt;
+        // const isSoDtChange = userModified.soDt !== userOriginal.soDt;
         const isMaLoaiNguoiDungChange =
-          userModified.maLoaiNguoiDung !== userOriginal.maLoaiNguoiDung;
-        const isHoTenChange = userModified.hoTen !== userOriginal.hoTen;
+          userModified.roles !== userOriginal.roles;
+        const isHoTenChange = userModified.name !== userOriginal.name;
         const ismodify =
           isMatKhauChange ||
           isEmailChange ||
-          isSoDtChange ||
+          // isSoDtChange ||
           isMaLoaiNguoiDungChange ||
           isHoTenChange;
         // xử lý display
@@ -410,7 +411,7 @@ export default function UsersManagement() {
         }
         // nếu ismodify = false thì xóa user khỏi userListmodified
         const newUserListmodified = userListmodified.userListmodified.filter(
-          (user) => user.taiKhoan !== id
+          (user) => user.id !== id
         ); // xóa ra khỏi mảng
         setUserListmodified((data) => ({
           ...data,
@@ -491,8 +492,8 @@ export default function UsersManagement() {
       dispatch(
         postAddUser({
           ...addUser.data[0],
-          maLoaiNguoiDung: userAdd.maLoaiNguoiDung ? "QuanTri" : "KhachHang",
-          maNhom: "GP09",
+          roles: userAdd.roles ? "[ROLE_ADMIN]" : "[ROLE_USER]",
+          // maNhom: "GP09",
         })
       );
     }
@@ -501,27 +502,27 @@ export default function UsersManagement() {
   const onFilter = () => {
     const searchUsersListDisplay = usersListDisplay.filter((user) => {
       const matchTaiKhoan =
-        slugify(user.taiKhoan ?? "", modifySlugify)?.indexOf(
+        slugify(user.username ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchMatKhau =
-        slugify(user.matKhau ?? "", modifySlugify)?.indexOf(
+        slugify(user.createdAt ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchEmail =
         slugify(user.email ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
-      const matchSoDt =
-        slugify(user.soDt ?? "", modifySlugify)?.indexOf(
-          slugify(valueSearch, modifySlugify)
-        ) !== -1;
+      // const matchSoDt =
+      //   slugify(user.soDt ?? "", modifySlugify)?.indexOf(
+      //     slugify(valueSearch, modifySlugify)
+      //   ) !== -1;
       const matchHoTen =
-        slugify(user.hoTen ?? "", modifySlugify)?.indexOf(
+        slugify(user.name ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       return (
-        matchTaiKhoan || matchMatKhau || matchEmail || matchSoDt || matchHoTen
+        matchTaiKhoan || matchMatKhau || matchEmail || matchHoTen
       );
     });
     return searchUsersListDisplay;
@@ -556,8 +557,8 @@ export default function UsersManagement() {
           hide: addUser.toggle,
         },
         {
-          field: "taiKhoan",
-          headerName: "Tài Khoản",
+          field: "username",
+          headerName: "Account",
           width: 250,
           editable: addUser.toggle,
           headerAlign: "center",
@@ -565,8 +566,8 @@ export default function UsersManagement() {
           headerClassName: "custom-header",
         },
         {
-          field: "matKhau",
-          headerName: "Mật Khẩu",
+          field: "createdAt",
+          headerName: "Create At",
           width: 300,
           editable: true,
           headerAlign: "center",
@@ -574,8 +575,8 @@ export default function UsersManagement() {
           headerClassName: "custom-header",
         },
         {
-          field: "hoTen",
-          headerName: "Họ tên",
+          field: "name",
+          headerName: "Name",
           width: 300,
           editable: true,
           headerAlign: "center",
@@ -591,18 +592,18 @@ export default function UsersManagement() {
           align: "left",
           headerClassName: "custom-header",
         },
+        // {
+        //   field: "soDt",
+        //   headerName: "Số điện thoại",
+        //   width: 200,
+        //   editable: true,
+        //   type: "number",
+        //   headerAlign: "center",
+        //   align: "left",
+        //   headerClassName: "custom-header",
+        // },
         {
-          field: "soDt",
-          headerName: "Số điện thoại",
-          width: 200,
-          editable: true,
-          type: "number",
-          headerAlign: "center",
-          align: "left",
-          headerClassName: "custom-header",
-        },
-        {
-          field: "maLoaiNguoiDung",
+          field: "roles",
           headerName: "isAdmin",
           width: 145,
           editable: true,
@@ -647,7 +648,7 @@ export default function UsersManagement() {
               }
               onClick={handleDeleteMultiple}
             >
-              {userListDelete.triggerDelete === false ? "xóa" : "ngừng xóa"}{" "}
+              {userListDelete.triggerDelete === false ? "delete" : "don't delete"}{" "}
               {userListDelete.userListDelete.length} user
             </Button>
           </div>
@@ -667,8 +668,8 @@ export default function UsersManagement() {
               }
             >
               {userListmodified.triggerUpdate === false
-                ? "cập nhật"
-                : "hủy cập nhật"}{" "}
+                ? "update"
+                : "cancel"}{" "}
               {userListmodified.userListmodified.length} user
             </Button>
           </div>
@@ -680,7 +681,7 @@ export default function UsersManagement() {
               onClick={handleRefreshUserListResetChanged}
               startIcon={<CachedIcon />}
             >
-              làm mới
+              Refresh
             </Button>
           </div>
           <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
@@ -712,9 +713,9 @@ export default function UsersManagement() {
             >
               {addUser.toggle
                 ? addUser.isFilledIn
-                  ? "thêm user"
-                  : "quản lý user"
-                : "thêm user"}
+                  ? "Add User"
+                  : "User Management"
+                : "Add User"}
             </Button>
           </div>
           <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
@@ -722,10 +723,10 @@ export default function UsersManagement() {
               variant="contained"
               className={`${classes.userKhachHang} ${classes.button}`}
               onClick={() =>
-                setsortBy({ field: "maLoaiNguoiDung", sort: "asc" })
+                setsortBy({ field: "roles", sort: "asc" })
               }
             >
-              User khách hàng
+              Users
             </Button>
           </div>
           <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
@@ -734,7 +735,7 @@ export default function UsersManagement() {
               className={`${classes.userModified} ${classes.button}`}
               onClick={() => setsortBy({ field: "ismodify", sort: "desc" })}
             >
-              User đã chỉnh sửa
+              Modified Users
             </Button>
           </div>
           <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
@@ -742,10 +743,10 @@ export default function UsersManagement() {
               variant="contained"
               className={`${classes.userQuanTri} ${classes.button}`}
               onClick={() =>
-                setsortBy({ field: "maLoaiNguoiDung", sort: "desc" })
+                setsortBy({ field: "roles", sort: "desc" })
               }
             >
-              User quản trị
+              Admin Account
             </Button>
           </div>
           <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
@@ -772,11 +773,11 @@ export default function UsersManagement() {
         pageSize={25}
         rowsPerPageOptions={[25, 50, 100]}
         // css màu cho tài khoản QuanTri hoặc KhachHang: thay đổi tên class row dựa trên giá trị prop riêng biệt của row
-        getRowClassName={(params) => {
-          return `isadmin--${params
-            .getValue("maLoaiNguoiDung")
-            .toString()} ismodify--${params.getValue("ismodify")?.toString()}`;
-        }}
+        // getRowClassName={(params) => {
+        //   return `isadmin--${params
+        //     .getValue("[ROLE_USER]")
+        //     .toString()} ismodify--${params.getValue("ismodify")?.toString()}`;
+        // }}
         // bật checkbox
         checkboxSelection={!addUser.toggle}
         disableSelectionOnClick

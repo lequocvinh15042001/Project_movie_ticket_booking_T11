@@ -36,8 +36,9 @@ function CustomLoadingOverlay() {
 
 export default function MoviesManagement() {
   const [movieListDisplay, setMovieListDisplay] = useState([]);
+  console.log("movieListDisplay: ", movieListDisplay);
   const classes = useStyles();
-  const { enqueueSnackbar } = useSnackbar();
+  const  {enqueueSnackbar}  = useSnackbar();
   let {
     movieList2,
     loadingMovieList2,
@@ -88,10 +89,10 @@ export default function MoviesManagement() {
   }, []);
   useEffect(() => {
     if (movieList2) {
-      let newMovieListDisplay = movieList2.map((movie) => ({
+      let newMovieListDisplay = movieList2?.data?.map((movie) => ({
         ...movie,
         hanhDong: "",
-        id: movie.maPhim,
+        id: movie.id,
       }));
       setMovieListDisplay(newMovieListDisplay);
     }
@@ -115,8 +116,8 @@ export default function MoviesManagement() {
     if (successUpdateMovie || successUpdateNoneImageMovie) {
       callApiChangeImageSuccess.current = true;
       enqueueSnackbar(
-        `Update thành công phim: ${successUpdateMovie.tenPhim ?? ""}${
-          successUpdateNoneImageMovie.tenPhim ?? ""
+        `Update successfully: ${successUpdateMovie.name ?? ""}${
+          successUpdateNoneImageMovie.name ?? ""
         }`,
         { variant: "success" }
       );
@@ -138,7 +139,7 @@ export default function MoviesManagement() {
   useEffect(() => {
     if (successAddUploadMovie) {
       enqueueSnackbar(
-        `Thêm thành công phim: ${successAddUploadMovie.tenPhim}`,
+        `Add new movie successfully: ${successAddUploadMovie.name}`,
         { variant: "success" }
       );
     }
@@ -167,10 +168,10 @@ export default function MoviesManagement() {
     newImageUpdate.current = fakeImage;
     if (typeof hinhAnh === "string") {
       // nếu dùng updateMovieUpload sẽ bị reset danhGia về 10
-      const movieUpdate = movieListDisplay.find(
-        (movie) => movie.maPhim === fakeImage.maPhim
+      const movieUpdate = movieListDisplay?.find(
+        (movie) => movie.id === fakeImage.id
       ); // lẩy ra url gốc, tránh gửi base64 tới backend
-      movieObj.hinhAnh = movieUpdate.hinhAnh;
+      movieObj.smallImageURl = movieUpdate.smallImageURl;
       dispatch(updateMovie(movieObj));
       return undefined;
     }
@@ -184,14 +185,14 @@ export default function MoviesManagement() {
   };
   const handleAddMovie = () => {
     const emtySelectedPhim = {
-      maPhim: "",
-      tenPhim: "",
-      biDanh: "",
-      trailer: "",
-      hinhAnh: "",
-      moTa: "",
-      maNhom: "",
-      ngayKhoiChieu: "",
+      id: "",
+      name: "",
+      duration: "",
+      trailerURL: "",
+      smallImageURl: "",
+      longDescription: "",
+      categories: "",
+      releaseDate: "",
       danhGia: 10,
     };
     selectedPhim.current = emtySelectedPhim;
@@ -207,26 +208,26 @@ export default function MoviesManagement() {
 
   const onFilter = () => {
     // dùng useCallback, slugify bỏ dấu tiếng việt
-    let searchMovieListDisplay = movieListDisplay.filter((movie) => {
+    let searchMovieListDisplay = movieListDisplay?.filter((movie) => {
       const matchTenPhim =
-        slugify(movie.tenPhim ?? "", modifySlugify)?.indexOf(
+        slugify(movie.name ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchMoTa =
-        slugify(movie.moTa ?? "", modifySlugify)?.indexOf(
+        slugify(movie.longDescription ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchNgayKhoiChieu =
-        slugify(movie.ngayKhoiChieu ?? "", modifySlugify)?.indexOf(
+        slugify(movie.releaseDate ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       return matchTenPhim || matchMoTa || matchNgayKhoiChieu;
     });
     if (newImageUpdate.current && callApiChangeImageSuccess.current) {
       // hiển thị hình bằng base64 thay vì url, lỗi react không hiển thị đúng hình mới cập nhật(đã cập hình thanh công nhưng url backend trả về giữ nguyên đường dẫn)
-      searchMovieListDisplay = searchMovieListDisplay.map((movie) => {
-        if (movie.maPhim === newImageUpdate.current.maPhim) {
-          return { ...movie, hinhAnh: newImageUpdate.current.srcImage };
+      searchMovieListDisplay = searchMovieListDisplay?.map((movie) => {
+        if (movie.id === newImageUpdate.current.id) {
+          return { ...movie, smallImageURl: newImageUpdate.current.smallImageURl};
         }
         return movie;
       });
@@ -237,7 +238,7 @@ export default function MoviesManagement() {
   const columns = [
     {
       field: "hanhDong",
-      headerName: "Hành Động",
+      headerName: "Action",
       width: 130,
       renderCell: (params) => (
         <Action
@@ -251,8 +252,8 @@ export default function MoviesManagement() {
       headerClassName: "custom-header",
     },
     {
-      field: "tenPhim",
-      headerName: "Tên phim",
+      field: "name",
+      headerName: "Name",
       width: 250,
       headerAlign: "center",
       align: "left",
@@ -260,12 +261,12 @@ export default function MoviesManagement() {
       renderCell: RenderCellExpand,
     },
     {
-      field: "trailer",
+      field: "trailerURL",
       headerName: "Trailer",
       width: 130,
       renderCell: (params) => (
         <div style={{ display: "inline-block" }}>
-          <ThumbnailYoutube urlYoutube={params.row.trailer} />
+          <ThumbnailYoutube urlYoutube={params.row.trailerURL} />
         </div>
       ),
       headerAlign: "center",
@@ -273,8 +274,8 @@ export default function MoviesManagement() {
       headerClassName: "custom-header",
     },
     {
-      field: "hinhAnh",
-      headerName: "Hình ảnh",
+      field: "smallImageURl",
+      headerName: "Image",
       width: 200,
       headerAlign: "center",
       align: "center",
@@ -282,8 +283,8 @@ export default function MoviesManagement() {
       renderCell: (params) => RenderCellExpand(params),
     },
     {
-      field: "moTa",
-      headerName: "Mô Tả",
+      field: "longDescription",
+      headerName: "Description",
       width: 200,
       headerAlign: "center",
       align: "left",
@@ -291,8 +292,8 @@ export default function MoviesManagement() {
       renderCell: RenderCellExpand,
     },
     {
-      field: "ngayKhoiChieu",
-      headerName: "Ngày khởi chiếu",
+      field: "releaseDate",
+      headerName: "Release Date",
       width: 160,
       type: "date",
       headerAlign: "center",
@@ -301,20 +302,20 @@ export default function MoviesManagement() {
       valueFormatter: (params) => params.value.slice(0, 10),
     },
     {
-      field: "danhGia",
-      headerName: "Đánh giá",
+      field: "rated",
+      headerName: "Rated",
       width: 120,
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
     },
-    { field: "maPhim", hide: true, width: 130 },
-    { field: "maNhom", hide: true, width: 130 },
-    { field: "biDanh", hide: true, width: 200, renderCell: RenderCellExpand },
+    { field: "id", hide: true, width: 130 },
+    { field: "categories", hide: true, width: 130 },
+    { field: "duration", hide: true, width: 200, renderCell: RenderCellExpand },
   ];
   const modifySlugify = { lower: true, locale: "vi" };
   return (
-    <div style={{ height: "80vh", width: "100%" }}>
+    <div style={{ height: "80vh", width: "100%", backgroundColor:"white"}}>
       <div className={classes.control}>
         <div className="row">
           <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
@@ -326,7 +327,7 @@ export default function MoviesManagement() {
               disabled={loadingAddUploadMovie}
               startIcon={<AddBoxIcon />}
             >
-              thêm phim
+              Add new movie
             </Button>
           </div>
           <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
@@ -340,6 +341,7 @@ export default function MoviesManagement() {
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
+                style={{color:"black"}}
                 onChange={(evt) => handleInputSearchChange(evt.target.value)}
               />
             </div>
@@ -364,13 +366,13 @@ export default function MoviesManagement() {
           Toolbar: GridToolbar,
         }}
         // sort
-        sortModel={[{ field: "tenPhim", sort: "asc" }]}
+        sortModel={[{ field: "name", sort: "asc" }]}
       />
       <Dialog open={openModal}>
         <DialogTitle onClose={() => setOpenModal(false)}>
-          {selectedPhim?.current?.tenPhim
-            ? `Sửa phim: ${selectedPhim?.current?.tenPhim}`
-            : "Thêm Phim"}
+          {selectedPhim?.current?.name
+            ? `Edit: ${selectedPhim?.current?.name}`
+            : "Add new"}
         </DialogTitle>
         <DialogContent dividers>
           <Form

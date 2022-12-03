@@ -19,9 +19,9 @@ const useStyles = makeStyles((theme) => {
         backgroundColor: "rgb(255, 213, 153)",
       },
       "& .custom-header": {
-        backgroundColor: "rgb(255, 213, 153)",
+        backgroundColor: "rgb(236,	135,	14)",
         "&:hover": {
-          backgroundColor: "rgb(255, 203, 127)",
+          backgroundColor: "rgb(178,	0,	31)",
         },
       },
       "& .MuiDataGrid-colCellCheckbox": {

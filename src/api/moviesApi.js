@@ -26,17 +26,19 @@ const moviesApi = {
   },
 
   postThemPhimUpload: (movie) => {
-    const path = `/QuanLyPhim/ThemPhimUploadHinh`;
+    const path = `/movies/addNew`;
     //trong obj movie có key hinhAnh là file nên phải chuyển sang formData
     const formData = new FormData();
     for (const key in movie) {
+      console.log(key);
       formData.append(key, movie[key]);
     }
     return axiosClient.post(path, formData);
   },
 
   postCapNhatPhimUpload: (movie) => {
-    const path = `/QuanLyPhim/CapNhatPhimUpload`;
+    console.log("update phim upload: ", movie);
+    const path = `/movies/update`;
     const formData = new FormData();
     for (const key in movie) {
       formData.append(key, movie[key]);
@@ -45,12 +47,13 @@ const moviesApi = {
   },
 
   postCapNhatPhim: (movie) => {
-    const path = `/QuanLyPhim/CapNhatPhim`;
+    console.log("update phim: ", movie);
+    const path = `/movies/update`;
     return axiosClient.post(path, movie);
   },
 
   deleteMovie: (maPhim) => {
-    const path = `/QuanLyPhim/XoaPhim?MaPhim=${maPhim}`;
+    const path = `/movies/?movieId=${maPhim}`;
     return axiosClient.delete(path);
   },
 };

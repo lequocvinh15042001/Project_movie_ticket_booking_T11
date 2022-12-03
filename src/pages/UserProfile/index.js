@@ -337,7 +337,7 @@ export default function Index() {
             >
               {(props) => (
                 <Form className={`${classes.field}`}>
-                  <div className="form-group"  style={{"color":"white"}}>
+                  {/* <div className="form-group"  style={{"color":"white"}}>
                     <label>Id User&nbsp;</label>
                     <ErrorMessage
                       name="id"
@@ -352,7 +352,7 @@ export default function Index() {
                       className="form-control"
                       onChange={props.handleChange}
                     />
-                  </div>
+                  </div> */}
 
                   <div className="form-group" style={{"color":"white"}}>
                     <label>Account&nbsp;</label>

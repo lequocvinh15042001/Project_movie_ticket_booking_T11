@@ -15,7 +15,8 @@ export default function AdminLayout(props) {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const isMobile = useMediaQuery('(max-width:768px)');
   const dispatch = useDispatch();
-  // const { currentUser } = useSelector((state) => state.authReducer);
+  const { currentUser } = useSelector((state) => state.authReducer);
+  console.log(currentUser);
   // const { currentUser } = useSelector((state) => state.usersManagementReducer);
   // console.log(currentUser);
   const [userAdmin, setUserAdmin]= useState();
@@ -79,22 +80,25 @@ export default function AdminLayout(props) {
 
   console.log(cUser);
   // currentUser = userAdmin;
-  if (cUser?.data?.role === "[ROLE_ADMIN]") { // nếu không phải tài khoản quản trị thì ẩn đi giao diện AdminLayout, vẫn truyền vào children để hiện thông báo trong children
+  // if (currentUser?.data?.role === "[ROLE_ADMIN]") { // nếu không phải tài khoản quản trị thì ẩn đi giao diện AdminLayout, vẫn truyền vào children để hiện thông báo trong children
+  //   return <>{props.children}</>
+  // }
+  if (!currentUser) { // nếu không phải tài khoản quản trị thì ẩn đi giao diện AdminLayout, vẫn truyền vào children để hiện thông báo trong children
     return <>{props.children}</>
   }
   return (
     // package notistack: popup thông báo nhỏ gọn
     <SnackbarProvider maxSnack={3}>
-      <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
+      <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} style={{backgroundColor:"black"}}/>
       <div className="row">
-        <div style={{ width: 255 }}>
+        <div style={{ width: 255 , backgroundColor:"white"}}>
           {/* đây là phần NavBar nằm bên trái, có thể đóng mở khi màn hình nhỏ */}
           <NavBar
             onMobileClose={() => setMobileNavOpen(false)}
             openMobile={isMobileNavOpen}
           />
         </div>
-        <div style={{ width: isMobile ? "100%" : "calc(100% - 255px)" }}>
+        <div style={{ width: isMobile ? "100%" : "calc(100% - 255px)",backgroundColor:"white" }}>
           {/* đây là nội dung chính: UserManagement, MoviesManagement, ReateShowtime */}
           {props.children}
         </div>

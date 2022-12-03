@@ -32,7 +32,8 @@ const headMenu = [
     { nameLink: 'Schedule Showing', id: "lichchieu" }, 
     { nameLink: 'Branch Theaters', id: "cumrap" }, 
     { nameLink: 'News and Events', id: "tintuc" }, 
-    { nameLink: 'App', id: "ungdung" }]
+    // { nameLink: 'App', id: "ungdung" }
+  ]
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.authReducer);
