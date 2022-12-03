@@ -100,7 +100,7 @@ const GridCellExpand = function GridCellExpand(props) {
                   elevation={1}
                   style={{
                     minHeight: wrapper.current.offsetHeight - 3,
-                    backgroundColor: "#00fff3",
+                    backgroundColor: "#ffff",
                   }}
                 >
                   <Typography variant="body2" style={{ padding: 8 }}>

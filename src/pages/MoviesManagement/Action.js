@@ -8,16 +8,16 @@ import Tooltip from '@material-ui/core/Tooltip';
 import UseApiCheckIsMaPhimSetShowtime from '../../utilities/useApiCheckIsMaPhimSetShowtime';
 
 export default function ButtonDelete({ onDeleted, phimItem, onEdit }) {
-  const isMovieSetShowtime = UseApiCheckIsMaPhimSetShowtime(phimItem.maPhim)
+  const isMovieSetShowtime = UseApiCheckIsMaPhimSetShowtime(phimItem.id)
   return (
     <>
-      <Tooltip title={isMovieSetShowtime ? "Không thể xóa" : "Xóa"}>
-        <IconButton color="primary" style={{ color: isMovieSetShowtime ? "#00000042" : "#f50057" }} onClick={() => onDeleted(phimItem.maPhim)} >
+      <Tooltip title={isMovieSetShowtime ? "Can't Delete" : "Delete"}>
+        <IconButton color="primary" style={{ color: isMovieSetShowtime ? "#00000042" : "#f50057" }} onClick={() => onDeleted(phimItem.id)} >
           <DeleteForeverIcon />
         </IconButton>
       </Tooltip>
 
-      <Tooltip title="Chỉnh sửa">
+      <Tooltip title="Edit">
         <IconButton color="primary" style={{ color: "#3f51b5" }} onClick={() => onEdit(phimItem)} >
           <EditIcon />
         </IconButton>

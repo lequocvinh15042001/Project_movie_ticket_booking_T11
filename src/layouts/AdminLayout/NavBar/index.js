@@ -49,6 +49,12 @@ const items = [
     icon: PostAddIcon,
     title: 'Create Schedule'
   },
+  {
+    href: '#',
+    icon: PostAddIcon,
+    title: 'Book for User'
+  },
+
 ];
 
 const useStyles = makeStyles(() => ({
@@ -130,13 +136,30 @@ export default function NavBar({ onMobileClose, openMobile }) {
       display="flex"
       flexDirection="column"
     >
+      <Divider />
+
+      {/* đây là phần menu lựa chọn */}
+      <Box p={2}>
+        <List>
+          {items.map((item) => (
+            // NavItem hiện thị ra icon và title
+            <NavItem
+              href={item.href}
+              key={item.title}
+              title={item.title}
+              icon={item.icon}
+            />
+          ))}
+        </List>
+      </Box>
+
       {/* đây là phần logo avatar user và tên user */}
       <Box
         // căn giữa cột
         alignItems="center"
         display="flex"
         flexDirection="column"
-        p={2} // padding 2
+        p={5} // padding 2
       >
         <Tooltip title="User information">
           <Avatar
@@ -159,28 +182,12 @@ export default function NavBar({ onMobileClose, openMobile }) {
           {user.jobTitle}
         </Typography>
       </Box>
-      <Divider />
-
-      {/* đây là phần menu lựa chọn */}
-      <Box p={2}>
-        <List>
-          {items.map((item) => (
-            // NavItem hiện thị ra icon và title
-            <NavItem
-              href={item.href}
-              key={item.title}
-              title={item.title}
-              icon={item.icon}
-            />
-          ))}
-        </List>
-      </Box>
     </Box>
+    
   );
 
   return (
     <>
-
       {/* đây là giao diện mobile */}
       <Hidden lgUp>
         <Drawer
