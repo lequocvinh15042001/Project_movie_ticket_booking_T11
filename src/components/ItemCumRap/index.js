@@ -6,7 +6,7 @@ import BtnGoToCheckOut from '../BtnGoToCheckOut'
 import TenCumRap from '../TenCumRap'
 import { useStyles, Accordion, AccordionSummary, AccordionDetails } from './style'
 
-export default function ItemCumRap({ tenCumRap, maLichChieu, lichChieuPhim, diaChi, defaultExpanded, maPhim, ngayChieu, maPhong, gioChieu, maRap}) {
+export default function ItemCumRap({ tenCumRap, maLichChieu, lichChieuPhim, diaChi, defaultExpanded, maPhim, ngayChieu, maPhong, gioChieu, maRap, giaVe}) {
   const classes = useStyles()
 
   return (
@@ -16,7 +16,7 @@ export default function ItemCumRap({ tenCumRap, maLichChieu, lichChieuPhim, diaC
           <AccordionSummary>
             <FakeImgTheater nameTheater={tenCumRap} imgStyle={classes.imgTheater} />
             <div className={classes.wrapInfo} >
-              <TenCumRap tenCumRap={tenCumRap} />
+              <TenCumRap tenCumRap={tenCumRap} giaVe={giaVe}/>
               <Address maLichChieu={maLichChieu} diaChiAlreadyExist={diaChi} />
             </div>
             <div style={{ clear: "both" }}></div>

@@ -12,7 +12,9 @@ const useStyles = makeStyles((theme) => ({
       "0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%)",
   },
   image: {
-    height: "auto",
+    // height: "auto",
+    width: 1000,
+    height: 400,
     borderRadius: 4,
   },
   info: {
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff !important",
     position: "absolute",
     left: "50%",
-    bottom: 10,
+    bottom: 5,
     transform: "translateX(-50%)",
     width: "fit-content",
   },
@@ -43,14 +45,14 @@ const useStyles = makeStyles((theme) => ({
   },
   withOutImage: {
     borderRadius: 4,
-    width: 200,
-    height: 200 * 1.5,
+    width: 500,
+    height: 500 * 1.5,
     animationName: `$myEffect`,
     animationDuration: "3s",
     animationTimingFunction: `${theme.transitions.easing.easeInOut}`,
     animationIterationCount: "infinite",
     background: "linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)",
-    backgroundSize: "400% 400%",
+    backgroundSize: "500% 500%",
   },
   "@keyframes myEffect": {
     "0%": { backgroundPosition: "0% 50%" },
@@ -128,13 +130,13 @@ export default function CustomPopper(props) {
               />
               {imageNotFound && <div className={classes.withOutImage}></div>}
               <div className={classes.info}>
-                <p>{phim.rated}</p>
+                {/* <p>{phim.rated}</p> */}
               </div>
               <button
                 className={classes.btnMovieDetail}
                 onClick={() => history.push(`/phim/${phim.id}`)}
               >
-                Chi tiêt phim
+                Click to Detail
               </button>
             </div>
           </div>

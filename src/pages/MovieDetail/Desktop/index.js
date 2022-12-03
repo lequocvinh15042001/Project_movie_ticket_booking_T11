@@ -50,7 +50,7 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
             <p className={classes.movieName}>{data?.name}</p>
             {/* <p>{`${thoiLuong ?? "120"} phút - ${danhGia}`} - 2D/Digital</p> */}
             <p>
-              Thời lượng: {data?.duration} phút
+              Duration: {data?.duration} phút
             </p>
             <button className={classes.btnMuaVe} onClick={handleBtnMuaVe}>{location?.state?.comingMovie ? "Thông tin phim" : "Mua vé"}</button>
           </div>

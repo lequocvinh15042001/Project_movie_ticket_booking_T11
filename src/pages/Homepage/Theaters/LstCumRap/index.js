@@ -22,7 +22,7 @@ function LstCumRap(props) {
           <div className={classes.cumRap} index={lstCumRap.id} onClick={(e,) => handleChangeCumRap(e)} key={lstCumRap.id} style={{ opacity: valueCumRap === lstCumRap.id ? '1' : '.5' }}>
             <FakeImgTheater nameTheater={lstCumRap.name} imgStyle={classes.cumRap__img} />
             <div className={classes.cumRap__info}>
-              <TenCumRap tenCumRap={lstCumRap.name} />
+              <TenCumRap tenCumRap={lstCumRap.name} giaVe={70000} />
               <p className={classes.cumRap__address}>{lstCumRap.address}</p>
             </div>
           </div>

@@ -26,12 +26,13 @@ export default function BtnGoToCheckout({ lichChieuTheoPhim, duration, idLich, m
   // console.log(timeInMinutes);
 
 
-  const calculateTimeout = (ngayChieuGioChieu) => {
-    const fakeThoiLuong = duration
-    const timeInObj = ngayChieuGioChieu.slice(0,5).toString();
+  const calculateTimeout = (ngayChieuGioChieu, duration) => {
+    // const fakeThoiLuong = duration
+    console.log("ngayChieuGioChieu: ", ngayChieuGioChieu);
+    const timeInObj = ngayChieuGioChieu
     const gioDoi = convertH2M(timeInObj)
     console.log(gioDoi);
-    const tongGio = new Date(timeInObj + gioDoi).getTime()
+    const tongGio = duration + gioDoi
 
     // const timeThem = toHoursAndMinutes(duration)
     // const timeThem = new Date(duration.getTime() + 30 * 60 * 1000)
@@ -46,7 +47,7 @@ export default function BtnGoToCheckout({ lichChieuTheoPhim, duration, idLich, m
 
   return (
     <button className={classes.button} onClick={() => history.push(`/datvechitiet/${idLich}/${maRap}/${maPhim}/${ngayChieu}/${maPhong}/${gioChieu}`, `/datvechitiet/${idLich}/${maRap}/${maPhim}/${ngayChieu}${maPhong}/${gioChieu}`)}>
-      <span className={classes.inTime}>From {lichChieuTheoPhim.slice(0, 10)}</span>
+      <span className={classes.inTime}>From {lichChieuTheoPhim.slice(0, 5)}</span>
       <span className={classes.outTime}>{` to ${calculateTimeout(lichChieuTheoPhim, duration)}`}</span>
     </button>
   )
