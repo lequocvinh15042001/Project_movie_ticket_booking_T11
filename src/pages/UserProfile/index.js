@@ -116,6 +116,9 @@ export default function Index() {
   const { successUpdateUser, errorUpdateUser, loadingUpdateUser } = useSelector(
     (state) => state.usersManagementReducer
   );
+
+  // console.log(loadingUpdateUser);
+
   const [value, setValue] = React.useState(0);
   const [typePassword, settypePassword] = useState("password");
 
@@ -170,12 +173,12 @@ export default function Index() {
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const updateUserSchema = yup.object().shape({
-    username: yup.string().required("*Username not be empty !"),
-    password: yup.string().required("*Password not be empty !"),
-    email: yup
-      .string()
-      .required("*Email not be empty !")
-      .email("* Email invalid! "),
+    // username: yup.string().required("*Username not be empty !"),
+    // password: yup.string().required("*Password not be empty !"),
+    // email: yup
+    //   .string()
+    //   .required("*Email not be empty !")
+    //   .email("* Email invalid! "),
     // soDt: yup
     //   .string()
     //   .required("*Số điện thoại không được bỏ trống !")
@@ -183,8 +186,25 @@ export default function Index() {
     name: yup.string().required("*Name not be empty !"),
   });
 
+  const updateUserSchemaPassword = yup.object().shape({
+    // username: yup.string().required("*Username not be empty !"),
+    oldpassword: yup.string().required("*Password not be empty !"),
+    newpassword: yup.string().required("*Password not be empty !"),
+    // email: yup
+    //   .string()
+    //   .required("*Email not be empty !")
+    //   .email("* Email invalid! "),
+    // soDt: yup
+    //   .string()
+    //   .required("*Số điện thoại không được bỏ trống !")
+    //   .matches(phoneRegExp, "Số điện thoại không hợp lệ!"),
+    // name: yup.string().required("*Name not be empty !"),
+  });
+
   const handleSubmit = (user) => {
+    console.log("Thông tin cập nhật: ", user);
     if (loadingUpdateUser) {
+      console.log("Thoát");
       return;
     }
     dispatch(putUserUpdate(user));
@@ -229,9 +249,9 @@ export default function Index() {
               }`}
               alt="avatar"
             />
-            <h1 className="my-2">{successInfoUser?.data?.username}</h1>
+            <h1 className="my-2" style={{"color":"white"}}>{successInfoUser?.data?.username}</h1>
           </div>
-          {successInfoUser?.data?.roles === "[ROLE_ADMIN]" && (
+          {successInfoUser?.data?.role === "[ROLE_ADMIN]" && (
             <div className="text-center mb-2">
               <Fab
                 variant="extended"
@@ -239,7 +259,7 @@ export default function Index() {
                 onClick={() => history.push("/admin/users")}
               >
                 <NavigationIcon className={classes.extendedIcon} />
-                Admin
+                Go to Admin Page
               </Fab>
             </div>
           )}
@@ -300,13 +320,16 @@ export default function Index() {
               />
             </Tabs>
           </AppBar>
+          {/* -------------caapj nhật thong tin---------- */}
           <TabPanel value={value} index={0}>
             <Formik
               initialValues={{
                 username: successInfoUser?.data?.username ?? "",
                 password: successInfoUser?.data?.password ?? "",
                 email: successInfoUser?.data?.email ?? "",
+                id: successInfoUser?.data?.id ?? "",
                 name: successInfoUser?.data?.name ?? "",
+                image: successInfoUser?.data?.image ?? "",
               }}
               enableReinitialize // cho phép cập nhật giá trị initialValues
               validationSchema={updateUserSchema}
@@ -314,7 +337,24 @@ export default function Index() {
             >
               {(props) => (
                 <Form className={`${classes.field}`}>
-                  <div className="form-group">
+                  <div className="form-group"  style={{"color":"white"}}>
+                    <label>Id User&nbsp;</label>
+                    <ErrorMessage
+                      name="id"
+                      render={(msg) => (
+                        <span className="text-danger">{msg}</span>
+                      )}
+                    />
+                    <Field
+                      disabled
+                      name="id"
+                      type="text"
+                      className="form-control"
+                      onChange={props.handleChange}
+                    />
+                  </div>
+
+                  <div className="form-group" style={{"color":"white"}}>
                     <label>Account&nbsp;</label>
                     <ErrorMessage
                       name="username"
@@ -355,7 +395,7 @@ export default function Index() {
                       )}
                     </div>
                   </div> */}
-                  <div className="form-group">
+                  <div className="form-group"  style={{"color":"white"}}>
                     <label>Full name&nbsp;</label>
                     <ErrorMessage
                       name="name"
@@ -371,7 +411,7 @@ export default function Index() {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="form-group"  style={{"color":"white"}}>
                     <label>Email&nbsp;</label>
                     <ErrorMessage
                       name="email"
@@ -405,7 +445,9 @@ export default function Index() {
                   <div className="text-left">
                     <button
                       type="submit"
-                      className="btn btn-success"
+                      // type="button"
+                      // onClick={() => handleSubmit()}
+                      className="btn btn-danger"
                       disable={loadingUpdateUser.toString()}
                     >
                       Update
@@ -420,6 +462,8 @@ export default function Index() {
               )}
             </Formik>
           </TabPanel>
+
+          {/* này bên cái bảng kia */}
           <TabPanel
             value={value}
             index={1}
@@ -482,30 +526,31 @@ export default function Index() {
           <TabPanel value={value} index={2}>
             <Formik
               initialValues={{
-                username: successInfoUser?.username ?? "",
-                password: successInfoUser?.password ?? "",
-                email: successInfoUser?.email ?? "",
+                // username: successInfoUser?.username ?? "",
+                oldpassword: successInfoUser?.password ?? "",
+                newpassword: "",
+                // email: successInfoUser?.email ?? "",
                 // soDt: successInfoUser?.soDT ?? "",
                 // maNhom: "GP09",
                 // maLoaiNguoiDung: "KhachHang",
-                name: successInfoUser?.name ?? "",
+                // name: successInfoUser?.name ?? "",
               }}
               enableReinitialize // cho phép cập nhật giá trị initialValues
-              validationSchema={updateUserSchema}
+              validationSchema={updateUserSchemaPassword}
               onSubmit={handleSubmit}
             >
               {(props) => (
                 <Form className={`${classes.field}`}>
-                  <div className={`form-group ${classes.password}`}>
-                    <label>Password&nbsp;</label>
+                  <div className={`form-group ${classes.password}`}  style={{"color":"white"}}>
+                    <label>Old Password&nbsp;</label>
                     <ErrorMessage
-                      name="password"
+                      name="oldpassword"
                       render={(msg) => (
                         <span className="text-danger">{msg}</span>
                       )}
                     />
                     <Field
-                      name="password"
+                      name="oldpassword"
                       type={typePassword}
                       className="form-control"
                       onChange={props.handleChange}
@@ -515,22 +560,22 @@ export default function Index() {
                       onClick={handleToggleHidePassword}
                     >
                       {typePassword !== "password" ? (
-                        <i className="fa fa-eye-slash"></i>
+                        <i className="fa fa-eye-slash" style={{"color":"black"}}></i>
                       ) : (
-                        <i className="fa fa-eye"></i>
+                        <i className="fa fa-eye" style={{"color":"black"}}></i>
                       )}
                     </div>
                   </div>
-                  <div className={`form-group ${classes.password}`}>
-                    <label>Password&nbsp;</label>
+                  <div className={`form-group ${classes.password}`}  style={{"color":"white"}}>
+                    <label>New Password&nbsp;</label>
                     <ErrorMessage
-                      name="password"
+                      name="newpassword"
                       render={(msg) => (
                         <span className="text-danger">{msg}</span>
                       )}
                     />
                     <Field
-                      name="password"
+                      name="newpassword"
                       type={typePassword}
                       className="form-control"
                       onChange={props.handleChange}
@@ -540,9 +585,9 @@ export default function Index() {
                       onClick={handleToggleHidePassword}
                     >
                       {typePassword !== "password" ? (
-                        <i className="fa fa-eye-slash"></i>
+                        <i className="fa fa-eye-slash" style={{"color":"black"}}></i>
                       ) : (
-                        <i className="fa fa-eye"></i>
+                        <i className="fa fa-eye" style={{"color":"black"}}></i>
                       )}
                     </div>
                   </div>

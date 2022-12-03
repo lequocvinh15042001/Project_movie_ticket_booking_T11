@@ -73,6 +73,7 @@ export const putUserUpdate = (user) => {
     })
     usersApi.editTaiKhoan(user)
       .then(result => {
+        console.log("Cập nhật: ", result);
         dispatch({
           type: UPDATE_USER_SUCCESS,
           payload: { data: result.data }
