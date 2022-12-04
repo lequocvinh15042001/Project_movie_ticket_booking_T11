@@ -25,6 +25,7 @@ import {
 import Action from "./Action";
 import ThumbnailYoutube from "./ThumbnailYoutube";
 import Form from "./Form";
+import FormAdd from "./FormAdd";
 
 function CustomLoadingOverlay() {
   return (
@@ -153,6 +154,7 @@ export default function MoviesManagement() {
     if (!loadingDeleteMovie) {
       // nếu click xóa liên tục một user
       dispatch(deleteMovie(maPhim));
+      // window.location.reload();
     }
   };
   const handleEdit = (phimItem) => {
@@ -187,13 +189,19 @@ export default function MoviesManagement() {
     const emtySelectedPhim = {
       id: "",
       name: "",
-      duration: "",
-      trailerURL: "",
       smallImageURl: "",
       longDescription: "",
+      shortDescription: "",
+      largeImageURL: "",
+      director: "",
+      actors: "",
       categories: "",
       releaseDate: "",
-      danhGia: 10,
+      duration: "",
+      trailerURL: "",
+      language: "",
+      rated: "",
+      isShowing: null,
     };
     selectedPhim.current = emtySelectedPhim;
     setOpenModal(true);
@@ -375,7 +383,7 @@ export default function MoviesManagement() {
             : "Add new"}
         </DialogTitle>
         <DialogContent dividers>
-          <Form
+          <FormAdd
             selectedPhim={selectedPhim.current}
             onUpdate={onUpdate}
             onAddMovie={onAddMovie}

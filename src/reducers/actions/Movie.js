@@ -74,6 +74,7 @@ export const getMovieListManagement = () => {
 };
 
 export const deleteMovie = (maPhim) => {
+  console.log(maPhim);
   return (dispatch) => {
     dispatch({
       type: DELETE_MOVIE_REQUEST,
@@ -83,7 +84,7 @@ export const deleteMovie = (maPhim) => {
       .then((result) => {
         dispatch({
           type: DELETE_MOVIE_SUCCESS,
-          payload: { data: result.data },
+          payload: { data: result.data.data },
         });
       })
       .catch((error) => {
@@ -99,6 +100,7 @@ export const deleteMovie = (maPhim) => {
 };
 
 export const updateMovieUpload = (phimObj) => {
+  console.log('updateMovieUpload', phimObj);
   return (dispatch) => {
     dispatch({
       type: POST_UPDATE_MOVIE_REQUEST,
@@ -108,20 +110,22 @@ export const updateMovieUpload = (phimObj) => {
       .then((result) => {
         dispatch({
           type: POST_UPDATE_MOVIE_SUCCESS,
-          payload: { data: result.data },
+          payload: { data: result.data.data },
         });
       })
       .catch((error) => {
         dispatch({
           type: POST_UPDATE_MOVIE_FAIL,
           payload: {
-            error: error.response?.data ? error.response.data : error.message,
+            // error: error.response?.data ? error.response.data : error.message,
+            error: "Update fail! Don't be empty any field or Release Date was wrong!"
           },
         });
       });
   };
 };
 export const updateMovie = (phimObj) => {
+  console.log("Update phim: ", phimObj);
   return (dispatch) => {
     dispatch({
       type: UPDATE_NONEIMAGE_MOVIE_REQUEST,
@@ -132,14 +136,15 @@ export const updateMovie = (phimObj) => {
         console.log(result);
         dispatch({
           type: UPDATE_NONEIMAGE_MOVIE_SUCCESS,
-          payload: { data: result.data.data },
+          payload: { data: result.data },
         });
       })
       .catch((error) => {
+        console.log(error);
         dispatch({
           type: UPDATE_NONEIMAGE_MOVIE_FAIL,
           payload: {
-            error: "Update fail!"
+            error: "Update fail! Don't be empty any field or Release Date was wrong!"
             // error: error.response?.data ? error.response.data : error.message,
           },
         });
@@ -149,22 +154,26 @@ export const updateMovie = (phimObj) => {
 
 export const addMovieUpload = (movieObj) => {
   return (dispatch) => {
+    console.log("movieObj: ", movieObj);
     dispatch({
       type: ADD_MOVIE_UPLOAD_REQUEST,
     });
     moviesApi
       .postThemPhimUpload(movieObj)
       .then((result) => {
+        console.log("Thêm: ", result);
         dispatch({
           type: ADD_MOVIE_UPLOAD_SUCCESS,
           payload: { data: result.data },
         });
       })
       .catch((error) => {
+        console.log("Lỗi thêm: ", error.message);
         dispatch({
           type: ADD_MOVIE_UPLOAD_FAIL,
           payload: {
-            error: error.response?.data ? error.response.data : error.message,
+            // error: error.response?.data ? error.response.data : error.message,
+            error: "Update fail! Don't be empty any field or Release Date was wrong!"
           },
         });
       });
