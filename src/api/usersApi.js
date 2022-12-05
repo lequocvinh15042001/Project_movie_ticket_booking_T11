@@ -29,6 +29,11 @@ const usersApi = {
     return axiosClient.post(path, user);
   },
 
+  getTicket: (userId) =>{
+    const path = `/tickets?userId=${userId}`;
+    return axiosClient.get(path);
+  },
+
   deleteUser: (taiKhoan) => {
     const path = `user/${taiKhoan}`;
 

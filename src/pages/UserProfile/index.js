@@ -16,6 +16,8 @@ import { useTheme } from "@material-ui/core/styles";
 import NavigationIcon from "@material-ui/icons/Navigation";
 import Fab from "@material-ui/core/Fab";
 import { useHistory } from "react-router-dom";
+import ShowtimeUser from "./../UserProfile/ShowtimeUser/index"
+
 
 import { FAKE_AVATAR } from "../../constants/config";
 import {
@@ -25,6 +27,7 @@ import {
 } from "../../reducers/actions/UsersManagement";
 import { getComment } from "../../reducers/actions/MovieDetail";
 import usersApi from "../../api/usersApi";
+import { getAllTicket } from "../../reducers/actions/Ticket";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -107,6 +110,12 @@ export default function Index() {
   console.log(currentUser);
 
   const { commentList } = useSelector((state) => state.movieDetailReducer);
+  const { ticketList } = useSelector((state) => state.ticketReducer);
+  const movieList = useSelector((state) => state.movieReducer.movieList);
+
+
+  console.log(ticketList);
+
   const [dataShort, setdataShort] = useState({
     ticket: 0,
     posts: 0,
@@ -121,7 +130,7 @@ export default function Index() {
 
   const [value, setValue] = React.useState(0);
   const [typePassword, settypePassword] = useState("password");
-
+  const [ticket, setTicket] = useState([]);
   const [image, setImage] = useState()
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -130,7 +139,18 @@ export default function Index() {
   useEffect(() => {
     // dispatch(getInfoUser({ username: currentUser?.username }));
     dispatch(getInfoUser());
+
+    // usersApi.getTicket(successInfoUser.data.id)
+    // .then((res) => {
+    //   setTicket(res)
+    //   console.log(ticket);
+    // })
+    // .catch((err) =>{
+    //   console.log(err);
+    // })
+    dispatch(getAllTicket(successInfoUser?.data?.id))
     dispatch(getComment());
+
     return () => dispatch(resetUserList());
   }, []);
 
@@ -217,9 +237,8 @@ export default function Index() {
     }
   };
   const getIdSeat = (danhSachGhe) => {
-    return danhSachGhe
-      .reduce((listSeat, seat) => {
-        return [...listSeat, seat.tenGhe];
+    return danhSachGhe?.reduce((listSeat, seat) => {
+        return [...listSeat, seat.name];
       }, [])
       .join(", ");
   };
@@ -240,12 +259,12 @@ export default function Index() {
     <div className="bootstrap snippet mb-5 mx-4" style={{"backgroundColor":"black"}}>
       <br />
       <div className="row">
-        <div className="col-sm-3">
+        <div className="col-sm-2">
           <div className="text-center">
             <img
               src={FAKE_AVATAR}
               className={`avatar rounded-circle img-thumbnail ${
-                isDesktop ? "w-100" : "w-50"
+                isDesktop ? "w-60" : "w-30"
               }`}
               alt="avatar"
             />
@@ -256,7 +275,7 @@ export default function Index() {
               <Fab
                 variant="extended"
                 color="primary"
-                onClick={() => history.push("/admin/users")}
+                onClick={() => history.push("/admin/movies")}
               >
                 <NavigationIcon className={classes.extendedIcon} />
                 Go to Admin Page
@@ -291,8 +310,8 @@ export default function Index() {
             </li>
           </ul> */}
         </div>
-        <div className={`col-sm-9 py-3 px-0`}>
-          <AppBar className={classes.appBar} position="static" style={{"backgroundColor":"orange","borderRadius":"5px"}}>
+        <div className={`col-sm-10 py-3 px-0`}>
+          <AppBar className={classes.appBar} position="static" style={{backgroundColor:"orange", color:"white"}}>
             <Tabs value={value} onChange={handleChange} centered={!isDesktop}>
               <Tab
                 disableRipple
@@ -467,7 +486,7 @@ export default function Index() {
           <TabPanel
             value={value}
             index={1}
-            style={{ padding: isDesktop ? "0px 0px" : "0px 16px" }}
+            style={{ padding: isDesktop ? "0px 0px" : "0px 16px", backgroundColor:"white", borderRadius: "5px"}}
             isDesktop={isDesktop}
           >
             <div className="table-responsive">
@@ -479,41 +498,44 @@ export default function Index() {
                     <th scope="col">Duration</th>
                     <th scope="col">Date Booking</th>
                     <th scope="col">Branch Theater</th>
-                    <th scope="col">Code</th>
+                    <th scope="col">Code Ticket</th>
                     <th scope="col">Seat</th>
-                    <th scope="col">Cost(vnđ)</th>
+                    {/* <th scope="col">Cost(vnđ)</th> */}
                     <th scope="col">Total(vnđ)</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {successInfoUser?.thongTinDatVe?.map((sticket, i) => (
-                      <tr key={sticket.maVe} className={classes.td}>
+                  {ticketList?.map((sticket, i) => (
+                      <tr key={sticket.id} className={classes.td}>
                         <th scope="row">{i + 1}</th>
-                        <td>{sticket.tenPhim}</td>
-                        <td>{sticket.thoiLuongPhim}</td>
+                        <td>{sticket?.schedule?.movie?.name}</td>
+                        <td>{sticket?.schedule?.movie?.duration}min</td>
                         <td>
-                          {new Date(sticket.ngayDat).toLocaleDateString()},{" "}
-                          {new Date(sticket.ngayDat).toLocaleTimeString(
+                          {new Date(sticket?.bill?.createdTime).toLocaleDateString()},{" "}
+                          {new Date(sticket?.bill?.createdTime).toLocaleTimeString(
                             "en-US",
                             { hour: "2-digit", minute: "2-digit" }
                           )}
                         </td>
                         <td>
-                          {sticket.danhSachGhe[0].tenHeThongRap},{" "}
-                          {sticket.danhSachGhe[0].tenRap}
+                          {sticket?.schedule?.room?.name},{" "}
+                          {sticket?.schedule?.branch?.name}
+          
+                          {/* {sticket?.schedule?.branch?.address} */}
                         </td>
-                        <td>{sticket.maVe}</td>
-                        <td>{getIdSeat(sticket.danhSachGhe)}</td>
+                        <td>{sticket?.id}</td>
+                        {/* <td>{getIdSeat(sticket.seat)}</td> */}
+                        <td>{sticket?.seat?.name}</td>
                         <td>
                           {new Intl.NumberFormat("it-IT", {
                             style: "decimal",
-                          }).format(sticket.giaVe)}
+                          }).format(sticket?.schedule?.price)}
                         </td>
-                        <td>
+                        {/* <td>
                           {new Intl.NumberFormat("it-IT", {
                             style: "decimal",
-                          }).format(sticket.giaVe * sticket.danhSachGhe.length)}
-                        </td>
+                          }).format(sticket?.schedule?.price)}
+                        </td> */}
                       </tr>
                     ))
                     .reverse()}
@@ -627,6 +649,7 @@ export default function Index() {
           <CircularProgress style={{ margin: "auto" }} />
         </div>
       )}
+      <ShowtimeUser />
     </div>
   );
 }
