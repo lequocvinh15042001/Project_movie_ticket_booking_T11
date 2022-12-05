@@ -18,6 +18,11 @@ const theatersApi = {
     return axiosClient.get(path);
   },
 
+  getThongTinLichChieuLe: () => {
+    const path = "/schedule/getAll?page=0&size=20";
+    return axiosClient.get(path);
+  },
+
   getThongTinLichChieuHeThongRapTheoRap: (branchId) => {
     const path = `/schedule/getAll?page=0&size=20&branchId=${branchId}`;
     return axiosClient.get(path);

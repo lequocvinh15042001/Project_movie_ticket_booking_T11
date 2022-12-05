@@ -42,7 +42,7 @@ export const deleteUser = (taiKhoanUser) => {
       .then(result => {
         dispatch({
           type: DELETE_USER_SUCCESS,
-          payload: { data: result.data }
+          payload: { data: result.data.data }
         })
       }
       )
@@ -50,7 +50,8 @@ export const deleteUser = (taiKhoanUser) => {
         error => {
           dispatch({
             type: DELETE_USER_FAIL,
-            payload: { error: error.response?.data ? error.response.data : error.message, }
+            // payload: { error: error.response?.data ? error.response.data : error.message, }
+            payload: "Delete fail!"
           })
         }
       )

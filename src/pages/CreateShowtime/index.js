@@ -44,9 +44,11 @@ export default function MoviesManagement() {
   const { theaterList2, loadingTheaterList2 } = useSelector(
     (state) => state.theaterReducer
   );
+  console.log("theaterList2: ", theaterList2);
   const { loadingCreateShowtime, successCreateShowtime, errorCreateShowtime } =
     useSelector((state) => state.bookTicketReducer);
   const movieList2 = useSelector((state) => state.movieReducer.movieList2);
+  console.log("movieList2: ", movieList2);
   const dispatch = useDispatch();
   const [valueSearch, setValueSearch] = useState("");
   const clearSetSearch = useRef(0);
@@ -96,43 +98,54 @@ export default function MoviesManagement() {
     }
   }, []);
 
-  useEffect(() => {
-    const showTimeList = theaterList2?.reduce((collect1, heThongRap) => {
-      return [
-        ...collect1,
-        ...heThongRap.lstCumRap?.reduce((collect2, cumRap) => {
-          return [
-            ...collect2,
-            ...cumRap.danhSachPhim?.reduce((collect3, phim) => {
-              return [
-                ...collect3,
-                ...phim.lstLichChieuTheoPhim?.reduce((collect4, lichChieu) => {
-                  return [
-                    ...collect4,
-                    {
-                      ...lichChieu,
-                      tenHeThongRap: heThongRap.tenHeThongRap,
-                      tenCumRap: cumRap.tenCumRap,
-                      logo: heThongRap.logo,
-                      diaChi: cumRap.diaChi,
-                      maPhim: phim.maPhim,
-                      tenPhim: phim.tenPhim,
-                      id: lichChieu.maLichChieu,
-                      ngayChieuGioChieu: `${lichChieu.ngayChieuGioChieu.slice(
-                        0,
-                        10
-                      )}, ${lichChieu.ngayChieuGioChieu.slice(11, 16)}`,
-                    },
-                  ];
-                }, []),
-              ];
-            }, []),
-          ];
-        }, []),
-      ];
-    }, []);
-    setLichChieuDisplay(showTimeList);
-  }, [theaterList2]);
+
+  useEffect(() =>{
+    theatersApi.getThongTinLichChieuLe()
+    .then((res) => {
+      console.log("lịch: ",res);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  },[])
+
+  // useEffect(() => {
+  //   const showTimeList = theaterList2?.reduce((collect1, heThongRap) => {
+  //     return [
+  //       ...collect1,
+  //       ...heThongRap.lstCumRap?.reduce((collect2, cumRap) => {
+  //         return [
+  //           ...collect2,
+  //           ...cumRap.danhSachPhim?.reduce((collect3, phim) => {
+  //             return [
+  //               ...collect3,
+  //               ...phim.lstLichChieuTheoPhim?.reduce((collect4, lichChieu) => {
+  //                 return [
+  //                   ...collect4,
+  //                   {
+  //                     ...lichChieu,
+  //                     tenHeThongRap: heThongRap.tenHeThongRap,
+  //                     tenCumRap: cumRap.tenCumRap,
+  //                     logo: heThongRap.logo,
+  //                     diaChi: cumRap.diaChi,
+  //                     maPhim: phim.maPhim,
+  //                     tenPhim: phim.tenPhim,
+  //                     id: lichChieu.maLichChieu,
+  //                     ngayChieuGioChieu: `${lichChieu.ngayChieuGioChieu.slice(
+  //                       0,
+  //                       10
+  //                     )}, ${lichChieu.ngayChieuGioChieu.slice(11, 16)}`,
+  //                   },
+  //                 ];
+  //               }, []),
+  //             ];
+  //           }, []),
+  //         ];
+  //       }, []),
+  //     ];
+  //   }, []);
+  //   setLichChieuDisplay(showTimeList);
+  // }, [theaterList2]);
 
   useEffect(() => {
     if (data.setPhim && data.ngayChieuGioChieu && data.maRap && data.setGiaVe)
@@ -212,8 +225,8 @@ export default function MoviesManagement() {
 
   const handleSelectPhim = (e) => {
     // từ mã phim đã gửi lên > lấy ra hình ảnh để hiển thị
-    const hinhAnhPhimSelected = movieList2.find(
-      (item) => item.maPhim === e.target.value
+    const hinhAnhPhimSelected = movieList2.data.find(
+      (item) => item.id === e.target.value
     ).hinhAnh;
     const isOpenHeThongRap = data.setHeThongRap ? false : true;
     setData((data) => ({
@@ -501,6 +514,7 @@ export default function MoviesManagement() {
   };
   const modifySlugify = { lower: true, locale: "vi" };
 
+  console.log("data: ", data);
   return (
     <div style={{ height: "80vh", width: "100%" }}>
       <div className={classes.backgroundImg}>
@@ -531,16 +545,16 @@ export default function MoviesManagement() {
                 >
                   Chọn Phim
                 </MenuItem>
-                {movieList2?.map((phim) => (
+                {movieList2?.data?.map((phim) => (
                   <MenuItem
-                    value={phim.maPhim} // giá trị sẽ được đẩy lên
-                    key={phim.maPhim}
+                    value={phim.id} // giá trị sẽ được đẩy lên
+                    key={phim.id}
                     classes={{
                       root: classes.menu__item,
                       selected: classes["menu__item--selected"],
                     }}
                   >
-                    {phim.tenPhim}
+                    {phim.name}
                   </MenuItem>
                 ))}
               </Select>
