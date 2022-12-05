@@ -263,7 +263,7 @@ export default function Index() {
               </Fab>
             </div>
           )}
-          <ul className="list-group">
+          {/* <ul className="list-group">
             <li className="list-group-item text-muted">Activity</li>
             <li className="list-group-item text-right">
               <span className="float-left">
@@ -289,7 +289,7 @@ export default function Index() {
               </span>
               {dataShort.total}
             </li>
-          </ul>
+          </ul> */}
         </div>
         <div className={`col-sm-9 py-3 px-0`}>
           <AppBar className={classes.appBar} position="static" style={{"backgroundColor":"orange","borderRadius":"5px"}}>
