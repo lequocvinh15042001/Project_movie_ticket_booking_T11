@@ -1,12 +1,9 @@
 import React from "react";
-
 import ScrollToTop from "react-scroll-up";
 import { makeStyles } from "@material-ui/core";
-
 import Header from "./Header";
-// import Footer from "./Footer";
 import Footer from "./../../components/Footer/Footer";
-import Logo from "../../assets/LeafSVG"
+import NavigationIcon from '@mui/icons-material/Navigation';
 
 const useStyles = makeStyles((theme) => ({
   top: {
@@ -35,16 +32,9 @@ export default function MainLayout(props) {
       {props.children}
       <Footer />
       <ScrollToTop showUnder={160}>
-        {/* <img
-          src="../../"
-          alt="totop"
-          className={classes.styleScrollToTop}
-        /> */}
-        <Logo
-          fillColor={"#fb4226"}
-          alt="totop"
-          className={classes.styleScrollToTop}
-        />
+        <NavigationIcon 
+        style={{color:"orange", width:"52px", height:"52px", 
+         borderRadius:"50%", backgroundColor:"white"}}/>
       </ScrollToTop>
     </div>
   );
