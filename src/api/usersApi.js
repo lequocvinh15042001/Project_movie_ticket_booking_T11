@@ -46,13 +46,13 @@ const usersApi = {
   },
 
   getThongTinTaiKhoan: () => {
-    console.log("Vô get");
+    // console.log("Vô get");
     const path = "/user/me";
     return axiosClient.get(path);
   },
 
   getChiTietTaiKhoan: (username) => {
-    console.log(username);
+    // console.log(username);
     const path = `/user/${username}`;
     return axiosClient.get(path);
   },

@@ -11,6 +11,8 @@ import { theme } from "./constants/config";
 // layout
 const MainLayout = lazy(() => import("./layouts/MainLayout"));
 const AuthLayout = lazy(() => import("./layouts/AuthLayout"));
+const AuthLayoutAdmin = lazy(() => import("./layouts/AuthLayoutAdmin"));
+const AuthLayoutStaff = lazy(() => import("./layouts/AuthLayoutStaff"));
 const AdminLayout = lazy(() => import("./layouts/AdminLayout"));
 // guards
 const AdminRoute = lazy(() => import("./guards/AdminRoute"));
@@ -26,6 +28,8 @@ const UsersManagement = lazy(() => import("./pages/UsersManagement"));
 const MoviesManagement = lazy(() => import("./pages/MoviesManagement"));
 const CreateShowtime = lazy(() => import("./pages/CreateShowtime"));
 const Login = lazy(() => import("./pages/Login"));
+const LoginAdmin = lazy(() => import("./pages/LoginAdmin"));
+const LoginStaff = lazy(() => import("./pages/LoginStaff"));
 const Register = lazy(() => import("./pages/Register"));
 const DetailNews = lazy(() => import("./pages/DetailNews"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -92,6 +96,18 @@ function App() {
                 <Route exact path="/dangnhap" component={Login} />
                 <Route exact path="/dangky" component={Register} />
               </AuthLayout>
+            </Route>
+
+            <Route exact path={["/admin"]}>
+              <AuthLayoutAdmin>
+                <Route exact path="/admin" component={LoginAdmin} />
+              </AuthLayoutAdmin>
+            </Route>
+
+            <Route exact path={["/staff"]}>
+              <AuthLayoutStaff>
+                <Route exact path="/staff" component={LoginStaff} />
+              </AuthLayoutStaff>
             </Route>
 
             <Route component={NotFound} />

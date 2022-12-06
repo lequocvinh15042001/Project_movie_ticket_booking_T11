@@ -8,13 +8,14 @@ import { useDispatch } from 'react-redux';
 
 import { LOADING_BACKTO_HOME } from '../../reducers/constants/Lazy';
 
-const bgAuth = '/img/posterBG.jpg'
+// const bgAuth = '/img/posterBG.jpg'
 
 const useStyles = makeStyles(theme => ({
   backgroundImage: {
     width: '100vw',
     height: '100vh',
-    backgroundImage: `url(${bgAuth})`,
+    // backgroundImage: `url(${bgAuth})`,
+    backgroundColor:"white",
     backgroundSize: 'contain',
     backgroundPosition: 'center',
     display: 'flex',
@@ -23,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 
   },
   bgBlueColor: {
-    backgroundImage: "linear-gradient(to bottom,rgba(200, 200, 0, 1),rgba(255, 67, 67,.9))",
+    backgroundImage: "linear-gradient(to bottom,rgba(255, 0, 0, 1),rgba(255, 67, 67,.9))",
     width: 700,
     height: "fit-content",
     [theme.breakpoints.down("sm")]: {
@@ -39,7 +40,7 @@ const useStyles = makeStyles(theme => ({
     top: 0,
     right: 0,
     transform: "translate(50%,-50%)",
-    border: '2px solid white',
+    border: '2px solid black',
     [theme.breakpoints.down("sm")]: {
       border: "none",
       top: 19,
@@ -73,7 +74,7 @@ export default function AuthLayout(props) {
       <div className={classes.bgBlueColor}>
         {props.children}
         <IconButton className={classes.closeButton} onClick={handleClose} >
-          <CloseIcon style={{ color: 'white' }} fontSize='small' />
+          <CloseIcon style={{ color: 'black'}} fontSize='small' />
         </IconButton>
       </div>
     </div>

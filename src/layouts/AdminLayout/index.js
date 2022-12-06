@@ -16,7 +16,7 @@ export default function AdminLayout(props) {
   const isMobile = useMediaQuery('(max-width:768px)');
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.authReducer);
-  console.log(currentUser);
+  // console.log(currentUser);
   // const { currentUser } = useSelector((state) => state.usersManagementReducer);
   // console.log(currentUser);
   const [userAdmin, setUserAdmin]= useState();
@@ -55,7 +55,7 @@ export default function AdminLayout(props) {
   useEffect(() => {
     usersApi.getThongTinTaiKhoan()
     .then((response) =>{
-      console.log("AMIN LAYOUT: ", response?.data);
+      // console.log("AMIN LAYOUT: ", response?.data);
       setCUser(response?.data);
       dispatch({
         type: LOGIN_SUCCESS,
@@ -65,7 +65,7 @@ export default function AdminLayout(props) {
       });
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
       dispatch({
         type: LOGIN_FAIL,
         payload: {
@@ -78,7 +78,7 @@ export default function AdminLayout(props) {
     // localStorage.setItem('userLogin', JSON.stringify(...setUserLog.data))
   },[])
 
-  console.log(cUser);
+  // console.log(cUser);
   // currentUser = userAdmin;
   // if (currentUser?.data?.role === "[ROLE_ADMIN]") { // nếu không phải tài khoản quản trị thì ẩn đi giao diện AdminLayout, vẫn truyền vào children để hiện thông báo trong children
   //   return <>{props.children}</>

@@ -50,16 +50,17 @@ export default function Login() {
 
   useEffect(() => {
     // đăng nhập thành công thì quay về trang trước đó
-    if (currentUser && currentUser?.data?.role !== "[ROLE_USER]") {
-      if (location.state === "/") {
-        // nếu trang trước đó là "/" thì phải hiện loading do trang home mất nhiều thời gian tải
-        dispatch({ type: LOADING_BACKTO_HOME });
-        setTimeout(() => {
-          history.push("/");
-        }, 50);
-        return undefined;
-      }
-      history.push(location.state);
+    if (currentUser) {
+      // if (location.state === "/") {
+      //   // nếu trang trước đó là "/" thì phải hiện loading do trang home mất nhiều thời gian tải
+      //   dispatch({ type: LOADING_BACKTO_HOME });
+      //   setTimeout(() => {
+      //     history.push("/admin/movies");
+      //   }, 50);
+      //   return undefined;
+      // }
+      // history.push(location.state);
+      history.push("/admin/movies");
     }
   }, [currentUser]);
   useEffect(() => {
@@ -77,9 +78,6 @@ export default function Login() {
   const handleSubmit = (user) => {
     console.log('người dùng nhập user',user);
     dispatch(login(user));
-  };
-  const handleDangKy = () => {
-    history.push("/dangky", location.state);
   };
 
   const handleHold = () => {
@@ -110,7 +108,7 @@ export default function Login() {
       <div className="container">
         <logoLogin className={classes.logoTix} />
         <p className={classes.text}>
-          Login!
+          STAFF
         </p>
       </div>
       <div>
@@ -161,13 +159,6 @@ export default function Login() {
                   )}
                 </div>
               </div>
-              <p
-                className="text-success"
-                style={{ cursor: "pointer" }}
-                onClick={handleDangKy}
-              >
-                * Register
-              </p>
               <button
                 style={{
                   backgroundColor: "#3E63b6",

@@ -87,7 +87,7 @@ export default function NavBar({ onMobileClose, openMobile }) {
     })
     usersApi.getThongTinTaiKhoan()
       .then(result => {
-        console.log("getThongTinTaiKhoan: ", result);
+        // console.log("getThongTinTaiKhoan: ", result);
         setUserAdmin(result.data.data)
         dispatch({
           type: GET_INFO_USER_SUCCESS,
