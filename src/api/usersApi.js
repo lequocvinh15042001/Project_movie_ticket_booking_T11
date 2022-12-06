@@ -24,7 +24,7 @@ const usersApi = {
   },
 
   postThemNguoiDung: (user) => {
-    const path = "/";
+    const path = "/auth/signup";
 
     return axiosClient.post(path, user);
   },

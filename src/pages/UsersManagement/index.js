@@ -31,6 +31,7 @@ import {
   setStatusIsExistUserModified,
 } from "../../reducers/actions/UsersManagement";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import Swal from "sweetalert2";
 
 function validateEmail(email) {
   const re =
@@ -89,7 +90,9 @@ export default function UsersManagement() {
         email: "",
         name: "",
         image: "",
-        roles: "",
+        role: "",
+        createdAt:"",
+        updatedAt:"",
       },
     ],
     toggle: false,
@@ -129,28 +132,28 @@ export default function UsersManagement() {
       if (userListmodified.userListmodified.length) {
         // nếu nhấn cancel và vẫn còn một số user chưa update thì giữ lại data dang chỉnh sửa
         const userListmodifiedRest = userListmodified.userListmodified;
-        newUsersListDisplay = usersList.map(function (userNew) {
+        newUsersListDisplay = usersList?.data?.map(function (userNew) {
           let userModified = this.find(
-            (user) => user.roles === userNew.roles
+            (user) => user.role === userNew.role
           );
           if (userModified) {
             userModified = { ...userModified };
             delete userModified.maNhom;
             return {
               ...userModified,
-              id: userModified.username,
+              id: userModified.id,
               xoa: "",
-              roles:
-                userModified.roles === "[ROLE_ADMIN]" ? true : false,
+              role:
+                userModified.role === "ROLE_ADMIN" ? true : false,
               ismodify: true,
             };
           }
           return {
             ...userNew,
             xoa: "",
-            id: userNew.username,
-            roles:
-              userNew.roles === "[ROLE_ADMIN]" ? true : false,
+            id: userNew.id,
+            role:
+              userNew.role === "ROLE_ADMIN" ? true : false,
             ismodify: false,
           };
         }, userListmodifiedRest);
@@ -159,7 +162,7 @@ export default function UsersManagement() {
           ...user,
           xoa: "",
           id: user.id,
-          roles: user.roles === "[ROLE_ADMIN]" ? true : false,
+          role: user.role === "ROLE_ADMIN" ? true : false,
           ismodify: false,
         })); // id là prop bắt buộc
       }
@@ -190,25 +193,56 @@ export default function UsersManagement() {
     }
     if (successUpdateUser) {
       setUserListmodified((data) => ({ ...data, triggerUpdate: nanoid(6) }));
-      enqueueSnackbar("Update thành công", { variant: "success" });
+      // enqueueSnackbar("Update successfully!", { variant: "success" });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Update Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
       return;
     }
     if (errorUpdateUser) {
       setUserListmodified((data) => ({ ...data, triggerUpdate: nanoid(6) }));
-      enqueueSnackbar(errorUpdateUser, { variant: "error" });
+      // enqueueSnackbar(errorUpdateUser, { variant: "error" });
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Update Error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
     }
   }, [successUpdateUser, errorUpdateUser]);
 
   useEffect(() => {
     // add user xong thì thông báo
     if (successAddUser) {
-      enqueueSnackbar(
-        `Đã thêm thành công tài khoản: ${successAddUser.username}`,
-        { variant: "success" }
-      );
+      // enqueueSnackbar(
+      //   `Add new user successfully: ${successAddUser.username}`,
+      //   { variant: "success" }
+      // );
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Add User Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
     }
     if (errorAddUser) {
-      enqueueSnackbar(errorAddUser, { variant: "error" });
+      // enqueueSnackbar(errorAddUser, { variant: "error" });
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Add User Error",
+          showConfirmButton: false,
+          timer: 1500,
+        });
     }
     setaddUser({
       data: [
@@ -218,7 +252,9 @@ export default function UsersManagement() {
           email: "",
           name: "",
           image: "",
-          roles: "",
+          role: "",        
+          createdAt:"",
+          updatedAt:"",
         },
       ],
       toggle: false,
@@ -254,7 +290,7 @@ export default function UsersManagement() {
   }, [userListDelete.triggerDelete]); // chỉ khi được kích hoạt thì mới thực hiện xóa tiếp user, nếu dùng chung successDelete, errorDelete làm trigger có thể lỗi do kết quả của useEffect trên phụ thuộc vào successDelete, errorDelete
 
   useEffect(() => {
-    if (userListmodified.userListmodified.length) {
+    if (userListmodified?.userListmodified?.length) {
       let newUserListmodified = [...userListmodified.userListmodified];
       const userUpdate = newUserListmodified.shift();
       setUserListmodified((data) => ({
@@ -311,7 +347,7 @@ export default function UsersManagement() {
           addUser.data[0].name !== "" ||
           addUser.data[0].email !== "" ||
           // addUser.data[0].soDt !== "" ||
-          addUser.data[0].roles === true;
+          addUser.data[0].role === true;
         const readyAdd =
           addUser.data[0].username !== "" &&
           addUser.data[0].createdAt !== "" &&
@@ -321,11 +357,11 @@ export default function UsersManagement() {
         setaddUser((data) => ({ ...data, readyAdd, isFilledIn }));
         return; // không thực hiệc các việc bên dưới nếu đang ở màn hình addUser
       }
-      const userOriginal = usersList.find((user) => user.id === id); // lấy ra phần tử chưa được chỉnh sửa
+      const userOriginal = usersList?.data?.find((user) => user.id === id); // lấy ra phần tử chưa được chỉnh sửa
       const valueDisplay = value;
       let valueModified = value;
-      if (field === "[ROLE_USER]") {
-        valueModified = value ? "[ROLE_ADMIN]" : "[ROLE_USER]";
+      if (field === "ROLE_USER") {
+        valueModified = value ? "ROLE_ADMIN" : "ROLE_USER";
       }
       const isChange = userOriginal[field] === valueModified ? false : true; // liệu có thay đổi
       const indexUserExist = userListmodified.userListmodified.findIndex(
@@ -363,7 +399,7 @@ export default function UsersManagement() {
           ...data,
           userListmodified: [
             ...userListmodified.userListmodified,
-            { ...userOriginal, [field]: valueModified, maNhom: "GP09" },
+            { ...userOriginal, [field]: valueModified },
           ],
         })); // nếu chưa tồn tại thì push vào
         return;
@@ -376,7 +412,7 @@ export default function UsersManagement() {
         const isEmailChange = userModified.email !== userOriginal.email;
         // const isSoDtChange = userModified.soDt !== userOriginal.soDt;
         const isMaLoaiNguoiDungChange =
-          userModified.roles !== userOriginal.roles;
+          userModified.role !== userOriginal.role;
         const isHoTenChange = userModified.name !== userOriginal.name;
         const ismodify =
           isMatKhauChange ||
@@ -386,7 +422,7 @@ export default function UsersManagement() {
           isHoTenChange;
         // xử lý display
         const updatedUsersListDisplay = usersListDisplay.map((row) => {
-          if (row.id === id) {
+          if (row.id === id) {//.taiKhoan
             return { ...row, ismodify, [field]: valueDisplay };
           }
           return row;
@@ -397,7 +433,7 @@ export default function UsersManagement() {
         if (ismodify) {
           const newUserListmodified = userListmodified.userListmodified.map(
             (user) => {
-              if (user.taiKhoan === id) {
+              if (user.id === id) {//.taiKhoan
                 return { ...userModified };
               }
               return user;
@@ -435,8 +471,10 @@ export default function UsersManagement() {
   const handleDeleteOne = (taiKhoan) => {
     if (loadingDelete) {
       // nếu click xóa liên tục một user
+      console.log("Xoa lien tuc");
       return;
     }
+    console.log("taiKhoan: ", taiKhoan);
     dispatch(deleteUser(taiKhoan));
   };
   // xóa nhiều user
@@ -492,7 +530,7 @@ export default function UsersManagement() {
       dispatch(
         postAddUser({
           ...addUser.data[0],
-          roles: userAdd.roles ? "[ROLE_ADMIN]" : "[ROLE_USER]",
+          // role: userAdd.role ? "ROLE_ADMIN" : "ROLE_USER",
           // maNhom: "GP09",
         })
       );
@@ -548,7 +586,7 @@ export default function UsersManagement() {
           renderCell: (params) => (
             <ButtonDelete
               onDeleted={handleDeleteOne}
-              taiKhoan={params.row.taiKhoan}
+              taiKhoan={params.row.id}
             />
           ),
           headerAlign: "center",
@@ -603,7 +641,7 @@ export default function UsersManagement() {
         //   headerClassName: "custom-header",
         // },
         {
-          field: "roles",
+          field: "role",
           headerName: "isAdmin",
           width: 145,
           editable: true,
@@ -723,7 +761,7 @@ export default function UsersManagement() {
               variant="contained"
               className={`${classes.userKhachHang} ${classes.button}`}
               onClick={() =>
-                setsortBy({ field: "roles", sort: "asc" })
+                setsortBy({ field: "role", sort: "asc" })
               }
             >
               Users
@@ -743,7 +781,7 @@ export default function UsersManagement() {
               variant="contained"
               className={`${classes.userQuanTri} ${classes.button}`}
               onClick={() =>
-                setsortBy({ field: "roles", sort: "desc" })
+                setsortBy({ field: "role", sort: "desc" })
               }
             >
               Admin Account
