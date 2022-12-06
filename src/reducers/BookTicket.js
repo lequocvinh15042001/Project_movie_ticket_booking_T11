@@ -1,3 +1,4 @@
+import { SignalCellularNullSharp } from '@material-ui/icons';
 import {
   BOOK_TICKET_REQUEST, BOOK_TICKET_SUCCESS, BOOK_TICKET_FAIL, GET_LISTSEAT_REQUEST,
   GET_LISTSEAT_SUCCESS, GET_LISTSEAT_FAIL, CHANGE_LISTSEAT, RESET_DATA_BOOKTICKET, SET_DATA_PAYMENT,
@@ -25,6 +26,9 @@ const initialState = {
 
   maLichChieu: null,
   taiKhoanNguoiDung: null,
+
+  //thêm mới nè
+  thongTinPhongVe: {},
 
   alertOver10: false,
 
@@ -59,8 +63,10 @@ const bookTicketReducer = (state = initialState, action) => {
     case GET_LISTSEAT_SUCCESS: {
       return {
         ...state,
+        // listSeat: action.payload.data,
         danhSachPhongVe: action.payload.data,
         loadingGetListSeat: false,
+        // thongTinPhongVe: action.payload.thongTinPhongVe,
       }
     }
     case GET_LISTSEAT_FAIL: {
@@ -78,6 +84,8 @@ const bookTicketReducer = (state = initialState, action) => {
         taiKhoanNguoiDung: action.payload.taiKhoanNguoiDung,
         email: action.payload.email,
         phone: action.payload.phone,
+        //thêm
+        thongTinPhongVe: action.payload.thongTinPhongVe,
       }
     }
 
@@ -90,6 +98,7 @@ const bookTicketReducer = (state = initialState, action) => {
         listSeatSelected: action.payload.listSeatSelected,
         danhSachVe: action.payload.danhSachVe,
         amount: action.payload.amount,
+        // thongTinPhongVe: action.payload.thongTinPhongVe,
       }
     }
     case RESET_DATA_BOOKTICKET: {
@@ -108,6 +117,7 @@ const bookTicketReducer = (state = initialState, action) => {
         refreshKey: Date.now(),
         amount: 0,
         alertOver10: false,
+        thongTinPhongVe: {},
       }
     }
     case SET_DATA_PAYMENT: {
@@ -116,12 +126,14 @@ const bookTicketReducer = (state = initialState, action) => {
         email: action.payload.email,
         phone: action.payload.phone,
         paymentMethod: action.payload.paymentMethod,
+        // thongTinPhongVe: action.payload.thongTinPhongVe,
       }
     }
     case SET_READY_PAYMENT: {
       return {
         ...state,
         isReadyPayment: action.payload.isReadyPayment,
+        // thongTinPhongVe: action.payload.thongTinPhongVe,
       }
     }
     case SET_STEP: {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import MovieIcon from '@material-ui/icons/Movie';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
@@ -15,28 +15,46 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import NavItem from './NavItem';
 import { FAKE_AVATAR } from '../../../constants/config';
+import { GET_INFO_USER_FAIL, GET_INFO_USER_REQUEST, GET_INFO_USER_SUCCESS } from '../../../reducers/constants/UsersManagement';
+import usersApi from '../../../api/usersApi';
 
 const items = [
   {
     href: '/admin/movies',
     icon: MovieIcon,
-    title: 'Quản lý Phim'
+    title: 'Movies Management'
   },
   {
     href: '/admin/users',
     icon: PeopleAltIcon,
-    title: 'Quản lý người dùng'
+    title: 'Users Management'
+  },
+  {
+    href: '#',
+    icon: PostAddIcon,
+    title: 'Reviews Managment'
+  },
+  {
+    href: '#',
+    icon: PostAddIcon,
+    title: 'Categories Managment'
   },
   {
     href: '/admin/showtimes',
     icon: PostAddIcon,
-    title: 'Tạo lịch chiếu'
+    title: 'Create Schedule'
   },
+  {
+    href: '#',
+    icon: PostAddIcon,
+    title: 'Book for User'
+  },
+
 ];
 
 const useStyles = makeStyles(() => ({
@@ -59,7 +77,37 @@ export default function NavBar({ onMobileClose, openMobile }) {
   const classes = useStyles();
   const location = useLocation();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const [userAdmin, setUserAdmin]= useState();
   const { currentUser } = useSelector((state) => state.authReducer);
+
+  useEffect(() => {
+    dispatch({
+      type: GET_INFO_USER_REQUEST
+    })
+    usersApi.getThongTinTaiKhoan()
+      .then(result => {
+        // console.log("getThongTinTaiKhoan: ", result);
+        setUserAdmin(result.data.data)
+        dispatch({
+          type: GET_INFO_USER_SUCCESS,
+          payload: {
+            data: result.data,
+          }
+        })
+      }
+      )
+      .catch(
+        error => {
+          dispatch({
+            type: GET_INFO_USER_FAIL,
+            payload: {
+              error: error.response?.data?.data ? error.response.data?.data : error.message,
+            }
+          })
+        }
+      )
+  },[])
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -70,8 +118,8 @@ export default function NavBar({ onMobileClose, openMobile }) {
 
   const user = {
     avatar: FAKE_AVATAR,
-    jobTitle: 'Senior Developer',
-    name: currentUser?.hoTen,
+    jobTitle: 'Admin',
+    name: userAdmin?.name,
   };
 
   const handleUser = () => {
@@ -88,15 +136,32 @@ export default function NavBar({ onMobileClose, openMobile }) {
       display="flex"
       flexDirection="column"
     >
+      <Divider />
+
+      {/* đây là phần menu lựa chọn */}
+      <Box p={2}>
+        <List>
+          {items.map((item) => (
+            // NavItem hiện thị ra icon và title
+            <NavItem
+              href={item.href}
+              key={item.title}
+              title={item.title}
+              icon={item.icon}
+            />
+          ))}
+        </List>
+      </Box>
+
       {/* đây là phần logo avatar user và tên user */}
       <Box
         // căn giữa cột
         alignItems="center"
         display="flex"
         flexDirection="column"
-        p={2} // padding 2
+        p={5} // padding 2
       >
-        <Tooltip title="Thông tin tài khoản">
+        <Tooltip title="User information">
           <Avatar
             className={classes.avatar}
             src={user.avatar}
@@ -117,28 +182,12 @@ export default function NavBar({ onMobileClose, openMobile }) {
           {user.jobTitle}
         </Typography>
       </Box>
-      <Divider />
-
-      {/* đây là phần menu lựa chọn */}
-      <Box p={2}>
-        <List>
-          {items.map((item) => (
-            // NavItem hiện thị ra icon và title
-            <NavItem
-              href={item.href}
-              key={item.title}
-              title={item.title}
-              icon={item.icon}
-            />
-          ))}
-        </List>
-      </Box>
     </Box>
+    
   );
 
   return (
     <>
-
       {/* đây là giao diện mobile */}
       <Hidden lgUp>
         <Drawer

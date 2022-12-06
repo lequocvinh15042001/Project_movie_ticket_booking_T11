@@ -8,6 +8,7 @@ import TenCumRap from '../../../../components/TenCumRap';
 
 function LstCumRap(props) {
   const { lstCumRap, color } = props;
+  console.log(lstCumRap);
   const [valueCumRap, setValueCumRap] = React.useState(0);
   const classes = useStyles({ underLine, customScrollbar, color });
   const handleChangeCumRap = (e) => {
@@ -16,21 +17,22 @@ function LstCumRap(props) {
   return (
     <div className={classes.flexCumRap}>
       <div className={classes.lstCumRap}>
-        {lstCumRap?.map((cumRap, index) =>
-        (
-          <div className={classes.cumRap} index={index} onClick={(e,) => handleChangeCumRap(e)} key={cumRap.maCumRap} style={{ opacity: valueCumRap === index ? '1' : '.5' }}>
-            <FakeImgTheater nameTheater={cumRap.tenCumRap} imgStyle={classes.cumRap__img} />
+        {/* {lstCumRap?.map((cumRap, index) =>
+        ( */}
+          <div className={classes.cumRap} index={lstCumRap.id} onClick={(e,) => handleChangeCumRap(e)} key={lstCumRap.id} style={{ opacity: valueCumRap === lstCumRap.id ? '1' : '.5' }}>
+            <FakeImgTheater nameTheater={lstCumRap.name} imgStyle={classes.cumRap__img} />
             <div className={classes.cumRap__info}>
-              <TenCumRap tenCumRap={cumRap.tenCumRap} />
-              <p className={classes.cumRap__address}>{cumRap.diaChi}</p>
+              <TenCumRap tenCumRap={lstCumRap.name} giaVe={70000} />
+              <p className={classes.cumRap__address}>{lstCumRap.address}</p>
             </div>
           </div>
-        )
-        )}
+        {/* ) */}
+        {/* )} */}
       </div>
-      {lstCumRap.map((cumRap, index) => (
-        <LstPhim lstPhim={cumRap.danhSachPhim} key={cumRap.maCumRap} hidden={valueCumRap !== index} />
-      ))}
+      {/* {lstCumRap.map((cumRap, index) => ( */}
+        {/* <LstPhim lstPhim={lstCumRap.danhSachPhim} key={lstCumRap.id} hidden={valueCumRap !== lstCumRap.id} /> */}
+        <LstPhim idRap={lstCumRap.id} key={lstCumRap.id} hidden={valueCumRap !== lstCumRap.id} />
+      {/* ))} */}
     </div>
   );
 }

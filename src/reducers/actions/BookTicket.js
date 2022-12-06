@@ -10,8 +10,10 @@ export const getListSeat = (maLichChieu) => {
     dispatch({
       type: GET_LISTSEAT_REQUEST
     })
+    console.log("getListSeat: ", maLichChieu);
     bookingApi.getDanhSachPhongVe(maLichChieu)
       .then(result => {
+       console.log("data danh sách ghế nè: ", result.data);
         dispatch({
           type: GET_LISTSEAT_SUCCESS,
           payload: { data: result.data }
@@ -29,6 +31,7 @@ export const getListSeat = (maLichChieu) => {
 }
 
 export const bookTicket = (data) => {
+  console.log("Data đặt vé: ",data);
   return (dispatch) => {
     dispatch({
       type: BOOK_TICKET_REQUEST
@@ -41,6 +44,7 @@ export const bookTicket = (data) => {
             data: result.data,
           }
         })
+        console.log("Kết quả: ",result);
       })
       .catch(
         error => {

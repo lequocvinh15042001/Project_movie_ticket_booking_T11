@@ -65,7 +65,7 @@ export default function SimpleTabs() {
     (state) => state.movieReducer
   );
 
-  console.log('Selector DS Phim: ', movieList)
+  // console.log('Selector DS Phim: ', movieList)
   const timeout = useRef(null);
   const [arrayData, setarrayData] = useState({
     dailyMovieList: null,
@@ -118,12 +118,12 @@ export default function SimpleTabs() {
           <Tab
             disableRipple
             className={`${classes.tabButton} ${classes.tabDangChieu}`}
-            label="Đang chiếu"
+            label="Showing!"
           />
           <Tab
             disableRipple
             className={`${classes.tabButton} ${classes.tabSapChieu}`}
-            label="Sắp chiếu"
+            label="Will Show!"
           />
         </Tabs>
       </AppBar>

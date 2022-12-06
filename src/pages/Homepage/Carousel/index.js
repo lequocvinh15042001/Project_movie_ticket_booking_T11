@@ -10,10 +10,12 @@ import { useDispatch } from "react-redux";
 
 import homeCarouselData from "../../../constants/homeCarouselData";
 import SearchStickets from "./SearchTickets";
+import Choose from "./Choose";
 import useStyles from "./styles";
 import BtnPlay from "../../../components/BtnPlay";
 import { LOADING_BACKTO_HOME_COMPLETED } from "../../../reducers/constants/Lazy";
 import "./carousel.css";
+import Booking from "./Booking";
 
 export default function Carousel() {
   const dispatch = useDispatch();
@@ -24,13 +26,18 @@ export default function Carousel() {
   const settings = {
     dots: true,
     infinite: true,
-    autoplaySpeed: 5000, //speed per sence
-    autoplay: false,
-    speed: 500,
-    swipeToSlide: true,
+    // autoplaySpeed: 5000, //speed per sence
+    // autoplay: false,
+    // speed: 500,
+    // swipeToSlide: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    pauseOnHover: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    dotsClass: "slickdotsbanner",
+    // dotsClass: "slickdotsbanner",
   };
 
   useEffect(() => {
@@ -62,7 +69,7 @@ export default function Carousel() {
   return (
     <div id="carousel" className={classes.carousel}>
       <Slider {...settings}>
-        {homeCarouselData.map((banner) => {
+        {homeCarouselData?.map((banner) => {
           return (
             <div key={banner.maPhim} className={classes.itemSlider}>
               <img src={banner?.hinhAnh} alt="banner" className={classes.img} />
@@ -77,7 +84,17 @@ export default function Carousel() {
           );
         })}
       </Slider>
-      <SearchStickets />
+      {/* <div style={{"backgroundColor":"white",
+       "paddingBottom":"5rem",
+        "paddingTop":"2rem",
+         "width":"50rem",
+         "height":"20rem",
+           "left":"0",
+           "bottom":"0"}}>
+      <Booking/>
+      </div> */}
+      {/* <SearchStickets /> */}
+      <Choose/>
     </div>
   );
 }

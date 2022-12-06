@@ -9,8 +9,8 @@ export default function AlertCanNotAccess() {
       allowOutsideClick: false,
       icon: 'error',
       title: 'Oops...',
-      text: 'Tài khoản này không phải tài khoản Quản Trị!',
-      confirmButtonText: `Quay về trang chủ`,
+      text: 'You do not have access!!',
+      confirmButtonText: `Go back Home`,
     }).then((result) => {
       if (result.isConfirmed) {
         history.replace('/')

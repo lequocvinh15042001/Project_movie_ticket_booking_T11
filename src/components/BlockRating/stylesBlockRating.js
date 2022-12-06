@@ -3,14 +3,14 @@ import { makeStyles } from "@material-ui/core"
 const useStyles = makeStyles((theme) => ({
   film__point: {
     fontFamily: '"SF Medium"',
-    backgroundColor: "rgba(12, 27, 54, 0.8)",
+    backgroundColor: "rgba(38, 20, 84, 1)",
     border: "1px solid #1f2e46",
     borderRadius: "4px",
     padding: "2px",
     position: "absolute",
     top: "12px",
     right: "12px",
-    color: "#fff",
+    color: "#ff4500",
     width: "54px",
     textAlign: "center",
     lineHeight: 1.1
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "10px !important",
   },
   iconFilled: {
-    color: "rgb(251, 66, 38)",
+    color: "rgb(255, 255, 0)",
   },
   iconEmpty: {
     color: "rgba(251, 66, 38, 0.3)",

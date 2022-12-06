@@ -41,7 +41,8 @@ const TopBar = ({
     >
       <Toolbar>
         <div onClick={handleClickLogo} style={{ cursor: "pointer" }}>
-          <img src="/img/headTixLogo.png" alt="logo" style={{ height: 50 }} />
+          {/* <img src="/img/headTixLogo.png" alt="logo" style={{ height: 50 }} /> */}
+          <h5>GOLDEN TICKET NEW WEBSITE</h5>
         </div>
 
         {/* 1 thẻ div chiếm hết khoảng trống còn lại dể dồn các icon về 2 bên */}
@@ -58,7 +59,7 @@ const TopBar = ({
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <Tooltip title="Đăng xuất">
+          <Tooltip title="Log out">
             <IconButton color="inherit" onClick={() => dispatch({ type: LOGOUT })}>
               <InputIcon />
             </IconButton>

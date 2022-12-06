@@ -26,31 +26,37 @@ const moviesApi = {
   },
 
   postThemPhimUpload: (movie) => {
-    const path = `/QuanLyPhim/ThemPhimUploadHinh`;
+    const path = `/movies/addNew`;
+    console.log(movie);
     //trong obj movie có key hinhAnh là file nên phải chuyển sang formData
-    const formData = new FormData();
-    for (const key in movie) {
-      formData.append(key, movie[key]);
-    }
-    return axiosClient.post(path, formData);
-  },
-
-  postCapNhatPhimUpload: (movie) => {
-    const path = `/QuanLyPhim/CapNhatPhimUpload`;
-    const formData = new FormData();
-    for (const key in movie) {
-      formData.append(key, movie[key]);
-    }
-    return axiosClient.post(path, formData);
-  },
-
-  postCapNhatPhim: (movie) => {
-    const path = `/QuanLyPhim/CapNhatPhim`;
+    // const formData = new FormData();
+    // for (const key in movie) {
+    //   // console.log(key);
+    //   formData.append(key, movie[key]);
+    // }
+    // return axiosClient.post(path, formData);
     return axiosClient.post(path, movie);
   },
 
+  postCapNhatPhimUpload: (movie) => {
+    console.log("update phim upload: ", movie);
+    const path = `/movies/update`;
+    // const formData = new FormData();
+    // for (const key in movie) {
+    //   formData.append(key, movie[key]);
+    // }
+    // return axiosClient.put(path, formData);
+    return axiosClient.put(path, movie);
+  },
+
+  postCapNhatPhim: (movie) => {
+    console.log("update phim: ", movie);
+    const path = `/movies/update`;
+    return axiosClient.put(path, movie);
+  },
+
   deleteMovie: (maPhim) => {
-    const path = `/QuanLyPhim/XoaPhim?MaPhim=${maPhim}`;
+    const path = `/movies/${maPhim}`;
     return axiosClient.delete(path);
   },
 };

@@ -36,14 +36,15 @@ export default function Index() {
     }
   }, [])
 
+
   if (errorMovieDetail) {
     return <div>{errorMovieDetail}</div>
   }
     return (
     <>
-      {  isMobile ? <Mobile movieDetailShowtimes={movieDetail} isMobile={isMobile} /> 
+      {  isMobile ? <Mobile movieDetailShowtimes={movieDetail.data} isMobile={isMobile} /> 
           : 
-            <Desktop movieDetailShowtimes={movieDetail} isMobile={isMobile} />}
+            <Desktop movieDetailShowtimes={movieDetail.data} isMobile={isMobile} />}
     </>
   )
 }

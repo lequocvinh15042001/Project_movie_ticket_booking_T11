@@ -242,7 +242,7 @@ export default function CenteredTabs({
     if (!currentUser) {
       // nếu chưa đăng nhập
       Swal.fire({
-        title: "Bạn cần phải đăng nhập",
+        title: "You need to login!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -301,6 +301,7 @@ export default function CenteredTabs({
         timeout={400}
         in={valueTab === (location.state?.comingMovie ? "hide" : 0)}
       >
+        {/* Chỗ này đặt vé nè */}
         <TabPanel
           value={valueTab}
           index={location.state?.comingMovie ? "hide" : 0}
@@ -396,7 +397,7 @@ export default function CenteredTabs({
               <input
                 className={classes.inputReviwer}
                 type="text"
-                placeholder="Bạn nghĩ gì về phim này?"
+                placeholder="What do you think about this film?"
                 readOnly="readonly"
               />
 
@@ -483,7 +484,7 @@ export default function CenteredTabs({
               onClick={() => setopenMore()}
               className={classes.moreMovieButton}
             >
-              XEM THÊM
+              See more
             </Button>
           </div>
         </TabPanel>
@@ -529,15 +530,14 @@ export default function CenteredTabs({
             label={
               dataComment.post
                 ? ""
-                : "Nói cho mọi người biết bạn nghĩ gì về phim này..."
+                : "Tell everyone about your think..."
             }
           />
         </DialogContent>
         <DialogActions className="justify-content-center flex-column px-4">
           {warningtext && (
             <DialogContentText className="text-danger">
-              Phim đem đến cảm xúc tuyệt vời cho bạn chứ? Chia sẻ thêm nữa đi
-              bạn ơi và nhớ gõ trên 60 kí tự nhé.
+              Please type more than 60 chart!
             </DialogContentText>
           )}
           <Button
@@ -545,7 +545,7 @@ export default function CenteredTabs({
             variant="contained"
             className={classes.btnDang}
           >
-            Đăng
+            Post
           </Button>
         </DialogActions>
       </Dialog>

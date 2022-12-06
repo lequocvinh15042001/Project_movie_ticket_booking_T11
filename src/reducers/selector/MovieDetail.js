@@ -74,6 +74,7 @@ const selectMobileData = createSelector(
 
 // đây chỉ là function nhằm mục đích tạo ra data mới từ currentSelectedHeThongRapChieu
 const selectDesktopData = (currentSelectedHeThongRapChieu) => {
+  console.log("currentSelectedHeThongRapChieu: ",currentSelectedHeThongRapChieu);
   // lọc ra tất cả lichChieuPhim và add thêm props tenCumRap để nhận biết lichChieuPhim này thuộc cụm rạp nào
   const arrayAllLichChieuPhim = currentSelectedHeThongRapChieu.cumRapChieu.reduce((colect, item) => {
     return [...colect,

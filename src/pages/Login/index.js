@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-
+import {logoLogin} from '../../assets/LeafSVG'
 import logoTix from "../Register/logo/logoTix.png";
 import { login, resetErrorLoginRegister } from "../../reducers/actions/Auth";
 import { LOADING_BACKTO_HOME } from "../../reducers/constants/Lazy";
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     textAlign: "center",
+    fontSize:"3rem",
     marginBottom: "30px",
   },
 }));
@@ -49,7 +50,7 @@ export default function Login() {
 
   useEffect(() => {
     // đăng nhập thành công thì quay về trang trước đó
-    if (currentUser) {
+    if (currentUser && currentUser?.data?.role !== "[ROLE_USER]") {
       if (location.state === "/") {
         // nếu trang trước đó là "/" thì phải hiện loading do trang home mất nhiều thời gian tải
         dispatch({ type: LOADING_BACKTO_HOME });
@@ -71,6 +72,7 @@ export default function Login() {
     usernameOrEmail: yup.string().required("*Username Or Email not be empty !"),
     password: yup.string().required("*Password not be empty !"),
   });
+
 
   const handleSubmit = (user) => {
     console.log('người dùng nhập user',user);
@@ -106,7 +108,7 @@ export default function Login() {
   return (
     <div className="text-light" style={{ padding: "60px 32px 30px" }}>
       <div className="container">
-        <img src={logoTix} alt="logoTix" className={classes.logoTix} />
+        <logoLogin className={classes.logoTix} />
         <p className={classes.text}>
           Login!
         </p>

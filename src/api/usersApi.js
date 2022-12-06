@@ -1,7 +1,6 @@
 import axiosClient from "./axiosClient";
 
 const usersApi = {
-  //post user:object gồm taiKhoan, matKhau, email,...
   postDangKy: (user) => {
     const path = "/auth/signup";
     return axiosClient.post(path, user);
@@ -15,35 +14,47 @@ const usersApi = {
   },
 
   getDanhSachNguoiDung: () => {
-    const path = "/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP09";
+    const path = "/user/getAll";
     return axiosClient.get(path);
   },
 
   getDanhSachNguoiDungPhanTrang: (soTrang, soPhanTuTrenTrang) => {
-    const path = "/QuanLyNguoiDung/LayDanhSachNguoiDungPhanTrang?MaNhom=GP09";
+    const path = "/";
     return axiosClient.get(path, { soTrang, soPhanTuTrenTrang });
   },
 
   postThemNguoiDung: (user) => {
-    const path = "/QuanLyNguoiDung/ThemNguoiDung";
+    const path = "/";
 
     return axiosClient.post(path, user);
   },
 
+  getTicket: (userId) =>{
+    const path = `/tickets?userId=${userId}`;
+    return axiosClient.get(path);
+  },
+
   deleteUser: (taiKhoan) => {
-    const path = `/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`;
+    const path = `user/${taiKhoan}`;
 
     return axiosClient.delete(path);
   },
 
   editTaiKhoan: (user) => {
-    const path = `/QuanLyNguoiDung/CapNhatThongTinNguoiDung`;
+    const path = `/user/updateInfo`;
     return axiosClient.put(path, user);
   },
 
   getThongTinTaiKhoan: () => {
-    const path = `/user/me`;
-    return axiosClient.post(path);
+    // console.log("Vô get");
+    const path = "/user/me";
+    return axiosClient.get(path);
+  },
+
+  getChiTietTaiKhoan: (username) => {
+    // console.log(username);
+    const path = `/user/${username}`;
+    return axiosClient.get(path);
   },
 };
 

@@ -12,18 +12,24 @@ import {
   SET_ALERT_OVER10,
 } from "../../../reducers/constants/BookTicket";
 import TenCumRap from "../../../components/TenCumRap";
+import poster from "../../../assets/posterBG.jpg"
 
 export default function ListSeat() {
   const {
     isMobile,
     listSeat,
     danhSachPhongVe: { thongTinPhim },
+    thongTinPhongVe,
   } = useSelector((state) => state.bookTicketReducer);
+  console.log("-------", listSeat);
+  console.log("------sdas-", thongTinPhongVe);
   const domToSeatElement = useRef(null);
   const [widthSeat, setWidthSeat] = useState(0);
   const classes = useStyles({
-    color: colorTheater[thongTinPhim?.tenCumRap.slice(0, 3).toUpperCase()],
-    modalLeftImg: thongTinPhim?.hinhAnh,
+    color: colorTheater[thongTinPhongVe?.setRap?.slice(0,3).toUpperCase()],
+    //color: "white",
+    modalLeftImg: thongTinPhongVe?.setPhim?.smallImageURl,
+   // modalLeftImg: poster,
     isMobile,
     widthLabel: widthSeat / 2,
   });
@@ -42,13 +48,13 @@ export default function ListSeat() {
   };
 
   const handleSelectedSeat = (seatSelected) => {
-    if (seatSelected.daDat) {
+    if (seatSelected.isOccupied) {
       // click vào ghế đã có người chọn
       return;
     }
     // đổi lại giá trị selected của ghế đã chọn
     let newListSeat = listSeat.map((seat) => {
-      if (seatSelected.maGhe === seat.maGhe) {
+      if (seatSelected.id === seat.id) {
         return { ...seat, selected: !seat.selected };
       }
       return seat;
@@ -73,7 +79,7 @@ export default function ListSeat() {
     // cập nhật lại danhSachVe dùng để booking
     const danhSachVe = newListSeat?.reduce((danhSachVe, seat) => {
       if (seat.selected) {
-        return [...danhSachVe, { maGhe: seat.maGhe, giaVe: seat.giaVe }];
+        return [...danhSachVe, { id: seat.id}];//giá vé nè thay vô
       }
       return danhSachVe;
     }, []);
@@ -82,7 +88,7 @@ export default function ListSeat() {
     // tính lại tổng tiền
     const amount = newListSeat?.reduce((amount, seat) => {
       if (seat.selected) {
-        return (amount += seat.giaVe);
+        return (amount += 70000);
       }
       return amount;
     }, 0);
@@ -99,16 +105,16 @@ export default function ListSeat() {
   };
   const color = (seat) => {
     let color;
-    if (seat.loaiGhe === "Thuong") {
+    if (seat.loaiGhe === "normal") {
       color = "#3e515d";
     }
-    if (seat.loaiGhe === "Vip") {
+    if (seat.loaiGhe === "vip") {
       color = "#f7b500";
     }
     if (seat.selected) {
       color = "#44c020";
     }
-    if (seat.daDat) {
+    if (seat.isOccupied) {
       color = "#99c5ff";
     }
     return color;
@@ -120,19 +126,19 @@ export default function ListSeat() {
       <div className={classes.info_CountDown}>
         <div className={classes.infoTheater}>
           <img
-            src={logoTheater[thongTinPhim?.tenCumRap.slice(0, 3).toUpperCase()]}
+            src={thongTinPhongVe?.setPhim?.smallImageURl}
             alt="phim"
             style={{ width: 50, height: 50 }}
           />
           <div className={classes.text}>
-            <TenCumRap tenCumRap={thongTinPhim?.tenCumRap} />
+            <TenCumRap tenCumRap={thongTinPhongVe?.setRap} />
             <p className={classes.textTime}>{`${
-              thongTinPhim && formatDate(thongTinPhim.ngayChieu).dayToday
-            } - ${thongTinPhim?.gioChieu} - ${thongTinPhim?.tenRap}`}</p>
+              thongTinPhongVe && formatDate(thongTinPhongVe?.setNgayXem).dayToday
+            } - ${thongTinPhongVe?.setNgayXem} - ${thongTinPhongVe?.setPhim?.rated}`}</p>
           </div>
         </div>
         <div className={classes.countDown}>
-          <p className={classes.timeTitle}>Thời gian giữ ghế</p>
+          <p className={classes.timeTitle}>Time count down</p>
           <Countdown />
         </div>
       </div>
@@ -150,7 +156,7 @@ export default function ListSeat() {
             {listSeat?.map((seat, i) => (
               <div
                 className={classes.seat}
-                key={seat.maGhe}
+                key={seat.id}
                 ref={domToSeatElement}
               >
                 {/* label A B C ... đầu mỗi row */}
@@ -166,7 +172,7 @@ export default function ListSeat() {
                   </p>
                 )}
                 {/* label ghế đã có người đặt */}
-                {seat.daDat && (
+                {seat.isOccupied === 1 && (
                   <img
                     className={classes.seatLocked}
                     src="/img/bookticket/notchoose.png"
@@ -179,7 +185,7 @@ export default function ListSeat() {
                   className={classes.seatIcon}
                 />
                 {/* đường viền chỉ vùng ghế */}
-                {seat.label === "E08" && (
+                {seat.label === "E8" &&(
                   <img
                     className={classes.viewCenter}
                     src="/img/bookticket/seatcenter.png"
@@ -201,32 +207,32 @@ export default function ListSeat() {
         <div className={classes.typeSeats}>
           <div>
             <SeatIcon style={{ color: "#3e515d", fontSize: 27 }} />
-            <p>Ghế thường</p>
+            <p>Normal</p>
           </div>
           <div>
             <SeatIcon style={{ color: "#f7b500", fontSize: 27 }} />
-            <p>Ghế vip</p>
+            <p>VIP</p>
           </div>
           <div>
             <SeatIcon style={{ color: "#44c020", fontSize: 27 }} />
-            <p>Ghế đang chọn</p>
+            <p>Choosing</p>
           </div>
           <div>
             <div style={{ position: "relative" }}>
               <p className={classes.posiX}>x</p>
               <SeatIcon style={{ color: "#99c5ff", fontSize: 27 }} />
             </div>
-            <p>Ghế đã được mua</p>
+            <p>Bought</p>
           </div>
         </div>
         <div className={classes.positionView}>
           <span>
             <span className={classes.linecenter} />
-            <span>Ghế trung tâm</span>
+            <span>Center</span>
           </span>
           <span className={classes.line}>
             <span className={classes.linebeautiful} />
-            <span>Ghế Đẹp</span>
+            <span>Good View</span>
           </span>
         </div>
       </div>

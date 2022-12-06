@@ -15,6 +15,7 @@ export const getUsersList = () => {
     })
     usersApi.getDanhSachNguoiDung()
       .then(result => {
+        console.log(result.data);
         dispatch({
           type: GET_USER_LIST_SUCCESS,
           payload: { data: result.data }
@@ -41,7 +42,7 @@ export const deleteUser = (taiKhoanUser) => {
       .then(result => {
         dispatch({
           type: DELETE_USER_SUCCESS,
-          payload: { data: result.data }
+          payload: { data: result.data.data }
         })
       }
       )
@@ -49,7 +50,8 @@ export const deleteUser = (taiKhoanUser) => {
         error => {
           dispatch({
             type: DELETE_USER_FAIL,
-            payload: { error: error.response?.data ? error.response.data : error.message, }
+            // payload: { error: error.response?.data ? error.response.data : error.message, }
+            payload: "Delete fail!"
           })
         }
       )
@@ -72,6 +74,7 @@ export const putUserUpdate = (user) => {
     })
     usersApi.editTaiKhoan(user)
       .then(result => {
+        console.log("Cập nhật: ", result);
         dispatch({
           type: UPDATE_USER_SUCCESS,
           payload: { data: result.data }
@@ -126,6 +129,7 @@ export const getInfoUser = () => {
     })
     usersApi.getThongTinTaiKhoan()
       .then(result => {
+        console.log("getThongTinTaiKhoan: ", result.data);
         dispatch({
           type: GET_INFO_USER_SUCCESS,
           payload: {

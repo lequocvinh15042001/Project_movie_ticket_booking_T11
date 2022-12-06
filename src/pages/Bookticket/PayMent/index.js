@@ -9,6 +9,7 @@ import {
   SET_DATA_PAYMENT,
   SET_READY_PAYMENT,
 } from "../../../reducers/constants/BookTicket";
+import { logger } from "workbox-core/_private";
 
 const makeObjError = (name, value, dataSubmit) => {
   // kiểm tra và set lỗi rỗng
@@ -16,7 +17,7 @@ const makeObjError = (name, value, dataSubmit) => {
     ...dataSubmit.errors,
     [name]:
       value?.trim() === ""
-        ? `${name.charAt(0).toUpperCase() + name.slice(1)} không được bỏ trống`
+        ? `${name.charAt(0).toUpperCase() + name.slice(1)} not be empty!`
         : "",
   };
 
@@ -28,12 +29,12 @@ const makeObjError = (name, value, dataSubmit) => {
     /^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/;
   if (name === "email" && value) {
     if (!regexEmail.test(value)) {
-      newErrors[name] = "Email không đúng định dạng";
+      newErrors[name] = "Email not valid";
     }
   }
   if (name === "phone" && value) {
     if (!regexNumber.test(value)) {
-      newErrors[name] = "Phone không đúng định dạng";
+      newErrors[name] = "Phone not valid";
     }
   }
   return newErrors;
@@ -57,7 +58,10 @@ export default function PayMent() {
     loadingBookingTicket,
     successBookingTicketMessage,
     errorBookTicketMessage,
+    thongTinPhongVe,
   } = useSelector((state) => state.bookTicketReducer);
+  console.log(maLichChieu, danhSachVe, taiKhoanNguoiDung);
+  console.log("danhSachVe: ",danhSachVe);
   const dispatch = useDispatch();
   const emailRef = useRef();
   const phoneRef = useRef(); // dùng useRef để dom tớ element
@@ -68,6 +72,7 @@ export default function PayMent() {
       email: email,
       phone: phone,
       paymentMethod: paymentMethod,
+      thongTinPhongVe: thongTinPhongVe,
     },
     errors: {
       email: "",
@@ -132,7 +137,7 @@ export default function PayMent() {
   useEffect(() => {
     // cập nhật lại data email, phone và validation khi reload
     let emailErrors = makeObjError(emailRef.current.name, email, dataSubmit);
-    let phoneErrors = makeObjError(phoneRef.current.name, phone, dataSubmit);
+    // let phoneErrors = makeObjError(phoneRef.current.name, phone, dataSubmit);
     setdataSubmit((dataSubmit) => ({
       ...dataSubmit,
       values: {
@@ -140,7 +145,7 @@ export default function PayMent() {
         phone: phone,
         paymentMethod: paymentMethod,
       },
-      errors: { email: emailErrors.email, phone: phoneErrors.phone },
+      // errors: { email: emailErrors.email, phone: phoneErrors.phone },
     }));
   }, [listSeat]); // khi reload listSeat sẽ được cập nhật kèm theo, email, phone mặc định của tài khoản
 
@@ -152,7 +157,19 @@ export default function PayMent() {
       !successBookingTicketMessage &&
       !errorBookTicketMessage
     ) {
-      dispatch(bookTicket({ maLichChieu, danhSachVe, taiKhoanNguoiDung }));
+      let userId = taiKhoanNguoiDung
+      let scheduleId = maLichChieu
+      // let list=[]
+      // for(var i=0;i<listSeatIds.length;i++){
+      //   list.push({id:listSeatIds[i]})
+      // }
+      let listSeatIds=[]
+      for(var i = 0;i < danhSachVe.length; i++){
+        listSeatIds.push(danhSachVe[i].id)
+      }
+      console.log("Gửi đi: ",userId, scheduleId, listSeatIds);
+    
+      dispatch(bookTicket({userId, scheduleId, listSeatIds} ));
       // dispatch(bookTicket({ maLichChieu: 40396, danhSachVe: [{ maGhe: 9122569, giaVe: 75000 }], taiKhoanNguoiDung }))
     }
   };
@@ -162,6 +179,12 @@ export default function PayMent() {
   const onBlur = (e) => {
     setDataFocus({ ...dataFocus, [e.target.name]: false });
   };
+  // let listSeatIds = [10,11]
+  // let list=[]
+  // for(var i=0;i<listSeatIds.length;i++){
+  //   list.push({id:listSeatIds[i]})
+  // }
+
 
   return (
     <aside className={classes.payMent}>
@@ -173,16 +196,17 @@ export default function PayMent() {
 
         {/* thông tin phim và rạp */}
         <div className={classes.payMentItem}>
-          <p className={classes.tenPhim}>{thongTinPhim?.tenPhim}</p>
-          <p>{thongTinPhim?.tenCumRap}</p>
-          <p>{`${thongTinPhim && formatDate(thongTinPhim.ngayChieu).dayToday} ${
-            thongTinPhim?.ngayChieu
-          } - ${thongTinPhim?.gioChieu} - ${thongTinPhim?.tenRap}`}</p>
+          <p className={classes.tenPhim}>{thongTinPhongVe?.setPhim?.name}</p>
+          <p>{thongTinPhongVe?.setRap}</p>
+          <p>Date show: {`${thongTinPhongVe?.setNgayXem} ${
+            thongTinPhongVe?.ngayChieu
+          } - ${thongTinPhongVe?.setSuatChieu} - ${thongTinPhongVe?.setPhim?.duration} Minutes 
+          - ${thongTinPhongVe?.setPhim?.categories} - Language: ${thongTinPhongVe?.setPhim?.language}`}</p>
         </div>
 
         {/* ghế đã chọn */}
         <div className={`${classes.seatInfo} ${classes.payMentItem}`}>
-          <span>{`Ghế ${listSeatSelected?.join(", ")}`}</span>
+          <span>{`Seat ${listSeatSelected?.join(", ")}`}</span>
           <p className={classes.amountLittle}>
             {`${amount.toLocaleString("vi-VI")} đ`}
           </p>
@@ -206,7 +230,7 @@ export default function PayMent() {
         </div>
 
         {/* phone */}
-        <div className={classes.payMentItem}>
+        {/* <div className={classes.payMentItem}>
           <label className={classes.labelPhone}>Phone</label>
           <input
             type="number"
@@ -220,10 +244,10 @@ export default function PayMent() {
             autoComplete="off"
           />
           <p className={classes.error}>{dataSubmit.errors.phone}</p>
-        </div>
+        </div> */}
 
         {/* Mã giảm giá */}
-        <div className={classes.payMentItem}>
+        {/* <div className={classes.payMentItem}>
           <label className={classes.label}>Mã giảm giá</label>
           <input
             type="text"
@@ -234,13 +258,13 @@ export default function PayMent() {
           <button className={classes.btnDiscount} disabled>
             Áp dụng
           </button>
-        </div>
+        </div> */}
 
         {/* hình thức thanh toán */}
         <div className={classes.selectedPayMentMethod}>
-          <label className={classes.label}>Hình thức thanh toán</label>
+          <label className={classes.label}>Payments Type</label>
           <p className={classes.toggleNotice}>
-            Vui lòng chọn ghế để hiển thị phương thức thanh toán phù hợp.
+              Please select the seat to display the appropriate payment method...
           </p>
 
           <div className={classes.formPayment}>
@@ -258,9 +282,9 @@ export default function PayMent() {
                 src="/img/bookticket/zalo.jpg"
                 alt="zalopay"
               />
-              <label>Thanh toán qua ZaloPay</label>
+              <label>ZaloPay</label>
             </div>
-            <div className={classes.formPaymentItem}>
+            {/* <div className={classes.formPaymentItem}>
               <input
                 className={classes.input}
                 type="radio"
@@ -277,8 +301,8 @@ export default function PayMent() {
                 alt="visa"
               />
               <label>Visa, Master, JCB</label>
-            </div>
-            <div className={classes.formPaymentItem}>
+            </div> */}
+            {/* <div className={classes.formPaymentItem}>
               <input
                 className={classes.input}
                 type="radio"
@@ -293,16 +317,16 @@ export default function PayMent() {
                 alt="atm"
               />
               <label>Thẻ ATM nội địa</label>
-            </div>
+            </div> */}
             <div className={classes.formPaymentItem}>
               <input
                 className={classes.input}
                 type="radio"
                 name="paymentMethod"
-                value="Cửa hàng tiện ích"
+                value="Pay at the counter"
                 onChange={onChange}
                 checked={
-                  dataSubmit.values.paymentMethod === "Cửa hàng tiện ích"
+                  dataSubmit.values.paymentMethod === "Pay at the counter"
                 }
               />
               <img
@@ -310,7 +334,7 @@ export default function PayMent() {
                 src="/img/bookticket/cuahang.png"
                 alt="cuahang"
               />
-              <label>Thanh toán tại cửa hàng tiện ích</label>
+              <label>Pay at the counter</label>
             </div>
           </div>
         </div>
@@ -322,7 +346,7 @@ export default function PayMent() {
             disabled={!isReadyPayment}
             onClick={handleBookTicket}
           >
-            <p className={classes.txtDatVe}>Đặt Vé</p>
+            <p className={classes.txtDatVe}>Book this</p>
           </button>
         </div>
       </div>
@@ -334,11 +358,11 @@ export default function PayMent() {
           src="/img/bookticket/exclamation.png"
           alt="notice"
         />
-        <span>Vé đã mua không thể đổi hoặc hoàn tiền</span>
+        <span>Tickets purchased cannot be exchanged or refunded</span>
         <p>
-          Mã vé sẽ được gửi qua tin nhắn{" "}
-          <span className={classes.contactColor}>ZMS</span> (tin nhắn Zalo) và{" "}
-          <span className={classes.contactColor}>Email</span> đã nhập.
+          Ticket code will be sent via text message{" "}
+          {/* <span className={classes.contactColor}></span> (Email) or{" "}
+          <span className={classes.contactColor}>Email</span> đã nhập. */}
         </p>
       </div>
     </aside>

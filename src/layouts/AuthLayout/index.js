@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 import { LOADING_BACKTO_HOME } from '../../reducers/constants/Lazy';
 
-const bgAuth = '/img/bgAuth.jpg'
+const bgAuth = '/img/posterBG.jpg'
 
 const useStyles = makeStyles(theme => ({
   backgroundImage: {
@@ -23,8 +23,8 @@ const useStyles = makeStyles(theme => ({
 
   },
   bgBlueColor: {
-    backgroundImage: "linear-gradient(to bottom,rgba(20,50,93,.9),rgba(8,22,48,.9))",
-    width: 600,
+    backgroundImage: "linear-gradient(to bottom,rgba(200, 200, 0, 1),rgba(255, 67, 67,.9))",
+    width: 700,
     height: "fit-content",
     [theme.breakpoints.down("sm")]: {
       width: "100%",

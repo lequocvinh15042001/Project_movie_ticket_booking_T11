@@ -7,9 +7,10 @@ const currentUser = localStorage.getItem("user")
 const avtIdUser = currentUser ? currentUser?.avtIdUser : nanoid(10);
 export { avtIdUser };
 // export const BASE_URL = "https://goldennew.azurewebsites.net/api";
-export const BASE_URL = "http://localhost:8080/api";
-export const FAKE_AVATAR = `https://i.pravatar.cc/300?u=${avtIdUser}`;
-export const UNKNOW_USER = "/img/unknowUser.png";
+// export const BASE_URL = "http://localhost:8080/api";
+export const BASE_URL = "http://20.204.78.133:8080/api";
+export const FAKE_AVATAR = `https://vnn-imgs-f.vgcloud.vn/2020/03/23/11/trend-avatar-11.jpg`;
+export const UNKNOW_USER = "https://cdn4.vectorstock.com/i/1000x1000/76/28/unknown-person-user-icon-for-web-vector-34757628.jpg";
 export const DISPLAY_MOBILE_BOOKTICKET = "(max-width:768px)";
 export const DISPLAY_MOBILE_THEATER = "(max-width:678px)";
 export const HIDDEN_SEARCHTICKET = "(max-width:992px)";

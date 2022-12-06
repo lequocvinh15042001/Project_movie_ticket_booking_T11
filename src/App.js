@@ -11,6 +11,8 @@ import { theme } from "./constants/config";
 // layout
 const MainLayout = lazy(() => import("./layouts/MainLayout"));
 const AuthLayout = lazy(() => import("./layouts/AuthLayout"));
+const AuthLayoutAdmin = lazy(() => import("./layouts/AuthLayoutAdmin"));
+const AuthLayoutStaff = lazy(() => import("./layouts/AuthLayoutStaff"));
 const AdminLayout = lazy(() => import("./layouts/AdminLayout"));
 // guards
 const AdminRoute = lazy(() => import("./guards/AdminRoute"));
@@ -21,10 +23,13 @@ const Homepage = lazy(() => import("./pages/Homepage"));
 const MovieDetail = lazy(() => import("./pages/MovieDetail"));
 const UserProfile = lazy(() => import("./pages/UserProfile"));
 const BookTickets = lazy(() => import("./pages/Bookticket"));
+const BookTicketsDetail = lazy(() => import("./pages/BookticketDetail"));
 const UsersManagement = lazy(() => import("./pages/UsersManagement"));
 const MoviesManagement = lazy(() => import("./pages/MoviesManagement"));
 const CreateShowtime = lazy(() => import("./pages/CreateShowtime"));
 const Login = lazy(() => import("./pages/Login"));
+const LoginAdmin = lazy(() => import("./pages/LoginAdmin"));
+const LoginStaff = lazy(() => import("./pages/LoginStaff"));
 const Register = lazy(() => import("./pages/Register"));
 const DetailNews = lazy(() => import("./pages/DetailNews"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -53,8 +58,14 @@ function App() {
 
             <CheckoutRoute
               exact
-              path="/datve/:maLichChieu"
+              path="/datve/:maLichChieu/:maPhim"
               component={BookTickets}
+            />
+
+            <CheckoutRoute
+              exact
+              path="/datvechitiet/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu"
+              component={BookTicketsDetail}
             />
 
             <Route
@@ -85,6 +96,18 @@ function App() {
                 <Route exact path="/dangnhap" component={Login} />
                 <Route exact path="/dangky" component={Register} />
               </AuthLayout>
+            </Route>
+
+            <Route exact path={["/admin"]}>
+              <AuthLayoutAdmin>
+                <Route exact path="/admin" component={LoginAdmin} />
+              </AuthLayoutAdmin>
+            </Route>
+
+            <Route exact path={["/staff"]}>
+              <AuthLayoutStaff>
+                <Route exact path="/staff" component={LoginStaff} />
+              </AuthLayoutStaff>
             </Route>
 
             <Route component={NotFound} />

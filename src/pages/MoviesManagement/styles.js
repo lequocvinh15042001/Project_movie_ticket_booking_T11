@@ -24,9 +24,9 @@ const useStyles = makeStyles((theme) => {
       verticalAlign: "bottom",
       position: "relative",
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.info.light, 0.15),
+      backgroundColor: fade(theme.palette.info.light, 0.5),
       "&:hover": {
-        backgroundColor: fade(theme.palette.info.light, 0.25),
+        backgroundColor: fade(theme.palette.info.light, 1),
       },
       [theme.breakpoints.down("md")]: {
         marginTop: 11,
@@ -54,27 +54,27 @@ const useStyles = makeStyles((theme) => {
     },
     rootDataGrid: {
       "& .Mui-odd": {
-        backgroundColor: "rgb(166, 213, 250)",
+        backgroundColor: "rgb(236,	236,	236)",
         "&:hover": {
-          backgroundColor: "rgb(144, 202, 249) !important",
+          backgroundColor: "rgb(236,	135,	14) !important",
         },
       },
       "& .MuiDataGrid-overlay": {
         zIndex: 100,
       },
       "& .Mui-even": {
-        backgroundColor: "rgb(183, 223, 185)",
+        backgroundColor: "rgb(230, 230, 230)",
         "&:hover": {
-          backgroundColor: "rgb(165, 215, 167)",
+          backgroundColor: "rgb(236,	135,	14)",
         },
       },
       "& .MuiDataGrid-columnsContainer": {
         backgroundColor: "rgb(255, 213, 153)",
       },
       "& .custom-header": {
-        backgroundColor: "rgb(255, 213, 153)",
+        backgroundColor: "rgb(236,	135,	14)",
         "&:hover": {
-          backgroundColor: "rgb(255, 203, 127)",
+          backgroundColor: "rgb(178,	0,	31)",
         },
       },
       "& .MuiDataGrid-colCellCheckbox": {
