@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import usersApi from '../../api/usersApi';
 import {
   GET_USER_LIST_REQUEST, GET_USER_LIST_SUCCESS, GET_USER_LIST_FAIL,
@@ -32,7 +33,17 @@ export const getUsersList = () => {
       )
   }
 }
-
+// useEffect(() => {
+//   if (successUpdateUser) {
+//     Swal.fire({
+//       position: "center",
+//       icon: "success",
+//       title: "Update Successfully",
+//       showConfirmButton: false,
+//       timer: 1500,
+//     });
+//   }
+// }, [successUpdateUser]);
 export const deleteUser = (taiKhoanUser) => {
   return (dispatch) => {
     dispatch({
@@ -40,6 +51,16 @@ export const deleteUser = (taiKhoanUser) => {
     })
     usersApi.deleteUser(taiKhoanUser)
       .then(result => {
+        console.log(result);
+
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Delete Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
         dispatch({
           type: DELETE_USER_SUCCESS,
           payload: { data: result.data.data }
@@ -50,8 +71,8 @@ export const deleteUser = (taiKhoanUser) => {
         error => {
           dispatch({
             type: DELETE_USER_FAIL,
-            // payload: { error: error.response?.data ? error.response.data : error.message, }
-            payload: "Delete fail!"
+            payload: { error: error.response?.data ? error.response.data : error.message, }
+            // payload: "Delete fail!"
           })
         }
       )
@@ -69,6 +90,7 @@ export const resetUserList = () => {
 export const putUserUpdate = (user) => {
 
   return (dispatch) => {
+    console.log("truyền vô cập nhật: ", user);
     dispatch({
       type: UPDATE_USER_REQUEST
     })
@@ -107,7 +129,8 @@ export const postAddUser = (user) => {
       .catch(error => {
         dispatch({
           type: ADD_USER_FAIL,
-          payload: { error: error.response?.data ? error.response.data : error.message, }
+          // payload: { error: error.response?.data ? error.response.data : error.message, }
+          payload: "Thêm lỗi!"
         })
       })
   }
