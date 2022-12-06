@@ -36,6 +36,7 @@ export default function Index() {
     }
   }, [])
 
+
   if (errorMovieDetail) {
     return <div>{errorMovieDetail}</div>
   }

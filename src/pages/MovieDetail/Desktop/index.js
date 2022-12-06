@@ -11,6 +11,7 @@ import useApiThoiLuongDanhGia from '../../../utilities/useApiThoiLuongDanhGia';
 import Tap from '../Tap';
 import BtnPlay from '../../../components/BtnPlay';
 import { dataFakeImgTheater } from '../../../constants/theaterData';
+import ShowtimeDetail  from "../../UserProfile/ShowtimeDetail/index"
 
 export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
   console.log("----------MT---------",data);
@@ -68,6 +69,7 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
         </div>
       </div>
       <Tap data={data} onClickBtnMuave={onClickBtnMuave} onIncreaseQuantityComment={onIncreaseQuantityComment} isMobile={isMobile} />
+      <ShowtimeDetail />
     </div>
   )
 }

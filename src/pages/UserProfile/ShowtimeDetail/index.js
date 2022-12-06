@@ -135,9 +135,9 @@ export default function SimpleTabs() {
       </AppBar>
       <div className={classes.listMovie}>
         {isDesktop ? (
-          <Desktop arrayData={arrayData} value={value} />
+          <Desktop arrayData={arrayData}/>
         ) : (
-          <Mobile arrayData={arrayData} value={value} />
+          <Mobile arrayData={arrayData} />
         )}
       </div>
     </div>
