@@ -29,6 +29,7 @@ import {
   putUserUpdate,
   postAddUser,
   setStatusIsExistUserModified,
+  postAddStaff,
 } from "../../reducers/actions/UsersManagement";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Swal from "sweetalert2";
@@ -536,6 +537,7 @@ export default function UsersManagement() {
     if (addUser.readyAdd && !loadingAddUser) {
       // nếu đã điền và đã sãn sàng
       const userAdd = { ...addUser.data[0] };
+      console.log(addUser);
       delete userAdd.id;
       const dataAdd = {
         name: userAdd.name,
@@ -544,14 +546,17 @@ export default function UsersManagement() {
         password:"123456789"
       }
       console.log("dataAdd:  ", dataAdd);
-      dispatch(
-        // postAddUser({
-        //   ...addUser.data[0],
-        //   role: userAdd.role ? "ROLE_ADMIN" : "ROLE_USER",
-        //   maNhom: "GP09",
-        // })
-        postAddUser(dataAdd)
-      );
+      if(addUser?.data[0]?.role === true)
+      {
+        console.log("gọi api add staff");
+        console.log("staff mới: ", dataAdd);
+        dispatch(postAddStaff(dataAdd));
+      } else {
+        console.log("gọi api add user");
+        console.log("user mới: ", dataAdd);
+        dispatch(postAddUser(dataAdd));
+      }
+      
     }
  
   };

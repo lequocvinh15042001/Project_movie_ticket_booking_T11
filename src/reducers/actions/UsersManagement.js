@@ -136,6 +136,29 @@ export const postAddUser = (user) => {
   }
 }
 
+export const postAddStaff = (user) => {
+  return (dispatch) => {
+    console.log("Truyền staff mới vô api: ", user);
+    dispatch({
+      type: ADD_USER_REQUEST
+    })
+    usersApi.postThemNhanVien(user)
+      .then(result => {
+        dispatch({
+          type: ADD_USER_SUCCESS,
+          payload: { data: result.data }
+        })
+      })
+      .catch(error => {
+        dispatch({
+          type: ADD_USER_FAIL,
+          payload: { error: error.response?.data ? error.response.data : error.message, }
+          // payload: "Thêm lỗi!"
+        })
+      })
+  }
+}
+
 export const setStatusIsExistUserModified = (isExistUserModified) => {
   return (dispatch) => {
     dispatch({
