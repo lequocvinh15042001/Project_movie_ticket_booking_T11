@@ -52,7 +52,7 @@ export default function UsersManagement() {
   const [editRowsModel, setEditRowsModel] = useState({});
   const classes = useStyles();
   const [usersListDisplay, setUsersListDisplay] = useState([]);
-  const  enqueueSnackbar  = useSnackbar();
+  const  {enqueueSnackbar}  = useSnackbar();
   const [selectionModel, setSelectionModel] = useState([]);
   const [userListDelete, setUserListDelete] = useState({
     triggerDelete: false,
@@ -222,28 +222,28 @@ export default function UsersManagement() {
   useEffect(() => {
     // add user xong thì thông báo
     if (successAddUser) {
-      // enqueueSnackbar(
-      //   `Add new user successfully: ${successAddUser.username}`,
-      //   { variant: "success" }
-      // );
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Add User Successfully",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      enqueueSnackbar(
+        `Successfully!`,
+        { variant: "success" }
+      );
+      // Swal.fire({
+      //   position: "center",
+      //   icon: "success",
+      //   title: "Add User Successfully",
+      //   showConfirmButton: false,
+      //   timer: 1500,
+      // });
 
     }
     if (errorAddUser) {
-      // enqueueSnackbar(errorAddUser, { variant: "error" });
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          title: "Add User Error",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+      enqueueSnackbar(errorAddUser, { variant: "error" });
+        // Swal.fire({
+        //   position: "center",
+        //   icon: "error",
+        //   title: "Add User Error",
+        //   showConfirmButton: false,
+        //   timer: 1500,
+        // });
     }
     setaddUser({
       data: [
@@ -545,15 +545,15 @@ export default function UsersManagement() {
         username:userAdd.username,
         password:"123456789"
       }
-      console.log("dataAdd:  ", dataAdd);
+      // console.log("dataAdd:  ", dataAdd);
       if(addUser?.data[0]?.role === true)
       {
-        console.log("gọi api add staff");
-        console.log("staff mới: ", dataAdd);
+        // console.log("gọi api add staff");
+        // console.log("staff mới: ", dataAdd);
         dispatch(postAddStaff(dataAdd));
       } else {
-        console.log("gọi api add user");
-        console.log("user mới: ", dataAdd);
+        // console.log("gọi api add user");
+        // console.log("user mới: ", dataAdd);
         dispatch(postAddUser(dataAdd));
       }
       
@@ -693,7 +693,7 @@ export default function UsersManagement() {
   }
 
   return (
-    <div style={{ height: "80vh", width: "100%" }}>
+    <div style={{ height: "77vh", width: "100%"}}>
       <div className="container-fluid pb-3">
         <div className="row">
           <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
@@ -875,9 +875,9 @@ export default function UsersManagement() {
         rowsPerPageOptions={[25, 50, 100]}
         // css màu cho tài khoản QuanTri hoặc KhachHang: thay đổi tên class row dựa trên giá trị prop riêng biệt của row
         // getRowClassName={(params) => {
-        //   return `isadmin--${params
-        //     .getValue("[ROLE_USER]")
-        //     .toString()} ismodify--${params.getValue("ismodify")?.toString()}`;
+        //   return `isStaff--${params
+        //     .getValue("ROLE_STAFF")
+        //     .toString()} isStaff--${params.getValue("isStaff")?.toString()}`;
         // }}
         // bật checkbox
         checkboxSelection={!addUser.toggle}
