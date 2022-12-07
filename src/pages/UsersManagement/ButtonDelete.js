@@ -8,8 +8,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 export default function ButtonDelete({ onDeleted, taiKhoan }) {
   const isUserBooking = UseApiCheckIsUserBooking(taiKhoan)
   return (
-    <Tooltip title={isUserBooking ? "Không thể xóa" : "Xóa"}>
-      <IconButton color="primary" style={{ color: isUserBooking ? "#00000042" : "#f50057" }} onClick={() => onDeleted(taiKhoan)} >
+    <Tooltip title={isUserBooking ? "Can Delete" : "Can't Delete"}>
+      <IconButton color="primary" style={{ color: isUserBooking ? "#f50057" : "#00000042" }} onClick={() => onDeleted(taiKhoan)} >
         <DeleteForeverIcon />
       </IconButton>
     </Tooltip>
