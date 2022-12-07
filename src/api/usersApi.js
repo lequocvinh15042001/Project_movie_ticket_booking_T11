@@ -23,6 +23,11 @@ const usersApi = {
     return axiosClient.get(path, { soTrang, soPhanTuTrenTrang });
   },
 
+  postThemNhanVien: (user) => {
+    const path = "/auth/registerStaff";
+    return axiosClient.post(path, user);
+  },
+
   postThemNguoiDung: (user) => {
     const path = "/auth/signup";
 
