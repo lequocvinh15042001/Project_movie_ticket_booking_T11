@@ -1,4 +1,5 @@
 import moviesApi from "../../api/moviesApi";
+import theatersApi from "../../api/theatersApi";
 
 import {
   GET_MOVIE_LIST_REQUEST,
@@ -21,6 +22,9 @@ import {
   ADD_MOVIE_UPLOAD_FAIL,
   RESET_MOVIE_MANAGEMENT,
   SAVE_BEFOREINSTALLPROMPT_EVENT,
+  GET_SCHEDULE_LIST_REQUEST2,
+  GET_SCHEDULE_LIST_SUCCESS2,
+  GET_SCHEDULE_LIST_FAIL2,
 } from "../constants/Movie";
 
 export const getMovieList = () => {
@@ -72,6 +76,35 @@ export const getMovieListManagement = () => {
       });
   };
 };
+
+export const getScheduleListManagement = (idRap) => {
+  console.log(idRap);
+  return (dispatch) => {
+    dispatch({
+      type: GET_SCHEDULE_LIST_REQUEST2,
+    });
+    theatersApi
+      .getThongTinLichChieuHeThongRapTheoRap(idRap)
+      .then((result) => {
+        console.log("Lấy lch: ", result);
+        dispatch({
+          type: GET_SCHEDULE_LIST_SUCCESS2,
+          payload: { data: result.data },
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: GET_SCHEDULE_LIST_FAIL2,
+          payload: {
+            errorScheduleList: error.response?.data
+              ? error.response.data
+              : error.message,
+          },
+        });
+      });
+  };
+};
+
 
 export const deleteMovie = (maPhim) => {
   console.log(maPhim);

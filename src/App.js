@@ -28,6 +28,7 @@ const BookTickets = lazy(() => import("./pages/Bookticket"));
 const BookTicketsDetail = lazy(() => import("./pages/BookticketDetail"));
 const UsersManagement = lazy(() => import("./pages/UsersManagement"));
 const MoviesManagement = lazy(() => import("./pages/MoviesManagement"));
+const BookByStaff = lazy(() => import("./pages/BookByStaff"));
 const CreateShowtime = lazy(() => import("./pages/CreateShowtime"));
 const Login = lazy(() => import("./pages/Login"));
 const LoginAdmin = lazy(() => import("./pages/LoginAdmin"));
@@ -106,7 +107,7 @@ function App() {
                 <StaffRoute
                   exact
                   path="/staff/book"
-                  component={UsersManagement}//viet
+                  component={BookByStaff}//viet
                 />
                 <StaffRoute
                   exact

@@ -76,7 +76,7 @@ export default function Login() {
 
 
   const handleSubmit = (user) => {
-    console.log('người dùng nhập user',user);
+    // console.log('người dùng nhập user',user);
     dispatch(login(user));
   };
 
