@@ -50,16 +50,16 @@ export default function Login() {
   useEffect(() => {
     // đăng nhập thành công thì quay về trang trước đó
     if (currentUser) {
-      // if (location.state === "/admin") {
-      //   // nếu trang trước đó là "/" thì phải hiện loading do trang home mất nhiều thời gian tải
-      //   // dispatch({ type: LOADING_BACKTO_HOME });
-      //   setTimeout(() => {
-      //     history.push("/movies");
-      //   }, 50);
-      //   return undefined;
-      // }
-      // history.push(location.state);
+      if (location.state === "/") {
+        // nếu trang trước đó là "/" thì phải hiện loading do trang home mất nhiều thời gian tải
+        // dispatch({ type: LOADING_BACKTO_HOME });
+        setTimeout(() => {
           history.push("/admin/movies");
+        }, 50);
+        return undefined;
+      }
+      history.push(location.state);
+          // history.push("/admin/movies");
 
     }
   }, [currentUser]);
