@@ -19,6 +19,9 @@ import {
   ADD_MOVIE_UPLOAD_FAIL,
   RESET_MOVIE_MANAGEMENT,
   SAVE_BEFOREINSTALLPROMPT_EVENT,
+  GET_SCHEDULE_LIST_REQUEST2,
+  GET_SCHEDULE_LIST_SUCCESS2,
+  GET_SCHEDULE_LIST_FAIL2,
 } from "./constants/Movie";
 
 const initialState = {
@@ -30,6 +33,10 @@ const initialState = {
   movieList2: null,
   loadingMovieList2: false,
   errorMovieList2: null,
+
+  scheduleList2: null,
+  loadingScheduleList2: false,
+  errorScheduleList2: null,
 
   successDeleteMovie: "",
   loadingDeleteMovie: false,
@@ -90,6 +97,24 @@ const movieReducer = (state = initialState, action) => {
         ...state,
         errorMovieList2: action.payload.errorMovieList,
         loadingMovieList2: false,
+      };
+    }
+
+    case GET_SCHEDULE_LIST_REQUEST2: {
+      return { ...state, loadingScheduleList2: true, errorScheduleList2: null };
+    }
+    case GET_SCHEDULE_LIST_SUCCESS2: {
+      return {
+        ...state,
+        scheduleList2: action.payload.data,
+        loadingScheduleList2: false,
+      };
+    }
+    case GET_SCHEDULE_LIST_FAIL2: {
+      return {
+        ...state,
+        errorScheduleList2: action.payload.errorScheduleList2,
+        loadingScheduleList2: false,
       };
     }
 
