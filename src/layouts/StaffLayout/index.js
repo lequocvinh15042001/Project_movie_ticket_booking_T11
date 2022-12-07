@@ -98,7 +98,7 @@ export default function AdminLayout(props) {
             openMobile={isMobileNavOpen}
           />
         </div>
-        <div style={{ width: isMobile ? "100%" : "calc(100% - 255px)",backgroundColor:"white" }}>
+        <div style={{ width: isMobile ? "100%" : "calc(100% - 255px)",backgroundColor:"white", height:"100vh" }}>
           {/* đây là nội dung chính: UserManagement, MoviesManagement, ReateShowtime */}
           {props.children}
         </div>
