@@ -124,7 +124,7 @@ export default function UsersManagement() {
   }, [userListmodified.userListmodified, addUser.isFilledIn]);
 
 
-
+// console.log("userListmodified", userListmodified);
   useEffect(() => {
     // dispatch(getUsersList()) thành công thì thêm props vào item để hiển thị theo yêu cầu DataGrid
     if (usersList?.data?.length) {
@@ -138,7 +138,7 @@ export default function UsersManagement() {
           );
           if (userModified) {
             userModified = { ...userModified };
-            delete userModified.maNhom;
+            // delete userModified.maNhom;
             return {
               ...userModified,
               id: userModified.id,
@@ -292,12 +292,20 @@ export default function UsersManagement() {
   useEffect(() => {
     if (userListmodified?.userListmodified?.length) {
       let newUserListmodified = [...userListmodified.userListmodified];
+
       const userUpdate = newUserListmodified.shift();
+
       setUserListmodified((data) => ({
         ...data,
         userListmodified: newUserListmodified,
       }));
-      dispatch(putUserUpdate(userUpdate));
+      const dataTruyen = {
+        id : userUpdate.id, 
+        image: "", 
+        name: userUpdate.name,
+        updatedAt: new Date()
+      }
+      dispatch(putUserUpdate(dataTruyen));
       return;
     }
     if (userListmodified.userListmodified.length === 0) {
@@ -580,7 +588,7 @@ export default function UsersManagement() {
       // cột tài khoản không được chỉnh sửa, backend dùng "taiKhoan" để định danh user
       [
         {
-          field: "xoa",
+          field: "id",
           headerName: "Xóa",
           width: 100,
           renderCell: (params) => (
