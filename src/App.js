@@ -14,8 +14,10 @@ const AuthLayout = lazy(() => import("./layouts/AuthLayout"));
 const AuthLayoutAdmin = lazy(() => import("./layouts/AuthLayoutAdmin"));
 const AuthLayoutStaff = lazy(() => import("./layouts/AuthLayoutStaff"));
 const AdminLayout = lazy(() => import("./layouts/AdminLayout"));
+const StaffLayout = lazy(() => import("./layouts/StaffLayout"));
 // guards
 const AdminRoute = lazy(() => import("./guards/AdminRoute"));
+const StaffRoute = lazy(() => import("./guards/StaffRoute"));
 const CheckoutRoute = lazy(() => import("./guards/CheckoutRoute"));
 const UserProfileRoute = lazy(() => import("./guards/UserProfileRoute"));
 // page
@@ -91,6 +93,31 @@ function App() {
               </AdminLayout>
             </Route>
 
+            <Route
+              exact
+              path={["/staff/movies", "/staff/book", "/staff/reviews"]}
+            >
+              <StaffLayout>
+                <StaffRoute
+                  exact
+                  path="/staff/movies"
+                  component={MoviesManagement}
+                />
+                <StaffRoute
+                  exact
+                  path="/staff/book"
+                  component={UsersManagement}//viet
+                />
+                <StaffRoute
+                  exact
+                  path="/staff/reviews"
+                  component={UsersManagement}//viet
+                />
+              </StaffLayout>
+            </Route>
+
+
+          {/* Author */}
             <Route exact path={["/dangnhap", "/dangky"]}>
               <AuthLayout>
                 <Route exact path="/dangnhap" component={Login} />

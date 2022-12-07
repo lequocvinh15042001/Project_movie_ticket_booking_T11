@@ -282,6 +282,18 @@ export default function Index() {
               </Fab>
             </div>
           )}
+          {successInfoUser?.data?.role === "[ROLE_STAFF]" && (
+            <div className="text-center mb-2">
+              <Fab
+                variant="extended"
+                color="primary"
+                onClick={() => history.push("/staff/movies")}
+              >
+                <NavigationIcon className={classes.extendedIcon} />
+                Go to Staff Page
+              </Fab>
+            </div>
+          )}
           {/* <ul className="list-group">
             <li className="list-group-item text-muted">Activity</li>
             <li className="list-group-item text-right">

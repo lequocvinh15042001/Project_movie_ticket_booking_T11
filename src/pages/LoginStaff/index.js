@@ -60,7 +60,7 @@ export default function Login() {
       //   return undefined;
       // }
       // history.push(location.state);
-      history.push("/admin/movies");
+      history.push("/staff/movies");
     }
   }, [currentUser]);
   useEffect(() => {

@@ -1,5 +1,5 @@
 .mainbox {
-  background-color: #95c2de;
+  background-color: #000000;
   margin: auto;
   height: 100vh;
   width: 100vw;
@@ -7,29 +7,29 @@
 }
 
 .err {
-  color: #ffffff;
+  color: #fe0000;
   font-family: "Nunito Sans", sans-serif;
   font-size: 11rem;
   position: absolute;
-  left: 20%;
-  top: 8%;
+  left: 23%;
+  top: 20%;
 }
 
 .far {
   position: absolute;
   font-size: 8.5rem;
-  left: 42%;
-  top: 15%;
+  left: 45%;
+  top: 28%;
   color: #ffffff;
 }
 
 .err2 {
-  color: #ffffff;
+  color: #ff0000;
   font-family: "Nunito Sans", sans-serif;
   font-size: 11rem;
   position: absolute;
-  left: 68%;
-  top: 8%;
+  left: 71%;
+  top: 20%;
 }
 
 .msg {
@@ -37,14 +37,15 @@
   font-family: "Nunito Sans", sans-serif;
   font-size: 1.6rem;
   position: absolute;
-  left: 16%;
-  top: 45%;
+  left: 12%;
+  top: 60%;
   width: 75%;
+  color: #ffffff;
 }
 
 a {
   text-decoration: none;
-  color: white;
+  color: rgb(251, 0, 0);
 }
 
 a:hover {
