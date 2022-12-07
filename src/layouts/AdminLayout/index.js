@@ -91,14 +91,14 @@ export default function AdminLayout(props) {
     <SnackbarProvider maxSnack={3}>
       <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} style={{backgroundColor:"black"}}/>
       <div className="row">
-        <div style={{ width: 255 , backgroundColor:"white"}}>
+        <div style={{ width: 255 , backgroundColor:"white"}} >
           {/* đây là phần NavBar nằm bên trái, có thể đóng mở khi màn hình nhỏ */}
           <NavBar
             onMobileClose={() => setMobileNavOpen(false)}
             openMobile={isMobileNavOpen}
           />
         </div>
-        <div style={{ width: isMobile ? "100%" : "calc(100% - 255px)",backgroundColor:"white" }}>
+        <div style={{ width: isMobile ? "100%" : "calc(100% - 255px)", backgroundColor:"white", height:"100vh" }}>
           {/* đây là nội dung chính: UserManagement, MoviesManagement, ReateShowtime */}
           {props.children}
         </div>
