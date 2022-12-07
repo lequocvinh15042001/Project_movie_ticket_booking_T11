@@ -101,8 +101,8 @@ export default function MoviesManagement() {
 
   useEffect(() => {
     // delete movie xong thì thông báo
-    if (errorDeleteMovie === "Xóa thành công nhưng backend return error") {
-      successDeleteMovie = "Xóa thành công !";
+    if (errorDeleteMovie === "Delete Success but backend return error") {
+      successDeleteMovie = "Delete Success !";
     }
     if (successDeleteMovie) {
       enqueueSnackbar(successDeleteMovie, { variant: "success" });

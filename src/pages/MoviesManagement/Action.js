@@ -11,14 +11,19 @@ export default function ButtonDelete({ onDeleted, phimItem, onEdit }) {
   const isMovieSetShowtime = UseApiCheckIsMaPhimSetShowtime(phimItem.id)
   return (
     <>
-      <Tooltip title={isMovieSetShowtime ? "Can't Delete" : "Delete"}>
+      {/* <Tooltip title={isMovieSetShowtime ? "Can't Delete" : "Delete"}>
         <IconButton color="primary" style={{ color: isMovieSetShowtime ? "#00000042" : "#f50057" }} onClick={() => onDeleted(phimItem.id)} >
+          <DeleteForeverIcon />
+        </IconButton>
+      </Tooltip> */}
+      <Tooltip title={isMovieSetShowtime ? "Can Delete" : "Can't Delete"}>
+        <IconButton color="primary" style={{ color: isMovieSetShowtime ? "#f50057" : "#00000042" }} onClick={() => onDeleted(phimItem.id)} >
           <DeleteForeverIcon />
         </IconButton>
       </Tooltip>
 
       <Tooltip title="Edit">
-        <IconButton color="primary" style={{ color: "#3f51b5" }} onClick={() => onEdit(phimItem)} >
+        <IconButton color="primary" style={{ color: "#b24332" }} onClick={() => onEdit(phimItem)} >
           <EditIcon />
         </IconButton>
       </Tooltip>

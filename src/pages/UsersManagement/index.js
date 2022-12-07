@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from "react";
 
-import { DataGrid, GridOverlay } from "@material-ui/data-grid";
+import { DataGrid, GridOverlay, GridToolbar } from "@material-ui/data-grid";
 import { nanoid } from "nanoid";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
@@ -79,7 +79,7 @@ export default function UsersManagement() {
   console.log("usersList:", usersList);
   const dispatch = useDispatch();
   const [btnReFresh, setBtnReFresh] = useState("");
-  const [sortBy, setsortBy] = useState({ field: "username", sort: "asc" });
+  const [sortBy, setsortBy] = useState({ field: "role", sort: "asc" });
   const [valueSearch, setValueSearch] = useState("");
   const clearSetSearch = useRef(0);
   const [addUser, setaddUser] = useState({
@@ -144,7 +144,7 @@ export default function UsersManagement() {
               id: userModified.id,
               xoa: "",
               role:
-                userModified.role === "ROLE_ADMIN" ? true : false,
+                userModified.role === "ROLE_STAFF" ? true : false,
               ismodify: true,
             };
           }
@@ -153,7 +153,7 @@ export default function UsersManagement() {
             xoa: "",
             id: userNew.id,
             role:
-              userNew.role === "ROLE_ADMIN" ? true : false,
+              userNew.role === "ROLE_STAFF" ? true : false,
             ismodify: false,
           };
         }, userListmodifiedRest);
@@ -162,7 +162,7 @@ export default function UsersManagement() {
           ...user,
           xoa: "",
           id: user.id,
-          role: user.role === "ROLE_ADMIN" ? true : false,
+          role: user.role === "ROLE_STAFF" ? true : false,
           ismodify: false,
         })); // id là prop bắt buộc
       }
@@ -351,18 +351,20 @@ export default function UsersManagement() {
       if (addUser.toggle) {
         const isFilledIn =
           addUser.data[0].username !== "" ||
-          addUser.data[0].createdAt !== "" ||
+          // addUser.data[0].createdAt !== "" ||
           addUser.data[0].name !== "" ||
-          addUser.data[0].email !== "" ||
+          addUser.data[0].email !== "" 
           // addUser.data[0].soDt !== "" ||
-          addUser.data[0].role === true;
+          // addUser.data[0].role === true;
         const readyAdd =
           addUser.data[0].username !== "" &&
-          addUser.data[0].createdAt !== "" &&
+          // addUser.data[0].createdAt !== "" &&
           addUser.data[0].name !== "" &&
-          addUser.data[0].email !== "" &&
+          addUser.data[0].email !== "" 
+          // addUser.data[0].role === true;
           // addUser.data[0].soDt !== "";
         setaddUser((data) => ({ ...data, readyAdd, isFilledIn }));
+        console.log(addUser);
         return; // không thực hiệc các việc bên dưới nếu đang ở màn hình addUser
       }
       const userOriginal = usersList?.data?.find((user) => user.id === id); // lấy ra phần tử chưa được chỉnh sửa
@@ -416,14 +418,14 @@ export default function UsersManagement() {
         // nếu không khác biệt và có trong danh sách modify
         let userModified = userListmodified.userListmodified[indexUserExist];
         userModified = { ...userModified, [field]: valueModified };
-        const isMatKhauChange = userModified.createdAt !== userOriginal.createdAt;
+        // const isMatKhauChange = userModified.createdAt !== userOriginal.createdAt;
         const isEmailChange = userModified.email !== userOriginal.email;
         // const isSoDtChange = userModified.soDt !== userOriginal.soDt;
         const isMaLoaiNguoiDungChange =
           userModified.role !== userOriginal.role;
         const isHoTenChange = userModified.name !== userOriginal.name;
         const ismodify =
-          isMatKhauChange ||
+          // isMatKhauChange ||
           isEmailChange ||
           // isSoDtChange ||
           isMaLoaiNguoiDungChange ||
@@ -535,14 +537,23 @@ export default function UsersManagement() {
       // nếu đã điền và đã sãn sàng
       const userAdd = { ...addUser.data[0] };
       delete userAdd.id;
+      const dataAdd = {
+        name: userAdd.name,
+        email: userAdd.email,
+        username:userAdd.username,
+        password:"123456789"
+      }
+      console.log("dataAdd:  ", dataAdd);
       dispatch(
-        postAddUser({
-          ...addUser.data[0],
-          // role: userAdd.role ? "ROLE_ADMIN" : "ROLE_USER",
-          // maNhom: "GP09",
-        })
+        // postAddUser({
+        //   ...addUser.data[0],
+        //   role: userAdd.role ? "ROLE_ADMIN" : "ROLE_USER",
+        //   maNhom: "GP09",
+        // })
+        postAddUser(dataAdd)
       );
     }
+ 
   };
 
   const onFilter = () => {
@@ -551,10 +562,10 @@ export default function UsersManagement() {
         slugify(user.username ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
-      const matchMatKhau =
-        slugify(user.createdAt ?? "", modifySlugify)?.indexOf(
-          slugify(valueSearch, modifySlugify)
-        ) !== -1;
+      // const matchMatKhau =
+      //   slugify(user.createdAt ?? "", modifySlugify)?.indexOf(
+      //     slugify(valueSearch, modifySlugify)
+      //   ) !== -1;
       const matchEmail =
         slugify(user.email ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
@@ -568,7 +579,8 @@ export default function UsersManagement() {
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       return (
-        matchTaiKhoan || matchMatKhau || matchEmail || matchHoTen
+        // matchTaiKhoan || matchMatKhau || matchEmail || matchHoTen
+        matchTaiKhoan || matchEmail || matchHoTen
       );
     });
     return searchUsersListDisplay;
@@ -589,7 +601,7 @@ export default function UsersManagement() {
       [
         {
           field: "id",
-          headerName: "Xóa",
+          headerName: "ID",
           width: 100,
           renderCell: (params) => (
             <ButtonDelete
@@ -611,15 +623,15 @@ export default function UsersManagement() {
           align: "left",
           headerClassName: "custom-header",
         },
-        {
-          field: "createdAt",
-          headerName: "Create At",
-          width: 300,
-          editable: true,
-          headerAlign: "center",
-          align: "left",
-          headerClassName: "custom-header",
-        },
+        // {
+        //   field: "createdAt",
+        //   headerName: "Create At",
+        //   width: 300,
+        //   editable: true,
+        //   headerAlign: "center",
+        //   align: "left",
+        //   headerClassName: "custom-header",
+        // },
         {
           field: "name",
           headerName: "Name",
@@ -650,7 +662,7 @@ export default function UsersManagement() {
         // },
         {
           field: "role",
-          headerName: "isAdmin",
+          headerName: "isStaff",
           width: 145,
           editable: true,
           type: "boolean",
@@ -723,11 +735,34 @@ export default function UsersManagement() {
             <Button
               variant="contained"
               color="primary"
-              className={classes.button}
-              onClick={handleRefreshUserListResetChanged}
-              startIcon={<CachedIcon />}
+              className={`${classes.addUser} ${classes.button}`}
+              onClick={handleToggleAddUser}
+              disabled={
+                addUser.toggle
+                  ? addUser.isFilledIn
+                    ? addUser.readyAdd
+                      ? false
+                      : true
+                    : false
+                  : false
+              }
+              startIcon={
+                addUser.toggle ? (
+                  addUser.isFilledIn ? (
+                    <PersonAddIcon />
+                  ) : (
+                    <EditIcon />
+                  )
+                ) : (
+                  <PersonAddIcon />
+                )
+              }
             >
-              Refresh
+              {addUser.toggle
+                ? addUser.isFilledIn
+                  ? "Add Staff"
+                  : "User Management"
+                : "Add Staff"}
             </Button>
           </div>
           <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
@@ -767,7 +802,9 @@ export default function UsersManagement() {
           <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
             <Button
               variant="contained"
-              className={`${classes.userKhachHang} ${classes.button}`}
+              color="primary"
+              // className={`${classes.userKhachHang} ${classes.button}`}
+              className={classes.button}
               onClick={() =>
                 setsortBy({ field: "role", sort: "asc" })
               }
@@ -775,7 +812,7 @@ export default function UsersManagement() {
               Users
             </Button>
           </div>
-          <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
+          {/* <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
             <Button
               variant="contained"
               className={`${classes.userModified} ${classes.button}`}
@@ -783,16 +820,29 @@ export default function UsersManagement() {
             >
               Modified Users
             </Button>
+          </div> */}
+          <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={handleRefreshUserListResetChanged}
+              startIcon={<CachedIcon />}
+            >
+              Refresh
+            </Button>
           </div>
           <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
             <Button
               variant="contained"
-              className={`${classes.userQuanTri} ${classes.button}`}
+              // className={`${classes.userQuanTri} ${classes.button}`}
+              color="primary"
+              className={classes.button}
               onClick={() =>
                 setsortBy({ field: "role", sort: "desc" })
               }
             >
-              Admin Account
+              Staff Account
             </Button>
           </div>
           <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
@@ -849,7 +899,11 @@ export default function UsersManagement() {
         onEditCellChangeCommitted={handleEditCellChangeCommitted}
         // hiện loading khi đang call api lấy userList
         loading={loadingUsersList}
-        components={{ LoadingOverlay: CustomLoadingOverlay }}
+        // components={{ LoadingOverlay: CustomLoadingOverlay }}
+        components={{
+          LoadingOverlay: CustomLoadingOverlay,
+          Toolbar: GridToolbar,
+        }}
         // sort
         sortModel={sortModel}
       />
