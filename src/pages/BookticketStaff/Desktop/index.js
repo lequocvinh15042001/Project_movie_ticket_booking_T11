@@ -1,5 +1,4 @@
 import React from 'react'
-
 import useStyles from './style'
 import ListSeat from '../ListSeat'
 import PayMent from '../PayMent'
@@ -10,7 +9,7 @@ export default function Index() {
   return (
     <div className={classes.bookTicked}>
       <section className={classes.left}>
-        <StepCheckout />
+        {/* <StepCheckout /> */}
         <ListSeat />
       </section>
       <section className={classes.right}>

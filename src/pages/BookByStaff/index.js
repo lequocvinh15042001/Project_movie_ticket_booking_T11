@@ -28,6 +28,7 @@ import Action from "./Action";
 import ThumbnailYoutube from "./ThumbnailYoutube";
 import FormAdd from "./FormAdd";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import BtnGoToCheckoutByStaff from "./BtnGoToCheckOut";
 
 function CustomLoadingOverlay() {
   return (
@@ -123,6 +124,8 @@ export default function BookByStaff() {
         nameRoom:schedule.room.name,
         totalArea:schedule.room.totalArea,
         idRoom:schedule.room.id,
+        idRap:schedule.branch.id,
+        idPhim:schedule.movie.id,
         smallImageURl: schedule.movie.smallImageURl
       }));
       setScheduleListDisplay(newScheduleListDisplay);
@@ -284,15 +287,27 @@ export default function BookByStaff() {
   const columns = [
     {
       field: "hanhDong",
-      headerName: "Action",
-      width: 110,
-      renderCell: (params) => (
-        <Action
-          // onEdit={handleEdit}
-          // onDeleted={handleDeleteOne}
-          onBook={handleBook}
-          phimItem={params.row.id}
-        />
+      headerName: "Book",
+      width: 100,
+      // renderCell: (params) => (
+      //   <Action
+      //     // onEdit={handleEdit}
+      //     // onDeleted={handleDeleteOne}
+      //     onBook={handleBook}
+      //     phimItem={params.row.id}
+      //   />
+      // ),
+      renderCell:(params) =>(
+        <BtnGoToCheckoutByStaff 
+        lichChieuTheoPhim={params.row.startTime}
+        duration={params.row.time} //duration
+        idLich={params.row.id}
+        maPhim={params.row.idPhim}
+        ngayChieu={params.row.startDate}
+        maPhong={params.row.idRoom}
+        gioChieu={params.row.startTime}
+        maRap={params.row.idRap} 
+       />
       ),
       headerAlign: "center",
       align: "left",

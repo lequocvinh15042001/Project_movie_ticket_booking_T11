@@ -6,6 +6,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useDispatch, useSelector } from "react-redux";
 
 import NavBar from './NavBar';
+import NavAdminStaff from './NavAdminStaff/Sidebar'
 import TopBar from './TopBar';
 import usersApi from '../../api/usersApi';
 import { GET_INFO_USER_FAIL, GET_INFO_USER_REQUEST, GET_INFO_USER_SUCCESS } from '../../reducers/constants/UsersManagement';
@@ -97,6 +98,7 @@ export default function AdminLayout(props) {
             onMobileClose={() => setMobileNavOpen(false)}
             openMobile={isMobileNavOpen}
           />
+          <NavAdminStaff/>
         </div>
         <div style={{ width: isMobile ? "100%" : "calc(100% - 255px)",backgroundColor:"white", height:"100vh" }}>
           {/* đây là nội dung chính: UserManagement, MoviesManagement, ReateShowtime */}

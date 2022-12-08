@@ -7,6 +7,9 @@ const useStyles = makeStyles({
     padding: props.isMobile ? "0px" : '0 10%',
     marginLeft: props.isMobile ? '0%' : '10%',
   }),
+  listSeat:{
+    width: "65vw",
+  },
 
   info_CountDown: {
     width: "100%",
@@ -16,6 +19,7 @@ const useStyles = makeStyles({
   },
   infoTheater: {
     display: 'flex',
+    marginLeft:"1rem",
   },
   text: {
     paddingTop: 5,
@@ -27,6 +31,7 @@ const useStyles = makeStyles({
   },
   countDown: {
     textAlign: "center",
+    marginRight:"3rem",
   },
   timeTitle: {
     fontSize: "12px",

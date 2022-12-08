@@ -13,6 +13,8 @@ import {
 } from "../../../reducers/constants/BookTicket";
 import TenCumRap from "../../../components/TenCumRap";
 import poster from "../../../assets/posterBG.jpg"
+import { useParams } from "react-router-dom";
+import bookingApi from "../../../api/bookingApi";
 
 export default function ListSeat() {
   const {
@@ -25,10 +27,36 @@ export default function ListSeat() {
   console.log("------sdas-", thongTinPhongVe);
   const domToSeatElement = useRef(null);
   const [widthSeat, setWidthSeat] = useState(0);
+
+  const [thongTin, setThongTin] = useState()
+  const param = useParams();
+
+  console.log(param.maPhim, param.maRap, param.ngayChieu, param.gioChieu, param.maPhong);
+  useEffect(() => {
+    // lấy thongTinPhim và danhSachGhe
+    // dispatch(getListSeat(param.maLichChieu));
+    bookingApi.getLichChieuChiTietHeThong(param.maPhim, param.maRap, param.ngayChieu, param.gioChieu, param.maPhong)
+    .then((response) =>{
+      console.log(response.data.data);
+      setThongTin(response.data);
+      // dispatch({
+      //   type: GET_LISTSEAT_SUCCESS,
+      //   payload: { data: response.data.data }
+      // })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    // return () => {
+    //   // xóa dữ liệu khi đóng hủy component
+    //   dispatch({ type: RESET_DATA_BOOKTICKET });
+    // };
+  }, []);
+  
   const classes = useStyles({
     color: colorTheater[thongTinPhongVe?.setRap?.slice(0,3).toUpperCase()],
     //color: "white",
-    modalLeftImg: thongTinPhongVe?.setPhim?.smallImageURl,
+    modalLeftImg: thongTin?.data?.content[0]?.movie?.smallImageURl,
    // modalLeftImg: poster,
     isMobile,
     widthLabel: widthSeat / 2,
@@ -46,6 +74,8 @@ export default function ListSeat() {
   const handleResize = () => {
     setWidthSeat(domToSeatElement?.current?.offsetWidth);
   };
+
+ 
 
   const handleSelectedSeat = (seatSelected) => {
     if (seatSelected.isOccupied) {
@@ -119,22 +149,23 @@ export default function ListSeat() {
     }
     return color;
   };
-
+console.log(thongTin);
   return (
     <main className={classes.listSeat}>
       {/* thông tin phim */}
       <div className={classes.info_CountDown}>
         <div className={classes.infoTheater}>
           <img
-            src={thongTinPhongVe?.setPhim?.smallImageURl}
+            src={thongTin?.data?.content[0]?.movie?.smallImageURl}
             alt="phim"
-            style={{ width: 50, height: 50 }}
+            style={{ width: 100, height: 150 }}
           />
           <div className={classes.text}>
-            <TenCumRap tenCumRap={thongTinPhongVe?.setRap} />
+            <p style={{color: "green", fontWeight:"700", marginBottom:"1rem", fontSize:"2rem"}}>{thongTin?.data?.content[0]?.movie?.name}</p>
+            <TenCumRap tenCumRap={thongTin?.data?.content[0]?.branch?.name} />
             <p className={classes.textTime}>{`${
-              thongTinPhongVe && formatDate(thongTinPhongVe?.setNgayXem).dayToday
-            } - ${thongTinPhongVe?.setNgayXem} - ${thongTinPhongVe?.setPhim?.rated}`}</p>
+              thongTin && formatDate(thongTin?.data?.content[0]?.startDate).dayToday
+            } - ${thongTin?.data?.content[0]?.startDate} - ${thongTin?.data?.content[0]?.movie?.rated}`}</p>
           </div>
         </div>
         <div className={classes.countDown}>
