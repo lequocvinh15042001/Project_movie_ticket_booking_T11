@@ -22,6 +22,19 @@ import {
   GET_SCHEDULE_LIST_REQUEST2,
   GET_SCHEDULE_LIST_SUCCESS2,
   GET_SCHEDULE_LIST_FAIL2,
+  DELETE_SCHEDULE_REQUEST,
+  DELETE_SCHEDULE_SUCCESS,
+  DELETE_SCHEDULE_FAIL,
+  POST_UPDATE_SCHEDULE_REQUEST,
+  POST_UPDATE_SCHEDULE_SUCCESS,
+  POST_UPDATE_SCHEDULE_FAIL,
+  UPDATE_NONEIMAGE_SCHEDULE_REQUEST,
+  UPDATE_NONEIMAGE_SCHEDULE_SUCCESS,
+  UPDATE_NONEIMAGE_SCHEDULE_FAIL,
+  ADD_SCHEDULE_UPLOAD_REQUEST,
+  ADD_SCHEDULE_UPLOAD_SUCCESS,
+  RESET_SCHEDULE_MANAGEMENT,
+  ADD_SCHEDULE_UPLOAD_FAIL,
 } from "./constants/Movie";
 
 const initialState = {
@@ -33,10 +46,6 @@ const initialState = {
   movieList2: null,
   loadingMovieList2: false,
   errorMovieList2: null,
-
-  scheduleList2: null,
-  loadingScheduleList2: false,
-  errorScheduleList2: null,
 
   successDeleteMovie: "",
   loadingDeleteMovie: false,
@@ -55,6 +64,27 @@ const initialState = {
   errorAddUploadMovie: null,
 
   saveBeforeinstallpromptEvent: null,
+
+  // schedule
+  scheduleList2: null,
+  loadingScheduleList2: false,
+  errorScheduleList2: null,
+
+  successDeleteSchedule: "",
+  loadingDeleteSchedule: false,
+  errorDeleteSchedule: null,
+
+  successUpdateSchedule: "",
+  loadingUpdateSchedule: false,
+  errorUpdateSchedule: null,
+
+  successUpdateNoneImageSchedule: "",
+  loadingUpdateNoneImageSchedule: false,
+  errorUpdateNoneImageSchedule: null,
+
+  successAddUploadSchedule: "",
+  loadingAddUploadSchedule: false,
+  errorAddUploadSchedule: null,
 };
 
 const movieReducer = (state = initialState, action) => {
@@ -79,42 +109,6 @@ const movieReducer = (state = initialState, action) => {
         ...state,
         errorMovieList: action.payload.errorMovieList,
         loadingMovieList: false,
-      };
-    }
-
-    case GET_MOVIE_LIST_REQUEST2: {
-      return { ...state, loadingMovieList2: true, errorMovieList2: null };
-    }
-    case GET_MOVIE_LIST_SUCCESS2: {
-      return {
-        ...state,
-        movieList2: action.payload.data,
-        loadingMovieList2: false,
-      };
-    }
-    case GET_MOVIE_LIST_FAIL2: {
-      return {
-        ...state,
-        errorMovieList2: action.payload.errorMovieList,
-        loadingMovieList2: false,
-      };
-    }
-
-    case GET_SCHEDULE_LIST_REQUEST2: {
-      return { ...state, loadingScheduleList2: true, errorScheduleList2: null };
-    }
-    case GET_SCHEDULE_LIST_SUCCESS2: {
-      return {
-        ...state,
-        scheduleList2: action.payload.data,
-        loadingScheduleList2: false,
-      };
-    }
-    case GET_SCHEDULE_LIST_FAIL2: {
-      return {
-        ...state,
-        errorScheduleList2: action.payload.errorScheduleList2,
-        loadingScheduleList2: false,
       };
     }
 
@@ -222,6 +216,148 @@ const movieReducer = (state = initialState, action) => {
       };
     }
 
+
+    case GET_MOVIE_LIST_REQUEST2: {
+      return { ...state, loadingMovieList2: true, errorMovieList2: null };
+    }
+    case GET_MOVIE_LIST_SUCCESS2: {
+      return {
+        ...state,
+        movieList2: action.payload.data,
+        loadingMovieList2: false,
+      };
+    }
+    case GET_MOVIE_LIST_FAIL2: {
+      return {
+        ...state,
+        errorMovieList2: action.payload.errorMovieList,
+        loadingMovieList2: false,
+      };
+    }
+
+    // SCHEDULE
+    case GET_SCHEDULE_LIST_REQUEST2: {
+      return { ...state, loadingScheduleList2: true, errorScheduleList2: null };
+    }
+    case GET_SCHEDULE_LIST_SUCCESS2: {
+      return {
+        ...state,
+        scheduleList2: action.payload.data,
+        loadingScheduleList2: false,
+      };
+    }
+    case GET_SCHEDULE_LIST_FAIL2: {
+      return {
+        ...state,
+        errorScheduleList2: action.payload.errorScheduleList2,
+        loadingScheduleList2: false,
+      };
+    }
+
+    case DELETE_SCHEDULE_REQUEST: {
+      return { ...state, loadingDeleteSchedule: true, errorDeleteSchedule: null };
+    }
+    case DELETE_SCHEDULE_SUCCESS: {
+      return {
+        ...state,
+        successDeleteSchedule: action.payload.data,
+        loadingDeleteSchedule: false,
+      };
+    }
+    case DELETE_SCHEDULE_FAIL: {
+      return {
+        ...state,
+        errorDeleteSchedule: action.payload.error,
+        loadingDeleteSchedule: false,
+      };
+    }
+
+    case POST_UPDATE_SCHEDULE_REQUEST: {
+      return { ...state, loadingUpdateSchedule: true, errorUpdateSchedule: null };
+    }
+    case POST_UPDATE_SCHEDULE_SUCCESS: {
+      return {
+        ...state,
+        successUpdateSchedule: action.payload.data,
+        loadingUpdateSchedule: false,
+      };
+    }
+    case POST_UPDATE_SCHEDULE_FAIL: {
+      return {
+        ...state,
+        errorUpdateSchedule: action.payload.error,
+        loadingUpdateSchedule: false,
+      };
+    }
+
+    case UPDATE_NONEIMAGE_SCHEDULE_REQUEST: {
+      return {
+        ...state,
+        loadingUpdateNoneImageSchedule: true,
+        errorUpdateNoneImageSchedule: null,
+      };
+    }
+    case UPDATE_NONEIMAGE_SCHEDULE_SUCCESS: {
+      return {
+        ...state,
+        successUpdateNoneImageSchedule: action.payload.data,
+        loadingUpdateNoneImageSchedule: false,
+      };
+    }
+    case UPDATE_NONEIMAGE_SCHEDULE_FAIL: {
+      return {
+        ...state,
+        errorUpdateNoneImageSchedule: action.payload.error,
+        loadingUpdateNoneImageSchedule: false,
+      };
+    }
+
+    case ADD_SCHEDULE_UPLOAD_REQUEST: {
+      return {
+        ...state,
+        loadingAddUploadSchedule: true,
+        errorAddUploadSchedule: null,
+      };
+    }
+    case ADD_SCHEDULE_UPLOAD_SUCCESS: {
+      return {
+        ...state,
+        successAddUploadSchedule: action.payload.data,
+        loadingAddUploadSchedule: false,
+      };
+    }
+    case ADD_SCHEDULE_UPLOAD_FAIL: {
+      return {
+        ...state,
+        errorAddUploadSchedule: action.payload.error,
+        loadingAddUploadSchedule: false,
+      };
+    }
+
+    case RESET_SCHEDULE_MANAGEMENT: {
+      return {
+        ...state,
+        loadingScheduleList2: false,
+        errorScheduleList2: null,
+
+        successDeleteSchedule: "",
+        loadingDeleteSchedule: false,
+        errorDeleteSchedule: null,
+
+        successUpdateSchedule: "",
+        loadingUpdateSchedule: false,
+        errorUpdateSchedule: null,
+
+        successUpdateNoneImageSchedule: "",
+        loadingUpdateNoneImageSchedule: false,
+        errorUpdateNoneImageSchedule: null,
+
+        successAddUploadSchedule: "",
+        loadingAddUploadSchedule: false,
+        errorAddUploadSchedule: null,
+      };
+    }
+// HẾT SCHEDULE
     case SAVE_BEFOREINSTALLPROMPT_EVENT: {
       state.saveBeforeinstallpromptEvent = action.payload.event;
       return state;

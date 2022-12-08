@@ -15,17 +15,17 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import { useStyles, DialogContent, DialogTitle } from "./styles";
 import {
-  getMovieListManagement,
   deleteMovie,
   updateMovieUpload,
   resetMoviesManagement,
   updateMovie,
   addMovieUpload,
   getScheduleListManagement,
+  resetScheduleManagement,
+  getMovieListManagement,
 } from "../../reducers/actions/Movie";
 import Action from "./Action";
 import ThumbnailYoutube from "./ThumbnailYoutube";
-import Form from "./Form";
 import FormAdd from "./FormAdd";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
@@ -37,169 +37,188 @@ function CustomLoadingOverlay() {
   );
 }
 
-export default function MoviesManagement() {
-  const [movieListDisplay, setMovieListDisplay] = useState([]);
-  console.log("movieListDisplay: ", movieListDisplay);
+export default function BookByStaff() {
+  // const [movieListDisplay, setMovieListDisplay] = useState([]);
+  // console.log("movieListDisplay: ", movieListDisplay);
 
   const [scheduleListDisplay, setScheduleListDisplay] = useState([]);
-  console.log("scheduleListDisplay: ", movieListDisplay);
+
 
   const classes = useStyles();
   const  {enqueueSnackbar}  = useSnackbar();
   let {
-    movieList2,
-    loadingMovieList2,
-    loadingDeleteMovie,
-    errorDeleteMovie,
-    successDeleteMovie,
-    successUpdateMovie,
-    errorUpdateMovie,
-    loadingUpdateMovie,
-    loadingAddUploadMovie,
-    successAddUploadMovie,
-    errorAddUploadMovie,
-    loadingUpdateNoneImageMovie,
-    successUpdateNoneImageMovie,
-    errorUpdateNoneImageMovie,
+    scheduleList2,
+    loadingScheduleList2,
+    loadingDeleteSchedule,
+    errorDeleteSchedule,
+    successDeleteSchedule,
+    successUpdateSchedule,
+    errorUpdateSchedule,
+    loadingUpdateSchedule,
+    loadingAddUploadSchedule,
+    successAddUploadSchedule,
+    errorAddUploadSchedule,
+    loadingUpdateNoneImageSchedule,
+    successUpdateNoneImageSchedule,
+    errorUpdateNoneImageSchedule,
   } = useSelector((state) => state.movieReducer);
+  // console.log(scheduleList2);
   const dispatch = useDispatch();
   const newImageUpdate = useRef("");
   const callApiChangeImageSuccess = useRef(false);
   const [valueSearch, setValueSearch] = useState("");
   const clearSetSearch = useRef(0);
   const [openModal, setOpenModal] = React.useState(false);
-  const selectedPhim = useRef(null);
+  const selectedSchedule = useRef(null);
+  const [branch, setBranch] = React.useState('');
   const isMobile = useMediaQuery("(max-width:768px)");
+
+  const handleChange = (event) => {
+    setBranch(event.target.value);
+  };
+
+  // console.log("Rạp: ", branch);
+
   useEffect(() => {
     if (
-      !movieList2 ||
-      successUpdateMovie ||
-      successUpdateNoneImageMovie ||
-      successDeleteMovie ||
-      errorDeleteMovie ||
-      successAddUploadMovie
+      !scheduleList2 ||
+      successUpdateSchedule ||
+      successUpdateNoneImageSchedule ||
+      successDeleteSchedule ||
+      errorDeleteSchedule ||
+      successAddUploadSchedule
     ) {
       // dispatch(getMovieListManagement());
+      // console.log("branch: ",branch);
       dispatch(getScheduleListManagement(branch))
     }
   }, [
-    successUpdateMovie,
-    successUpdateNoneImageMovie,
-    successDeleteMovie,
-    errorDeleteMovie,
-    successAddUploadMovie,
+    successUpdateSchedule,
+    successUpdateNoneImageSchedule,
+    successDeleteSchedule,
+    errorDeleteSchedule,
+    successAddUploadSchedule,
   ]); // khi vừa thêm phim mới xong mà xóa liên backend sẽ báo lỗi xóa không được nhưng thực chất đã xóa thành công > errorDeleteMovie nhưng vẫn tiến hành làm mới lại danh sách
-
-  const [branch, setBranch] = React.useState('');
-
-  useEffect(() =>{
-    dispatch(getScheduleListManagement(branch))
-  },[branch])
   
-  const handleChange = (event) => {
-
-    setBranch(event.target.value);
-    console.log("Rạp: ", event.target.value);
-  };
+  useEffect(() => {
+      dispatch(getScheduleListManagement((branch.toString())))
+      // console.log("scheduleList2: ",scheduleList2);
+      // setScheduleListDisplay(scheduleList2)
+  }, [branch]);
 
   useEffect(() => {
     return () => {
-      dispatch(resetMoviesManagement());
+      dispatch(resetScheduleManagement());
     };
   }, []);
+
   useEffect(() => {
-    if (movieList2) {
-      let newMovieListDisplay = movieList2?.data?.map((movie) => ({
-        ...movie,
+    if (scheduleList2) {
+      let newScheduleListDisplay = scheduleList2?.data?.content?.map((schedule) => ({
+        ...schedule,
         hanhDong: "",
-        id: movie.id,
+        id: schedule.id,
+        movieName: schedule.movie.name,
+        time:schedule.movie.duration,
+        nameRoom:schedule.room.name,
+        totalArea:schedule.room.totalArea,
+        idRoom:schedule.room.id,
+        smallImageURl: schedule.movie.smallImageURl
       }));
-      setMovieListDisplay(newMovieListDisplay);
+      setScheduleListDisplay(newScheduleListDisplay);
     }
-  }, [movieList2]);
+
+  }, [scheduleList2]);
+
+  // useEffect(() => {
+  //   // delete movie xong thì thông báo
+  //   if (errorDeleteSchedule === "Delete Success but backend return error") {
+  //     successDeleteSchedule = "Delete Success !";
+  //   }
+  //   if (successDeleteSchedule) {
+  //     enqueueSnackbar(successDeleteSchedule, { variant: "success" });
+  //     return;
+  //   }
+  //   if (errorDeleteSchedule) {
+  //     enqueueSnackbar(errorDeleteSchedule, { variant: "error" });
+  //   }
+  // }, [errorDeleteSchedule, successDeleteSchedule]);
 
   useEffect(() => {
-    // delete movie xong thì thông báo
-    if (errorDeleteMovie === "Delete Success but backend return error") {
-      successDeleteMovie = "Delete Success !";
-    }
-    if (successDeleteMovie) {
-      enqueueSnackbar(successDeleteMovie, { variant: "success" });
-      return;
-    }
-    if (errorDeleteMovie) {
-      enqueueSnackbar(errorDeleteMovie, { variant: "error" });
-    }
-  }, [errorDeleteMovie, successDeleteMovie]);
-
-  useEffect(() => {
-    if (successUpdateMovie || successUpdateNoneImageMovie) {
+    if (successUpdateSchedule || successUpdateNoneImageSchedule) {
       callApiChangeImageSuccess.current = true;
       enqueueSnackbar(
-        `Update successfully: ${successUpdateMovie.name ?? ""}${
-          successUpdateNoneImageMovie.name ?? ""
+        `Update successfully: ${successUpdateSchedule.name ?? ""}${
+          successUpdateNoneImageSchedule.name ?? ""
         }`,
         { variant: "success" }
       );
     }
-    if (errorUpdateMovie || errorUpdateNoneImageMovie) {
+    if (errorUpdateSchedule || errorUpdateNoneImageSchedule) {
       callApiChangeImageSuccess.current = false;
       enqueueSnackbar(
-        `${errorUpdateMovie ?? ""}${errorUpdateNoneImageMovie ?? ""}`,
+        `${errorUpdateSchedule ?? ""}${errorUpdateNoneImageSchedule ?? ""}`,
         { variant: "error" }
       );
     }
   }, [
-    successUpdateMovie,
-    errorUpdateMovie,
-    successUpdateNoneImageMovie,
-    errorUpdateNoneImageMovie,
+    successUpdateSchedule,
+    errorUpdateSchedule,
+    successUpdateNoneImageSchedule,
+    errorUpdateNoneImageSchedule,
   ]);
-
+  // console.log("scheduleListDisplay: ", scheduleListDisplay);
   useEffect(() => {
-    if (successAddUploadMovie) {
+    if (successAddUploadSchedule) {
       enqueueSnackbar(
-        `Add new movie successfully: ${successAddUploadMovie.name}`,
+        `Add new Schedule successfully: ${successAddUploadSchedule.name}`,
         { variant: "success" }
       );
     }
-    if (errorAddUploadMovie) {
-      enqueueSnackbar(errorAddUploadMovie, { variant: "error" });
+    if (errorAddUploadSchedule) {
+      enqueueSnackbar(errorAddUploadSchedule, { variant: "error" });
     }
-  }, [successAddUploadMovie, errorAddUploadMovie]);
+  }, [successAddUploadSchedule, errorAddUploadSchedule]);
 
   // xóa một phim
   const handleDeleteOne = (maPhim) => {
-    if (!loadingDeleteMovie) {
+    if (!loadingDeleteSchedule) {
       // nếu click xóa liên tục một user
-      dispatch(deleteMovie(maPhim));
+      // dispatch(deleteMovie(maPhim));
       // window.location.reload();
     }
   };
   const handleEdit = (phimItem) => {
-    selectedPhim.current = phimItem;
+    selectedSchedule.current = phimItem;
     setOpenModal(true);
   };
 
+  const handleBook = (phimItem) => {
+    console.log("Book lịch chiếu thứ: ", phimItem);
+    
+    // selectedSchedule.current = phimItem;
+    // setOpenModal(true);
+  };
+
   const onUpdate = (movieObj, hinhAnh, fakeImage) => {
-    if (loadingUpdateMovie || loadingUpdateNoneImageMovie) {
+    if (loadingUpdateSchedule || loadingUpdateNoneImageSchedule) {
       return undefined;
     }
     setOpenModal(false);
     newImageUpdate.current = fakeImage;
     if (typeof hinhAnh === "string") {
       // nếu dùng updateMovieUpload sẽ bị reset danhGia về 10
-      const movieUpdate = movieListDisplay?.find(
+      const scheduleUpdate = scheduleListDisplay?.find(
         (movie) => movie.id === fakeImage.id
       ); // lẩy ra url gốc, tránh gửi base64 tới backend
-      movieObj.smallImageURl = movieUpdate.smallImageURl;
+      movieObj.smallImageURl = scheduleUpdate.smallImageURl;
       dispatch(updateMovie(movieObj));
       return undefined;
     }
     dispatch(updateMovieUpload(movieObj));
   };
   const onAddMovie = (movieObj) => {
-    if (!loadingAddUploadMovie) {
+    if (!loadingAddUploadSchedule) {
       dispatch(addMovieUpload(movieObj));
     }
     setOpenModal(false);
@@ -222,7 +241,7 @@ export default function MoviesManagement() {
       rated: "",
       isShowing: null,
     };
-    selectedPhim.current = emtySelectedPhim;
+    selectedSchedule.current = emtySelectedPhim;
     setOpenModal(true);
   };
 
@@ -235,43 +254,44 @@ export default function MoviesManagement() {
 
   const onFilter = () => {
     // dùng useCallback, slugify bỏ dấu tiếng việt
-    let searchMovieListDisplay = movieListDisplay?.filter((movie) => {
+    let searchScheduleListDisplay = scheduleListDisplay?.filter((schedule) => {
       const matchTenPhim =
-        slugify(movie.name ?? "", modifySlugify)?.indexOf(
+        slugify(schedule.movie.name ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchMoTa =
-        slugify(movie.longDescription ?? "", modifySlugify)?.indexOf(
+        slugify(schedule.movie.longDescription ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchNgayKhoiChieu =
-        slugify(movie.releaseDate ?? "", modifySlugify)?.indexOf(
+        slugify(schedule.movie.releaseDate ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       return matchTenPhim || matchMoTa || matchNgayKhoiChieu;
     });
     if (newImageUpdate.current && callApiChangeImageSuccess.current) {
       // hiển thị hình bằng base64 thay vì url, lỗi react không hiển thị đúng hình mới cập nhật(đã cập hình thanh công nhưng url backend trả về giữ nguyên đường dẫn)
-      searchMovieListDisplay = searchMovieListDisplay?.map((movie) => {
-        if (movie.id === newImageUpdate.current.id) {
-          return { ...movie, smallImageURl: newImageUpdate.current.smallImageURl};
+      searchScheduleListDisplay = searchScheduleListDisplay?.map((schedule) => {
+        if (schedule.id === newImageUpdate.current.id) {
+          return { ...schedule, smallImageURl: newImageUpdate.current.smallImageURl};
         }
-        return movie;
+        return schedule;
       });
     }
-    return searchMovieListDisplay;
+    return searchScheduleListDisplay;
   };
 
   const columns = [
     {
       field: "hanhDong",
       headerName: "Action",
-      width: 130,
+      width: 110,
       renderCell: (params) => (
         <Action
-          onEdit={handleEdit}
+          // onEdit={handleEdit}
           // onDeleted={handleDeleteOne}
-          phimItem={params.row}
+          onBook={handleBook}
+          phimItem={params.row.id}
         />
       ),
       headerAlign: "center",
@@ -279,23 +299,9 @@ export default function MoviesManagement() {
       headerClassName: "custom-header",
     },
     {
-      field: "name",
-      headerName: "Name",
+      field: "movieName",
+      headerName: "Movie Name",
       width: 250,
-      headerAlign: "center",
-      align: "left",
-      headerClassName: "custom-header",
-      renderCell: RenderCellExpand,
-    },
-    {
-      field: "trailerURL",
-      headerName: "Trailer",
-      width: 130,
-      renderCell: (params) => (
-        <div style={{ display: "inline-block" }}>
-          <ThumbnailYoutube urlYoutube={params.row.trailerURL} />
-        </div>
-      ),
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
@@ -309,18 +315,18 @@ export default function MoviesManagement() {
       headerClassName: "custom-header",
       renderCell: (params) => RenderCellExpand(params),
     },
+    // {
+    //   field: "startDate",
+    //   headerName: "Start Date",
+    //   width: 130,
+    //   headerAlign: "center",
+    //   align: "left",
+    //   headerClassName: "custom-header",
+    //   renderCell: RenderCellExpand,
+    // },
     {
-      field: "longDescription",
-      headerName: "Description",
-      width: 200,
-      headerAlign: "center",
-      align: "left",
-      headerClassName: "custom-header",
-      renderCell: RenderCellExpand,
-    },
-    {
-      field: "releaseDate",
-      headerName: "Release Date",
+      field: "startDate",
+      headerName: "Start Date",
       width: 160,
       type: "date",
       headerAlign: "center",
@@ -329,19 +335,113 @@ export default function MoviesManagement() {
       valueFormatter: (params) => params.value.slice(0, 10),
     },
     {
-      field: "rated",
-      headerName: "Rated",
+      field: "startTime",
+      headerName: "Start Time",
       width: 120,
       headerAlign: "center",
-      align: "center",
+      align: "left",
       headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
     },
-    { field: "id", hide: true, width: 130 },
-    { field: "categories", hide: true, width: 130 },
-    { field: "duration", hide: true, width: 200, renderCell: RenderCellExpand },
+    {
+      field: "price",
+      headerName: "Price",
+      width: 110,
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
+    },
+
+    {
+      field: "time",
+      headerName: "Duration(mins)",
+      width: 110,
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
+    },
+
+    {
+      field: "nameRoom",
+      headerName: "Room",
+      width: 110,
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
+    },
+
+    {
+      field: "totalArea",
+      headerName: "totalArea",
+      width: 110,
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
+    },
+
+    {
+      field: "idRoom",
+      headerName: "idRoom",
+      width: 110,
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
+    },
+
+    // {
+    //   field: "trailerURL",
+    //   headerName: "Trailer",
+    //   width: 130,
+    //   renderCell: (params) => (
+    //     <div style={{ display: "inline-block" }}>
+    //       <ThumbnailYoutube urlYoutube={params.row.trailerURL} />
+    //     </div>
+    //   ),
+    //   headerAlign: "center",
+    //   align: "center",
+    //   headerClassName: "custom-header",
+    // },
+    // {
+    //   field: "smallImageURl",
+    //   headerName: "Image",
+    //   width: 200,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   headerClassName: "custom-header",
+    //   renderCell: (params) => RenderCellExpand(params),
+    // },
+
+    // {
+    //   field: "releaseDate",
+    //   headerName: "Release Date",
+    //   width: 160,
+    //   type: "date",
+    //   headerAlign: "center",
+    //   align: "center",
+    //   headerClassName: "custom-header",
+    //   valueFormatter: (params) => params.value.slice(0, 10),
+    // },
+    // {
+    //   field: "rated",
+    //   headerName: "Rated",
+    //   width: 120,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   headerClassName: "custom-header",
+    // },
+      
+      // { field: "id", hide: true, width: 130, headerClassName: "custom-header", },
+    // { field: "categories", hide: true, width: 130 },
+    // { field: "duration", hide: true, width: 200, renderCell: RenderCellExpand },
   ];
 
   const modifySlugify = { lower: true, locale: "vi" };
+
   return (
     <div style={{ height: "80vh", width: "100%", backgroundColor:"white"}}>
       <div className={classes.control}>
@@ -400,20 +500,20 @@ export default function MoviesManagement() {
         rowsPerPageOptions={[10, 25, 50]}
         // hiện loading khi
         loading={
-          loadingUpdateMovie ||
-          loadingDeleteMovie ||
-          loadingMovieList2 ||
-          loadingUpdateNoneImageMovie
+          loadingUpdateSchedule ||
+          loadingDeleteSchedule ||
+          loadingScheduleList2 ||
+          loadingUpdateNoneImageSchedule
         }
         components={{
           LoadingOverlay: CustomLoadingOverlay,
           Toolbar: GridToolbar,
         }}
         // sort
-        sortModel={[{ field: "name", sort: "asc" }]}
+        // sortModel={[{ field: "name", sort: "asc" }]}
       />
 
-      <Dialog open={openModal}>
+      {/* <Dialog open={openModal}>
         <DialogTitle onClose={() => setOpenModal(false)}>
           {selectedPhim?.current?.name
             ? `Edit: ${selectedPhim?.current?.name}`
@@ -426,7 +526,7 @@ export default function MoviesManagement() {
             onAddMovie={onAddMovie}
           />
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 }

@@ -25,6 +25,7 @@ import {
   GET_SCHEDULE_LIST_REQUEST2,
   GET_SCHEDULE_LIST_SUCCESS2,
   GET_SCHEDULE_LIST_FAIL2,
+  RESET_SCHEDULE_MANAGEMENT,
 } from "../constants/Movie";
 
 export const getMovieList = () => {
@@ -210,6 +211,14 @@ export const addMovieUpload = (movieObj) => {
           },
         });
       });
+  };
+};
+
+export const resetScheduleManagement = () => {
+  return (dispatch) => {
+    dispatch({
+      type: RESET_SCHEDULE_MANAGEMENT,
+    });
   };
 };
 

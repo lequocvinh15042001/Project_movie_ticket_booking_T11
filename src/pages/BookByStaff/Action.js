@@ -8,7 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import UseApiCheckIsMaPhimSetShowtime from '../../utilities/useApiCheckIsMaPhimSetShowtime';
 
-export default function ButtonDelete({ onDeleted, phimItem, onEdit }) {
+export default function ButtonDelete({ onDeleted, phimItem, onBook }) {
   const isMovieSetShowtime = UseApiCheckIsMaPhimSetShowtime(phimItem.id)
   return (
     <>
@@ -23,8 +23,8 @@ export default function ButtonDelete({ onDeleted, phimItem, onEdit }) {
         </IconButton>
       </Tooltip> */}  
 
-      <Tooltip title="Edit">
-        <IconButton color="primary" style={{ color: "#f00000" }} onClick={() => onEdit(phimItem)} >
+      <Tooltip title="Book For User">
+        <IconButton color="primary" style={{ color: "#f00000" }} onClick={() => onBook(phimItem)} >
           <EventIcon /> {" "}
           <p style={{fontSize:"medium"}}>Book</p>
         </IconButton>
