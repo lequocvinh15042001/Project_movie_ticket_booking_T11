@@ -11,6 +11,11 @@ import {
   RESET_DATA_BOOKTICKET,
   GET_LISTSEAT_SUCCESS,
 } from "../../reducers/constants/BookTicket";
+
+import {
+  LOGIN_SUCCESS
+} from "../../reducers/constants/Auth";
+
 import Mobile from "./Mobile";
 import Desktop from "./Desktop";
 import { DISPLAY_MOBILE_BOOKTICKET } from "../../constants/config";
@@ -194,6 +199,8 @@ export default function Index() {
   const { currentUser } = useSelector((state) => state.authReducer);
 
   const param = useParams();
+  console.log(param.maPhim, param.maLichChieu, param.ngayChieu, param.ngayChieu, param.gioChieu, param.maRap);
+
   const dispatch = useDispatch();
   const mediaQuery = useMediaQuery(DISPLAY_MOBILE_BOOKTICKET);
   const loading = isLazy || loadingGetListSeat;
@@ -203,39 +210,54 @@ export default function Index() {
 
 
   const [seat, setSeat] = useState([])
+  // const listSeat = useSelector((state) => state.listSeat)
+  // console.log(listSeat);
 
   useEffect(() =>{
     usersApi.getThongTinTaiKhoan()
     .then((response) =>{
-      console.log(response.data.data);
-      setCUser(response.data.data);
+      console.log(response);
+      setCUser(response);
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload:{ data : response.data.data }
+      })
     })
     .catch((err) => {
       console.log(err);
     })
   },[])
   
-  console.log(thongTin);
+  console.log(cUser);
 
-  useEffect(() => {
-    console.log("Mã phim: ", param.maPhim);
-    moviesApi.getThongTinPhim(param.maPhim)
-    .then((response) =>{
-      console.log(response.data.data);
-      setCPhim(response.data.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  },[])
+  // useEffect(() => {
+  //   // lấy thongTinPhim và danhSachGhe
+  //   // dispatch(getListSeat(param.maLichChieu));
+  //   bookingApi.getLichChieuChiTietHeThong(param.maPhim, param.maRap, param.ngayChieu, param.gioChieu, param.maPhong)
+  //   .then((response) =>{
+  //     console.log(response.data.data);
+  //     setThongTin(response.data);
+  //     console.log(thongTin);
+  //     // dispatch({
+  //     //   type: GET_LISTSEAT_SUCCESS,
+  //     //   payload: { data: response.data.data }
+  //     // })
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   })
+  //   // return () => {
+  //   //   // xóa dữ liệu khi đóng hủy component
+  //   //   dispatch({ type: RESET_DATA_BOOKTICKET });
+  //   // };
+  // }, []);
 
-  useEffect(() => {
-    // lấy thongTinPhim và danhSachGhe
-    // dispatch(getListSeat(param.maLichChieu));
+  useEffect(() =>{
     bookingApi.getDanhSachPhongVe(param.maLichChieu)
     .then((response) =>{
-      console.log(response.data.data);
+      console.log("Lấy ghế nè", response.data.data);
       setSeat(response.data.data);
+      // console.log(thongTin);
       dispatch({
         type: GET_LISTSEAT_SUCCESS,
         payload: { data: response.data.data }
@@ -248,7 +270,8 @@ export default function Index() {
       // xóa dữ liệu khi đóng hủy component
       dispatch({ type: RESET_DATA_BOOKTICKET });
     };
-  }, []);
+  },[])
+  //useEffect nữa chỗ này để lấy ra các thông tin hoàn chỉnh
 
   useEffect(() => {
     // sau khi lấy được danhSachPhongVe thì khởi tạo data
@@ -265,11 +288,11 @@ export default function Index() {
       payload: {
         listSeat: danhSachGheEdit,
         maLichChieu: param?.maLichChieu,
-        hoTen:"Lê Quốc Vinh",
-        taiKhoanNguoiDung: "4",
-        email: "adam@gmail.com",
+        hoTen:cUser?.data?.data?.name,
+        taiKhoanNguoiDung: cUser?.data?.data?.id,
+        email: cUser?.data?.data?.email,
         phone: "0376621299",
-        thongTinPhongVe: thongTinPhongVe,
+        thongTinPhongVe: thongTin.content,
       },
     });
   }, [seat, cUser, currentUser, cPhim, timeOut]);

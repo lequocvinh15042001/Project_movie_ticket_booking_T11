@@ -10,6 +10,8 @@ import {
   SET_READY_PAYMENT,
 } from "../../../reducers/constants/BookTicket";
 import { logger } from "workbox-core/_private";
+import bookingApi from "../../../api/bookingApi";
+import { useParams } from "react-router-dom";
 
 const makeObjError = (name, value, dataSubmit) => {
   // kiểm tra và set lỗi rỗng
@@ -87,6 +89,9 @@ export default function PayMent() {
     dataSubmit,
   });
 
+  const [thongTin, setThongTin] = useState()
+  const param = useParams();
+
   const onChange = (e) => {
     // khi onchange update values và validation
     let { name, value } = e.target;
@@ -98,6 +103,28 @@ export default function PayMent() {
       errors: newErrors,
     }));
   };
+
+  console.log(param.maPhim, param.maRap, param.ngayChieu, param.gioChieu, param.maPhong);
+  useEffect(() => {
+    // lấy thongTinPhim và danhSachGhe
+    // dispatch(getListSeat(param.maLichChieu));
+    bookingApi.getLichChieuChiTietHeThong(param.maPhim, param.maRap, param.ngayChieu, param.gioChieu, param.maPhong)
+    .then((response) =>{
+      console.log(response.data.data);
+      setThongTin(response.data);
+      // dispatch({
+      //   type: GET_LISTSEAT_SUCCESS,
+      //   payload: { data: response.data.data }
+      // })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    // return () => {
+    //   // xóa dữ liệu khi đóng hủy component
+    //   dispatch({ type: RESET_DATA_BOOKTICKET });
+    // };
+  }, []);
 
   useEffect(() => {
     // sau 0.5s mới đẩy data lên redux để tăng hiệu năng
@@ -184,7 +211,7 @@ export default function PayMent() {
   // for(var i=0;i<listSeatIds.length;i++){
   //   list.push({id:listSeatIds[i]})
   // }
-
+  console.log(thongTin?.data?.content[0]);
 
   return (
     <aside className={classes.payMent}>
@@ -196,12 +223,12 @@ export default function PayMent() {
 
         {/* thông tin phim và rạp */}
         <div className={classes.payMentItem}>
-          <p className={classes.tenPhim}>{thongTinPhongVe?.setPhim?.name}</p>
-          <p>{thongTinPhongVe?.setRap}</p>
-          <p>Date show: {`${thongTinPhongVe?.setNgayXem} ${
-            thongTinPhongVe?.ngayChieu
-          } - ${thongTinPhongVe?.setSuatChieu} - ${thongTinPhongVe?.setPhim?.duration} Minutes 
-          - ${thongTinPhongVe?.setPhim?.categories} - Language: ${thongTinPhongVe?.setPhim?.language}`}</p>
+          <p className={classes.tenPhim}>{thongTin?.data?.content[0]?.movie?.name}</p>
+          <p>{thongTin?.data?.content[0]?.branch.name}</p>
+          <p>Room: {`${thongTin?.data?.content[0]?.room?.name} - Date: ${
+            thongTin?.data?.content[0]?.startDate
+          } - ${thongTin?.data?.content[0]?.startTime} - ${thongTin?.data?.content[0]?.movie?.duration} Minutes 
+          - ${thongTin?.data?.content[0]?.movie?.categories} - Language: ${thongTin?.data?.content[0]?.movie?.language}`}</p>
         </div>
 
         {/* ghế đã chọn */}

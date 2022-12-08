@@ -7,8 +7,8 @@ const useStyles = makeStyles({
     fontSize: props.testSize ? props.testSize : 14,
   }),
   text__second: {
-    color: "#000",
-    fontWeight: "500",
+    color: "#f22222",
+    fontWeight: "700",
   },
 });
 export default useStyles
