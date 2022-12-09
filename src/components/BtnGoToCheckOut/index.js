@@ -28,19 +28,19 @@ export default function BtnGoToCheckout({ lichChieuTheoPhim, duration, idLich, m
 
   const calculateTimeout = (ngayChieuGioChieu, duration) => {
     // const fakeThoiLuong = duration
-    console.log("ngayChieuGioChieu: ", ngayChieuGioChieu);
+    // console.log("ngayChieuGioChieu: ", ngayChieuGioChieu);
     const timeInObj = ngayChieuGioChieu
     const gioDoi = convertH2M(timeInObj)
-    console.log(gioDoi);
+    // console.log(gioDoi);
     const tongGio = duration + gioDoi
 
     // const timeThem = toHoursAndMinutes(duration)
     // const timeThem = new Date(duration.getTime() + 30 * 60 * 1000)
-    console.log("tongGio", tongGio);
+    // console.log("tongGio", tongGio);
 
     const timeOutObj = toHoursAndMinutes(tongGio)
     // const timeOutObj = timeInObj + fakeThoiLuong * 60 * 1000;
-    console.log("timeOutObj", timeOutObj);
+    // console.log("timeOutObj", timeOutObj);
 
     return timeOutObj
   }

@@ -508,7 +508,7 @@ export default function Choose() {
             }}
             classes={{ root: classes.menu__item }}
           >
-            Please choose film and branch
+            No Schedule!
           </MenuItem>
           {data.ngayChieuRender.map((ngayChieu) => (
             <MenuItem
@@ -549,7 +549,7 @@ export default function Choose() {
             }}
             classes={{ root: classes.menu__item }}
           >
-            Please choose film, branch and showdate
+            No Scheudle!
           </MenuItem>
           {data.suatChieuRender.map((suatChieu) => (
             <MenuItem

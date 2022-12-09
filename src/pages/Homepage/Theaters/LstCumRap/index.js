@@ -1,19 +1,31 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 
 import LstPhim from '../LstPhim'
 import useStyles from './style'
 import { underLine, customScrollbar } from '../../../../styles/materialUi'
 import FakeImgTheater from '../../../../components/FakeImgTheater/fakeImgTheater';
 import TenCumRap from '../../../../components/TenCumRap';
+import moviesApi from '../../../../api/moviesApi';
 
 function LstCumRap(props) {
   const { lstCumRap, color } = props;
   console.log(lstCumRap);
   const [valueCumRap, setValueCumRap] = React.useState(0);
+  const [danhSachPhim, setDanhSachPhim] = React.useState([]);
   const classes = useStyles({ underLine, customScrollbar, color });
   const handleChangeCumRap = (e) => {
     setValueCumRap(Number(e.currentTarget.getAttribute("index")));
   };
+  useEffect(() =>{
+    moviesApi.getDanhSachPhim()
+    .then((res) => {
+      setDanhSachPhim(res.data.data);
+    })
+    .catch((err) =>{
+      console.log(err);
+    })
+  },[])
+
   return (
     <div className={classes.flexCumRap}>
       <div className={classes.lstCumRap}>
@@ -31,7 +43,7 @@ function LstCumRap(props) {
       </div>
       {/* {lstCumRap.map((cumRap, index) => ( */}
         {/* <LstPhim lstPhim={lstCumRap.danhSachPhim} key={lstCumRap.id} hidden={valueCumRap !== lstCumRap.id} /> */}
-        <LstPhim idRap={lstCumRap.id} key={lstCumRap.id} hidden={valueCumRap !== lstCumRap.id} />
+        <LstPhim idRap={lstCumRap.id} key={lstCumRap.id} hidden={valueCumRap !== lstCumRap.id} listSachPhim={danhSachPhim}/>
       {/* ))} */}
     </div>
   );

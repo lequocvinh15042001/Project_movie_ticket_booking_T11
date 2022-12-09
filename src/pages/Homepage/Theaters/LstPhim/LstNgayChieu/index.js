@@ -4,13 +4,15 @@ import formatDate from '../../../../../utilities/formatDate'
 import BtnGoToCheckOut from '../../../../../components/BtnGoToCheckOut';
 import useStyles from './style'
 
-export default function LstGioChieu({ lstLichChieuTheoPhim }) {
-  console.log(lstLichChieuTheoPhim);
+export default function LstGioChieu({ lstLichChieuTheoPhim}) {
+  // console.log("nè",danhSachPhim);
   const classes = useStyles()
+  
   // const mangChiChuaNgay = lstLichChieuTheoPhim.map(item => {  // tạo mảng mới chỉ chứa ngày
   //   return item;// item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
   // })
   // console.log(mangChiChuaNgay);
+
   // const MangNgayKhongTrungLap = [...new Set(mangChiChuaNgay)] // xóa đi ngày trùng lặp > dùng mảng này để render số phần tử
 
   // const filterByDay = (date) => { // lọc ra item từ mảng gốc
