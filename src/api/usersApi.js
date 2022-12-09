@@ -50,6 +50,11 @@ const usersApi = {
     return axiosClient.put(path, user);
   },
 
+  editPassword: (newPassword, oldPassword) => {
+    const path = `/auth/changePassword?newPassword=${newPassword}&oldPassword=${oldPassword}`;
+    return axiosClient.put(path);
+  },
+
   getThongTinTaiKhoan: () => {
     // console.log("Vô get");
     const path = "/user/me";

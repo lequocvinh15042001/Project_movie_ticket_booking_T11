@@ -87,6 +87,43 @@ export const resetUserList = () => {
   }
 }
 
+export const putUserChangePass = (newPassword, oldPassword) => {
+
+  return (dispatch) => {
+    console.log("truyền vô cập nhật pass: ", newPassword, oldPassword);
+
+    usersApi.editPassword(newPassword, oldPassword)
+      .then(result => {
+        // console.log("Cập nhật pass thành công: ", result);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Update Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      )
+      .catch(
+        error => {
+          // dispatch({
+          //   type: UPDATE_USER_FAIL,
+          //   payload: { error: error.response?.data ? error.response.data : error.message, }
+          // })
+          // console.log("Cập nhật pass false");
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Password was wrong",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      )
+  }
+}
+
+
 export const putUserUpdate = (user) => {
 
   return (dispatch) => {
