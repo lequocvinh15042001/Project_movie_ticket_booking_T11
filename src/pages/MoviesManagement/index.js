@@ -26,6 +26,7 @@ import Action from "./Action";
 import ThumbnailYoutube from "./ThumbnailYoutube";
 import Form from "./Form";
 import FormAdd from "./FormAdd";
+import Swal from "sweetalert2";
 
 function CustomLoadingOverlay() {
   return (
@@ -151,11 +152,46 @@ export default function MoviesManagement() {
 
   // xóa một phim
   const handleDeleteOne = (maPhim) => {
-    if (!loadingDeleteMovie) {
-      // nếu click xóa liên tục một user
-      dispatch(deleteMovie(maPhim));
-      // window.location.reload();
-    }
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (!loadingDeleteMovie) {
+          // nếu click xóa liên tục một user
+          dispatch(deleteMovie(maPhim));
+          // window.location.reload();
+        }
+        swalWithBootstrapButtons.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Your movie is safe :)',
+          'error'
+        )
+      }
+    })
+
   };
   const handleEdit = (phimItem) => {
     selectedPhim.current = phimItem;
