@@ -18,6 +18,7 @@ export default function RightSection({ branch, idRap }) {
   const [data, setData] = useState({
     ngayChieuRender: [],
     lichChieuPhimData: [],
+    phongChieuData: [],
   });
 
     useEffect(() => {
@@ -58,11 +59,27 @@ export default function RightSection({ branch, idRap }) {
       console.log("Api khi chọn ngày: ", response?.data?.data?.content);
       setLich(response?.data);
       console.log("Lịch nè: ", lich);
+
+      // const phongChieuRender = lich?.data?.content?.map((item) => {
+      //   return (item.room.name); // tạo mảng mới với item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
+      // });
+      // const phongRenderRemoveDuplicates = [...new Set(phongChieuRender)]; // xóa đi phần tử trùng lặp để hiển thị
+      // setData((data) => ({
+      //   ...data,
+      //   phongChieuData: phongRenderRemoveDuplicates,
+      //   // ngayChieuRender,
+      //   // lichChieuPhimData,
+      // }));
+
+    // console.log(phongChieuRender);
+
+
     })
     .catch((err) => {
       console.log(err);
     });
   };
+
   const {theaterList} = useSelector((state) => state.theaterReducer)
   return (
     <div>
@@ -142,15 +159,6 @@ export default function RightSection({ branch, idRap }) {
               maRap={lichChieu?.branch?.id}
               giaVe={lichChieu?.price}
             />
-            {/* {lichChieu?.map((item) => (
-              <ItemCumRap
-                key={item?.id}
-                tenCumRap={item?.branch?.name}
-                maLichChieu={item?.id}
-                lichChieuPhim={item}
-                defaultExpanded={true}
-              />
-            ))} */}
           </div>
         )
       )}

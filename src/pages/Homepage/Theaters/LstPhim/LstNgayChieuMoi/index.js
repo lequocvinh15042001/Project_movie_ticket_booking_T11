@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 
 import formatDate from '../../../../../utilities/formatDate'
-import BtnGoToCheckOut from '../../../../../components/BtnGoToCheckOut';
+import BtnGoToCheckOutPhong from '../../../../../components/BtnGoToCheckOutPhong';
 import useStyles from './style'
 import theatersApi from '../../../../../api/theatersApi';
 
@@ -65,8 +65,9 @@ export default function LstGioChieu(props) {
           <p className={classes.ngayChieu}>{formatDate(date).dateFull}</p>
           <div className={classes.groupTime}>
             {lstLichChieuTheoPhim?.content?.map((lichChieuTheoPhim) => (
+              (lichChieuTheoPhim.startDate === date) ?
               <Fragment key={lichChieuTheoPhim?.id}>
-                <BtnGoToCheckOut 
+                <BtnGoToCheckOutPhong 
                  lichChieuTheoPhim={lichChieuTheoPhim?.startTime}
                  duration={lichChieuTheoPhim?.movie?.duration}
                  idLich={lichChieuTheoPhim?.id}
@@ -74,9 +75,10 @@ export default function LstGioChieu(props) {
                  ngayChieu={lichChieuTheoPhim?.startDate}
                  maPhong={lichChieuTheoPhim?.room?.id}
                  gioChieu={lichChieuTheoPhim?.startTime}
-                 maRap={lichChieuTheoPhim?.branch?.id} 
+                 maRap={lichChieuTheoPhim?.branch?.id}
+                 phong={lichChieuTheoPhim?.room?.name}
                 />
-              </Fragment>
+              </Fragment>:null
             ))}
           </div>
 
