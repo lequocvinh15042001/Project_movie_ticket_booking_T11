@@ -10,6 +10,7 @@ import {
   SET_READY_PAYMENT,
 } from "../../../reducers/constants/BookTicket";
 import { logger } from "workbox-core/_private";
+import Swal from "sweetalert2";
 
 const makeObjError = (name, value, dataSubmit) => {
   // kiểm tra và set lỗi rỗng
@@ -151,27 +152,44 @@ export default function PayMent() {
 
   const handleBookTicket = () => {
     // khi đủ dữ liệu và chưa có lần đặt vé nào trước đó thì mới cho đặt vé
-    if (
-      isReadyPayment &&
-      !loadingBookingTicket &&
-      !successBookingTicketMessage &&
-      !errorBookTicketMessage
-    ) {
-      let userId = taiKhoanNguoiDung
-      let scheduleId = maLichChieu
-      // let list=[]
-      // for(var i=0;i<listSeatIds.length;i++){
-      //   list.push({id:listSeatIds[i]})
-      // }
-      let listSeatIds=[]
-      for(var i = 0;i < danhSachVe.length; i++){
-        listSeatIds.push(danhSachVe[i].id)
+    Swal.fire({
+      title: 'Do you want to book this?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      denyButtonText: 'No',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2',
+        denyButton: 'order-3',
       }
-      console.log("Gửi đi: ",userId, scheduleId, listSeatIds);
-    
-      dispatch(bookTicket({userId, scheduleId, listSeatIds} ));
-      // dispatch(bookTicket({ maLichChieu: 40396, danhSachVe: [{ maGhe: 9122569, giaVe: 75000 }], taiKhoanNguoiDung }))
-    }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (
+          isReadyPayment &&
+          !loadingBookingTicket &&
+          !successBookingTicketMessage &&
+          !errorBookTicketMessage
+        ) {
+          let userId = taiKhoanNguoiDung
+          let scheduleId = maLichChieu
+          // let list=[]
+          // for(var i=0;i<listSeatIds.length;i++){
+          //   list.push({id:listSeatIds[i]})
+          // }
+          let listSeatIds=[]
+          for(var i = 0;i < danhSachVe.length; i++){
+            listSeatIds.push(danhSachVe[i].id)
+          }
+          console.log("Gửi đi: ",userId, scheduleId, listSeatIds);
+          dispatch(bookTicket({userId, scheduleId, listSeatIds} ));
+        }
+        Swal.fire('Booked!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Okay, do not book!', '', 'info')
+      }
+    })
   };
   const onFocus = (e) => {
     setDataFocus({ ...dataFocus, [e.target.name]: true });

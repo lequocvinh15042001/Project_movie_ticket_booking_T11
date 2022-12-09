@@ -12,6 +12,7 @@ import {
 import { logger } from "workbox-core/_private";
 import bookingApi from "../../../api/bookingApi";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const makeObjError = (name, value, dataSubmit) => {
   // kiểm tra và set lỗi rỗng
@@ -176,29 +177,76 @@ export default function PayMent() {
     }));
   }, [listSeat]); // khi reload listSeat sẽ được cập nhật kèm theo, email, phone mặc định của tài khoản
 
-  const handleBookTicket = () => {
-    // khi đủ dữ liệu và chưa có lần đặt vé nào trước đó thì mới cho đặt vé
-    if (
-      isReadyPayment &&
-      !loadingBookingTicket &&
-      !successBookingTicketMessage &&
-      !errorBookTicketMessage
-    ) {
-      let userId = taiKhoanNguoiDung
-      let scheduleId = maLichChieu
-      // let list=[]
-      // for(var i=0;i<listSeatIds.length;i++){
-      //   list.push({id:listSeatIds[i]})
-      // }
-      let listSeatIds=[]
-      for(var i = 0;i < danhSachVe.length; i++){
-        listSeatIds.push(danhSachVe[i].id)
+  const SwalConfirm = () => {
+    Swal.fire({
+      title: 'Do you want to book this?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      denyButtonText: 'No',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2',
+        denyButton: 'order-3',
       }
-      console.log("Gửi đi: ",userId, scheduleId, listSeatIds);
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Booked!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Okay, do not book!', '', 'info')
+      }
+    })
     
-      dispatch(bookTicket({userId, scheduleId, listSeatIds} ));
+  }
+  const handleBookTicket = () => {
+    Swal.fire({
+      title: 'Do you want to book this?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      denyButtonText: 'No',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2',
+        denyButton: 'order-3',
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (
+          isReadyPayment &&
+          !loadingBookingTicket &&
+          !successBookingTicketMessage &&
+          !errorBookTicketMessage
+        ) {
+          let userId = taiKhoanNguoiDung
+          let scheduleId = maLichChieu
+          // let list=[]
+          // for(var i=0;i<listSeatIds.length;i++){
+          //   list.push({id:listSeatIds[i]})
+          // }
+          let listSeatIds=[]
+          for(var i = 0;i < danhSachVe.length; i++){
+            listSeatIds.push(danhSachVe[i].id)
+          }
+          console.log("Gửi đi: ",userId, scheduleId, listSeatIds);
+          dispatch(bookTicket({userId, scheduleId, listSeatIds} ));
+        }
+        Swal.fire('Booked!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Okay, do not book!', '', 'info')
+      }
+    })
+
+    // khi đủ dữ liệu và chưa có lần đặt vé nào trước đó thì mới cho đặt vé
+
+
+      // SwalConfirm()
+
+      
       // dispatch(bookTicket({ maLichChieu: 40396, danhSachVe: [{ maGhe: 9122569, giaVe: 75000 }], taiKhoanNguoiDung }))
-    }
+    
   };
   const onFocus = (e) => {
     setDataFocus({ ...dataFocus, [e.target.name]: true });
