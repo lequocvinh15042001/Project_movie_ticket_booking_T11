@@ -22,6 +22,7 @@ import ShowtimeUser from "./../UserProfile/ShowtimeUser/index"
 import { FAKE_AVATAR } from "../../constants/config";
 import {
   getInfoUser,
+  putUserChangePass,
   putUserUpdate,
   resetUserList,
 } from "../../reducers/actions/UsersManagement";
@@ -130,8 +131,11 @@ export default function Index() {
 
   const [value, setValue] = React.useState(0);
   const [typePassword, settypePassword] = useState("password");
+  const [typePassword2, settypePassword2] = useState("password");
   const [ticket, setTicket] = useState([]);
   const [image, setImage] = useState()
+  const [oldPass, setOldPass] = useState()
+  const [newPass, setNewPass] = useState()
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -229,6 +233,16 @@ export default function Index() {
     }
     dispatch(putUserUpdate(user));
   };
+
+  const handleSubmitChangePass = (pass) => {
+    console.log(pass);
+    if (loadingUpdateUser) {
+      console.log("Thoát");
+      return;
+    }
+    dispatch(putUserChangePass(pass.newpassword, pass.oldpassword));
+  };
+
   const handleToggleHidePassword = () => {
     if (typePassword === "password") {
       settypePassword("text");
@@ -236,6 +250,18 @@ export default function Index() {
       settypePassword("password");
     }
   };
+  const handleToggleHidePassword2 = () => {
+    if (typePassword2 === "password") {
+      settypePassword2("text");
+    } else {
+      settypePassword2("password");
+    }
+  };
+
+  const handleChangePassword = (o,n) =>{
+    console.log(o,n);
+  };
+
   const getIdSeat = (danhSachGhe) => {
     return danhSachGhe?.reduce((listSeat, seat) => {
         return [...listSeat, seat.name];
@@ -561,7 +587,7 @@ export default function Index() {
             <Formik
               initialValues={{
                 // username: successInfoUser?.username ?? "",
-                oldpassword: successInfoUser?.password ?? "",
+                oldpassword: "",
                 newpassword: "",
                 // email: successInfoUser?.email ?? "",
                 // soDt: successInfoUser?.soDT ?? "",
@@ -571,7 +597,7 @@ export default function Index() {
               }}
               enableReinitialize // cho phép cập nhật giá trị initialValues
               validationSchema={updateUserSchemaPassword}
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmitChangePass}
             >
               {(props) => (
                 <Form className={`${classes.field}`}>
@@ -588,6 +614,7 @@ export default function Index() {
                       type={typePassword}
                       className="form-control"
                       onChange={props.handleChange}
+                      // value={this.props.values.oldpassword}
                     />
                     <div
                       className={classes.eye}
@@ -610,15 +637,16 @@ export default function Index() {
                     />
                     <Field
                       name="newpassword"
-                      type={typePassword}
+                      type={typePassword2}
                       className="form-control"
                       onChange={props.handleChange}
+                      // value={value.newpassword}
                     />
                     <div
                       className={classes.eye}
-                      onClick={handleToggleHidePassword}
+                      onClick={handleToggleHidePassword2}
                     >
-                      {typePassword !== "password" ? (
+                      {typePassword2 !== "password" ? (
                         <i className="fa fa-eye-slash" style={{"color":"black"}}></i>
                       ) : (
                         <i className="fa fa-eye" style={{"color":"black"}}></i>
@@ -628,10 +656,11 @@ export default function Index() {
                   <div className="text-left">
                     <button
                       type="submit"
-                      className="btn btn-success"
+                      className="btn btn-primary"
                       disable={loadingUpdateUser.toString()}
+                      // onClick={(e) => {handleChangePassword(value.oldpassword, value.newpassword)}}
                     >
-                      Update
+                      Change
                     </button>
                     {errorUpdateUser && (
                       <div className="alert alert-danger">
