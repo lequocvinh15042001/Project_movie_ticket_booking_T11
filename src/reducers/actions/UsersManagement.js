@@ -53,14 +53,6 @@ export const deleteUser = (taiKhoanUser) => {
       .then(result => {
         console.log(result);
 
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Delete Successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-
         dispatch({
           type: DELETE_USER_SUCCESS,
           payload: { data: result.data.data }
