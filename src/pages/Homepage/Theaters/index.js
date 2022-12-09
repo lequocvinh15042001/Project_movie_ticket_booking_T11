@@ -50,7 +50,7 @@ export default function HeThongRap() {
               key={theater?.id}
               label={
                 <img
-                  style={{ width: "50px", height: "50px" }}
+                  style={{ width: "60px", height: "60px" }}
                   src={theater?.imgURL}
                   alt="theaterLogo"
                 />

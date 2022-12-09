@@ -3,17 +3,17 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles({
   theater: {
     display: (props) => (props.isMobileTheater ? "block" : "flex"),
-    maxWidth: 940,
-    maxHeight: 705,
+    maxWidth: 1024,
+    maxHeight: 800,
     margin: "auto",
-    // border: "1px solid #ebebec",
+    borderTop: "1rem solid orange",
     borderRadius: 0,
     backgroundColor:"white",
   },
   taps: {
     // dường line phần chia khi horizontal
-    // borderBottom: "none",
-    minWidth: 92,
+    borderBottom: "none",
+    minWidth: 75,
   },
   cumRap: {
     minWidth: "calc(100% - 92px)",

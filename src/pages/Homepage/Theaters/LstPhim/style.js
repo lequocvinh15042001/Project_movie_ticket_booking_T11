@@ -19,8 +19,8 @@ const useStyles = makeStyles({
     display: 'flex',
   },
   phim__img: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     objectFit: "cover",
   },
   phim__text: {
@@ -28,7 +28,8 @@ const useStyles = makeStyles({
     width: "calc(100% - 50px)",
   },
   phim__text_name: {
-    fontWeight: 500,
+    fontWeight: 700,
+    color:"#800000",
     textTransform: "capitalize",
   },
 

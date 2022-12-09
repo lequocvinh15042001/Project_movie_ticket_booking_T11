@@ -4,17 +4,16 @@ const useStyle = makeStyles({
   // search bar
   search: {
     display: props => props.down992px ? "none" : 'flex',
-    maxWidth: "940px",
+    maxWidth: "1024px",
     margin: "auto",
-    height: "83px",
+    height: "120px",
     position: "absolute",
     bottom: "0",
     width: "100%",
     left: "50%",
     transform: "translate(-50%,50%)",
-
     backgroundColor: "#fff",
-    borderRadius: "5px",
+    borderTop:"1rem solid orange",
     boxShadow: '0 0 10px rgb(0 0 0 / 30%)',
 
     alignItems: "center",
@@ -140,8 +139,8 @@ const useStyle = makeStyles({
     minHeight: "auto",
     display: 'block',
     padding: '3px 20px',
-    fontSize: '14px',
-    color: '#333',
+    fontSize: '15px',
+    color: '#33',
     '&:focus': {
       backgroundColor: 'transparent',
     },

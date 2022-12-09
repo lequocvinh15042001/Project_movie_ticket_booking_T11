@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     '&:hover': {
       opacity: [[1], '!important'],
     },
-    ...props.underLine
+    // ...props.underLine
   }),
   cumRap__img: {
     width: 50, height: 50,
