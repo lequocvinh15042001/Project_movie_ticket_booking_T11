@@ -40,21 +40,10 @@ const items = [
     title: 'Reviews Managment'
   },
   {
-    href: '#',
-    icon: PostAddIcon,
-    title: 'Categories Managment'
-  },
-  {
     href: '/admin/showtimes',
     icon: PostAddIcon,
     title: 'Create Schedule'
   },
-  {
-    href: '#',
-    icon: PostAddIcon,
-    title: 'Book for User'
-  },
-
 ];
 
 const useStyles = makeStyles(() => ({

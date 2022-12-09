@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
 import usersApi from "../../api/usersApi";
 import {
   LOGIN_REQUEST,
@@ -35,6 +36,13 @@ export const login = (user) => { // đăng nhập
         },
         
       });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Login Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       const stateAfter = getState();      //10
       console.log("Todos after dispatch: ", stateAfter.authReducer);      //11
     } catch (error) {       //12
@@ -44,6 +52,13 @@ export const login = (user) => { // đăng nhập
           // error: error.response?.data?.data ? error.response?.data?.data : error.message,
           error: "Username, email or password not right!"
         },
+      });
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Login False",
+        showConfirmButton: false,
+        timer: 1500,
       });
     }
 
@@ -89,7 +104,6 @@ export const register = (user) => {
     dispatch({
       type: REGISTER_REQUEST,
     });
-
     usersApi
       .postDangKy(user)
       .then((result) => {
@@ -99,6 +113,13 @@ export const register = (user) => {
             data: result.data,
           },
         });
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Register Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => {
         console.log(error.message);
@@ -107,6 +128,13 @@ export const register = (user) => {
           payload: {
             error: "Username or email has been taken!"
           },
+        });
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Register False",
+          showConfirmButton: false,
+          timer: 1500,
         });
       });
   };
