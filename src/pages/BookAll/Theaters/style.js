@@ -5,7 +5,7 @@ const useStyles = makeStyles({
     display: (props) => (props.isMobileTheater ? "block" : "flex"),
     maxWidth: 1024,
     maxHeight: 800,
-    borderTop: "1rem solid orange",
+    borderTop: "1rem solid rgb(250, 82, 56)",
     borderRadius: 0,
     backgroundColor:"white",
   },

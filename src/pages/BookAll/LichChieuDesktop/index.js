@@ -20,7 +20,7 @@ export default function LichChieuDesktop({ data }) {
   const classes = useStyles();
 
   const [value, setValue] = React.useState(0);
-  const [value1, setValue1] = React.useState(7);
+  const [value1, setValue1] = React.useState(0);
   const [idPhim, setIdPhim] = React.useState(7);
 
   const handleChange = (event, newValue) => {

@@ -6,7 +6,7 @@ const useStyles = makeStyles({
     maxWidth: 1024,
     maxHeight: 800,
     margin: "auto",
-    borderTop: "1rem solid orange",
+    borderTop: "1rem solid rgb(250, 82, 56)",
     borderRadius: 0,
     backgroundColor:"white",
   },

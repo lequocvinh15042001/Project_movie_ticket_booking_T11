@@ -8,8 +8,8 @@ export default class Footer extends Component {
         <div className="footer__content">
           <div className="footer__above">
             <div className="above__row row">
-              <div className="above__item col-2 tix-info">
-                <p className="above__title">GOLDEN TICKET MOVIE BOOKING</p>
+              <div className="above__item col-3 tix-info">
+                <p className="above__title">GOLDENNEW TICKET MOVIE BOOKING</p>
                 <ul className="above__list">
                   <li className="list__item">
                     <a className="list__link" href="/#">
@@ -38,7 +38,7 @@ export default class Footer extends Component {
                   </li>
                 </ul>
               </div>
-              <div className="above__item img__col col-4 tix-coop">
+              <div className="above__item img__col col-3 tix-coop">
                 <p className="above__title">PARTNER</p>
                 <ul className="img__list">
                   <li className="img__item">
@@ -105,102 +105,6 @@ export default class Footer extends Component {
                       />
                     </a>
                   </li>
-                  <li className="img__item">
-                    <a className="img__link" href="/#">
-                      <img
-                        src="https://i.ibb.co/VQ0wbkj/TOUCH.png"
-                        alt="hinhanh"
-                      />
-                    </a>
-                  </li>
-                  <li className="img__item">
-                    <a className="img__link" href="/#">
-                      <img
-                        src="https://i.ibb.co/bKGdjCY/cnx.jpg"
-                        alt="hinhanh"
-                      />
-                    </a>
-                  </li>
-                  <li className="img__item">
-                    <a className="img__link" href="/#">
-                      <img
-                        src="https://i.ibb.co/nDZgccs/STARLIGHT.png"
-                        alt="hinhanh"
-                      />
-                    </a>
-                  </li>
-                  <li className="img__item">
-                    <a className="img__link" href="/#">
-                      <img
-                        src="https://i.ibb.co/Yc2Jzzm/dcine.png"
-                        alt="hinhanh"
-                      />
-                    </a>
-                  </li>
-                  <li className="img__item">
-                    <a className="img__link" href="/#">
-                      <img
-                        src="https://i.ibb.co/kMwVgNK/zalopay-icon.png"
-                        alt="hinhanh"
-                      />
-                    </a>
-                  </li>
-                  <li className="img__item">
-                    <a className="img__link" href="/#">
-                      <img
-                        src="https://i.ibb.co/Jtqmn5J/payoo.jpg"
-                        alt="hinhanh"
-                      />
-                    </a>
-                  </li>
-                  <li className="img__item">
-                    <a className="img__link" href="/#">
-                      <img
-                        src="https://i.ibb.co/kcKrb8N/VCB.png"
-                        alt="hinhanh"
-                      />
-                    </a>
-                  </li>
-                  <li className="img__item">
-                    <a className="img__link" href="/#">
-                      <img
-                        src="https://i.ibb.co/2K08K6K/AGRIBANK.png"
-                        alt="hinhanh"
-                      />
-                    </a>
-                  </li>
-                  <li className="img__item">
-                    <a className="img__link" href="/#">
-                      <img
-                        src="https://i.ibb.co/xq10kSK/viettin.png"
-                        alt="hinhanh"
-                      />
-                    </a>
-                  </li>
-                  <li className="img__item">
-                    <a className="img__link" href="/#">
-                      <img
-                        src="https://i.ibb.co/j6xvWHm/IVB.png"
-                        alt="hinhanh"
-                      />
-                    </a>
-                  </li>
-                  <li className="img__item">
-                    <a className="img__link" href="/#">
-                      <img
-                        src="https://i.ibb.co/yWmpqsj/123go.png"
-                        alt="hinhanh"
-                      />
-                    </a>
-                  </li>
-                  <li className="img__item">
-                    <a className="img__link" href="/#">
-                      <img
-                        src="https://i.ibb.co/4VRdzs4/laban.png"
-                        alt="hinhanh"
-                      />
-                    </a>
-                  </li>
                 </ul>
               </div>
               <div className="above__item mobile__app col-2">
@@ -252,13 +156,9 @@ export default class Footer extends Component {
           <hr className="gachchan" />
           <div className="footer__below">
             <div className="below__row justify-content-center align-items-center row">
-              <div className="below__left col-md-3 col-xs-12 col-sm-12">
-                <Logo fillColor={"white"}/>
-                <span className="text-logo">Golden Ticket Movie Booking</span>
-              </div>
-              <div className="below__middle col-md-7 col-sm-12 col-xs-12">
+              <div className="below__middle col-md-9 col-sm-12 col-xs-12">
                 <div className="middle__title">
-                  Golden Ticket Movie Booking – TIỂU LUẬN CHUYÊN NGÀNH
+                  TIỂU LUẬN CHUYÊN NGÀNH
                   <br/>
                   Nhóm tác giả:
                   <br/>
@@ -286,14 +186,9 @@ export default class Footer extends Component {
                   </span>
                 </span>
               </div>
-              <div className="below__right col-md-2 col-sm-12 col-xs-12">
-                <div className="right__link">
-                  <img
-                    className="img-fuild"
-                    src="https://file.hstatic.net/1000012850/file/thong-bao-website-voi-bo-cong-thuong_grande.png"
-                    alt="hello"
-                  />
-                </div>
+              <div className="below__left col-md-3 col-xs-12 col-sm-12">
+                <Logo fillColor={"rgb(250, 82, 56)"}/>
+                <span className="text-logo">Golden Ticket Movie Booking</span>
               </div>
             </div>
           </div>

@@ -129,10 +129,10 @@ export default function Header() {
 
           {/* logo */}
           <div className={classes.logo} onClick={handleClickLogo}>
-            <Logo fillColor={"orange"}/>
+            <Logo fillColor={"rgb(250, 82, 56)"}/>
             {" "}
             {/* <img src="/img/headTixLogo.png" alt="logo" style={{ height: 50 }} /> */}
-            <span style={{ height: 50, color:"orange", fontWeight:"800" }}>GOLDEN NEW TICKET</span>
+            <span style={{ height: 50, color:"rgb(250, 82, 56)", fontWeight:"800" }}>GOLDEN NEW TICKET</span>
           </div>
           <div className={classes.linkTobody}>
             <Grid

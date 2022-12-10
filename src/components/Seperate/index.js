@@ -7,7 +7,7 @@ export default function index() {
     maxWidth: 940,
     margin: "auto",
     width: "100%",
-    // background:"url(../../assets/posterBG.jpg)",
+    background:"url(../../assets/posterBG.jpg)",
     backgroundSize: "100%",
     backgroundRepeat: "no-repeat"
   }

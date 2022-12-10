@@ -118,12 +118,12 @@ export default function SimpleTabs() {
           <Tab
             disableRipple
             className={`${classes.tabButton} ${classes.tabDangChieu}`}
-            label="BOOK BY THEATER"
+            label="Book by theater"
           />
           <Tab
             disableRipple
             className={`${classes.tabButton} ${classes.tabSapChieu}`}
-            label="BOOK BY MOVIE"
+            label="Book by movie"
           />
         </Tabs>
       </AppBar>
