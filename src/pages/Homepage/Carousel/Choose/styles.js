@@ -13,7 +13,8 @@ const useStyle = makeStyles({
     left: "50%",
     transform: "translate(-50%,50%)",
     backgroundColor: "#fff",
-    borderTop:"1rem solid orange",
+    borderTop: "1rem solid rgb(250, 82, 56)",
+    marginBottom:"1rem",
     boxShadow: '0 0 10px rgb(0 0 0 / 30%)',
 
     alignItems: "center",

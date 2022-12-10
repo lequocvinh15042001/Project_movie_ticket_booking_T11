@@ -30,7 +30,7 @@ export default function HeThongRap() {
   }
   return (
     <div id="cumrap">
-      <Seperate />
+      {/* <Seperate /> */}
       <div className={classes.theater}>
         <Tabs
           variant={isMobileTheater ? "scrollable" : "standard"}

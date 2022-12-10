@@ -55,9 +55,9 @@ export default function RightSection({ branch, idRap, idPhim }) {
     setindexSelected(i);
     theatersApi.getThongTinLichCoNgay(idPhim, idRap, date)
     .then((response) => {
-      console.log("Api khi chọn ngày: ", response?.data?.data?.content);
+      // console.log("Api khi chọn ngày: ", response?.data?.data?.content);
       setLich(response?.data);
-      console.log("Lịch nè: ", lich);
+      // console.log("Lịch nè: ", lich);
 
       // const phongChieuRender = lich?.data?.content?.map((item) => {
       //   return (item.room.name); // tạo mảng mới với item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
@@ -76,6 +76,7 @@ export default function RightSection({ branch, idRap, idPhim }) {
       console.log(err);
     });
   };
+  
   const {theaterList} = useSelector((state) => state.theaterReducer)
 
   return (
@@ -137,10 +138,41 @@ export default function RightSection({ branch, idRap, idPhim }) {
             </p>
           </div> */}
       </div>
-      {lich?.data?.content?.map(
+
+      <div>
+        { data.ngayChieuRender.length === 0
+          ? <p style={{ padding: 10 }}>No show time! Choose orther</p>
+          : (lich?.data?.content?.map(
+            (lichChieu, i) => (
+              <div
+                // style={{ display: indexSelected === i ? "block" : "none" }}
+                key={i}
+              >
+                <ItemCumRap
+                  key={lichChieu?.id}
+                  tenCumRap={lichChieu?.room?.name}
+                  maLichChieu={lichChieu?.id}
+                  lichChieuPhim={lichChieu}
+                  diaChi={lichChieu?.branch?.address}
+                  defaultExpanded={true}
+                  maPhim={idPhim}
+                  ngayChieu={lichChieu?.startDate}
+                  maPhong={lichChieu?.room?.id}
+                  gioChieu={lichChieu?.startTime}
+                  maRap={lichChieu?.branch?.id}
+                  giaVe={lichChieu?.price}
+                />
+              </div>
+            )
+          ))
+        }
+
+      </div>
+
+      {/* {lich?.data?.content?.map(
         (lichChieu, i) => (
           <div
-            // style={{ display: indexSelected === i ? "block" : "none" }}
+            style={{ display: indexSelected === i ? "block" : "none" }}
             key={i}
           >
             <ItemCumRap
@@ -159,7 +191,7 @@ export default function RightSection({ branch, idRap, idPhim }) {
             />
           </div>
         )
-      )}
+      )} */}
     </div>
   );
 }
