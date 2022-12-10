@@ -29,6 +29,7 @@ const BookTickets = lazy(() => import("./pages/Bookticket"));
 const BookTicketsDetail = lazy(() => import("./pages/BookticketDetail"));
 const BookTicketsByStaff = lazy(() => import("./pages/BookticketStaff"));
 const UsersManagement = lazy(() => import("./pages/UsersManagement"));
+const EventsManagement = lazy(() => import("./pages/EventsManagement"));
 const MoviesManagement = lazy(() => import("./pages/MoviesManagement"));
 const BookByStaff = lazy(() => import("./pages/BookByStaff"));
 const CreateShowtime = lazy(() => import("./pages/CreateShowtime"));
@@ -76,7 +77,7 @@ function App() {
 
             <Route
               exact
-              path={["/admin/users", "/admin/movies", "/admin/showtimes"]}
+              path={["/admin/users", "/admin/movies", "/admin/showtimes", "/admin/events"]}
             >
               <AdminLayout>
                 <AdminRoute
@@ -93,6 +94,11 @@ function App() {
                   exact
                   path="/admin/showtimes"
                   component={CreateShowtime}
+                />
+                <AdminRoute
+                  exact
+                  path="/admin/events"
+                  component={EventsManagement}
                 />
               </AdminLayout>
             </Route>

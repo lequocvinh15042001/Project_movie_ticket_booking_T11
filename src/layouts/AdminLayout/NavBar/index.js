@@ -40,6 +40,11 @@ const items = [
     title: 'Reviews Managment'
   },
   {
+    href: '/admin/events',
+    icon: PostAddIcon,
+    title: 'Events Managment'
+  },
+  {
     href: '/admin/showtimes',
     icon: PostAddIcon,
     title: 'Create Schedule'
