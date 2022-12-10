@@ -1,18 +1,17 @@
 import React, { useState, useMemo, useEffect } from "react";
 
 import useStyles from "./style";
-import formatDate from "../../../../utilities/formatDate";
-import ItemCumRap from "../../../../components/ItemCumRap";
-import { selectDesktopData } from "../../../../reducers/selector/MovieDetail";
+import formatDate from "../../../utilities/formatDate";
+import ItemCumRap from "../../../components/ItemCumRap";
+import { selectDesktopData } from "../../../reducers/selector/MovieDetail";
 import { logger } from "workbox-core/_private";
 import { useSelector } from "react-redux";
-import theatersApi from "../../../../api/theatersApi";
+import theatersApi from "../../../api/theatersApi";
 import { useParams } from "react-router-dom";
 
-export default function RightSection({ branch, idRap }) {
+export default function RightSection({ branch, idRap, idPhim }) {
   // console.log('branch nè', branch);
   const [lich, setLich] = useState();
-
   const param = useParams()
 
   const [data, setData] = useState({
@@ -22,7 +21,7 @@ export default function RightSection({ branch, idRap }) {
   });
 
     useEffect(() => {
-    theatersApi.getThongTinLichChieuPhim(param.maPhim, idRap)
+    theatersApi.getThongTinLichChieuPhim(idPhim, idRap)
     .then((response) => {
       console.log("all lịch chiếu: ",response.data.data.content);
       const lichChieuPhimData = response.data.data.content
@@ -40,7 +39,7 @@ export default function RightSection({ branch, idRap }) {
     .catch((err) => {
       console.log(err);
     });
-  },[])
+  },[idPhim, idRap])
 
   const [indexSelected, setindexSelected] = useState(0);
 
@@ -54,7 +53,7 @@ export default function RightSection({ branch, idRap }) {
 
   const handleSelectDay = (i, date) => {
     setindexSelected(i);
-    theatersApi.getThongTinLichCoNgay(param.maPhim, idRap, date)
+    theatersApi.getThongTinLichCoNgay(idPhim, idRap, date)
     .then((response) => {
       console.log("Api khi chọn ngày: ", response?.data?.data?.content);
       setLich(response?.data);
@@ -72,18 +71,17 @@ export default function RightSection({ branch, idRap }) {
       // }));
 
     // console.log(phongChieuRender);
-
-
     })
     .catch((err) => {
       console.log(err);
     });
   };
-
   const {theaterList} = useSelector((state) => state.theaterReducer)
+
   return (
     <div>
       <div className={classes.listDay}>
+        {data?.ngayChieuRender.length === 0 && <p style={{ padding: 10 }}>No show time for this film!</p>}
         {data?.ngayChieuRender?.map((day, i) => (
           // <div
           //   className={classes.dayItem}
@@ -108,7 +106,7 @@ export default function RightSection({ branch, idRap }) {
             onClick={() => handleSelectDay(i, day)}
           >
             {/* <p>{formatDate(day).startDate}</p> */}
-            <p>{day}</p>
+            <p>{formatDate(day).dateFull}</p>
             {/* <p>{day.startTime}</p> */}
             {/* <p>{day.start}</p> */}
             <p
@@ -152,7 +150,7 @@ export default function RightSection({ branch, idRap }) {
               lichChieuPhim={lichChieu}
               diaChi={lichChieu?.branch?.address}
               defaultExpanded={true}
-              maPhim={param.maPhim}
+              maPhim={idPhim}
               ngayChieu={lichChieu?.startDate}
               maPhong={lichChieu?.room?.id}
               gioChieu={lichChieu?.startTime}

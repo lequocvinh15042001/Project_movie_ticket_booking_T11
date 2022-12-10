@@ -53,6 +53,11 @@ const theatersApi = {
       return axiosClient.get(path);
   },
 
+  getLichCoPhong: (maPhim, branchId, startDate, maPhong) => {
+    const path = `schedule/getAll?page=0&size=20&movieId=${maPhim}&branchId=${branchId}&startDate=${startDate}&roomId=${maPhong}`;
+    return axiosClient.get(path);
+},
+
   //lấy thông tin các cum rap của 1 hệ thống
   getListCumRapTheoHeThong: (maHeThongRap) => {
     const path = `/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}`;

@@ -22,6 +22,7 @@ const CheckoutRoute = lazy(() => import("./guards/CheckoutRoute"));
 const UserProfileRoute = lazy(() => import("./guards/UserProfileRoute"));
 // page
 const Homepage = lazy(() => import("./pages/Homepage"));
+const BookAll = lazy(() => import("./pages/BookAll"));
 const MovieDetail = lazy(() => import("./pages/MovieDetail"));
 const UserProfile = lazy(() => import("./pages/UserProfile"));
 const BookTickets = lazy(() => import("./pages/Bookticket"));
@@ -47,9 +48,10 @@ function App() {
         <ModalTrailer />
         <Suspense fallback={<TriggerLoadingLazy />}> 
           <Switch>
-            <Route exact path={["/", "/phim/:maPhim", "/taikhoan", "/review/:maTin"]}>
+            <Route exact path={["/", "/phim/:maPhim", "/taikhoan", "/review/:maTin", "/schedule"]}>
               <MainLayout>
                 <Route exact path="/" component={Homepage} />
+                <Route exact path="/schedule" component={BookAll} />
                 <Route exact path="/phim/:maPhim" component={MovieDetail} />
                 <Route exact path="/review/:maTin" component={DetailNews} />
                 <UserProfileRoute

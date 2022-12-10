@@ -8,7 +8,7 @@ axiosClient.interceptors.request.use((config) => { //tất cả request đều p
   if (user) { // nếu có đăng nhập thì thực hiện
     const { accessToken } = JSON.parse(user)
     config.headers.common.Authorization = `Bearer ${accessToken}`;
-    console.log(accessToken);
+    // console.log(accessToken);
   }
   return config;
 })

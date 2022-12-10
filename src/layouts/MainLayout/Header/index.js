@@ -101,6 +101,9 @@ export default function Header() {
       }, 50);
     }
   }
+  const handleClickLink2 = () => {
+    history.push("/schedule")
+  }
 
   const handleUser = () => {
     history.push("/taikhoan")
@@ -138,6 +141,7 @@ export default function Header() {
               justify="space-between"
               alignItems="center"
             >
+              <span className={classes.link} onClick={() => handleClickLink2()}>Book Ticket</span>
               {headMenu.map((link) => (
                 <span key={link.id} className={classes.link} onClick={() => handleClickLink(link.id)}>{link.nameLink}</span>
               ))}

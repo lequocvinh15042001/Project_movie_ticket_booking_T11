@@ -6,7 +6,6 @@ const useStyles = makeStyles({
   },
   ngayChieu: {
     fontSize: 16,
-    paddingTop: 15,
     marginBottom: 5,
     fontWeight: 500,
   },
