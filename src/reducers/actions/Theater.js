@@ -52,3 +52,27 @@ export const getTheaters2 = () => {
       )
   }
 }
+
+export const getTheaters3 = () => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_THEATERS_SHOWTIME_REQUEST2
+    })
+    theatersApi.getThongTinHeThongRap()
+      .then(result => {
+        dispatch({
+          type: GET_THEATERS_SHOWTIME_SUCCESS2,
+          payload: { data: result.data }
+        })
+      }
+      )
+      .catch(
+        error => {
+          dispatch({
+            type: GET_THEATERS_SHOWTIME_FAIL2,
+            payload: { errorTheaterList2: error.response?.data ? error.response.data : error.message, }
+          })
+        }
+      )
+  }
+}

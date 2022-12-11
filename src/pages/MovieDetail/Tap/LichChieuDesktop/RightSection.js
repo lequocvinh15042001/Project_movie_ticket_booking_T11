@@ -109,7 +109,7 @@ export default function RightSection({ branch, idRap }) {
             onClick={() => handleSelectDay(i, day)}
           >
             {/* <p>{formatDate(day).startDate}</p> */}
-            <p>{day}</p>
+            <p>{formatDate(day).dateFull}</p>
             {/* <p>{day.startTime}</p> */}
             {/* <p>{day.start}</p> */}
             <p

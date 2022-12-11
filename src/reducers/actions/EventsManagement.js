@@ -1,4 +1,4 @@
-import usersApi from '../../api/eventsApi';
+import eventsApi from '../../api/eventsApi';
 import { ADD_EVENT_FAIL, ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, DELETE_EVENT_FAIL, DELETE_EVENT_REQUEST, DELETE_EVENT_SUCCESS, GET_EVENT_LIST_FAIL, GET_EVENT_LIST_REQUEST, GET_EVENT_LIST_SUCCESS, RESET_EVENT_LIST, SET_IS_EXIST_EVENT_MODIFIED, UPDATE_EVENT_FAIL, UPDATE_EVENT_REQUEST, UPDATE_EVENT_SUCCESS } from '../constants/EventsManagement';
 
 export const getEventsList = () => {
@@ -6,7 +6,7 @@ export const getEventsList = () => {
     dispatch({
       type: GET_EVENT_LIST_REQUEST
     })
-    usersApi.getDanhSachNguoiDung()
+    eventsApi.getListEvent()
       .then(result => {
         console.log(result.data);
         dispatch({
@@ -36,12 +36,12 @@ export const getEventsList = () => {
 //     });
 //   }
 // }, [successUpdateUser]);
-export const deleteEvent = (taiKhoanUser) => {
+export const deleteEvent = (event) => {
   return (dispatch) => {
     dispatch({
       type: DELETE_EVENT_REQUEST
     })
-    usersApi.deleteUser(taiKhoanUser)
+    eventsApi.deleteEvent(event)
       .then(result => {
         console.log(result);
 
@@ -108,14 +108,14 @@ export const resetEventList = () => {
 // }
 
 
-export const putEventUpdate = (user) => {
+export const putEventUpdate = (event) => {
 
   return (dispatch) => {
-    console.log("truyền vô cập nhật: ", user);
+    console.log("truyền vô cập nhật: ", event);
     dispatch({
       type: UPDATE_EVENT_REQUEST
     })
-    usersApi.editTaiKhoan(user)
+    eventsApi.putEditEvent(event)
       .then(result => {
         console.log("Cập nhật: ", result);
         dispatch({
@@ -135,12 +135,35 @@ export const putEventUpdate = (user) => {
   }
 }
 
-export const postAddEvent = (user) => {
+export const postAddEvent = (event) => {
   return (dispatch) => {
     dispatch({
       type: ADD_EVENT_REQUEST
     })
-    usersApi.postThemNguoiDung(user)
+    eventsApi.postAddEvent(event)
+      .then(result => {
+        dispatch({
+          type: ADD_EVENT_SUCCESS,
+          payload: { data: result.data }
+        })
+      })
+      .catch(error => {
+        dispatch({
+          type: ADD_EVENT_FAIL,
+          // payload: { error: error.response?.data ? error.response.data : error.message, }
+          payload: "Thêm lỗi!"
+        })
+      })
+  }
+}
+
+//chỉnh lại cái type
+export const postAddReview = (review) => {
+  return (dispatch) => {
+    dispatch({
+      type: ADD_EVENT_REQUEST
+    })
+    eventsApi.postAddReview(review)
       .then(result => {
         dispatch({
           type: ADD_EVENT_SUCCESS,

@@ -1,44 +1,33 @@
-import React, {
-  useEffect,
-  useState,
-  useMemo,
-  useRef,
-  useCallback,
-} from "react";
+import React, { useEffect, useState, useRef } from "react";
 
-import { DataGrid, GridOverlay, GridToolbar } from "@material-ui/data-grid";
-import { nanoid } from "nanoid";
+import { DataGrid, GridToolbar, GridOverlay } from "@material-ui/data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
-import DeleteIcon from "@material-ui/icons/Delete";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { useSnackbar } from "notistack";
-import ButtonDelete from "./ButtonDelete";
-import CachedIcon from "@material-ui/icons/Cached";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
-import EditIcon from "@material-ui/icons/Edit";
+import Dialog from "@material-ui/core/Dialog";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import RenderCellExpand from "./RenderCellExpand";
 import slugify from "slugify";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-import useStyles from "./styles";
+import { useStyles, DialogContent, DialogTitle } from "./styles";
 import {
-  deleteUser,
-  getUsersList,
-  resetUserList,
-  putUserUpdate,
-  postAddUser,
-  setStatusIsExistUserModified,
-  postAddStaff,
-} from "../../reducers/actions/UsersManagement";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
+  getMovieListManagement,
+  deleteMovie,
+  updateMovieUpload,
+  resetMoviesManagement,
+  updateMovie,
+  addMovieUpload,
+} from "../../reducers/actions/Movie";
+import Action from "./Action";
+import ThumbnailYoutube from "./ThumbnailYoutube";
+import Form from "./Form";
+import FormAddEvent from "./FormAddEvent";
 import Swal from "sweetalert2";
-
-function validateEmail(email) {
-  const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
+import { getEventsList, putEventUpdate, resetEventList } from "../../reducers/actions/EventsManagement";
 
 function CustomLoadingOverlay() {
   return (
@@ -48,438 +37,122 @@ function CustomLoadingOverlay() {
   );
 }
 
-export default function UsersManagement() {
-  const [editRowsModel, setEditRowsModel] = useState({});
+export default function MoviesManagement() {
+  const [eventListDisplay, setEventListDisplay] = useState([]);
+  console.log("eventListDisplay: ", eventListDisplay);
   const classes = useStyles();
-  const [usersListDisplay, setUsersListDisplay] = useState([]);
   const  {enqueueSnackbar}  = useSnackbar();
-  const [selectionModel, setSelectionModel] = useState([]);
-  const [userListDelete, setUserListDelete] = useState({
-    triggerDelete: false,
-    userListDelete: [],
-    cancel: false,
-  });
-  const [userListmodified, setUserListmodified] = useState({
-    triggerUpdate: false,
-    userListmodified: [],
-    cancel: false,
-  });
-  const {
-    usersList,
-    loadingUsersList,
-    errorUsersList,
-    successDelete,
-    errorDelete,
+  let {
+    eventList,
+    loadingEventList,
     loadingDelete,
-    successUpdateUser,
-    errorUpdateUser,
-    loadingAddUser,
-    successAddUser,
-    errorAddUser,
-  } = useSelector((state) => state.usersManagementReducer);
-  console.log("usersList:", usersList);
+    errorDelete,
+    successDelete,
+    successUpdateEvent,
+    errorUpdateEvent,
+    loadingUpdateEvent,
+    loadingAddEvent,
+    successAddEvent,
+    errorAddEvent,
+    // loadingUpdateNoneImageMovie,
+    // successUpdateNoneImageMovie,
+    // errorUpdateNoneImageMovie,
+  } = useSelector((state) => state.eventsManagementReducer);
   const dispatch = useDispatch();
-  const [btnReFresh, setBtnReFresh] = useState("");
-  const [sortBy, setsortBy] = useState({ field: "role", sort: "asc" });
+  const newImageUpdate = useRef("");
+  const callApiChangeImageSuccess = useRef(false);
   const [valueSearch, setValueSearch] = useState("");
   const clearSetSearch = useRef(0);
-  const [addUser, setaddUser] = useState({
-    data: [
-      {
-        id: "",
-        username: "",
-        email: "",
-        name: "",
-        image: "",
-        role: "",
-        createdAt:"",
-        updatedAt:"",
-      },
-    ],
-    toggle: false,
-    readyAdd: false,
-    isFilledIn: false,
-  });
+  const [openModal, setOpenModal] = React.useState(false);
+  const selectedPhim = useRef(null);
+  const isMobile = useMediaQuery("(max-width:768px)");
+  useEffect(() => {
+    if (
+      !eventList ||
+      successUpdateEvent ||
+      // successUpdateNoneImageMovie ||
+      successDelete ||
+      errorDelete ||
+      successAddEvent
+    ) {
+      dispatch(getEventsList());
+    }
+  }, [
+    successUpdateEvent,
+    // successUpdateNoneImageMovie,
+    successDelete,
+    errorDelete,
+    successAddEvent,
+  ]); // khi vừa thêm phim mới xong mà xóa liên backend sẽ báo lỗi xóa không được nhưng thực chất đã xóa thành công > errorDeleteMovie nhưng vẫn tiến hành làm mới lại danh sách
 
   useEffect(() => {
-    // get list user lần đầu
-    if (!usersList) {
-      dispatch(getUsersList());
-    }
-    return () => dispatch(resetUserList());
+    return () => {
+      dispatch(resetEventList());
+    };
   }, []);
   useEffect(() => {
-    // xóa hoặc update thành công thì refresh list user
-    if (successDelete || successUpdateUser || btnReFresh || successAddUser) {
-      dispatch(getUsersList());
+    if (eventList) {
+      let newEventListDisplay = eventList?.data?.map((event) => ({
+        ...event,
+        hanhDong: "",
+        id: event.id,
+      }));
+      setEventListDisplay(newEventListDisplay);
     }
-  }, [successDelete, successUpdateUser, btnReFresh, successAddUser]);
-
+  }, [eventList]);
 
   useEffect(() => {
-    if (userListmodified.userListmodified.length || addUser.isFilledIn) {
-      dispatch(setStatusIsExistUserModified(true));
-    } else {
-      dispatch(setStatusIsExistUserModified(false));
-    }
-  }, [userListmodified.userListmodified, addUser.isFilledIn]);
-
-
-// console.log("userListmodified", userListmodified);
-  useEffect(() => {
-    // dispatch(getUsersList()) thành công thì thêm props vào item để hiển thị theo yêu cầu DataGrid
-    if (usersList?.data?.length) {
-      let newUsersListDisplay;
-      if (userListmodified.userListmodified.length) {
-        // nếu nhấn cancel và vẫn còn một số user chưa update thì giữ lại data dang chỉnh sửa
-        const userListmodifiedRest = userListmodified.userListmodified;
-        newUsersListDisplay = usersList?.data?.map(function (userNew) {
-          let userModified = this.find(
-            (user) => user.role === userNew.role
-          );
-          if (userModified) {
-            userModified = { ...userModified };
-            // delete userModified.maNhom;
-            return {
-              ...userModified,
-              id: userModified.id,
-              xoa: "",
-              role:
-                userModified.role === "ROLE_STAFF" ? true : false,
-              ismodify: true,
-            };
-          }
-          return {
-            ...userNew,
-            xoa: "",
-            id: userNew.id,
-            role:
-              userNew.role === "ROLE_STAFF" ? true : false,
-            ismodify: false,
-          };
-        }, userListmodifiedRest);
-      } else {
-        newUsersListDisplay = usersList?.data?.map((user, i) => ({
-          ...user,
-          xoa: "",
-          id: user.id,
-          role: user.role === "ROLE_STAFF" ? true : false,
-          ismodify: false,
-        })); // id là prop bắt buộc
-      }
-      setUsersListDisplay(newUsersListDisplay);
-    }
-  }, [usersList]);
-
-  useEffect(() => {
-    // deleteUser xong thì thông báo
-    if (userListDelete.cancel) {
-      return;
+    // delete movie xong thì thông báo
+    if (errorDelete === "Delete Success but backend return error") {
+      successDelete = "Delete Success !";
     }
     if (successDelete) {
-      setUserListDelete((data) => ({ ...data, triggerDelete: nanoid(6) })); // kích hoạt xóa tiếp user tiếp theo
       enqueueSnackbar(successDelete, { variant: "success" });
       return;
     }
     if (errorDelete) {
-      setUserListDelete((data) => ({ ...data, triggerDelete: nanoid(6) }));
       enqueueSnackbar(errorDelete, { variant: "error" });
     }
-  }, [successDelete, errorDelete]);
+  }, [errorDelete, successDelete]);
+
+  // useEffect(() => {
+  //   if (successUpdate || successUpdateNoneImageMovie) {
+  //     callApiChangeImageSuccess.current = true;
+  //     enqueueSnackbar(
+  //       `Update successfully: ${successUpdateMovie.name ?? ""}${
+  //         successUpdateNoneImageMovie.name ?? ""
+  //       }`,
+  //       { variant: "success" }
+  //     );
+  //   }
+  //   if (errorUpdateMovie || errorUpdateNoneImageMovie) {
+  //     callApiChangeImageSuccess.current = false;
+  //     enqueueSnackbar(
+  //       `${errorUpdateMovie ?? ""}${errorUpdateNoneImageMovie ?? ""}`,
+  //       { variant: "error" }
+  //     );
+  //   }
+  // }, [
+  //   successUpdateMovie,
+  //   errorUpdateMovie,
+  //   successUpdateNoneImageMovie,
+  //   errorUpdateNoneImageMovie,
+  // ]);
 
   useEffect(() => {
-    // update user xong thì thông báo
-    if (userListmodified.cancel) {
-      return;
-    }
-    if (successUpdateUser) {
-      setUserListmodified((data) => ({ ...data, triggerUpdate: nanoid(6) }));
-      // enqueueSnackbar("Update successfully!", { variant: "success" });
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Update Successfully",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-
-      return;
-    }
-    if (errorUpdateUser) {
-      setUserListmodified((data) => ({ ...data, triggerUpdate: nanoid(6) }));
-      // enqueueSnackbar(errorUpdateUser, { variant: "error" });
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Update Error",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-
-    }
-  }, [successUpdateUser, errorUpdateUser]);
-
-  useEffect(() => {
-    // add user xong thì thông báo
-    if (successAddUser) {
+    if (successAddEvent) {
       enqueueSnackbar(
-        `Successfully!`,
+        `Add new movie successfully: ${successAddEvent.brief}`,
         { variant: "success" }
       );
-      // Swal.fire({
-      //   position: "center",
-      //   icon: "success",
-      //   title: "Add User Successfully",
-      //   showConfirmButton: false,
-      //   timer: 1500,
-      // });
-
     }
-    if (errorAddUser) {
-      enqueueSnackbar(errorAddUser, { variant: "error" });
-        // Swal.fire({
-        //   position: "center",
-        //   icon: "error",
-        //   title: "Add User Error",
-        //   showConfirmButton: false,
-        //   timer: 1500,
-        // });
+    if (errorAddEvent) {
+      enqueueSnackbar(errorAddEvent, { variant: "error" });
     }
-    setaddUser({
-      data: [
-        {
-          id: "",
-          username: "",
-          email: "",
-          name: "",
-          image: "",
-          role: "",        
-          createdAt:"",
-          updatedAt:"",
-        },
-      ],
-      toggle: false,
-      readyAdd: false,
-      isFilledIn: false,
-    });
-  }, [successAddUser, errorAddUser]);
+  }, [successAddEvent, errorAddEvent]);
 
-  useEffect(() => {
-    // ý tưởng là tiến hành delete từng user trong danh sách mỗi khi hoàn thành call api cho đến khi hết user trong danh dách
-    if (userListDelete.userListDelete.length) {
-      // nếu mảng còn phần tử
-      let newUserListDelete = [...userListDelete.userListDelete]; // copy
-      const userDelete = newUserListDelete.shift(); // cắt ra, và xóa luôn phần tử đầu trong mảng
-      setUserListDelete((data) => ({
-        ...data,
-        userListDelete: newUserListDelete,
-      })); // set array
-      setSelectionModel(() => newUserListDelete);
-      dispatch(deleteUser(userDelete)); // delete
-      return;
-    }
-    if (userListDelete.userListDelete.length === 0) {
-      // nếu mảng hết phần tử
-      setUserListDelete({
-        triggerDelete: false,
-        userListDelete: [],
-        cancel: false,
-      });
-      dispatch(resetUserList());
-      setSelectionModel([]);
-    }
-  }, [userListDelete.triggerDelete]); // chỉ khi được kích hoạt thì mới thực hiện xóa tiếp user, nếu dùng chung successDelete, errorDelete làm trigger có thể lỗi do kết quả của useEffect trên phụ thuộc vào successDelete, errorDelete
-
-  useEffect(() => {
-    if (userListmodified?.userListmodified?.length) {
-      let newUserListmodified = [...userListmodified.userListmodified];
-
-      const userUpdate = newUserListmodified.shift();
-
-      setUserListmodified((data) => ({
-        ...data,
-        userListmodified: newUserListmodified,
-      }));
-      const dataTruyen = {
-        id : userUpdate.id, 
-        image: "", 
-        name: userUpdate.name,
-        updatedAt: new Date()
-      }
-      dispatch(putUserUpdate(dataTruyen));
-      return;
-    }
-    if (userListmodified.userListmodified.length === 0) {
-      setUserListmodified({
-        triggerUpdate: false,
-        userListmodified: [],
-        cancel: false,
-      });
-      dispatch(resetUserList());
-    }
-  }, [userListmodified.triggerUpdate]);
-
-  const handleEditCellChange = useCallback(
-    ({ id, field, props }) => {
-      if (field === "email") {
-        const data = props; // Fix eslint value is missing in prop-types for JS files
-        const isValid = validateEmail(data.value);
-        const newState = {};
-        newState[id] = {
-          ...editRowsModel[id],
-          email: { ...props, error: !isValid },
-        };
-        setEditRowsModel((state) => ({ ...state, ...newState }));
-        if (!validateEmail(props.value)) {
-          // nếu email sai thì thoát không lưu
-          return;
-        }
-      }
-      if (addUser.toggle) {
-        setaddUser((data) => ({
-          ...data,
-          data: [{ ...data.data[0], [field]: props.value }],
-        }));
-      }
-    },
-    [editRowsModel, addUser.toggle]
-  );
-
-  // handleEditCellChangeCommitted thực thi mỗi khi cell change được commit(không lỗi validation)
-  // so sánh với giá trị trước khi chỉnh sửa, nếu khác biệt thì thêm user vào danh sách chuẩn bị update, nếu không khác biệt thì xóa khỏi danh sách hoặc không làm gì
-  const handleEditCellChangeCommitted = useCallback(
-    ({ id, field, props: { value } }) => {
-      if (addUser.toggle) {
-        const isFilledIn =
-          addUser.data[0].username !== "" ||
-          // addUser.data[0].createdAt !== "" ||
-          addUser.data[0].name !== "" ||
-          addUser.data[0].email !== "" 
-          // addUser.data[0].soDt !== "" ||
-          // addUser.data[0].role === true;
-        const readyAdd =
-          addUser.data[0].username !== "" &&
-          // addUser.data[0].createdAt !== "" &&
-          addUser.data[0].name !== "" &&
-          addUser.data[0].email !== "" 
-          // addUser.data[0].role === true;
-          // addUser.data[0].soDt !== "";
-        setaddUser((data) => ({ ...data, readyAdd, isFilledIn }));
-        console.log(addUser);
-        return; // không thực hiệc các việc bên dưới nếu đang ở màn hình addUser
-      }
-      const userOriginal = usersList?.data?.find((user) => user.id === id); // lấy ra phần tử chưa được chỉnh sửa
-      const valueDisplay = value;
-      let valueModified = value;
-      if (field === "ROLE_USER") {
-        valueModified = value ? "ROLE_ADMIN" : "ROLE_USER";
-      }
-      const isChange = userOriginal[field] === valueModified ? false : true; // liệu có thay đổi
-      const indexUserExist = userListmodified.userListmodified.findIndex(
-        (user) => user.id === id
-      ); // user vừa chỉnh có được lưu trước đó?
-      if (isChange) {
-        // nếu có khác biệt
-        // xử lý hiển thị: set row đã modify, set lại value mới
-        const updatedUsersListDisplay = usersListDisplay.map((row) => {
-          if (row.id === id) {
-            return { ...row, ismodify: true, [field]: valueDisplay };
-          }
-          return row;
-        });
-        setUsersListDisplay(updatedUsersListDisplay);
-        // xử lý userListmodified
-        if (indexUserExist !== -1) {
-          // nếu đã tồn tại user modify
-          const newUserListmodified = userListmodified.userListmodified.map(
-            (user) => {
-              // sửa lại phần khác biệt
-              if (user.id === id) {
-                return { ...user, [field]: valueModified };
-              }
-              return user;
-            }
-          );
-          setUserListmodified((data) => ({
-            ...data,
-            userListmodified: newUserListmodified,
-          }));
-          return;
-        }
-        setUserListmodified((data) => ({
-          ...data,
-          userListmodified: [
-            ...userListmodified.userListmodified,
-            { ...userOriginal, [field]: valueModified },
-          ],
-        })); // nếu chưa tồn tại thì push vào
-        return;
-      }
-      if (indexUserExist !== -1) {
-        // nếu không khác biệt và có trong danh sách modify
-        let userModified = userListmodified.userListmodified[indexUserExist];
-        userModified = { ...userModified, [field]: valueModified };
-        // const isMatKhauChange = userModified.createdAt !== userOriginal.createdAt;
-        const isEmailChange = userModified.email !== userOriginal.email;
-        // const isSoDtChange = userModified.soDt !== userOriginal.soDt;
-        const isMaLoaiNguoiDungChange =
-          userModified.role !== userOriginal.role;
-        const isHoTenChange = userModified.name !== userOriginal.name;
-        const ismodify =
-          // isMatKhauChange ||
-          isEmailChange ||
-          // isSoDtChange ||
-          isMaLoaiNguoiDungChange ||
-          isHoTenChange;
-        // xử lý display
-        const updatedUsersListDisplay = usersListDisplay.map((row) => {
-          if (row.id === id) {//.taiKhoan
-            return { ...row, ismodify, [field]: valueDisplay };
-          }
-          return row;
-        });
-        setUsersListDisplay(updatedUsersListDisplay);
-
-        // nếu ismodify = true thì cập nhật userListmodified
-        if (ismodify) {
-          const newUserListmodified = userListmodified.userListmodified.map(
-            (user) => {
-              if (user.id === id) {//.taiKhoan
-                return { ...userModified };
-              }
-              return user;
-            }
-          );
-          setUserListmodified((data) => ({
-            ...data,
-            userListmodified: newUserListmodified,
-          }));
-          return;
-        }
-        // nếu ismodify = false thì xóa user khỏi userListmodified
-        const newUserListmodified = userListmodified.userListmodified.filter(
-          (user) => user.id !== id
-        ); // xóa ra khỏi mảng
-        setUserListmodified((data) => ({
-          ...data,
-          userListmodified: newUserListmodified,
-        }));
-      }
-    },
-    [usersListDisplay, usersList, userListmodified, addUser]
-  );
-
-  const handleRefreshUserListResetChanged = () => {
-    setUserListmodified({
-      triggerUpdate: false,
-      userListmodified: [],
-      cancel: false,
-    });
-    setBtnReFresh(nanoid(6));
-  };
-
-  // xóa một user
-  const handleDeleteOne = (taiKhoan) => {
+  // xóa một phim
+  const handleDeleteOne = (maPhim) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
@@ -498,15 +171,11 @@ export default function UsersManagement() {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-
-        if (loadingDelete) {
+        if (!loadingDelete) {
           // nếu click xóa liên tục một user
-          console.log("Xoa lien tuc");
-          return;
+          dispatch(deleteMovie(maPhim));
+          // window.location.reload();
         }
-        console.log("taiKhoan: ", taiKhoan);
-        dispatch(deleteUser(taiKhoan));
-
         swalWithBootstrapButtons.fire(
           'Deleted!',
           'Your file has been deleted.',
@@ -518,44 +187,74 @@ export default function UsersManagement() {
       ) {
         swalWithBootstrapButtons.fire(
           'Cancelled',
-          'Your user is safe :)',
+          'Your movie is safe :)',
           'error'
         )
       }
     })
 
   };
-  // xóa nhiều user
-  const handleDeleteMultiple = () => {
-    if (userListDelete.triggerDelete !== false) {
-      setUserListDelete((data) => ({
-        ...data,
-        cancel: true,
-        triggerDelete: false,
-      }));
-      return;
-    }
-    setUserListDelete((data) => ({
-      ...data,
-      triggerDelete: nanoid(6),
-      cancel: false,
-    }));
+  const handleEdit = (eventItem) => {
+    selectedPhim.current = eventItem;
+    setOpenModal(true);
   };
-  // update nhiều user
-  const handleUpdateMultiple = () => {
-    if (userListmodified.triggerUpdate !== false) {
-      setUserListmodified((data) => ({
-        ...data,
-        cancel: true,
-        triggerUpdate: false,
-      }));
-      return;
+
+  const onUpdate = (movieObj, hinhAnh, fakeImage) => {
+    // if (loadingUpdateEvent || loadingUpdateNoneImageMovie) {
+    if (loadingUpdateEvent) {
+      return undefined;
     }
-    setUserListmodified((data) => ({
-      ...data,
-      triggerUpdate: nanoid(6),
-      cancel: false,
-    }));
+    setOpenModal(false);
+    newImageUpdate.current = fakeImage;
+    if (typeof hinhAnh === "string") {
+      // nếu dùng updateMovieUpload sẽ bị reset danhGia về 10
+      const movieUpdate = eventListDisplay?.find(
+        (event) => event.id === fakeImage.id
+      ); // lẩy ra url gốc, tránh gửi base64 tới backend
+      // movieObj.smallImageURl = movieUpdate.smallImageURl;
+      dispatch(putEventUpdate(movieObj));
+      return undefined;
+    }
+    // dispatch(updateMovieUpload(movieObj));
+  };
+  const onAddMovie = (movieObj) => {
+    if (!loadingAddEvent) {
+      dispatch(addMovieUpload(movieObj));
+    }
+    setOpenModal(false);
+  };
+  const handleAddMovie = () => {
+    const emtySelectedEvent = {
+      // id: "",
+      // name: "",
+      // smallImageURl: "",
+      // longDescription: "",
+      // shortDescription: "",
+      // largeImageURL: "",
+      // director: "",
+      // actors: "",
+      // categories: "",
+      // releaseDate: "",
+      // duration: "",
+      // trailerURL: "",
+      // language: "",
+      // rated: "",
+      // isShowing: null,
+      brief:"",
+      contents: [
+        {
+        priority : null,
+        description : "",
+        image : "",
+        },
+      ],
+      title:"",
+      mainImage:"",
+      status:"",
+      typy:"",
+    };
+    selectedPhim.current = emtySelectedEvent;
+    setOpenModal(true);
   };
 
   const handleInputSearchChange = (props) => {
@@ -565,330 +264,151 @@ export default function UsersManagement() {
     }, 500);
   };
 
-  const handleToggleAddUser = () => {
-    if (!addUser.isFilledIn) {
-      // nếu chưa điền thì toggle
-      setaddUser((data) => ({ ...data, toggle: !addUser.toggle }));
-      return;
-    }
-    if (addUser.readyAdd && !loadingAddUser) {
-      // nếu đã điền và đã sãn sàng
-      const userAdd = { ...addUser.data[0] };
-      console.log(addUser);
-      delete userAdd.id;
-      const dataAdd = {
-        name: userAdd.name,
-        email: userAdd.email,
-        username:userAdd.username,
-        password:"123456789"
-      }
-      // console.log("dataAdd:  ", dataAdd);
-      if(addUser?.data[0]?.role === true)
-      {
-        // console.log("gọi api add staff");
-        // console.log("staff mới: ", dataAdd);
-        dispatch(postAddStaff(dataAdd));
-      } else {
-        // console.log("gọi api add user");
-        // console.log("user mới: ", dataAdd);
-        dispatch(postAddUser(dataAdd));
-      }
-      
-    }
- 
-  };
-
   const onFilter = () => {
-    const searchUsersListDisplay = usersListDisplay.filter((user) => {
-      const matchTaiKhoan =
-        slugify(user.username ?? "", modifySlugify)?.indexOf(
+    // dùng useCallback, slugify bỏ dấu tiếng việt
+    let searchEventListDisplay = eventListDisplay?.filter((event) => {
+      const matchTenPhim =
+        slugify(event?.brief ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
-      // const matchMatKhau =
-      //   slugify(user.createdAt ?? "", modifySlugify)?.indexOf(
-      //     slugify(valueSearch, modifySlugify)
-      //   ) !== -1;
-      const matchEmail =
-        slugify(user.email ?? "", modifySlugify)?.indexOf(
+      const matchMoTa =
+        slugify(event?.status ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
-      // const matchSoDt =
-      //   slugify(user.soDt ?? "", modifySlugify)?.indexOf(
-      //     slugify(valueSearch, modifySlugify)
-      //   ) !== -1;
-      const matchHoTen =
-        slugify(user.name ?? "", modifySlugify)?.indexOf(
+      const matchNgayKhoiChieu =
+        slugify(event?.type ?? "", modifySlugify)?.indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
-      return (
-        // matchTaiKhoan || matchMatKhau || matchEmail || matchHoTen
-        matchTaiKhoan || matchEmail || matchHoTen
-      );
+      return matchTenPhim || matchMoTa || matchNgayKhoiChieu;
     });
-    return searchUsersListDisplay;
+    if (newImageUpdate.current && callApiChangeImageSuccess.current) {
+      // hiển thị hình bằng base64 thay vì url, lỗi react không hiển thị đúng hình mới cập nhật(đã cập hình thanh công nhưng url backend trả về giữ nguyên đường dẫn)
+      searchEventListDisplay = searchEventListDisplay?.map((event) => {
+        if (event.id === newImageUpdate.current.id) {
+          return { ...event, smallImageURl: newImageUpdate.current.smallImageURl};
+        }
+        return event;
+      });
+    }
+    return searchEventListDisplay;
   };
 
-  const sortModel = useMemo(() => {
-    return [
-      {
-        field: sortBy.field,
-        sort: sortBy.sort,
-      },
-    ];
-  }, [sortBy]);
+  const columns = [
+    {
+      field: "hanhDong",
+      headerName: "Action",
+      width: 130,
+      renderCell: (params) => (
+        <Action
+          onEdit={handleEdit}
+          // onDeleted={handleDeleteOne}
+          phimItem={params.row}
+        />
+      ),
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+    },
+    {
+      field: "brief",
+      headerName: "Name Event",
+      width: 250,
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
+    },
+    // {
+    //   field: "trailerURL",
+    //   headerName: "Trailer",
+    //   width: 130,
+    //   renderCell: (params) => (
+    //     <div style={{ display: "inline-block" }}>
+    //       <ThumbnailYoutube urlYoutube={params.row.trailerURL} />
+    //     </div>
+    //   ),
+    //   headerAlign: "center",
+    //   align: "center",
+    //   headerClassName: "custom-header",
+    // },
 
-  const columns = useMemo(
-    () =>
-      // cột tài khoản không được chỉnh sửa, backend dùng "taiKhoan" để định danh user
-      [
-        {
-          field: "id",
-          headerName: "ID",
-          width: 100,
-          renderCell: (params) => (
-            <ButtonDelete
-              onDeleted={handleDeleteOne}
-              taiKhoan={params.row.id}
-            />
-          ),
-          headerAlign: "center",
-          align: "center",
-          headerClassName: "custom-header",
-          hide: addUser.toggle,
-        },
-        {
-          field: "username",
-          headerName: "Account",
-          width: 250,
-          editable: addUser.toggle,
-          headerAlign: "center",
-          align: "left",
-          headerClassName: "custom-header",
-        },
-        // {
-        //   field: "createdAt",
-        //   headerName: "Create At",
-        //   width: 300,
-        //   editable: true,
-        //   headerAlign: "center",
-        //   align: "left",
-        //   headerClassName: "custom-header",
-        // },
-        {
-          field: "name",
-          headerName: "Name",
-          width: 300,
-          editable: true,
-          headerAlign: "center",
-          align: "left",
-          headerClassName: "custom-header",
-        },
-        {
-          field: "email",
-          headerName: "Email",
-          width: 300,
-          editable: true,
-          headerAlign: "center",
-          align: "left",
-          headerClassName: "custom-header",
-        },
-        // {
-        //   field: "soDt",
-        //   headerName: "Số điện thoại",
-        //   width: 200,
-        //   editable: true,
-        //   type: "number",
-        //   headerAlign: "center",
-        //   align: "left",
-        //   headerClassName: "custom-header",
-        // },
-        {
-          field: "role",
-          headerName: "isStaff",
-          width: 145,
-          editable: true,
-          type: "boolean",
-          headerAlign: "center",
-          align: "center",
-          headerClassName: "custom-header",
-        },
-        {
-          field: "ismodify",
-          width: 0,
-          type: "boolean",
-          headerClassName: "custom-header",
-          hide: true,
-        },
-      ],
-    [addUser.toggle]
-  );
-
+    {
+      field: "title",
+      headerName: "Title",
+      width: 200,
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
+    },
+    {
+      field: "mainImage",
+      headerName: "Image",
+      width: 200,
+      headerAlign: "center",
+      align: "center",
+      headerClassName: "custom-header",
+      renderCell: (params) => RenderCellExpand(params),
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 250,
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
+    },
+    {
+      field: "type",
+      headerName: "Type",
+      width: 250,
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
+    },
+    // {
+    //   field: "releaseDate",
+    //   headerName: "Release Date",
+    //   width: 160,
+    //   type: "date",
+    //   headerAlign: "center",
+    //   align: "center",
+    //   headerClassName: "custom-header",
+    //   valueFormatter: (params) => params.value.slice(0, 10),
+    // },
+    // {
+    //   field: "rated",
+    //   headerName: "Rated",
+    //   width: 120,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   headerClassName: "custom-header",
+    // },
+    // { field: "id", hide: true, width: 130 },
+    // { field: "categories", hide: true, width: 130 },
+    // { field: "duration", hide: true, width: 200, renderCell: RenderCellExpand },
+  ];
   const modifySlugify = { lower: true, locale: "vi" };
-
-  if (errorUsersList) {
-    return <h1>{errorUsersList}</h1>;
-  }
-
   return (
-    <div style={{ height: "77vh", width: "100%"}}>
-      <div className="container-fluid pb-3">
+    <div style={{ height: "80vh", width: "100%", backgroundColor:"white"}}>
+      <div className={classes.control}>
         <div className="row">
-          <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
-            <Button
-              variant="contained"
-              color="secondary"
-              disabled={userListDelete.userListDelete.length ? false : true}
-              className={classes.button}
-              startIcon={
-                userListDelete.triggerDelete === false ? (
-                  <DeleteIcon />
-                ) : (
-                  <CircularProgress size={20} color="inherit" />
-                )
-              }
-              onClick={handleDeleteMultiple}
-            >
-              {userListDelete.triggerDelete === false ? "delete" : "don't delete"}{" "}
-              {userListDelete.userListDelete.length} user
-            </Button>
-          </div>
-          <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
+          <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
             <Button
               variant="contained"
               color="primary"
-              disabled={userListmodified.userListmodified.length ? false : true}
-              className={classes.button}
-              onClick={handleUpdateMultiple}
-              startIcon={
-                userListmodified.triggerUpdate === false ? (
-                  <CloudUploadIcon />
-                ) : (
-                  <CircularProgress size={20} color="inherit" />
-                )
-              }
+              className={classes.addMovie}
+              onClick={handleAddMovie}
+              disabled={loadingAddEvent}
+              startIcon={<AddBoxIcon />}
             >
-              {userListmodified.triggerUpdate === false
-                ? "update"
-                : "cancel"}{" "}
-              {userListmodified.userListmodified.length} user
+              Add Event
             </Button>
           </div>
-          <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
-            <Button
-              variant="contained"
-              color="primary"
-              className={`${classes.addUser} ${classes.button}`}
-              onClick={handleToggleAddUser}
-              disabled={
-                addUser.toggle
-                  ? addUser.isFilledIn
-                    ? addUser.readyAdd
-                      ? false
-                      : true
-                    : false
-                  : false
-              }
-              startIcon={
-                addUser.toggle ? (
-                  addUser.isFilledIn ? (
-                    <PersonAddIcon />
-                  ) : (
-                    <EditIcon />
-                  )
-                ) : (
-                  <PersonAddIcon />
-                )
-              }
-            >
-              {addUser.toggle
-                ? addUser.isFilledIn
-                  ? "Add Staff"
-                  : "User Management"
-                : "Add Staff"}
-            </Button>
-          </div>
-          <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
-            <Button
-              variant="contained"
-              color="primary"
-              className={`${classes.addUser} ${classes.button}`}
-              onClick={handleToggleAddUser}
-              disabled={
-                addUser.toggle
-                  ? addUser.isFilledIn
-                    ? addUser.readyAdd
-                      ? false
-                      : true
-                    : false
-                  : false
-              }
-              startIcon={
-                addUser.toggle ? (
-                  addUser.isFilledIn ? (
-                    <PersonAddIcon />
-                  ) : (
-                    <EditIcon />
-                  )
-                ) : (
-                  <PersonAddIcon />
-                )
-              }
-            >
-              {addUser.toggle
-                ? addUser.isFilledIn
-                  ? "Add User"
-                  : "User Management"
-                : "Add User"}
-            </Button>
-          </div>
-          <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
-            <Button
-              variant="contained"
-              color="primary"
-              // className={`${classes.userKhachHang} ${classes.button}`}
-              className={classes.button}
-              onClick={() =>
-                setsortBy({ field: "role", sort: "asc" })
-              }
-            >
-              Users
-            </Button>
-          </div>
-          {/* <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
-            <Button
-              variant="contained"
-              className={`${classes.userModified} ${classes.button}`}
-              onClick={() => setsortBy({ field: "ismodify", sort: "desc" })}
-            >
-              Modified Users
-            </Button>
-          </div> */}
-          <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              onClick={handleRefreshUserListResetChanged}
-              startIcon={<CachedIcon />}
-            >
-              Refresh
-            </Button>
-          </div>
-          <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
-            <Button
-              variant="contained"
-              // className={`${classes.userQuanTri} ${classes.button}`}
-              color="primary"
-              className={classes.button}
-              onClick={() =>
-                setsortBy({ field: "role", sort: "desc" })
-              }
-            >
-              Staff Account
-            </Button>
-          </div>
-          <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
-            <div className={`${classes.search} ${classes.button}`}>
+          <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
+            <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
@@ -898,6 +418,7 @@ export default function UsersManagement() {
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
+                style={{color:"black"}}
                 onChange={(evt) => handleInputSearchChange(evt.target.value)}
               />
             </div>
@@ -906,49 +427,38 @@ export default function UsersManagement() {
       </div>
       <DataGrid
         className={classes.rootDataGrid}
-        rows={addUser.toggle ? addUser.data : onFilter()}
+        rows={onFilter()}
         columns={columns}
         pageSize={25}
-        rowsPerPageOptions={[25, 50, 100]}
-        // css màu cho tài khoản QuanTri hoặc KhachHang: thay đổi tên class row dựa trên giá trị prop riêng biệt của row
-        // getRowClassName={(params) => {
-        //   return `isStaff--${params
-        //     .getValue("ROLE_STAFF")
-        //     .toString()} isStaff--${params.getValue("isStaff")?.toString()}`;
-        // }}
-        // bật checkbox
-        checkboxSelection={!addUser.toggle}
-        disableSelectionOnClick
-        // khi click chọn từng phần tử phải lưu lại
-        onSelectionModelChange={(newSelection) => {
-          if (newSelection.selectionModel.length === 0) {
-            setUserListDelete({
-              triggerDelete: false,
-              userListDelete: [],
-              cancel: false,
-            });
-          }
-          setUserListDelete((data) => ({
-            ...data,
-            userListDelete: newSelection.selectionModel,
-          }));
-          setSelectionModel(newSelection.selectionModel);
-        }}
-        selectionModel={selectionModel}
-        // xử lý chỉnh sửa
-        editRowsModel={editRowsModel}
-        onEditCellChange={handleEditCellChange}
-        onEditCellChangeCommitted={handleEditCellChangeCommitted}
-        // hiện loading khi đang call api lấy userList
-        loading={loadingUsersList}
-        // components={{ LoadingOverlay: CustomLoadingOverlay }}
+        rowsPerPageOptions={[10, 25, 50]}
+        // hiện loading khi
+        loading={
+          loadingUpdateEvent ||
+          loadingDelete ||
+          loadingEventList 
+          // loadingUpdateNoneImageMovie
+        }
         components={{
           LoadingOverlay: CustomLoadingOverlay,
           Toolbar: GridToolbar,
         }}
         // sort
-        sortModel={sortModel}
+        sortModel={[{ field: "brief", sort: "asc" }]}
       />
+      <Dialog open={openModal}>
+        <DialogTitle onClose={() => setOpenModal(false)}>
+          {selectedPhim?.current?.brief
+            ? `Edit: ${selectedPhim?.current?.brief}`
+            : "Add new"}
+        </DialogTitle>
+        <DialogContent dividers>
+          <FormAddEvent
+            selectedPhim={selectedPhim.current}
+            onUpdate={onUpdate}
+            onAddMovie={onAddMovie}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
