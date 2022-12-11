@@ -214,12 +214,32 @@ export default function PayMent() {
 
         {/* thông tin phim và rạp */}
         <div className={classes.payMentItem}>
-          <p className={classes.tenPhim}>{thongTinPhongVe?.setPhim?.name}</p>
-          <p>{thongTinPhongVe?.setRap}</p>
-          <p>Date show: {`${thongTinPhongVe?.setNgayXem} ${
-            thongTinPhongVe?.ngayChieu
-          } - ${thongTinPhongVe?.setSuatChieu} - ${thongTinPhongVe?.setPhim?.duration} Minutes 
-          - ${thongTinPhongVe?.setPhim?.categories} - Language: ${thongTinPhongVe?.setPhim?.language}`}</p>
+        <p className={classes.tenPhim}>{thongTinPhongVe?.data?.content[0]?.movie?.name}</p>
+          <p>{thongTinPhongVe?.data?.content[0]?.branch.name}</p>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <p>Room:</p>
+            <span>{thongTinPhongVe?.data?.content[0]?.room?.name}</span>
+          </div>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <p>Date:</p>
+            <span>{thongTinPhongVe?.data?.content[0]?.startDate}</span>
+          </div>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <p>Time:</p>
+            <span>{thongTinPhongVe?.data?.content[0]?.startTime}</span>
+          </div>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <p>Duration:</p>
+            <span>{thongTinPhongVe?.data?.content[0]?.movie?.duration} Minutes</span>
+          </div>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <p>Category: </p>
+            <span>{thongTinPhongVe?.data?.content[0]?.movie?.categories}</span>
+          </div>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <p>Language: </p>
+            <span>{thongTinPhongVe?.data?.content[0]?.movie?.language}</span>
+          </div>
         </div>
 
         {/* ghế đã chọn */}

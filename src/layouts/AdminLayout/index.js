@@ -13,7 +13,7 @@ import { LOGIN_FAIL, LOGIN_SUCCESS } from '../../reducers/constants/Auth';
 
 export default function AdminLayout(props) {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
-  const isMobile = useMediaQuery('(max-width:768px)');
+  // const isMobile = useMediaQuery('(max-width:768px)');
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.authReducer);
   // console.log(currentUser);
@@ -89,16 +89,18 @@ export default function AdminLayout(props) {
   return (
     // package notistack: popup thông báo nhỏ gọn
     <SnackbarProvider maxSnack={3}>
-      <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} style={{backgroundColor:"black"}}/>
+      {/* <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} style={{backgroundColor:"black"}}/> */}
+      <TopBar style={{backgroundColor:"black"}}/>
       <div className="row">
         <div style={{ width: 255 , backgroundColor:"white"}} >
           {/* đây là phần NavBar nằm bên trái, có thể đóng mở khi màn hình nhỏ */}
           <NavBar
-            onMobileClose={() => setMobileNavOpen(false)}
-            openMobile={isMobileNavOpen}
+            // onMobileClose={() => setMobileNavOpen(false)}
+            // openMobile={isMobileNavOpen}
           />
         </div>
-        <div style={{ width: isMobile ? "100%" : "calc(100% - 255px)", backgroundColor:"white", height:"100vh" }}>
+        {/* <div style={{ width: isMobile ? "100%" : "calc(100% - 255px)", backgroundColor:"white", height:"100vh" }}> */}
+        <div style={{ width: "calc(100% - 255px)", backgroundColor:"white", height:"100vh" }}>
           {/* đây là nội dung chính: UserManagement, MoviesManagement, ReateShowtime */}
           {props.children}
         </div>

@@ -28,10 +28,13 @@ import {
   resetCreateShowtime,
 } from "../../reducers/actions/BookTicket";
 import theatersApi from "../../api/theatersApi";
-import { getTheaters, getTheaters2, getTheaters3, getTheaters4 } from "../../reducers/actions/Theater";
+import { getTheaters2, getTheaters3 } from "../../reducers/actions/Theater";
 
+import {
+  getScheduleListManagement,
+  resetScheduleManagement,
+} from "../../reducers/actions/Movie";
 import formatDate from "../../utilities/formatDate";
-import Swal from "sweetalert2";
 
 function CustomLoadingOverlay() {
   return (
@@ -41,30 +44,35 @@ function CustomLoadingOverlay() {
   );
 }
 
-export default function CreateShowTime() {
+export default function MoviesManagement() {
   const [lichChieuDisplay, setLichChieuDisplay] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
   // const { theaterList2, loadingTheaterList2 } = useSelector(
   //   (state) => state.theaterReducer
   // );
-  // const { theaterList2, loadingTheaterList2 } = useSelector(
-  //     (state) => state.theaterReducer)
-  // console.log("theaterList2: ", theaterList2);
-
+  const { theaterList2, loadingTheaterList2 } = useSelector(
+      (state) => state.theaterReducer)
+  console.log("theaterList2: ", theaterList2);
   const { loadingCreateShowtime, successCreateShowtime, errorCreateShowtime } =
     useSelector((state) => state.bookTicketReducer);
-
-  // const movieList2 = useSelector((state) => state.movieReducer);
-  // console.log("movieList2: ", movieList2);
+  const movieList2 = useSelector((state) => state.movieReducer?.movieList2);
+  console.log("movieList2: ", movieList2);
 
   let {
-    movieList2,
     scheduleList2,
+    loadingScheduleList2,
+    loadingDeleteSchedule,
     errorDeleteSchedule,
     successDeleteSchedule,
     successUpdateSchedule,
+    errorUpdateSchedule,
+    loadingUpdateSchedule,
+    loadingAddUploadSchedule,
     successAddUploadSchedule,
+    errorAddUploadSchedule,
+    loadingUpdateNoneImageSchedule,
     successUpdateNoneImageSchedule,
+    errorUpdateNoneImageSchedule,
   } = useSelector((state) => state.movieReducer);
 
   const dispatch = useDispatch();
@@ -85,14 +93,10 @@ export default function CreateShowTime() {
     setRap: "",
     maRap: "",
 
-    ngayChieuGioChieu: "",
+    ngayChieuGioChieu: null,
 
     setGiaVe: "",
-    giaVeRender: [70000, 100000, 120000, 150000],
-
-    setPhong:"",
-    phongRender:[101, 202, 303, 404],
-    maPhong:[1,2,3,4],
+    giaVeRender: [75000, 100000, 120000, 150000],
 
     startRequest: false, // lựa chọn giữa hiện thị "đang tìm" hay "không tìm thấy"
 
@@ -103,46 +107,58 @@ export default function CreateShowTime() {
       rap: false,
       ngayChieuGioChieu: false,
       giaVe: false,
-      phong:false,
     },
   });
   console.log("data: ", data);
   const [isReadyTaoLichChieu, setIsReadyTaoLichChieu] = useState(false);
-  const classes = useStyles({ srcImg: data?.hinhAnhPhimSelected });
+  const classes = useStyles({ srcImg: data.hinhAnhPhimSelected });
 
 
-  // useEffect(() => {
-  //   if (
-  //     !scheduleList2 ||
-  //     successUpdateSchedule ||
-  //     successUpdateNoneImageSchedule ||
-  //     successDeleteSchedule ||
-  //     errorDeleteSchedule ||
-  //     successAddUploadSchedule
-  //   ) {
-  //     dispatch(getMovieListManagement());
-  //     // console.log("branch: ",branch);
-  //     dispatch(getAllScheduleListManagement())
-  //   }
-  // }, [
-  //   successUpdateSchedule,
-  //   successUpdateNoneImageSchedule,
-  //   successDeleteSchedule,
-  //   errorDeleteSchedule,
-  //   successAddUploadSchedule,
-  // ]); // khi vừa thêm phim mới xong m
-  
   useEffect(() => {
-    if (movieList2 === null) {
+    if (
+      !scheduleList2 ||
+      successUpdateSchedule ||
+      successUpdateNoneImageSchedule ||
+      successDeleteSchedule ||
+      errorDeleteSchedule ||
+      successAddUploadSchedule
+    ) {
+      // dispatch(getMovieListManagement());
+      // console.log("branch: ",branch);
+      dispatch(getAllScheduleListManagement())
+    }
+  }, [
+    successUpdateSchedule,
+    successUpdateNoneImageSchedule,
+    successDeleteSchedule,
+    errorDeleteSchedule,
+    successAddUploadSchedule,
+  ]); // khi vừa thêm phim mới xong m
+  
+console.log(scheduleList2);
+
+  useEffect(() => {
+    if (!movieList2) {
       dispatch(getMovieListManagement());
     }
   }, []);
 
   useEffect(() => {
-    if (scheduleList2 === null) {
-      dispatch(getAllScheduleListManagement());
+    if (!theaterList2.length) {
+      dispatch(getTheaters3());
     }
   }, []);
+
+
+  // useEffect(() =>{
+  //   theatersApi.getThongTinLichChieuLe()
+  //   .then((res) => {
+  //     console.log("lịch: ",res);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   })
+  // },[])
 
   // useEffect(() => {
   //   const showTimeList = theaterList2?.reduce((collect1, heThongRap) => {
@@ -188,14 +204,13 @@ export default function CreateShowTime() {
           ...collect1,
           {
             ...lichChieu,
-            // tenHeThongRap: lichChieu?.branch?.name,
+            tenHeThongRap: lichChieu?.branch?.name,
             tenCumRap: lichChieu?.branch?.name,
             maLichChieu: lichChieu?.id,
             diaChi: lichChieu?.branch?.address,
             maPhim: lichChieu?.movie?.id,
             logo: lichChieu?.branch?.imgURL,
             tenPhim: lichChieu?.movie?.name,
-            maPhong:lichChieu?.room?.id,
             id: lichChieu?.id,
             giaVe:lichChieu?.price,
             ngayChieuGioChieu: `${formatDate(lichChieu?.startDate.slice(
@@ -206,37 +221,23 @@ export default function CreateShowTime() {
         ];
       }, [])
     setLichChieuDisplay(showTimeList);
-  }, [scheduleList2]);
+  }, [theaterList2]);
 
-  // console.log(lichChieuDisplay);
+  console.log(lichChieuDisplay);
 
-  // useEffect(() => {
-  //   if (data.setPhim && data.ngayChieuGioChieu && data.maRap && data.setGiaVe)
-  //     setIsReadyTaoLichChieu(true);
-  //   else setIsReadyTaoLichChieu(false);
-  // }, [data?.setPhim, data?.ngayChieuGioChieu, data?.maRap, data?.setGiaVe]);
+  useEffect(() => {
+    if (data.setPhim && data.ngayChieuGioChieu && data.maRap && data.setGiaVe)
+      setIsReadyTaoLichChieu(true);
+    else setIsReadyTaoLichChieu(false);
+  }, [data.setPhim, data.ngayChieuGioChieu, data.maRap, data.setGiaVe]);
 
   useEffect(() => {
     if (successCreateShowtime) {
-      // enqueueSnackbar(successCreateShowtime, { variant: "success" });
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Create Successfully",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      dispatch(getTheaters());
+      enqueueSnackbar(successCreateShowtime, { variant: "success" });
+      dispatch(getTheaters3());
     }
     if (errorCreateShowtime) {
-      // enqueueSnackbar(errorCreateShowtime, { variant: "error" });
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Create Error",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      enqueueSnackbar(errorCreateShowtime, { variant: "error" });
     }
     return () => dispatch(resetCreateShowtime());
   }, [errorCreateShowtime, successCreateShowtime]);
@@ -267,10 +268,6 @@ export default function CreateShowTime() {
   };
   const handleOpenGiaVe = () => {
     setData((data) => ({ ...data, openCtr: { ...data.openCtr, giaVe: true } }));
-  };
-
-  const handleOpenPhong = () => {
-    setData((data) => ({ ...data, openCtr: { ...data.openCtr, phong: true } }));
   };
 
   const handleClosePhim = () => {
@@ -304,19 +301,12 @@ export default function CreateShowTime() {
     }));
   };
 
-  const handleClosePhong = () => {
-    setData((data) => ({
-      ...data,
-      openCtr: { ...data.openCtr, phong: false },
-    }));
-  };
-
   const handleSelectPhim = (e) => {
     // từ mã phim đã gửi lên > lấy ra hình ảnh để hiển thị
-    const hinhAnhPhimSelected = movieList2?.data?.find(
+    const hinhAnhPhimSelected = movieList2.data.find(
       (item) => item.id === e.target.value
     ).hinhAnh;
-    const isOpenHeThongRap = data?.setHeThongRap ? false : true;
+    const isOpenHeThongRap = data.setHeThongRap ? false : true;
     setData((data) => ({
       ...data,
       setPhim: e.target.value,
@@ -369,7 +359,7 @@ export default function CreateShowTime() {
   };
 
   const handleSelectRap = (e) => {
-    const openNgayChieuGioChieu = data?.ngayChieuGioChieu ? false : true;
+    const openNgayChieuGioChieu = data.ngayChieuGioChieu ? false : true;
     const openGiave = openNgayChieuGioChieu
       ? false
       : data.setGiaVe
@@ -419,13 +409,6 @@ export default function CreateShowTime() {
     }));
   };
 
-  const handleSelectPhong = (e) => {
-    setData((data) => ({
-      ...data,
-      setPhong: e.target.value,
-    }));
-  };
-
   const handleTaoLichChieu = () => {
     if (loadingCreateShowtime || !isReadyTaoLichChieu) {
       // khi đang gửi requet hoặc chưa sẵn sàng thì không cho dispatch
@@ -433,17 +416,13 @@ export default function CreateShowTime() {
     }
     dispatch(
       createShowtime({
-        branchId: data.maRap.toString(),//có
-        movieId: data.setPhim.toString(),//có
-        price: data.setGiaVe.toString(),
-        roomId: data.setPhong.toString(),
-        startDate: (formatDate(data.ngayChieuGioChieu.slice(0,10)).YyMmDd).split(".").join("-"),
-        startTime:data.ngayChieuGioChieu.slice(11,19),
+        maPhim: data.setPhim,
+        ngayChieuGioChieu: data.ngayChieuGioChieu,
+        maRap: data.maRap,
+        giaVe: data.setGiaVe,
       })
     ); // ngayChieuGioChieu phải có định dạng dd/MM/yyyy hh:mm:ss
   };
-
-  // console.log((formatDate(data.ngayChieuGioChieu.slice(0,10)).YyMmDd).split(".").join("-"));
 
   const handleInputSearchChange = (props) => {
     clearTimeout(clearSetSearch.current);
@@ -454,14 +433,14 @@ export default function CreateShowTime() {
 
   const onFilter = () => {
     const searchLichChieuDisplay = lichChieuDisplay?.filter((lichChieu) => {
-      // const matchTenHeThongRap =
-      //   slugify(lichChieu?.tenHeThongRap ?? "", modifySlugify).indexOf(
-      //     slugify(valueSearch, modifySlugify)
-      //   ) !== -1;
-      // const matchTenCumRap =
-      //   slugify(lichChieu?.tenCumRap ?? "", modifySlugify).indexOf(
-      //     slugify(valueSearch, modifySlugify)
-      //   ) !== -1;
+      const matchTenHeThongRap =
+        slugify(lichChieu?.tenHeThongRap ?? "", modifySlugify).indexOf(
+          slugify(valueSearch, modifySlugify)
+        ) !== -1;
+      const matchTenCumRap =
+        slugify(lichChieu?.tenCumRap ?? "", modifySlugify).indexOf(
+          slugify(valueSearch, modifySlugify)
+        ) !== -1;
       const matchDiaChi =
         slugify(lichChieu?.diaChi ?? "", modifySlugify).indexOf(
           slugify(valueSearch, modifySlugify)
@@ -476,15 +455,15 @@ export default function CreateShowTime() {
         ) !== -1;
       const matchNgayChieuGioChieu =
         slugify(
-          lichChieu?.ngayChieuGioChieu?.toLocaleString() ?? "",
+          lichChieu?.ngayChieuGioChieu.toLocaleString() ?? "",
           modifySlugify
         ).indexOf(slugify(valueSearch, modifySlugify)) !== -1;
       const matchGiaVe =
-        slugify(lichChieu?.price?.toString() ?? "", modifySlugify).indexOf(
+        slugify(lichChieu?.price.toString() ?? "", modifySlugify).indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchMaPhim =
-        slugify(lichChieu?.maPhim?.toString() ?? "", modifySlugify).indexOf(
+        slugify(lichChieu?.maPhim.toString() ?? "", modifySlugify).indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchMaRap =
@@ -492,11 +471,12 @@ export default function CreateShowTime() {
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchMalichChieu =
-        slugify(lichChieu?.maLichChieu?.toString() ?? "", modifySlugify).indexOf(
+        slugify(lichChieu?.maLichChieu.toString() ?? "", modifySlugify).indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       return (
-        // matchTenHeThongRap ||
+        matchTenHeThongRap ||
+        matchTenCumRap ||
         matchDiaChi ||
         matchTenRap ||
         matchTenPhim ||
@@ -507,10 +487,8 @@ export default function CreateShowTime() {
         matchMalichChieu
       );
     });
-    return searchLichChieuDisplay
-  }
-
-  console.log("Lịch chiếu: ", scheduleList2);
+    return searchLichChieuDisplay;
+  };
 
   const columns = [
     {
@@ -519,13 +497,13 @@ export default function CreateShowTime() {
       hide: true,
       width: 130,
     },
-    // { field: "logo", hide: true, width: 130 },
+    { field: "logo", hide: true, width: 130 },
     {
-      field: "logo",
+      field: "tenHeThongRap",
       headerName: "Logo",
       width: 130,
       renderCell: (params) => (
-        <Tooltip title={params.row.tenCumRap}>
+        <Tooltip title={params.row.tenHeThongRap}>
           <img
             style={{
               maxWidth: "100%",
@@ -534,7 +512,7 @@ export default function CreateShowTime() {
               marginRight: 15,
             }}
             src={params.row.logo}
-            // alt="logo hệ thống rạp"
+            alt="logo hệ thống rạp"
           />
         </Tooltip>
       ),
@@ -554,7 +532,7 @@ export default function CreateShowTime() {
     {
       field: "diaChi",
       headerName: "Address",
-      width: 250,
+      width: 400,
       headerAlign: "center",
       align: "left",
       headerClassName: "custom-header",
@@ -574,15 +552,6 @@ export default function CreateShowTime() {
       field: "tenPhim",
       headerName: "Movie",
       width: 250,
-      headerAlign: "center",
-      align: "left",
-      headerClassName: "custom-header",
-      // renderCell: RenderCellExpand,
-    },
-    {
-      field: "maPhong",
-      headerName: "Room",
-      width: 90,
       headerAlign: "center",
       align: "left",
       headerClassName: "custom-header",
@@ -607,7 +576,6 @@ export default function CreateShowTime() {
       headerClassName: "custom-header",
     },
   ];
-  console.log("movieList2: ", movieList2);
 
   const menuProps = {
     // props và class của menu(Popover)
@@ -626,7 +594,7 @@ export default function CreateShowTime() {
 
   console.log("data: ", data);
   return (
-    <div style={{ height: "65vh", width: "100%"}}>
+    <div style={{ height: "70vh", width: "100%", backgroundColor:"white !important"}}>
       <div className={classes.backgroundImg}>
         <div className="row">
           <div className="col-3 px-0 px-md-3">
@@ -693,7 +661,7 @@ export default function CreateShowTime() {
                   value=""
                   style={{
                     display:
-                      data?.heThongRapRender?.length > 0 ? "none" : "block",
+                      data.heThongRapRender?.length > 0 ? "none" : "block",
                   }}
                   classes={{
                     root: classes.menu__item,
@@ -826,7 +794,7 @@ export default function CreateShowTime() {
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <ThemeProvider theme={materialTheme}>
                   <KeyboardDateTimePicker
-                    open={data?.openCtr?.ngayChieuGioChieu}
+                    open={data.openCtr.ngayChieuGioChieu}
                     onClose={handleCloseNgayChieuGioChieu}
                     onOpen={handleOpenNgayChieuGioChieu}
                     inputValue={selectedDate ? null : "Choose date, time"} // khi chưa chọn thì "Chọn ngày, giờ chiếu" ghi đè lên value, khi đã chọn ngày thì return null để value={selectedDate} hiển thị ngày đã chọn
@@ -843,7 +811,7 @@ export default function CreateShowTime() {
               </MuiPickersUtilsProvider>
             </FormControl>
           </div>
-          <div className="col-2 px-0 px-md-3">
+          <div className="col-3 px-0 px-md-3">
             <FormControl
               className={classes.search__item}
               focused={false}
@@ -862,7 +830,7 @@ export default function CreateShowTime() {
                 IconComponent={ExpandMoreIcon}
                 MenuProps={menuProps}
               >
-                {data?.giaVeRender?.map((giaVe) => (
+                {data.giaVeRender.map((giaVe) => (
                   <MenuItem
                     value={giaVe}
                     key={giaVe}
@@ -872,40 +840,6 @@ export default function CreateShowTime() {
                     }}
                   >
                     {giaVe} vnđ
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-          <div className="col-1 px-0 px-md-3">
-            <FormControl
-              className={classes.search__item}
-              focused={false}
-              fullWidth
-            >
-              <Select
-                open={data.openCtr.phong}
-                onClose={handleClosePhong}
-                onOpen={handleOpenPhong}
-                onChange={handleSelectPhong}
-                value={data.setPhong}
-                renderValue={(value) =>
-                  `${value ? value + " vnđ" : "Choose ticket cost"}`
-                }
-                displayEmpty
-                IconComponent={ExpandMoreIcon}
-                MenuProps={menuProps}
-              >
-                {data.maPhong.map((phong) => (
-                  <MenuItem
-                    value={phong}
-                    key={phong}
-                    classes={{
-                      root: classes.menu__item,
-                      selected: classes["menu__item--selected"],
-                    }}
-                  >
-                    Phòng {phong}
                   </MenuItem>
                 ))}
               </Select>
@@ -945,19 +879,19 @@ export default function CreateShowTime() {
           </div>
         </div>
       </div>
-      {/* <DataGrid
+      <DataGrid
         className={classes.rootDataGrid}
         rows={onFilter()}
         columns={columns}
         pageSize={25}
         rowsPerPageOptions={[10, 25, 50]}
-        loading={false}
+        loading={loadingTheaterList2}
         components={{
           LoadingOverlay: CustomLoadingOverlay,
           Toolbar: GridToolbar,
         }}
-        sortModel={[{ field: "tenCumRap", sort: "asc" }]}
-      /> */}
+        sortModel={[{ field: "tenHeThongRap", sort: "asc" }]}
+      />
     </div>
   );
 }

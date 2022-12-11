@@ -9,6 +9,7 @@ import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import rootReducer from "./reducers";
 import "./styles/normalize.css";
+// import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 const enhanced = compose(
   applyMiddleware(thunk),
@@ -21,6 +22,11 @@ const store = createStore(rootReducer, enhanced);
 ReactDOM.render(
   <Provider store={store}>
     <App />
+    {/* Chỉ cần add https của cái host lên setting tin nhắn nâng cao của fb là chat được + FPT Ai */}
+    {/* <MessengerCustomerChat
+      pageId="100088543873922"
+      appId="1049723576425832"
+    />, */}
   </Provider>,
   document.getElementById("root")
 );

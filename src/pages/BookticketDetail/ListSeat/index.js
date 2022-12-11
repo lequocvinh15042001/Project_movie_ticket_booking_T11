@@ -161,7 +161,7 @@ export default function ListSeat() {
             style={{ width: 70, height: 100 }}
           />
           <div className={classes.text}>
-            <TenCumRap tenCumRap={thongTin?.data?.content[0]?.branch?.name} />
+            <TenCumRap tenCumRap={thongTin?.data?.content[0]?.branch?.name} giaVe={thongTin?.data?.content[0]?.price}/>
             <p className={classes.textTime}>{`${
               thongTin && formatDate(thongTin?.data?.content[0]?.startDate).dayToday
             } - ${thongTin?.data?.content[0]?.startDate} - ${thongTin?.data?.content[0]?.movie?.rated}`}</p>

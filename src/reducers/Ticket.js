@@ -1,5 +1,5 @@
 import {
-    GET_TICKET_REQUEST, GET_TICKET_SUCCESS, GET_TICKET_FAIL,
+    GET_TICKET_REQUEST, GET_TICKET_SUCCESS, GET_TICKET_FAIL, GET_ALLTICKET_REQUEST, GET_ALLTICKET_SUCCESS, GET_ALLTICKET_FAIL,
   } from './constants/Ticket';
   
   const initialState = {
@@ -28,6 +28,26 @@ import {
           ...state,
           errorTicketList: action.payload.errorTicketList,
           loadingTicketList: false,
+        };
+      }
+
+      case GET_ALLTICKET_REQUEST: {
+        return {
+          ...state, loadingAllTicketList: true, errorAllTicketList: null
+        }
+      }
+      case GET_ALLTICKET_SUCCESS: {
+        return {
+          ...state,
+          allTicketList: action.payload?.data,
+          loadingAllTicketList: false
+        }
+      }
+      case GET_ALLTICKET_FAIL: {
+        return {
+          ...state,
+          errorAllTicketList: action.payload.errorAllTicketList,
+          loadingAllTicketList: false,
         };
       }
   

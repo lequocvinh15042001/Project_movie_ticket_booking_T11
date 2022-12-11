@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-import { getListSeat } from "../../reducers/actions/BookTicket";
 import {
   SET_ISMOBILE,
   INIT_DATA,
@@ -22,7 +21,6 @@ import { DISPLAY_MOBILE_BOOKTICKET } from "../../constants/config";
 import Modal from "./Modal";
 import usersApi from "../../api/usersApi";
 import bookingApi from "../../api/bookingApi";
-import moviesApi from "../../api/moviesApi";
 
 export default function Index() {
   // const { isLazy } = useSelector((state) => state.lazyReducer);

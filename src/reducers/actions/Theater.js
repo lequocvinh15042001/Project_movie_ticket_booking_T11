@@ -36,6 +36,7 @@ export const getTheaters2 = () => {
     })
     theatersApi.getThongTinLichChieuHeThongRap()
       .then(result => {
+        console.log(result);
         dispatch({
           type: GET_THEATERS_SHOWTIME_SUCCESS2,
           payload: { data: result.data }
@@ -52,13 +53,37 @@ export const getTheaters2 = () => {
       )
   }
 }
+export const getTheaters4 = () => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_THEATERS_SHOWTIME_REQUEST
+    })
+    theatersApi.getThongTinLichChieuCoPhim()
+      .then(result => {
+        console.log(result);
+        dispatch({
+          type: GET_THEATERS_SHOWTIME_SUCCESS,
+          payload: { data: result.data }
+        })
+      }
+      )
+      .catch(
+        error => {
+          dispatch({
+            type: GET_THEATERS_SHOWTIME_FAIL,
+            payload: { errorTheaterList2: error.response?.data ? error.response.data : error.message, }
+          })
+        }
+      )
+  }
+}
 
 export const getTheaters3 = () => {
   return (dispatch) => {
     dispatch({
       type: GET_THEATERS_SHOWTIME_REQUEST2
     })
-    theatersApi.getThongTinHeThongRap()
+    theatersApi.getThongTinLichChieuHeThongRap()
       .then(result => {
         dispatch({
           type: GET_THEATERS_SHOWTIME_SUCCESS2,

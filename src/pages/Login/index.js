@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import {logoLogin} from '../../assets/LeafSVG'
+// import {logoLogin} from '../../assets/LeafSVG'
 import logoTix from "../Register/logo/logoTix.png";
 import { login, resetErrorLoginRegister } from "../../reducers/actions/Auth";
 import { LOADING_BACKTO_HOME } from "../../reducers/constants/Lazy";
@@ -108,7 +108,7 @@ export default function Login() {
   return (
     <div className="text-light" style={{ padding: "60px 32px 30px" }}>
       <div className="container">
-        <logoLogin className={classes.logoTix} />
+        {/* <logoLogin className={classes.logoTix} /> */}
         <p className={classes.text}>
           Login!
         </p>

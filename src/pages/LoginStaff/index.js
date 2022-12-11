@@ -106,7 +106,7 @@ export default function Login() {
   return (
     <div className="text-light" style={{ padding: "60px 32px 30px" }}>
       <div className="container">
-        <logoLogin className={classes.logoTix} />
+        {/* <logoLogin className={classes.logoTix} /> */}
         <p className={classes.text}>
           STAFF
         </p>
