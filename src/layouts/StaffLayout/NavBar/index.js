@@ -39,6 +39,11 @@ const items = [
     icon: PostAddIcon,
     title: 'Book for User'
   },
+  {
+    href: '/staff/showtimes',
+    icon: PostAddIcon,
+    title: 'Create Showtime'
+  },
 ];
 
 const useStyles = makeStyles(() => ({

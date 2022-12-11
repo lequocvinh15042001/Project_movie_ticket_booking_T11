@@ -4,46 +4,39 @@ import { createMuiTheme } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
   return {
-    backgroundImg: {
-      animationTimingFunction: `${theme.transitions.easing.easeInOut}`,
-      animationIterationCount: "infinite",
-      animationDirection: "reverse",
-      animationName: "$myEffect",
-      backgroundImage: (theme) =>
-        theme.srcImg
-          ? `url('${theme.srcImg}')`
-          : "linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)",
-      backgroundSize: (theme) => (theme.srcImg ? "auto" : "400% 400%"),
-      animationDuration: (theme) => (theme.srcImg ? "0s" : "5s"),
+    control: {
+      height: "100%",
+      width: "100%",
     },
-    "@keyframes myEffect": {
-      "0%": { backgroundPosition: "0% 50%" },
-      "50%": { backgroundPosition: "100% 50%" },
-      "100%": { backgroundPosition: "0% 50%" },
-    },
+    // "@keyframes myEffect": {
+    //   "0%": { backgroundPosition: "0% 50%" },
+    //   "50%": { backgroundPosition: "100% 50%" },
+    //   "100%": { backgroundPosition: "0% 50%" },
+    // },
     rootDataGrid: {
+      backgroundColor:"#f000",
       "& .Mui-odd": {
-        backgroundColor: "rgb(166, 213, 250)",
+        backgroundColor: "rgb(255, 255, 255)",
         "&:hover": {
-          backgroundColor: "rgb(144, 202, 249) !important",
+          backgroundColor: "rgb(236,	135,	14) !important",
         },
       },
       "& .MuiDataGrid-overlay": {
         zIndex: 100,
       },
       "& .Mui-even": {
-        backgroundColor: "rgb(183, 223, 185)",
+        backgroundColor: "rgb(255, 255, 255)",
         "&:hover": {
-          backgroundColor: "rgb(165, 215, 167)",
+          backgroundColor: "rgb(236,	135,	14)",
         },
       },
       "& .MuiDataGrid-columnsContainer": {
         backgroundColor: "rgb(255, 213, 153)",
       },
       "& .custom-header": {
-        backgroundColor: "rgb(255, 213, 153)",
+        backgroundColor: "rgb(236,	135,	14)",
         "&:hover": {
-          backgroundColor: "rgb(255, 203, 127)",
+          backgroundColor: "rgb(178,	0,	31)",
         },
       },
       "& .MuiDataGrid-colCellCheckbox": {

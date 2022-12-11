@@ -22,13 +22,19 @@ import { ThemeProvider } from "@material-ui/styles";
 import slugify from "slugify";
 
 import { useStyles, materialTheme } from "./styles";
-import { getMovieListManagement } from "../../reducers/actions/Movie";
+import { getAllScheduleListManagement, getMovieListManagement } from "../../reducers/actions/Movie";
 import {
   createShowtime,
   resetCreateShowtime,
 } from "../../reducers/actions/BookTicket";
 import theatersApi from "../../api/theatersApi";
-import { getTheaters2 } from "../../reducers/actions/Theater";
+import { getTheaters2, getTheaters3 } from "../../reducers/actions/Theater";
+
+import {
+  getScheduleListManagement,
+  resetScheduleManagement,
+} from "../../reducers/actions/Movie";
+import formatDate from "../../utilities/formatDate";
 
 function CustomLoadingOverlay() {
   return (
@@ -41,14 +47,34 @@ function CustomLoadingOverlay() {
 export default function MoviesManagement() {
   const [lichChieuDisplay, setLichChieuDisplay] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
+  // const { theaterList2, loadingTheaterList2 } = useSelector(
+  //   (state) => state.theaterReducer
+  // );
   const { theaterList2, loadingTheaterList2 } = useSelector(
-    (state) => state.theaterReducer
-  );
+      (state) => state.theaterReducer)
   console.log("theaterList2: ", theaterList2);
   const { loadingCreateShowtime, successCreateShowtime, errorCreateShowtime } =
     useSelector((state) => state.bookTicketReducer);
   const movieList2 = useSelector((state) => state.movieReducer.movieList2);
   console.log("movieList2: ", movieList2);
+
+  let {
+    scheduleList2,
+    loadingScheduleList2,
+    loadingDeleteSchedule,
+    errorDeleteSchedule,
+    successDeleteSchedule,
+    successUpdateSchedule,
+    errorUpdateSchedule,
+    loadingUpdateSchedule,
+    loadingAddUploadSchedule,
+    successAddUploadSchedule,
+    errorAddUploadSchedule,
+    loadingUpdateNoneImageSchedule,
+    successUpdateNoneImageSchedule,
+    errorUpdateNoneImageSchedule,
+  } = useSelector((state) => state.movieReducer);
+
   const dispatch = useDispatch();
   const [valueSearch, setValueSearch] = useState("");
   const clearSetSearch = useRef(0);
@@ -83,8 +109,33 @@ export default function MoviesManagement() {
       giaVe: false,
     },
   });
+  console.log("data: ", data);
   const [isReadyTaoLichChieu, setIsReadyTaoLichChieu] = useState(false);
   const classes = useStyles({ srcImg: data.hinhAnhPhimSelected });
+
+
+  useEffect(() => {
+    if (
+      !scheduleList2 ||
+      successUpdateSchedule ||
+      successUpdateNoneImageSchedule ||
+      successDeleteSchedule ||
+      errorDeleteSchedule ||
+      successAddUploadSchedule
+    ) {
+      // dispatch(getMovieListManagement());
+      // console.log("branch: ",branch);
+      dispatch(getAllScheduleListManagement())
+    }
+  }, [
+    successUpdateSchedule,
+    successUpdateNoneImageSchedule,
+    successDeleteSchedule,
+    errorDeleteSchedule,
+    successAddUploadSchedule,
+  ]); // khi vừa thêm phim mới xong m
+  
+console.log(scheduleList2);
 
   useEffect(() => {
     if (!movieList2) {
@@ -94,20 +145,20 @@ export default function MoviesManagement() {
 
   useEffect(() => {
     if (!theaterList2.length) {
-      dispatch(getTheaters2());
+      dispatch(getTheaters3());
     }
   }, []);
 
 
-  useEffect(() =>{
-    theatersApi.getThongTinLichChieuLe()
-    .then((res) => {
-      console.log("lịch: ",res);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  },[])
+  // useEffect(() =>{
+  //   theatersApi.getThongTinLichChieuLe()
+  //   .then((res) => {
+  //     console.log("lịch: ",res);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   })
+  // },[])
 
   // useEffect(() => {
   //   const showTimeList = theaterList2?.reduce((collect1, heThongRap) => {
@@ -148,6 +199,33 @@ export default function MoviesManagement() {
   // }, [theaterList2]);
 
   useEffect(() => {
+    const showTimeList = scheduleList2?.data?.content?.reduce((collect1, lichChieu) => {
+        return [
+          ...collect1,
+          {
+            ...lichChieu,
+            tenHeThongRap: lichChieu.branch.name,
+            tenCumRap: lichChieu.branch.name,
+            maLichChieu: lichChieu.id,
+            diaChi: lichChieu.branch.address,
+            maPhim: lichChieu.movie.id,
+            logo: lichChieu.branch.imgURL,
+            tenPhim: lichChieu.movie.name,
+            id: lichChieu.id,
+            giaVe:lichChieu.price,
+            ngayChieuGioChieu: `${formatDate(lichChieu.startDate.slice(
+              0,
+              10
+            )).dateFull}, ${lichChieu.startTime.slice(0, 8)}`,
+          },
+        ];
+      }, [])
+    setLichChieuDisplay(showTimeList);
+  }, [theaterList2]);
+
+  console.log(lichChieuDisplay);
+
+  useEffect(() => {
     if (data.setPhim && data.ngayChieuGioChieu && data.maRap && data.setGiaVe)
       setIsReadyTaoLichChieu(true);
     else setIsReadyTaoLichChieu(false);
@@ -156,7 +234,7 @@ export default function MoviesManagement() {
   useEffect(() => {
     if (successCreateShowtime) {
       enqueueSnackbar(successCreateShowtime, { variant: "success" });
-      dispatch(getTheaters2());
+      dispatch(getTheaters3());
     }
     if (errorCreateShowtime) {
       enqueueSnackbar(errorCreateShowtime, { variant: "error" });
@@ -248,24 +326,24 @@ export default function MoviesManagement() {
   const handleSelectHeThongRap = (e) => {
     setData((data) => ({
       ...data,
-      setHeThongRap: e.target.value.tenHeThongRap,
+      setHeThongRap: e.target.value.name,
       startRequest: true,
       openCtr: { ...data.openCtr, cumRap: true },
       //reset
       setCumRap: "",
       rapRender: [],
       setRap: "",
-      maRap: "",
+      maRap: e.target.value.id,
     }));
-    theatersApi
-      .getListCumRapTheoHeThong(e.target.value.maHeThongRap)
-      .then((result) => {
-        setData((data) => ({
-          ...data,
-          cumRapRender: result.data,
-          startRequest: false,
-        }));
-      });
+    // theatersApi
+    //   .getListCumRapTheoHeThong(e.target.value.id)
+    //   .then((result) => {
+    //     setData((data) => ({
+    //       ...data,
+    //       cumRapRender: result.data,
+    //       startRequest: false,
+    //     }));
+    //   });
   };
 
   const handleSelectCumRap = (e) => {
@@ -289,13 +367,13 @@ export default function MoviesManagement() {
       : true;
     setData((data) => ({
       ...data,
-      setRap: e.target.value.tenRap,
+      setRap: e.target.value.name,
       openCtr: {
         ...data.openCtr,
         ngayChieuGioChieu: openNgayChieuGioChieu,
         giaVe: openGiave,
       },
-      maRap: e.target.value.maRap,
+      maRap: e.target.value.id,
     }));
   };
 
@@ -354,7 +432,7 @@ export default function MoviesManagement() {
   };
 
   const onFilter = () => {
-    const searchLichChieuDisplay = lichChieuDisplay.filter((lichChieu) => {
+    const searchLichChieuDisplay = lichChieuDisplay?.filter((lichChieu) => {
       const matchTenHeThongRap =
         slugify(lichChieu?.tenHeThongRap ?? "", modifySlugify).indexOf(
           slugify(valueSearch, modifySlugify)
@@ -368,7 +446,7 @@ export default function MoviesManagement() {
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchTenRap =
-        slugify(lichChieu?.tenRap ?? "", modifySlugify).indexOf(
+        slugify(lichChieu?.tenCumRap ?? "", modifySlugify).indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchTenPhim =
@@ -381,7 +459,7 @@ export default function MoviesManagement() {
           modifySlugify
         ).indexOf(slugify(valueSearch, modifySlugify)) !== -1;
       const matchGiaVe =
-        slugify(lichChieu?.giaVe.toString() ?? "", modifySlugify).indexOf(
+        slugify(lichChieu?.price.toString() ?? "", modifySlugify).indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchMaPhim =
@@ -389,7 +467,7 @@ export default function MoviesManagement() {
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchMaRap =
-        slugify(lichChieu?.maRap.toString() ?? "", modifySlugify).indexOf(
+        slugify(lichChieu?.branch?.id.toString() ?? "", modifySlugify).indexOf(
           slugify(valueSearch, modifySlugify)
         ) !== -1;
       const matchMalichChieu =
@@ -414,15 +492,15 @@ export default function MoviesManagement() {
 
   const columns = [
     {
-      field: "maLichChieu",
-      headerName: "Mã lịch chiếu",
+      field: "id",
+      headerName: "ID",
       hide: true,
       width: 130,
     },
     { field: "logo", hide: true, width: 130 },
     {
       field: "tenHeThongRap",
-      headerName: "Hệ thống rạp",
+      headerName: "Logo",
       width: 130,
       renderCell: (params) => (
         <Tooltip title={params.row.tenHeThongRap}>
@@ -444,8 +522,8 @@ export default function MoviesManagement() {
     },
     {
       field: "tenCumRap",
-      headerName: "Tên Cụm Rạp",
-      width: 300,
+      headerName: "Branch",
+      width: 200,
       headerAlign: "center",
       align: "left",
       headerClassName: "custom-header",
@@ -453,26 +531,26 @@ export default function MoviesManagement() {
     },
     {
       field: "diaChi",
-      headerName: "Địa chỉ",
+      headerName: "Address",
       width: 400,
       headerAlign: "center",
       align: "left",
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
     },
-    {
-      field: "tenRap",
-      headerName: "Tên Rạp",
-      width: 200,
-      headerAlign: "center",
-      align: "center",
-      headerClassName: "custom-header",
-    },
-    { field: "maRap", headerName: "Mã rạp", hide: true, width: 130 },
-    { field: "maPhim", headerName: "Mã phim", hide: true, width: 130 },
+    // {
+    //   field: "tenCumRap",
+    //   headerName: "Tên Rạp",
+    //   width: 200,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   headerClassName: "custom-header",
+    // },
+    { field: "maRap", headerName: "Branch Id", hide: true, width: 130 },
+    { field: "maPhim", headerName: "Movie Id", hide: true, width: 130 },
     {
       field: "tenPhim",
-      headerName: "Tên phim",
+      headerName: "Movie",
       width: 250,
       headerAlign: "center",
       align: "left",
@@ -481,8 +559,8 @@ export default function MoviesManagement() {
     },
     {
       field: "ngayChieuGioChieu",
-      headerName: "Ngày chiếu giờ chiếu",
-      width: 200,
+      headerName: "Showtime",
+      width: 280,
       type: "dateTime",
       headerAlign: "center",
       align: "left",
@@ -490,7 +568,7 @@ export default function MoviesManagement() {
     },
     {
       field: "giaVe",
-      headerName: "Giá vé(vnđ)",
+      headerName: "Price(vnđ)",
       width: 130,
       type: "number",
       headerAlign: "center",
@@ -516,10 +594,10 @@ export default function MoviesManagement() {
 
   console.log("data: ", data);
   return (
-    <div style={{ height: "80vh", width: "100%" }}>
+    <div style={{ height: "70vh", width: "100%", backgroundColor:"white !important"}}>
       <div className={classes.backgroundImg}>
         <div className="row">
-          <div className="col-6 px-0 px-md-3">
+          <div className="col-3 px-0 px-md-3">
             <FormControl
               className={classes.search__item}
               focused={false}
@@ -543,7 +621,7 @@ export default function MoviesManagement() {
                     selected: classes["menu__item--selected"],
                   }}
                 >
-                  Chọn Phim
+                  Choose movie
                 </MenuItem>
                 {movieList2?.data?.map((phim) => (
                   <MenuItem
@@ -560,7 +638,7 @@ export default function MoviesManagement() {
               </Select>
             </FormControl>
           </div>
-          <div className="col-6 px-0 px-md-3">
+          <div className="col-3 px-0 px-md-3">
             <FormControl
               className={classes.search__item}
               focused={false}
@@ -573,7 +651,7 @@ export default function MoviesManagement() {
                 onChange={handleSelectHeThongRap}
                 value={data.setHeThongRap}
                 renderValue={(value) =>
-                  `${value ? value : "Chọn hệ thống rạp"}`
+                  `${value ? value : "Choose branch theater"}`
                 } // hiển thị giá trị đã chọn
                 displayEmpty
                 IconComponent={ExpandMoreIcon}
@@ -593,27 +671,27 @@ export default function MoviesManagement() {
                   {data.setPhim
                     ? `${
                         data.startRequest
-                          ? "Đang tìm hệ thống rạp"
-                          : "Không tìm thấy, vui lòng chọn phim khác"
+                          ? "Finding"
+                          : "Not found, please choose orther film"
                       }`
-                    : "Vui lòng chọn phim"}
+                    : "Not found"}
                 </MenuItem>
-                {data.heThongRapRender.map((item) => (
+                {data?.heThongRapRender?.data?.content?.map((item) => (
                   <MenuItem
                     value={item}
-                    key={item.maHeThongRap}
+                    key={item.id}
                     classes={{
                       root: classes.menu__item,
                       selected: classes["menu__item--selected"],
                     }}
                   >
-                    {item.tenHeThongRap}
+                    {item.name}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
           </div>
-          <div className="col-6 px-0 px-md-3">
+          {/* <div className="col-6 px-0 px-md-3">
             <FormControl
               className={classes.search__item}
               focused={false}
@@ -662,8 +740,8 @@ export default function MoviesManagement() {
                 ))}
               </Select>
             </FormControl>
-          </div>
-          <div className="col-6 px-0 px-md-3">
+          </div> */}
+          {/* <div className="col-6 px-0 px-md-3">
             <FormControl
               className={classes.search__item}
               focused={false}
@@ -706,8 +784,8 @@ export default function MoviesManagement() {
                 ))}
               </Select>
             </FormControl>
-          </div>
-          <div className="col-6 px-0 px-md-3">
+          </div> */}
+          <div className="col-3 px-0 px-md-3">
             <FormControl
               className={classes.search__item}
               focused={false}
@@ -719,7 +797,7 @@ export default function MoviesManagement() {
                     open={data.openCtr.ngayChieuGioChieu}
                     onClose={handleCloseNgayChieuGioChieu}
                     onOpen={handleOpenNgayChieuGioChieu}
-                    inputValue={selectedDate ? null : "Chọn ngày, giờ chiếu"} // khi chưa chọn thì "Chọn ngày, giờ chiếu" ghi đè lên value, khi đã chọn ngày thì return null để value={selectedDate} hiển thị ngày đã chọn
+                    inputValue={selectedDate ? null : "Choose date, time"} // khi chưa chọn thì "Chọn ngày, giờ chiếu" ghi đè lên value, khi đã chọn ngày thì return null để value={selectedDate} hiển thị ngày đã chọn
                     invalidDateMessage={
                       selectedDate ? "Invalid Date Format" : ""
                     } // bỏ qua lỗi nếu selectedDate = null
@@ -733,7 +811,7 @@ export default function MoviesManagement() {
               </MuiPickersUtilsProvider>
             </FormControl>
           </div>
-          <div className="col-6 px-0 px-md-3">
+          <div className="col-3 px-0 px-md-3">
             <FormControl
               className={classes.search__item}
               focused={false}
@@ -746,7 +824,7 @@ export default function MoviesManagement() {
                 onChange={handleSelectGiaVe}
                 value={data.setGiaVe}
                 renderValue={(value) =>
-                  `${value ? value + " vnđ" : "Chọn giá vé"}`
+                  `${value ? value + " vnđ" : "Choose ticket cost"}`
                 }
                 displayEmpty
                 IconComponent={ExpandMoreIcon}
@@ -781,7 +859,7 @@ export default function MoviesManagement() {
               }}
               onClick={handleTaoLichChieu}
             >
-              Tạo Lịch Chiếu
+              Create Schedule
             </Button>
           </div>
           <div className={`col-12 col-md-6 ${classes.itemCtro}`}>

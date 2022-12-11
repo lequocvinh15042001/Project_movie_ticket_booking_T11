@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import "./NewsComponent.scss";
-import { NavLink } from "react-router-dom";
+import { NavLink,useHistory } from "react-router-dom";
 import { qLyPhimService } from "../../services/QuanLyPhimServices";
 import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -18,9 +18,13 @@ export default function NewsComponent() {
         console.log(err.response.data);
       });
   }, []);
+  const history = useHistory();
+  const handlerSeeMore =() =>{
+    history.push("/review")
+  }
   var moment = require("moment");
   const renderTinTuc = () => {
-    return danhSachTinTuc.map((tinTuc, index) => {
+    return danhSachTinTuc.slice(0,3).map((tinTuc, index) => {
       return (
         <div className="news__items" key={index}>
           <div className="items__img">
@@ -41,7 +45,7 @@ export default function NewsComponent() {
                 )}
               </NavLink>
             </h2>
-            ;<p className="items__text-description">{tinTuc.description1}</p>
+            <p className="items__text-description">{tinTuc.description1}</p>
             <div className="items__text-author">
               {tinTuc.author}
               <span className="items__text-days">
@@ -55,7 +59,7 @@ export default function NewsComponent() {
   };
 
   const renderTinTucHot = () => {
-    return danhSachTinTuc?.reverse().map((tinTuc, index) => {
+    return danhSachTinTuc?.slice(0,3).reverse().map((tinTuc, index) => {
       return (
         <div className="news__items" key={index}>
           <div className="items__img">
@@ -83,23 +87,23 @@ export default function NewsComponent() {
         <div className="news__header">
           <div className="overlay">
             <div className="title__description">
-                Latest Movie News and Reviews
+                Latest News and Reviews
             </div>
           </div>
         </div>
         <div className="news__container container">
           <div className="news__content row">
-            <div className="news__left col-md-9 col-sm-12">
+            <div className="news__left col-md-8 col-sm-12">
               <h3 className="news__title">Reviews</h3>
               {renderTinTuc()}
             </div>
-            <div className="news__right col-md-3 col-sm-12">
+            <div className="news__right col-md-4 col-sm-12">
               <h3 className="news__title">Hot News</h3>
               {renderTinTucHot()}
             </div>
           </div>
           <div className="readMore">
-            <button className="btn__readmore">See More</button>
+            <button className="btn__readmore" type="button" onClick={handlerSeeMore}>See More</button>
           </div>
         </div>
         </div>

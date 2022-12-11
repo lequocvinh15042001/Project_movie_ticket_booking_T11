@@ -22,6 +22,7 @@ const CheckoutRoute = lazy(() => import("./guards/CheckoutRoute"));
 const UserProfileRoute = lazy(() => import("./guards/UserProfileRoute"));
 // page
 const Homepage = lazy(() => import("./pages/Homepage"));
+const ReviewAll = lazy(() => import("./pages/ReviewAll"));
 const BookAll = lazy(() => import("./pages/BookAll"));
 const MovieDetail = lazy(() => import("./pages/MovieDetail"));
 const UserProfile = lazy(() => import("./pages/UserProfile"));
@@ -49,9 +50,10 @@ function App() {
         <ModalTrailer />
         <Suspense fallback={<TriggerLoadingLazy />}> 
           <Switch>
-            <Route exact path={["/", "/phim/:maPhim", "/taikhoan", "/review/:maTin", "/schedule"]}>
+            <Route exact path={["/", "/phim/:maPhim", "/taikhoan", "/review/:maTin", "/schedule", "/review"]}>
               <MainLayout>
                 <Route exact path="/" component={Homepage} />
+                <Route exact path="/review" component={ReviewAll} />
                 <Route exact path="/schedule" component={BookAll} />
                 <Route exact path="/phim/:maPhim" component={MovieDetail} />
                 <Route exact path="/review/:maTin" component={DetailNews} />
@@ -105,7 +107,7 @@ function App() {
 
             <Route
               exact
-              path={["/staff/movies", "/staff/book", "/staff/reviews", "/staff/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu"]}
+              path={["/staff/movies", "/staff/book", "/staff/reviews", "/staff/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/staff/showtimes"]}
             >
               <StaffLayout>
                 <StaffRoute
@@ -120,8 +122,13 @@ function App() {
                 />
                 <StaffRoute
                   exact
+                  path="/staff/showtimes"
+                  component={CreateShowtime}
+                />
+                <StaffRoute
+                  exact
                   path="/staff/reviews"
-                  component={UsersManagement}//viet
+                  component={EventsManagement}//viet
                 />
                 <CheckoutRoute
                 exact
