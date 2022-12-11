@@ -93,7 +93,7 @@ export default function ListSeat() {
     const newListSeatSelected = newListSeat?.reduce(
       (newListSeatSelected, seat) => {
         if (seat.selected) {
-          return [...newListSeatSelected, seat.label];
+          return [...newListSeatSelected, seat.name];
         }
         return newListSeatSelected;
       },
@@ -158,7 +158,7 @@ export default function ListSeat() {
           <img
             src={thongTin?.data?.content[0]?.movie?.smallImageURl}
             alt="phim"
-            style={{ width: 50, height: 50 }}
+            style={{ width: 70, height: 100 }}
           />
           <div className={classes.text}>
             <TenCumRap tenCumRap={thongTin?.data?.content[0]?.branch?.name} />
@@ -191,14 +191,14 @@ export default function ListSeat() {
               >
                 {/* label A B C ... đầu mỗi row */}
                 {(i === 0 || i % 16 === 0) && (
-                  <p className={classes.label}>{seat.label.slice(0, 1)}</p>
+                  <p className={classes.label}>{seat.name.slice(0, 1)}</p>
                 )}
                 {/* số ghế thứ tự của ghế */}
                 {seat.selected && (
                   <p className={classes.seatName}>
-                    {Number(seat.label.slice(1)) < 10
-                      ? seat.label.slice(2)
-                      : seat.label.slice(1)}
+                    {Number(seat.name.slice(1)) < 10
+                      ? seat.name.slice(1)
+                      : seat.name.slice(1)}
                   </p>
                 )}
                 {/* label ghế đã có người đặt */}
@@ -215,13 +215,13 @@ export default function ListSeat() {
                   className={classes.seatIcon}
                 />
                 {/* đường viền chỉ vùng ghế */}
-                {seat.label === "E8" &&(
+                {/* {seat.name === "E8" &&(
                   <img
                     className={classes.viewCenter}
                     src="/img/bookticket/seatcenter.png"
                     alt="seatcenter"
                   />
-                )}
+                )} */}
                 {/* vùng bắt sự kiện click */}
                 <div
                   className={classes.areaClick}
@@ -239,10 +239,10 @@ export default function ListSeat() {
             <SeatIcon style={{ color: "#3e515d", fontSize: 27 }} />
             <p>Normal</p>
           </div>
-          <div>
+          {/* <div>
             <SeatIcon style={{ color: "#f7b500", fontSize: 27 }} />
             <p>VIP</p>
-          </div>
+          </div> */}
           <div>
             <SeatIcon style={{ color: "#44c020", fontSize: 27 }} />
             <p>Choosing</p>

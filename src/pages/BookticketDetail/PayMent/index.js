@@ -105,6 +105,8 @@ export default function PayMent() {
     }));
   };
 
+  console.log(listSeatSelected);
+  
   console.log(param.maPhim, param.maRap, param.ngayChieu, param.gioChieu, param.maPhong);
   useEffect(() => {
     // lấy thongTinPhim và danhSachGhe
