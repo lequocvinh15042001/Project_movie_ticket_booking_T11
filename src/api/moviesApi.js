@@ -2,7 +2,7 @@ import axiosClient from "./axiosClient";
 const moviesApi = {
   //lấy thông tin toàn bộ danh sách phim
   getDanhSachPhim: () => {
-    const path = "/movies/v1/showing";
+    const path = `/movies/v1/showing`;
     return axiosClient.get(path);
   },
 

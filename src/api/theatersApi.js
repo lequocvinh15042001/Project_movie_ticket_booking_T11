@@ -7,7 +7,7 @@ const theatersApi = {
   },
 
   getThongTinPhim: (maPhim) => {
-    const path = `/movies/details/${maPhim}`;
+    const path = `/movies/v1/details/${maPhim}`;
     console.log("vô api");
     return axiosClient.get(path);
   },
