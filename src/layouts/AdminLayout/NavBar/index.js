@@ -45,10 +45,15 @@ const items = [
     title: 'Events Managment'
   },
   {
+    href: '/admin/ticket',
+    icon: PostAddIcon,
+    title: 'Ticket Management'
+  },
+  {
     href: '/admin/showtimes',
     icon: PostAddIcon,
     title: 'Create Schedule'
-  },
+  }, 
 ];
 
 const useStyles = makeStyles(() => ({
@@ -103,12 +108,12 @@ export default function NavBar({ onMobileClose, openMobile }) {
       )
   },[])
 
-  useEffect(() => {
-    if (openMobile && onMobileClose) {
-      onMobileClose();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   if (openMobile && onMobileClose) {
+  //     onMobileClose();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [location.pathname]);
 
   const user = {
     avatar: FAKE_AVATAR,
@@ -183,18 +188,18 @@ export default function NavBar({ onMobileClose, openMobile }) {
   return (
     <>
       {/* đây là giao diện mobile */}
-      <Hidden lgUp>
+      {/* <Hidden lgUp>
         <Drawer
           anchor="left"
           classes={{ paper: classes.mobileDrawer }}
-          onClose={onMobileClose}
-          open={openMobile} // đóng mở tùy thuộc vào bạn click
+          // onClose={onMobileClose}
+          // open={openMobile} // đóng mở tùy thuộc vào bạn click
           variant="temporary" // kiểu temporary có một lớp phủ mờ hiện ra cho đến khi bạn chọn xong thì Drawer mới đóng lại
         >
           {content}
         </Drawer>
 
-      </Hidden>
+      </Hidden> */}
       {/* đây là giao diện desktop */}
       <Hidden mdDown>
         <Drawer
@@ -216,10 +221,10 @@ NavBar.propTypes = {
   openMobile: PropTypes.bool
 };
 
-NavBar.defaultProps = {
-  onMobileClose: () => { },
-  openMobile: false
-};
+// NavBar.defaultProps = {
+//   onMobileClose: () => { },
+//   openMobile: false
+// };
 
 // export default NavBar;
 

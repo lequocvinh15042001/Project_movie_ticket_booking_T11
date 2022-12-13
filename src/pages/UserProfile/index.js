@@ -29,6 +29,7 @@ import {
 import { getComment } from "../../reducers/actions/MovieDetail";
 import usersApi from "../../api/usersApi";
 import { getAllTicket } from "../../reducers/actions/Ticket";
+import formatDate from "../../utilities/formatDate";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -115,7 +116,7 @@ export default function Index() {
   const movieList = useSelector((state) => state.movieReducer.movieList);
 
 
-  console.log(ticketList);
+  console.log("Vé đã đăt",ticketList);
 
   const [dataShort, setdataShort] = useState({
     ticket: 0,
@@ -540,6 +541,7 @@ export default function Index() {
                     <th scope="col">Seat</th>
                     {/* <th scope="col">Cost(vnđ)</th> */}
                     <th scope="col">Total(vnđ)</th>
+                    <th scope="col">QR Code</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -568,6 +570,15 @@ export default function Index() {
                           {new Intl.NumberFormat("it-IT", {
                             style: "decimal",
                           }).format(sticket?.schedule?.price)}
+                        </td>
+                        <td>
+                          <img
+                          // src={sticket?.qrImageURL}
+                          style={{width:50, height:50}}
+                          src="https://www.1check.vn/qrcodegen/qr.png"
+                          alt="QR code"
+                          >
+                          </img>
                         </td>
                         {/* <td>
                           {new Intl.NumberFormat("it-IT", {

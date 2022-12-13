@@ -76,7 +76,7 @@ const GridCellExpand = function GridCellExpand(props) {
             <Fade {...TransitionProps} timeout={350}>
               <Paper
                 elevation={1}
-                style={{ minHeight: wrapper.current.offsetHeight - 3, backgroundColor: "#fff" }}
+                style={{ minHeight: wrapper.current.offsetHeight - 3, backgroundColor: "#00fff3" }}
               >
                 <Typography variant="body2" style={{ padding: 8 }}>
                   {value}

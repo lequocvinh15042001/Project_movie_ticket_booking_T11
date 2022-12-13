@@ -105,6 +105,8 @@ export default function PayMent() {
     }));
   };
 
+  console.log(listSeatSelected);
+  
   console.log(param.maPhim, param.maRap, param.ngayChieu, param.gioChieu, param.maPhong);
   useEffect(() => {
     // lấy thongTinPhim và danhSachGhe
@@ -273,10 +275,30 @@ export default function PayMent() {
         <div className={classes.payMentItem}>
           <p className={classes.tenPhim}>{thongTin?.data?.content[0]?.movie?.name}</p>
           <p>{thongTin?.data?.content[0]?.branch.name}</p>
-          <p>Room: {`${thongTin?.data?.content[0]?.room?.name} - Date: ${
-            thongTin?.data?.content[0]?.startDate
-          } - ${thongTin?.data?.content[0]?.startTime} - ${thongTin?.data?.content[0]?.movie?.duration} Minutes 
-          - ${thongTin?.data?.content[0]?.movie?.categories} - Language: ${thongTin?.data?.content[0]?.movie?.language}`}</p>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <p>Room:</p>
+            <span>{thongTin?.data?.content[0]?.room?.name}</span>
+          </div>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <p>Date:</p>
+            <span>{thongTin?.data?.content[0]?.startDate}</span>
+          </div>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <p>Time:</p>
+            <span>{thongTin?.data?.content[0]?.startTime}</span>
+          </div>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <p>Duration:</p>
+            <span>{thongTin?.data?.content[0]?.movie?.duration} Minutes</span>
+          </div>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <p>Category: </p>
+            <span>{thongTin?.data?.content[0]?.movie?.categories}</span>
+          </div>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <p>Language: </p>
+            <span>{thongTin?.data?.content[0]?.movie?.language}</span>
+          </div>
         </div>
 
         {/* ghế đã chọn */}

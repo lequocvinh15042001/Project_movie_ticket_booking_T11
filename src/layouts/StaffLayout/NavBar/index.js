@@ -35,6 +35,11 @@ const items = [
     title: 'Reviews Managment'
   },
   {
+    href: '/staff/ticket',
+    icon: PostAddIcon,
+    title: 'Ticket Managment'
+  },
+  {
     href: '/staff/book',
     icon: PostAddIcon,
     title: 'Book for User'

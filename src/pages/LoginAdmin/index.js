@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import { logoLogin } from '../../assets/LeafSVG'
+// import { logoLogin } from '../../assets/LeafSVG'
 import { login, resetErrorLoginRegister } from "../../reducers/actions/Auth";
 import { LOADING_BACKTO_HOME } from "../../reducers/constants/Lazy";
 

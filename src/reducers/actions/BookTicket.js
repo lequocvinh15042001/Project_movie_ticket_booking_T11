@@ -60,6 +60,7 @@ export const bookTicket = (data) => {
 
 export const createShowtime = (data) => {
   return (dispatch) => {
+    console.log("Truyền vô thêm showtime: ", data);
     dispatch({
       type: CREATE_SHOWTIME_REQUEST
     })

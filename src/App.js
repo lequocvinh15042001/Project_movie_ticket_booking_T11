@@ -34,6 +34,7 @@ const EventsManagement = lazy(() => import("./pages/EventsManagement"));
 const MoviesManagement = lazy(() => import("./pages/MoviesManagement"));
 const BookByStaff = lazy(() => import("./pages/BookByStaff"));
 const CreateShowtime = lazy(() => import("./pages/CreateShowtime"));
+const TicketManagement = lazy(() => import("./pages/TicketManagement"));
 const Login = lazy(() => import("./pages/Login"));
 const LoginAdmin = lazy(() => import("./pages/LoginAdmin"));
 const LoginStaff = lazy(() => import("./pages/LoginStaff"));
@@ -79,7 +80,7 @@ function App() {
 
             <Route
               exact
-              path={["/admin/users", "/admin/movies", "/admin/showtimes", "/admin/events"]}
+              path={["/admin/users", "/admin/movies", "/admin/showtimes", "/admin/events", "/admin/ticket"]}
             >
               <AdminLayout>
                 <AdminRoute
@@ -102,12 +103,17 @@ function App() {
                   path="/admin/events"
                   component={EventsManagement}
                 />
+                <AdminRoute
+                  exact
+                  path="/admin/ticket"
+                  component={TicketManagement}
+                />
               </AdminLayout>
             </Route>
 
             <Route
               exact
-              path={["/staff/movies", "/staff/book", "/staff/reviews", "/staff/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/staff/showtimes"]}
+              path={["/staff/movies", "/staff/book", "/staff/reviews", "/staff/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/staff/showtimes", "/staff/ticket"]}
             >
               <StaffLayout>
                 <StaffRoute
@@ -118,7 +124,7 @@ function App() {
                 <StaffRoute
                   exact
                   path="/staff/book"
-                  component={BookByStaff}//viet
+                  component={BookByStaff}
                 />
                 <StaffRoute
                   exact
@@ -129,6 +135,11 @@ function App() {
                   exact
                   path="/staff/reviews"
                   component={EventsManagement}//viet
+                />
+                <StaffRoute
+                  exact
+                  path="/staff/ticket"
+                  component={TicketManagement}
                 />
                 <CheckoutRoute
                 exact

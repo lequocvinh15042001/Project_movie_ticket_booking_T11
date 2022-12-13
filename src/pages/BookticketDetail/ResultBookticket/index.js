@@ -47,7 +47,7 @@ export default function SuccessBooking() {
           <p className={classes.tenPhim}>
             {thongTin?.data?.content[0]?.movie?.name}
           </p>
-          <p className={classes.text__first}><span>{thongTin?.data?.content[0]?.branch?.name.split("-")[0]}</span><span className={classes.text__second}>-{thongTin?.data?.content[0]?.branch?.phoneNo.split("-")[1]}</span></p>
+          <p className={classes.text__first}><span>{thongTin?.data?.content[0]?.branch?.name.split("-")[0]}</span><span className={classes.text__second}> - {thongTin?.data?.content[0]?.branch?.phoneNo}</span></p>
           <p className={classes.diaChi} >{thongTin?.data?.content[0]?.branch?.address}</p>
           <table className={classes.table}>
             <tbody>

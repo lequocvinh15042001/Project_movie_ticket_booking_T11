@@ -26,6 +26,8 @@ const useStyles = makeStyles({
   },
   tenPhim: {
     fontSize: 19,
+    fontWeight: "700",
+    color:"red",
     ...underLineDashed
   },
   text__first: props => ({
@@ -37,11 +39,13 @@ const useStyles = makeStyles({
     fontWeight: "500",
   },
   diaChi: {
-    color: '#9B9B9B'
+    color: '#9B9B9B',
+    ...underLineDashed
   },
   table: {
     marginTop: 10,
     width: "100%",
+    ...underLineDashed
   },
   infoResult_label: {
     margin: "30px 0px 10px",
