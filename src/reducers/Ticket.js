@@ -6,7 +6,10 @@ import {
     loadingTicketList: false,
     errorTicketList: null,
     ticketList: [],
-  
+
+    allTicketList: [],
+    loadingAllTicketList: false,
+    errorAllTicketList: null,
   }
   
   const ticketReducer = (state = initialState, action) => {
@@ -19,7 +22,7 @@ import {
       case GET_TICKET_SUCCESS: {
         return {
           ...state,
-          ticketList: action.payload?.data,
+          ticketList: action.payload.data,
           loadingTicketList: false
         }
       }
@@ -39,7 +42,7 @@ import {
       case GET_ALLTICKET_SUCCESS: {
         return {
           ...state,
-          allTicketList: action.payload?.data,
+          allTicketList: action.payload.data,
           loadingAllTicketList: false
         }
       }

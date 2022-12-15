@@ -183,7 +183,7 @@ export default function CreateShowTime() {
   // }, [theaterList2]);
 
   useEffect(() => {
-    const showTimeList = scheduleList2?.data?.content?.reduce((collect1, lichChieu) => {
+    const showTimeList = scheduleList2?.data?.reduce((collect1, lichChieu) => {
         return [
           ...collect1,
           {
@@ -210,11 +210,11 @@ export default function CreateShowTime() {
 
   // console.log(lichChieuDisplay);
 
-  // useEffect(() => {
-  //   if (data.setPhim && data.ngayChieuGioChieu && data.maRap && data.setGiaVe)
-  //     setIsReadyTaoLichChieu(true);
-  //   else setIsReadyTaoLichChieu(false);
-  // }, [data?.setPhim, data?.ngayChieuGioChieu, data?.maRap, data?.setGiaVe]);
+  useEffect(() => {
+    if (data.setPhim && data.ngayChieuGioChieu && data.maRap && data.setGiaVe)
+      setIsReadyTaoLichChieu(true);
+    else setIsReadyTaoLichChieu(false);
+  }, [data?.setPhim, data?.ngayChieuGioChieu, data?.maRap, data?.setGiaVe]);
 
   useEffect(() => {
     if (successCreateShowtime) {
@@ -624,6 +624,10 @@ export default function CreateShowTime() {
   };
   const modifySlugify = { lower: true, locale: "vi" };
 
+  const handlerError = () =>{
+    console.log("Vô handler error");
+  }
+
   console.log("data: ", data);
   return (
     <div style={{ height: "65vh", width: "100%"}}>
@@ -653,7 +657,7 @@ export default function CreateShowTime() {
                     selected: classes["menu__item--selected"],
                   }}
                 >
-                  Choose movie
+                  Phim
                 </MenuItem>
                 {movieList2?.data?.map((phim) => (
                   <MenuItem
@@ -683,7 +687,7 @@ export default function CreateShowTime() {
                 onChange={handleSelectHeThongRap}
                 value={data.setHeThongRap}
                 renderValue={(value) =>
-                  `${value ? value : "Choose branch theater"}`
+                  `${value ? value : "Rạp"}`
                 } // hiển thị giá trị đã chọn
                 displayEmpty
                 IconComponent={ExpandMoreIcon}
@@ -703,10 +707,10 @@ export default function CreateShowTime() {
                   {data.setPhim
                     ? `${
                         data.startRequest
-                          ? "Finding"
-                          : "Not found, please choose orther film"
+                          ? "Đang tìm"
+                          : "Không tìm thấy, chọn lại phim!"
                       }`
-                    : "Not found"}
+                    : "Không tìm thấy"}
                 </MenuItem>
                 {data?.heThongRapRender?.data?.content?.map((item) => (
                   <MenuItem
@@ -817,7 +821,7 @@ export default function CreateShowTime() {
               </Select>
             </FormControl>
           </div> */}
-          <div className="col-3 px-0 px-md-3">
+          <div className="col-2 px-0 px-md-3">
             <FormControl
               className={classes.search__item}
               focused={false}
@@ -829,7 +833,7 @@ export default function CreateShowTime() {
                     open={data?.openCtr?.ngayChieuGioChieu}
                     onClose={handleCloseNgayChieuGioChieu}
                     onOpen={handleOpenNgayChieuGioChieu}
-                    inputValue={selectedDate ? null : "Choose date, time"} // khi chưa chọn thì "Chọn ngày, giờ chiếu" ghi đè lên value, khi đã chọn ngày thì return null để value={selectedDate} hiển thị ngày đã chọn
+                    inputValue={selectedDate ? null : "Suất"} // khi chưa chọn thì "Chọn ngày, giờ chiếu" ghi đè lên value, khi đã chọn ngày thì return null để value={selectedDate} hiển thị ngày đã chọn
                     invalidDateMessage={
                       selectedDate ? "Invalid Date Format" : ""
                     } // bỏ qua lỗi nếu selectedDate = null
@@ -856,7 +860,7 @@ export default function CreateShowTime() {
                 onChange={handleSelectGiaVe}
                 value={data.setGiaVe}
                 renderValue={(value) =>
-                  `${value ? value + " vnđ" : "Choose ticket cost"}`
+                  `${value ? value + " vnđ" : "Giá"}`
                 }
                 displayEmpty
                 IconComponent={ExpandMoreIcon}
@@ -877,7 +881,7 @@ export default function CreateShowTime() {
               </Select>
             </FormControl>
           </div>
-          <div className="col-1 px-0 px-md-3">
+          <div className="col-2 px-0 px-md-3">
             <FormControl
               className={classes.search__item}
               focused={false}
@@ -890,7 +894,7 @@ export default function CreateShowTime() {
                 onChange={handleSelectPhong}
                 value={data.setPhong}
                 renderValue={(value) =>
-                  `${value ? value + " vnđ" : "Choose ticket cost"}`
+                  `${value ? "Phòng " + value : "Phòng"}`
                 }
                 displayEmpty
                 IconComponent={ExpandMoreIcon}
@@ -925,7 +929,7 @@ export default function CreateShowTime() {
               }}
               onClick={handleTaoLichChieu}
             >
-              Create Schedule
+              Tạo lịch
             </Button>
           </div>
           <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
@@ -945,7 +949,9 @@ export default function CreateShowTime() {
           </div>
         </div>
       </div>
-      {/* <DataGrid
+      {
+        lichChieuDisplay === undefined ? handlerError():
+        <DataGrid
         className={classes.rootDataGrid}
         rows={onFilter()}
         columns={columns}
@@ -957,7 +963,9 @@ export default function CreateShowTime() {
           Toolbar: GridToolbar,
         }}
         sortModel={[{ field: "tenCumRap", sort: "asc" }]}
-      /> */}
+      />
+      }
+      
     </div>
   );
 }

@@ -208,13 +208,13 @@ export default function Index() {
     //   .string()
     //   .required("*Số điện thoại không được bỏ trống !")
     //   .matches(phoneRegExp, "Số điện thoại không hợp lệ!"),
-    name: yup.string().required("*Name not be empty !"),
+    name: yup.string().required("*Không được bỏ trống tên !"),
   });
 
   const updateUserSchemaPassword = yup.object().shape({
     // username: yup.string().required("*Username not be empty !"),
-    oldpassword: yup.string().required("*Password not be empty !"),
-    newpassword: yup.string().required("*Password not be empty !"),
+    oldpassword: yup.string().required("*Mật khẩu không được bỏ trống !"),
+    newpassword: yup.string().required("*Mật khẩu không được bỏ trống !"),
     // email: yup
     //   .string()
     //   .required("*Email not be empty !")
@@ -227,7 +227,7 @@ export default function Index() {
   });
 
   const handleSubmit = (user) => {
-    console.log("Thông tin cập nhật: ", user);
+    // console.log("Thông tin cập nhật: ", user);
     if (loadingUpdateUser) {
       console.log("Thoát");
       return;
@@ -282,6 +282,9 @@ export default function Index() {
     })
   }, []);
 
+  const handlerError = () => {
+    return;
+  }
   return (
     <div className="bootstrap snippet mb-5 mx-4" style={{"backgroundColor":"black"}}>
       <br />
@@ -305,7 +308,7 @@ export default function Index() {
                 onClick={() => history.push("/admin/movies")}
               >
                 <NavigationIcon className={classes.extendedIcon} />
-                Go to Admin Page
+                Đến trang Admin
               </Fab>
             </div>
           )}
@@ -317,7 +320,7 @@ export default function Index() {
                 onClick={() => history.push("/staff/movies")}
               >
                 <NavigationIcon className={classes.extendedIcon} />
-                Go to Staff Page
+                Đến trang nhân viên
               </Fab>
             </div>
           )}
@@ -358,7 +361,7 @@ export default function Index() {
                   root: classes.tabButton,
                   selected: classes.tabSelected,
                 }}
-                label="Profile"
+                label="Hồ sơ"
               />
               <Tab
                 disableRipple
@@ -366,7 +369,7 @@ export default function Index() {
                   root: classes.tabButton,
                   selected: classes.tabSelected,
                 }}
-                label="History"
+                label="Lịch sử đặc vé"
               />
               <Tab
                 disableRipple
@@ -374,7 +377,7 @@ export default function Index() {
                   root: classes.tabButton,
                   selected: classes.tabSelected,
                 }}
-                label="ChangePassword"
+                label="Đổi mật khẩu"
               />
             </Tabs>
           </AppBar>
@@ -413,7 +416,7 @@ export default function Index() {
                   </div> */}
 
                   <div className="form-group" style={{"color":"white"}}>
-                    <label>Account&nbsp;</label>
+                    <label>Tài khoản&nbsp;</label>
                     <ErrorMessage
                       name="username"
                       render={(msg) => (
@@ -454,7 +457,7 @@ export default function Index() {
                     </div>
                   </div> */}
                   <div className="form-group"  style={{"color":"white"}}>
-                    <label>Full name&nbsp;</label>
+                    <label>Tên&nbsp;</label>
                     <ErrorMessage
                       name="name"
                       render={(msg) => (
@@ -508,7 +511,7 @@ export default function Index() {
                       className="btn btn-danger"
                       disable={loadingUpdateUser.toString()}
                     >
-                      Update
+                      Cập nhật
                     </button>
                     {errorUpdateUser && (
                       <div className="alert alert-danger">
@@ -534,18 +537,19 @@ export default function Index() {
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Film</th>
-                    <th scope="col">Duration</th>
-                    <th scope="col">Date Booking</th>
-                    <th scope="col">Branch Theater</th>
-                    <th scope="col">Code Ticket</th>
-                    <th scope="col">Seat</th>
+                    <th scope="col">Thời lượng</th>
+                    <th scope="col">Ngày đặt</th>
+                    <th scope="col">Rạp</th>
+                    <th scope="col">Mã vé</th>
+                    <th scope="col">Ghế</th>
                     {/* <th scope="col">Cost(vnđ)</th> */}
-                    <th scope="col">Total(vnđ)</th>
+                    <th scope="col">VNĐ</th>
                     <th scope="col">QR Code</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {ticketList?.map((sticket, i) => (
+                  {ticketList === [] ? handlerError() : 
+                  ticketList?.data?.map((sticket, i) => (
                       <tr key={sticket.id} className={classes.td}>
                         <th scope="row">{i + 1}</th>
                         <td>{sticket?.schedule?.movie?.name}</td>
@@ -588,6 +592,7 @@ export default function Index() {
                       </tr>
                     ))
                     .reverse()}
+                  
                 </tbody>
               </table>
             </div>
@@ -613,7 +618,7 @@ export default function Index() {
               {(props) => (
                 <Form className={`${classes.field}`}>
                   <div className={`form-group ${classes.password}`}  style={{"color":"white"}}>
-                    <label>Old Password&nbsp;</label>
+                    <label>Mật khẩu cũ&nbsp;</label>
                     <ErrorMessage
                       name="oldpassword"
                       render={(msg) => (
@@ -639,7 +644,7 @@ export default function Index() {
                     </div>
                   </div>
                   <div className={`form-group ${classes.password}`}  style={{"color":"white"}}>
-                    <label>New Password&nbsp;</label>
+                    <label>Mật khẩu mới&nbsp;</label>
                     <ErrorMessage
                       name="newpassword"
                       render={(msg) => (
@@ -671,7 +676,7 @@ export default function Index() {
                       disable={loadingUpdateUser.toString()}
                       // onClick={(e) => {handleChangePassword(value.oldpassword, value.newpassword)}}
                     >
-                      Change
+                      Đổi
                     </button>
                     {errorUpdateUser && (
                       <div className="alert alert-danger">

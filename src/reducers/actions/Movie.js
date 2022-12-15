@@ -112,7 +112,7 @@ export const getAllScheduleListManagement = () => {
       type: GET_SCHEDULE_LIST_REQUEST2,
     });
     theatersApi
-      .getThongTinLichChieuLe()
+      .getTatCaLichChieuAdmin()
       .then((result) => {
         console.log("Lấy lch: ", result);
         dispatch({

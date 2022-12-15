@@ -2,13 +2,13 @@ import axiosClient from "./axiosClient";
 const moviesApi = {
   //lấy thông tin toàn bộ danh sách phim
   getDanhSachPhim: () => {
-    const path = `/movies/v1/showing`;
+    const path = `/movies/showing`;
     return axiosClient.get(path);
   },
 
   //lấy thông tin của 1 phim, bao gồm 1 mảng lichChieu<obj> không phân biệt cụm rạp
   getThongTinPhim: (maPhim) => {
-    const path = `/movies/v1/details/${maPhim}`;
+    const path = `/movies/details/${maPhim}`;
     return axiosClient.get(path);
   },
 
@@ -26,7 +26,7 @@ const moviesApi = {
   // },
 
   postThemPhimUpload: (movie) => {
-    const path = `/movies/v1/addNew`;
+    const path = `/movies/addNew`;
     console.log(movie);
     //trong obj movie có key hinhAnh là file nên phải chuyển sang formData
     // const formData = new FormData();
@@ -40,7 +40,7 @@ const moviesApi = {
 
   postCapNhatPhimUpload: (movie) => {
     console.log("update phim upload: ", movie);
-    const path = `/movies/v1/update`;
+    const path = `/movies/update`;
     // const formData = new FormData();
     // for (const key in movie) {
     //   formData.append(key, movie[key]);
@@ -51,12 +51,12 @@ const moviesApi = {
 
   postCapNhatPhim: (movie) => {
     console.log("update phim: ", movie);
-    const path = `/movies/v1/update`;
+    const path = `/movies/update`;
     return axiosClient.put(path, movie);
   },
 
   deleteMovie: (maPhim) => {
-    const path = `/movies/v1/${maPhim}`;
+    const path = `/movies/${maPhim}`;
     return axiosClient.delete(path);
   },
 };

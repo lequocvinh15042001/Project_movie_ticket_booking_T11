@@ -104,7 +104,7 @@ export default function SimpleTabs() {
   }
 
   return (
-    <div style={{ paddingTop: "80px" }} id="lichchieu">
+    <div style={{ paddingTop: "70px" }} id="lichchieu">
       <AppBar className={classes.appBar} position="static">
         <Tabs
           classes={{
@@ -118,12 +118,12 @@ export default function SimpleTabs() {
           <Tab
             disableRipple
             className={`${classes.tabButton} ${classes.tabDangChieu}`}
-            label="Showing!"
+            label="Đang chiếu"
           />
           <Tab
             disableRipple
             className={`${classes.tabButton} ${classes.tabSapChieu}`}
-            label="Will Show!"
+            label="Sắp chiếu"
           />
         </Tabs>
       </AppBar>

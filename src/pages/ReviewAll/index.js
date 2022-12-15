@@ -4,11 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getMovieList } from "../../reducers/actions/Movie";
 import { getTheaters } from "../../reducers/actions/Theater";
-import News from "./News";
-import Carousel from "./Carousel";
-import HomeApp from "./HomeApp";
-import Theaters from "./Theaters";
-import Showtime from "./Showtime";
 import NewsComponentMore from "../../components/NewsComponentMore/NewsComponent";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

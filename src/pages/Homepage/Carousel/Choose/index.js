@@ -406,7 +406,7 @@ export default function Choose() {
             return (
               <TextField
                 {...params}
-                label="Find movie..."
+                label="Tìm phim..."
                 variant="standard"
                 className={classes.textField}
               />
@@ -437,7 +437,7 @@ export default function Choose() {
           onClose={handleClosePhim}
           onOpen={handleOpenPhim}
           blurOnSelect
-          noOptionsText="Not found!"
+          noOptionsText="Không tìm thấy!"
         />
       </FormControl>
 {/* rạp-------- */}
@@ -451,7 +451,7 @@ export default function Choose() {
           onOpen={handleOpenRap}
           onChange={handleSelectRap}
           value={data?.setRap} // tenCumRap
-          renderValue={(value) => `${value ? value : "Branch"}`} // hiển thị giá trị đã chọn
+          renderValue={(value) => `${value ? value : "Chi nhánh rạp"}`} // hiển thị giá trị đã chọn
           displayEmpty
           IconComponent={ExpandMoreIcon}
           MenuProps={menuProps}
@@ -466,10 +466,10 @@ export default function Choose() {
                   data?.startRequest
                     ? data?.errorCallApi
                       ? data?.errorCallApi
-                      : "Finding theater!"
-                    : "No schedule, please choose orther film!"
+                      : "Đang tìm rạp!"
+                    : "Không có rạp, vui lòng chọn lại phim!"
                 }`
-              : "Please choose film!"}
+              : "Vui lòng chọn phim!"}
           </MenuItem>
           {data?.rapRender?.map((item) => (
             <MenuItem
@@ -496,7 +496,7 @@ export default function Choose() {
           onOpen={handleOpenNgayXem}
           onChange={handleSelectNgayXem}
           value={data.setNgayXem} // ngayChieu
-          renderValue={(value) => `${value ? value : "ShowDate"}`}
+          renderValue={(value) => `${value ? value : "Ngày chiếu"}`}
           displayEmpty
           IconComponent={ExpandMoreIcon}
           MenuProps={menuProps}
@@ -508,7 +508,7 @@ export default function Choose() {
             }}
             classes={{ root: classes.menu__item }}
           >
-            No Schedule!
+            Không có lịch chiếu!
           </MenuItem>
           {data.ngayChieuRender.map((ngayChieu) => (
             <MenuItem
@@ -537,7 +537,7 @@ export default function Choose() {
           onOpen={handleOpenSuatChieu}
           onChange={handleSelectSuatChieu}
           value={data.setSuatChieu} // suatChieu
-          renderValue={(value) => `${value ? value : "Showtime"}`}
+          renderValue={(value) => `${value ? value : "Suất chiếu"}`}
           displayEmpty
           IconComponent={ExpandMoreIcon}
           MenuProps={menuProps}
@@ -549,7 +549,7 @@ export default function Choose() {
             }}
             classes={{ root: classes.menu__item }}
           >
-            No Scheudle!
+            Không có lịch chiếu!
           </MenuItem>
           {data.suatChieuRender.map((suatChieu) => (
             <MenuItem
@@ -580,7 +580,7 @@ export default function Choose() {
             )
           }
         >
-          Book Now
+          Đặt ngay
         </Button>
       </FormControl>
     </div>

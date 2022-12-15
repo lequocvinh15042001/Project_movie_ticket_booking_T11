@@ -39,7 +39,7 @@ export default function Desktop({ arrayData, value }) {
     <div className={classes.container}>
       <Slider {...settings}>
         {value.value === 0 ?
-          <Theaters />: <LichChieuDesktop />
+          <Theaters /> : <LichChieuDesktop />
         }
       </Slider>
     </div >

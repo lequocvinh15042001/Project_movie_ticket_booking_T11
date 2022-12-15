@@ -19,7 +19,7 @@ const bookingApi = {
   },
 
   postTaoLichChieu: ({branchId, movieId, price, roomId, startDate, startTime}) => {
-    const path = `/schedule/v1/add?movieId=${movieId}&branchId=${branchId}&roomId=${roomId}&startDate=${startDate}&startTime=${startTime}&price=${price}`;
+    const path = `/schedule/add?movieId=${movieId}&branchId=${branchId}&roomId=${roomId}&startDate=${startDate}&startTime=${startTime}&price=${price}`;
     return axiosClient.post(path);
   },
 };

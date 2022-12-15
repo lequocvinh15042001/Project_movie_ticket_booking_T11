@@ -29,9 +29,9 @@ import { getTheaters } from '../../../reducers/actions/Theater';
 import Logo from "./../../../assets/LeafSVG";
 
 const headMenu = [
-    { nameLink: 'Schedule Showing', id: "lichchieu" }, 
-    { nameLink: 'Branch Theaters', id: "cumrap" }, 
-    { nameLink: 'News and Events', id: "tintuc" }, 
+    { nameLink: 'Lịch chiếu phim', id: "lichchieu" }, 
+    // { nameLink: 'Branch Theaters', id: "cumrap" }, 
+    { nameLink: 'Review và tin tức, khuyến mãi', id: "tintuc" }, 
     // { nameLink: 'App', id: "ungdung" }
   ]
 
@@ -132,7 +132,7 @@ export default function Header() {
             <Logo fillColor={"rgb(250, 82, 56)"}/>
             {" "}
             {/* <img src="/img/headTixLogo.png" alt="logo" style={{ height: 50 }} /> */}
-            <span style={{ height: 50, color:"rgb(250, 82, 56)", fontWeight:"800" }}>GOLDEN NEW TICKET</span>
+            <span style={{ height: 50, color:"rgb(250, 82, 56)", fontWeight:"800" }}>GOLDENNEW TICKET</span>
           </div>
           <div className={classes.linkTobody}>
             <Grid
@@ -141,7 +141,7 @@ export default function Header() {
               justify="space-between"
               alignItems="center"
             >
-              <span className={classes.link} onClick={() => handleClickLink2()}>Book Ticket</span>
+              <span className={classes.link} onClick={() => handleClickLink2()}>Đặt vé</span>
               {headMenu.map((link) => (
                 <span key={link.id} className={classes.link} onClick={() => handleClickLink(link.id)}>{link.nameLink}</span>
               ))}
@@ -156,10 +156,10 @@ export default function Header() {
                   <ListItemIcon classes={{ root: classes.icon }}>
                     <Avatar alt="avatar" className={classes.avatar} src={FAKE_AVATAR} />
                   </ListItemIcon>
-                  <ListItemText primary={currentUser?.hoTen} />
+                  <ListItemText primary={currentUser?.username} />
                 </ListItem>
                 <ListItem button classes={{ root: classes.itemAuth }} onClick={handleLogout}>
-                  <ListItemText primary="Log Out" />
+                  <ListItemText primary="Đăng xuất" />
                 </ListItem>
               </List>
               :
@@ -168,10 +168,10 @@ export default function Header() {
                   <ListItemIcon classes={{ root: classes.icon }}>
                     <AccountCircleIcon fontSize="large" />
                   </ListItemIcon>
-                  <ListItemText primary="Login" />
+                  <ListItemText primary="Đăng nhập" />
                 </ListItem>
                 <ListItem button classes={{ root: classes.itemAuth }} onClick={handleRegister}>
-                  <ListItemText primary="Register" />
+                  <ListItemText primary="Đăng ký" />
                 </ListItem>
               </List>
             }
@@ -209,14 +209,14 @@ export default function Header() {
               <ListItemIcon classes={{ root: classes.icon }}>
                 <Avatar alt="avatar" className={classes.avatar} src={FAKE_AVATAR} />
               </ListItemIcon>
-              <ListItemText className={classes.username} primary={currentUser?.name} />
+              <ListItemText className={classes.username} primary={currentUser?.username} />
             </ListItem>
             :
             <ListItem button classes={{ root: classes.listItem }} onClick={handleLogin}>
               <ListItemIcon classes={{ root: classes.icon }}>
                 <AccountCircleIcon fontSize="large" />
               </ListItemIcon>
-              <span className={classes.link} style={{ fontWeight: 500 }}>Login</span>
+              <span className={classes.link} style={{ fontWeight: 500 }}>Đăng nhập</span>
             </ListItem>
           }
           <IconButton classes={{ root: classes.listItem }} onClick={handleDrawerClose}>
@@ -229,9 +229,9 @@ export default function Header() {
           ))}
 
           {currentUser ?
-            <span className={classes.itemMenu} onClick={handleLogout}>Logout</span>
+            <span className={classes.itemMenu} onClick={handleLogout}>Đăng xuất</span>
             :
-            <span className={classes.itemMenu} onClick={handleRegister}>Register</span>
+            <span className={classes.itemMenu} onClick={handleRegister}>Đăng ký</span>
           }
         </List>
       </Drawer>
