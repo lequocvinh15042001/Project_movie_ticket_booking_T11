@@ -7,7 +7,7 @@ const theatersApi = {
   },
 
   getThongTinPhim: (maPhim) => {
-    const path = `/movies/v1/details/${maPhim}`;
+    const path = `/movies/details/${maPhim}`;
     console.log("vô api");
     return axiosClient.get(path);
   },
@@ -19,12 +19,17 @@ const theatersApi = {
   },
 
   postThemLichChieu: (schedule) => {
-    const path = "/schedule/v1/add";
+    const path = "/schedule/add";
     return axiosClient.post(path, schedule);
   },
 
   getThongTinLichChieuLe: () => {
     const path = "/schedule/getAll?page=0&size=20";
+    return axiosClient.get(path);
+  },
+
+  getTatCaLichChieuAdmin: () => {
+    const path = "/schedule";
     return axiosClient.get(path);
   },
 

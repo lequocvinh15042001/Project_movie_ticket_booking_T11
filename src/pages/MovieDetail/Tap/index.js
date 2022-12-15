@@ -281,18 +281,18 @@ export default function CenteredTabs({
           {(!location.state?.comingMovie ? true : "") && (
             <Tab
               disableRipple
-              label="Schedule"
+              label="Lịch chiếu"
               classes={{ selected: classes.selectedTap, root: classes.tapRoot }}
             />
           )}
           <Tab
             disableRipple
-            label="Information"
+            label="Thông tin"
             classes={{ selected: classes.selectedTap, root: classes.tapRoot }}
           />
           <Tab
             disableRipple
-            label="Rating"
+            label="Đánh giá"
             classes={{ selected: classes.selectedTap, root: classes.tapRoot }}
           />
         </Tabs>
@@ -323,14 +323,14 @@ export default function CenteredTabs({
             <div className="col-sm-6 col-xs-12">
               <div className="row mb-2">
                 <p className={`float-left ${classes.contentTitle}`}>
-                  Release Date
+                  Ngày khởi chiếu
                 </p>
                 <p className={`float-left ${classes.contentInfo}`}>
                   {formatDate(data?.releaseDate?.slice(0, 10)).YyMmDd}
                 </p>
               </div>
               <div className="row mb-2">
-                <p className={`float-left ${classes.contentTitle}`}>Director</p>
+                <p className={`float-left ${classes.contentTitle}`}>Đạo diễn</p>
                 <p className={`float-left ${classes.contentInfo}`}>
                   {" "}
                   {data?.director}{" "}
@@ -338,21 +338,21 @@ export default function CenteredTabs({
               </div>
               <div className="row mb-2">
                 <p className={`float-left ${classes.contentTitle}`}>
-                  Actors
+                  Diễn viên
                 </p>
                 <p className={`float-left ${classes.contentInfo}`}>
                   {data?.actors}
                 </p>
               </div>
               <div className="row mb-2">
-                <p className={`float-left ${classes.contentTitle}`}>Category</p>
+                <p className={`float-left ${classes.contentTitle}`}>Thể loại</p>
                 <p className={`float-left ${classes.contentInfo}`}>
                   {data?.categories}
                 </p>
               </div>
               <div className="row mb-2">
                 <p className={`float-left ${classes.contentTitle}`}>
-                  Language
+                  Ngôn ngữ
                 </p>
                 <p className={`float-left ${classes.contentInfo}`}>
                   {data?.language}
@@ -360,14 +360,14 @@ export default function CenteredTabs({
               </div>
               <div className="row mb-2">
                 <p className={`float-left ${classes.contentTitle}`}>
-                  Rated
+                  Xếp loại
                 </p>
                 <p className={`float-left ${classes.contentInfo}`}>{data?.rated}</p>
               </div>
             </div>
             <div className="col-sm-6 col-xs-12">
               <div className="row mb-2">
-                <p className={`float-left ${classes.contentTitle}`}>Description</p>
+                <p className={`float-left ${classes.contentTitle}`}>Chi tiết</p>
               </div>
               <div className="row mb-2">
                 <p>{data?.longDescription}</p>
@@ -397,7 +397,7 @@ export default function CenteredTabs({
               <input
                 className={classes.inputReviwer}
                 type="text"
-                placeholder="What do you think about this film?"
+                placeholder="Bạn nghĩ sao về phim này?"
                 readOnly="readonly"
               />
 
@@ -484,7 +484,7 @@ export default function CenteredTabs({
               onClick={() => setopenMore()}
               className={classes.moreMovieButton}
             >
-              See more
+              Xem thêm
             </Button>
           </div>
         </TabPanel>
@@ -530,14 +530,14 @@ export default function CenteredTabs({
             label={
               dataComment.post
                 ? ""
-                : "Tell everyone about your think..."
+                : "Nói lên suy nghĩ của bạn..."
             }
           />
         </DialogContent>
         <DialogActions className="justify-content-center flex-column px-4">
           {warningtext && (
             <DialogContentText className="text-danger">
-              Please type more than 60 chart!
+              Vui lòng gõ hơn 60 ký tự!
             </DialogContentText>
           )}
           <Button
@@ -545,7 +545,7 @@ export default function CenteredTabs({
             variant="contained"
             className={classes.btnDang}
           >
-            Post
+            Đăng
           </Button>
         </DialogActions>
       </Dialog>

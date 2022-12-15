@@ -13,7 +13,7 @@ export const getAllTicket = (userId) => {
        console.log("data ticket: ", result?.data?.data);
         dispatch({
           type: GET_TICKET_SUCCESS,
-          payload: { data: result?.data?.data }
+          payload: { data: result?.data }
         })
       })
       .catch(
@@ -27,17 +27,17 @@ export const getAllTicket = (userId) => {
   }
 }
 
-export const getAllTicketByAdminStaff = (userId) => {
+export const getAllTicketByAdminStaff = () => {
   return (dispatch) => {
     dispatch({
       type: GET_ALLTICKET_REQUEST
     })
-    usersApi.getTicketByAdminStaff(userId)
+    usersApi.getTicketByAdminStaff()
       .then(result => {
-       console.log("data ticket: ", result?.data?.data);
+       console.log("all ticket API: ", result);
         dispatch({
           type: GET_ALLTICKET_SUCCESS,
-          payload: { data: result?.data?.data }
+          payload: { data: result?.data}
         })
       })
       .catch(

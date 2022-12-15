@@ -1,4 +1,5 @@
 import commentApi from '../../api/commentApi';
+import moviesApi from '../../api/moviesApi';
 import theatersApi from '../../api/theatersApi';
 import {
   GET_MOVIE_SHOWTIMES_REQUESS, GET_MOVIE_SHOWTIMES_SUCCESS, GET_MOVIE_SHOWTIMES_FAIL,
@@ -39,7 +40,7 @@ export const getMovieDetails = (movieId) => {
       type: GET_MOVIE_DETAIL_REQUESS
     })
     console.log("Movie ID: ",movieId);
-    theatersApi.getThongTinPhim(movieId)
+    moviesApi.getThongTinPhim(movieId)
       .then(result => {
         dispatch({
           type: GET_MOVIE_DETAIL_SUCCESS,
