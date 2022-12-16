@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core"
 
 const useStyle = makeStyles(theme => ({
   root: {
-    maxWidth: 1024,
+    maxWidth: 940,
     margin: "auto",
   },
   content: {
