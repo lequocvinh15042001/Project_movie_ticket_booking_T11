@@ -35,12 +35,12 @@ const items = [
     title: 'Users Management'
   },
   {
-    href: '/admin/events',
+    href: '/admin/reviews',
     icon: PostAddIcon,
     title: 'Reviews Managment'
   },
   {
-    href: '#',
+    href: '/admin/events',
     icon: PostAddIcon,
     title: 'Events Managment'
   },
