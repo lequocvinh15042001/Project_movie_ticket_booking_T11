@@ -27,11 +27,12 @@ import { LOADING_BACKTO_HOME } from '../../../reducers/constants/Lazy';
 import { getMovieList } from '../../../reducers/actions/Movie';
 import { getTheaters } from '../../../reducers/actions/Theater';
 import Logo from "./../../../assets/LeafSVG";
+import Search from '../Search/Search';
 
 const headMenu = [
-    { nameLink: 'Lịch chiếu phim', id: "lichchieu" }, 
+    { nameLink: 'Lịch chiếu', id: "lichchieu" }, 
     // { nameLink: 'Branch Theaters', id: "cumrap" }, 
-    { nameLink: 'Review và tin tức, khuyến mãi', id: "tintuc" }, 
+    { nameLink: 'Reviews và Events', id: "tintuc" }, 
     // { nameLink: 'App', id: "ungdung" }
   ]
 
@@ -131,7 +132,6 @@ export default function Header() {
           <div className={classes.logo} onClick={handleClickLogo}>
             <Logo fillColor={"rgb(250, 82, 56)"}/>
             {" "}
-            {/* <img src="/img/headTixLogo.png" alt="logo" style={{ height: 50 }} /> */}
             <span style={{ height: 50, color:"rgb(250, 82, 56)", fontWeight:"800" }}>GOLDENNEW TICKET</span>
           </div>
           <div className={classes.linkTobody}>
@@ -147,7 +147,9 @@ export default function Header() {
               ))}
             </Grid>
           </div>
-
+          <div>
+            <Search />
+          </div>
           {/* user account */}
           <div className={classes.user}>
             {currentUser ?

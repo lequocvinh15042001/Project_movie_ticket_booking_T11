@@ -150,10 +150,10 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
                                 onChange={(newContent) => contentFieldChanaged(newContent)}
                             />
                         </div>
-                        {/* <div className="mt-3">
-                            <Label for="image">Select Post banner</Label>
+                        <div className="mt-3">
+                            <Label for="image">Chọn hình ảnh làm banner cho bài Review</Label>
                             <Input id="image" type="file" onChange={handleFileChange} />
-                        </div> */}
+                        </div>
                         <Container className="text-center">
                             <Button style={{margin:"5px"}} type="submit" className="rounded-0" color="primary">Gửi Review</Button>
                             <Button style={{margin:"5px"}} className="rounded-0 ms-2" color="danger">Tải lại trang</Button>
