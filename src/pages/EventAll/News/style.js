@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core"
 
 const useStyle = makeStyles(theme => ({
   root: {
-    maxWidth: "97vw",
+    maxWidth: "100%",
     margin: "auto",
   },
   content: {

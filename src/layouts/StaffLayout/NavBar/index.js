@@ -27,32 +27,32 @@ const items = [
   {
     href: '/staff/movies',
     icon: MovieIcon,
-    title: 'Movies Management'
+    title: 'Quản lý phim'
   },
   {
     href: '#',
     icon: PostAddIcon,
-    title: 'Reviews Managment'
+    title: 'Quản lý Review'
   },
   {
     href: '/staff/events',
     icon: PostAddIcon,
-    title: 'Events Managment'
+    title: 'Quản lý sự kiện'
   },
   {
     href: '/staff/ticket',
     icon: PostAddIcon,
-    title: 'Ticket Managment'
+    title: 'Quản lý vé'
   },
   {
     href: '/staff/book',
     icon: PostAddIcon,
-    title: 'Book for User'
+    title: 'Đặt cho người dùng'
   },
   {
     href: '/staff/showtimes',
     icon: PostAddIcon,
-    title: 'Create Showtime'
+    title: 'Quản lý lịch chiếu'
   },
 ];
 

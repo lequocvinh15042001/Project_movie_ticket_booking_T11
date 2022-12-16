@@ -113,7 +113,7 @@ export default function SimpleTabs() {
                 </a>
               </div> */}
               {
-                eventList?.data?.slice(0,4).map((event, index) => {
+                eventList?.data?.reverse().slice(0,4).map((event, index) => {
                   return(
                   <div className={classes.repons} key={index}>
                     <a href="https://tix.vn/review/7946-review-dinh-thu-oan-khuat-ghost-of-war" className={classes.news}>
@@ -225,19 +225,19 @@ export default function SimpleTabs() {
           <TabPanel value={value} index={1}>
             <div className="row">
               <div className={classes.repons}>
-                <a href="https://tix.vn/goc-dien-anh/7964-mortal-kombat-cuoc-chien-sinh-tu-goi-ten-nhung-phim-dien-anh-noi-tieng-duoc-chuyen-the-tu-cac-tua-game-dinh-dam" className={classes.news}>
+                <a href="#" className={classes.news}>
                   <img className={classes.fullImg} src="https://s3img.vcdn.vn/123phim/2020/08/review-tan-tich-quy-am-relic-ba-the-he-va-moi-lien-ket-15965255784224.png" alt="news-movie" />
                   <div className="py-3">
-                    <h4 className="card-title">[MORTAL KOMBAT: CUỘC CHIẾN SINH TỬ] - GỌI TÊN NHỮNG PHIM ĐIỆN ẢNH NỔI...</h4>
+                    <h4  style={{color:"white"}} className="card-title">[MORTAL KOMBAT: CUỘC CHIẾN SINH TỬ] - GỌI TÊN NHỮNG PHIM ĐIỆN ẢNH NỔI...</h4>
                     <p className="text-secondary">Cư dân nơi khác đang sắp “gato nổ mắt” với dân Sài Thành khi sắp tới đây thành phố HCM sẽ chào đón một rạp chiếu phim mang phong cách Artistic Urban Lifestyle đầu tiên tại Việt Nam!</p>
                   </div>
                 </a>
               </div>
               <div className={classes.repons}>
-                <a href="https://tix.vn/review/7946-review-dinh-thu-oan-khuat-ghost-of-war" className={classes.news}>
+                <a href="#" className={classes.news}>
                   <img className={classes.fullImg} src="https://s3img.vcdn.vn/123phim/2020/08/review-dinh-thu-oan-khuat-ghost-of-war-15965120886610.png" alt="news-movie" />
                   <div className="py-3">
-                    <h4 className="card-title">Review: Dinh Thự Oan Khuất (Ghost Of War)</h4>
+                    <h4  style={{color:"white"}} className="card-title">Review: Dinh Thự Oan Khuất (Ghost Of War)</h4>
                     <p className="text-secondary">Tuy là một bộ phim có chất lượng tốt, nhưng có vẻ Dinh Thự Oan Khuất vẫn chưa đủ để đem khán giả trở lại phòng vé!</p>
                   </div>
                 </a>
