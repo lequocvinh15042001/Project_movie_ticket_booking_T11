@@ -18,7 +18,6 @@ import Fab from "@material-ui/core/Fab";
 import { useHistory } from "react-router-dom";
 import ShowtimeUser from "./../UserProfile/ShowtimeUser/index"
 
-
 import { FAKE_AVATAR } from "../../constants/config";
 import {
   getInfoUser,
@@ -30,6 +29,7 @@ import { getComment } from "../../reducers/actions/MovieDetail";
 import usersApi from "../../api/usersApi";
 import { getAllTicket } from "../../reducers/actions/Ticket";
 import formatDate from "../../utilities/formatDate";
+import JoditEditor from "jodit-react";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -98,7 +98,7 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-export default function Index() {
+export default function Index({placeholder}) {
   const history = useHistory();
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
@@ -285,6 +285,7 @@ export default function Index() {
   const handlerError = () => {
     return;
   }
+
   return (
     <div className="bootstrap snippet mb-5 mx-4" style={{"backgroundColor":"black"}}>
       <br />
@@ -378,6 +379,14 @@ export default function Index() {
                   selected: classes.tabSelected,
                 }}
                 label="Đổi mật khẩu"
+              />
+              <Tab
+                disableRipple
+                classes={{
+                  root: classes.tabButton,
+                  selected: classes.tabSelected,
+                }}
+                label="Viết Review phim"
               />
             </Tabs>
           </AppBar>
@@ -536,7 +545,8 @@ export default function Index() {
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Film</th>
+                    <th scope="col">Review</th>
+                    <th scope="col">Phim</th>
                     <th scope="col">Thời lượng</th>
                     <th scope="col">Ngày đặt</th>
                     <th scope="col">Rạp</th>
@@ -552,6 +562,12 @@ export default function Index() {
                   ticketList?.data?.map((sticket, i) => (
                       <tr key={sticket.id} className={classes.td}>
                         <th scope="row">{i + 1}</th>
+                        <td>
+                          <a class="btn btn-primary" 
+                              href={`/phim/${sticket?.schedule?.movie?.id}/write-review`} 
+                              role="button">Viết Review
+                          </a>
+                        </td>
                         <td>{sticket?.schedule?.movie?.name}</td>
                         <td>{sticket?.schedule?.movie?.duration}min</td>
                         <td>
@@ -687,6 +703,96 @@ export default function Index() {
                 </Form>
               )}
             </Formik>
+          </TabPanel>
+
+          <TabPanel value={value} index={3}>
+            {/* <Formik
+              initialValues={{
+                // username: successInfoUser?.username ?? "",
+                oldpassword: "",
+                newpassword: "",
+                // email: successInfoUser?.email ?? "",
+                // soDt: successInfoUser?.soDT ?? "",
+                // maNhom: "GP09",
+                // maLoaiNguoiDung: "KhachHang",
+                // name: successInfoUser?.name ?? "",
+              }}
+              enableReinitialize // cho phép cập nhật giá trị initialValues
+              validationSchema={updateUserSchemaPassword}
+              onSubmit={handleSubmitChangePass}
+            >
+              {(props) => (
+                <Form className={`${classes.field}`}>
+                  <div className={`form-group ${classes.password}`}  style={{"color":"white"}}>
+                    <label>Mật khẩu cũ&nbsp;</label>
+                    <ErrorMessage
+                      name="oldpassword"
+                      render={(msg) => (
+                        <span className="text-danger">{msg}</span>
+                      )}
+                    />
+                    <Field
+                      name="oldpassword"
+                      type={typePassword}
+                      className="form-control"
+                      onChange={props.handleChange}
+                      // value={this.props.values.oldpassword}
+                    />
+                    <div
+                      className={classes.eye}
+                      onClick={handleToggleHidePassword}
+                    >
+                      {typePassword !== "password" ? (
+                        <i className="fa fa-eye-slash" style={{"color":"black"}}></i>
+                      ) : (
+                        <i className="fa fa-eye" style={{"color":"black"}}></i>
+                      )}
+                    </div>
+                  </div>
+                  <div className={`form-group ${classes.password}`}  style={{"color":"white"}}>
+                    <label>Mật khẩu mới&nbsp;</label>
+                    <ErrorMessage
+                      name="newpassword"
+                      render={(msg) => (
+                        <span className="text-danger">{msg}</span>
+                      )}
+                    />
+                    <Field
+                      name="newpassword"
+                      type={typePassword2}
+                      className="form-control"
+                      onChange={props.handleChange}
+                      // value={value.newpassword}
+                    />
+                    <div
+                      className={classes.eye}
+                      onClick={handleToggleHidePassword2}
+                    >
+                      {typePassword2 !== "password" ? (
+                        <i className="fa fa-eye-slash" style={{"color":"black"}}></i>
+                      ) : (
+                        <i className="fa fa-eye" style={{"color":"black"}}></i>
+                      )}
+                    </div>
+                  </div>
+                  <div className="text-left">
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      disable={loadingUpdateUser.toString()}
+                      // onClick={(e) => {handleChangePassword(value.oldpassword, value.newpassword)}}
+                    >
+                      Đổi
+                    </button>
+                    {errorUpdateUser && (
+                      <div className="alert alert-danger">
+                        <span>{errorUpdateUser}</span>
+                      </div>
+                    )}
+                  </div>
+                </Form>
+              )}
+            </Formik> */}
           </TabPanel>
         </div>
       </div>
