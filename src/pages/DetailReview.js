@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { qLyPhimService } from "../services/QuanLyPhimServices";
-import NewsDetailComponent from "../components/NewsDetailComponent/ReviewsDetailComponent";
 import SpinnerLoading from "../components/SpinnerLoading/SpinnerLoading";
 import { useParams } from "react-router-dom";
+import ReviewsDetailComponent from "../components/NewsDetailComponent/ReviewsDetailComponent";
 
-export default function DetailNews() {
+export default function DetailReview() {
   const { maTin } = useParams();
   console.log("slug:  ",maTin);
   let [tinTuc, setTinTuc] = useState([]);
@@ -40,7 +40,7 @@ export default function DetailNews() {
       {loading ? (
         <SpinnerLoading />
       ) : (
-        <NewsDetailComponent tinTuc={tinTuc} danhSachTinTuc={danhSachTinTuc} />
+        <ReviewsDetailComponent tinTuc={tinTuc} danhSachTinTuc={danhSachTinTuc} />
       )}
       </>
   );

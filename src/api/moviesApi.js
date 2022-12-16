@@ -6,6 +6,13 @@ const moviesApi = {
     return axiosClient.get(path);
   },
 
+  getSearchPhim: (value) => {
+    console.log(value);
+    const path = `/movies/showing/search?name=${value}`;
+    return axiosClient.get(path);
+  },
+
+
   //lấy thông tin của 1 phim, bao gồm 1 mảng lichChieu<obj> không phân biệt cụm rạp
   getThongTinPhim: (maPhim) => {
     const path = `/movies/details/${maPhim}`;

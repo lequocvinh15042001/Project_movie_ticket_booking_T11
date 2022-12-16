@@ -22,6 +22,7 @@ const CheckoutRoute = lazy(() => import("./guards/CheckoutRoute"));
 const UserProfileRoute = lazy(() => import("./guards/UserProfileRoute"));
 // page
 const Homepage = lazy(() => import("./pages/Homepage"));
+const AllMovieSearch = lazy(() => import("./pages/AllMovieSearch"));
 const ReviewAll = lazy(() => import("./pages/ReviewAll"));
 const EventAll = lazy(() => import("./pages/EventAll"));
 const BookAll = lazy(() => import("./pages/BookAll"));
@@ -44,6 +45,7 @@ const LoginAdmin = lazy(() => import("./pages/LoginAdmin"));
 const LoginStaff = lazy(() => import("./pages/LoginStaff"));
 const Register = lazy(() => import("./pages/Register"));
 const DetailNews = lazy(() => import("./pages/DetailNews"));
+const DetailReview = lazy(() => import("./pages/DetailReview"));
 // const DetailEvent = lazy(() => import("./pages/DetailEvent"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -56,16 +58,18 @@ function App() {
         <ModalTrailer />
         <Suspense fallback={<TriggerLoadingLazy />}> 
           <Switch>
-            <Route exact path={["/", "/phim/:maPhim", "/taikhoan", "/review/:maTin", "/schedule", "/review", "/bookall", "/event-all", "/phim/:maPhim/write-review"]}>
+            <Route exact path={["/search/:search", "/", "/phim/:maPhim", "/taikhoan", "/review/:maTin", "/schedule", "/review", "/bookall", "/event-all", "/phim/:maPhim/write-review", "/detail-review/:maTin"]}>
               <MainLayout>
                 <Route exact path="/" component={Homepage} />
                 <Route exact path="/review" component={ReviewAll} />
                 <Route exact path="/event-all" component={EventAll} />
+                <Route exact path="/search/:searchItem" component={AllMovieSearch} />
                 <Route exact path="/schedule" component={BookAll} />
                 <Route exact path="/bookall" component={BookAllFix} />
                 <Route exact path="/phim/:maPhim" component={MovieDetail} />
                 <Route exact path="/phim/:maPhim/write-review" component={ReviewMovie} />
                 <Route exact path="/review/:maTin" component={DetailNews} />
+                <Route exact path="/detail-review/:maTin" component={DetailReview} />
                 <UserProfileRoute
                   exact
                   path="/taikhoan"
