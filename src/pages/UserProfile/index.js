@@ -28,8 +28,18 @@ import {
 import { getComment } from "../../reducers/actions/MovieDetail";
 import usersApi from "../../api/usersApi";
 import { getAllTicket } from "../../reducers/actions/Ticket";
-import formatDate from "../../utilities/formatDate";
-import JoditEditor from "jodit-react";
+
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -160,30 +170,30 @@ export default function Index({placeholder}) {
     return () => dispatch(resetUserList());
   }, []);
 
-  useEffect(() => {
-    if (commentList) {
-      const { posts, likePosts } = commentList.reduce(
-        (obj, post) => {
-          let posts = obj.posts;
-          let likePosts = obj.likePosts;
-          if (post.avtId === successInfoUser?.data?.username) {
-            posts++;
-            likePosts += post.userLikeThisComment.length;
-          }
-          return { ...obj, posts, likePosts };
-        },
-        { posts: 0, likePosts: 0 }
-      );
-      setdataShort((data) => ({ ...data, posts, likePosts }));
-    }
-    if (successInfoUser) {
-      const ticket = successInfoUser?.thongTinDatVe?.length;
-      const total = successInfoUser?.thongTinDatVe?.reduce((total, ticket) => {
-        return total + ticket.danhSachGhe.length * ticket.giaVe;
-      }, 0);
-      setdataShort((data) => ({ ...data, ticket, total }));
-    }
-  }, [commentList, successInfoUser]);
+  // useEffect(() => {
+  //   if (commentList) {
+  //     const { posts, likePosts } = commentList.reduce(
+  //       (obj, post) => {
+  //         let posts = obj.posts;
+  //         let likePosts = obj.likePosts;
+  //         if (post.avtId === successInfoUser?.data?.username) {
+  //           posts++;
+  //           likePosts += post.userLikeThisComment.length;
+  //         }
+  //         return { ...obj, posts, likePosts };
+  //       },
+  //       { posts: 0, likePosts: 0 }
+  //     );
+  //     setdataShort((data) => ({ ...data, posts, likePosts }));
+  //   }
+  //   if (successInfoUser) {
+  //     const ticket = successInfoUser?.thongTinDatVe?.length;
+  //     const total = successInfoUser?.thongTinDatVe?.reduce((total, ticket) => {
+  //       return total + ticket.danhSachGhe.length * ticket.giaVe;
+  //     }, 0);
+  //     setdataShort((data) => ({ ...data, ticket, total }));
+  //   }
+  // }, [commentList, successInfoUser]);
   useEffect(() => {
     if (successUpdateUser) {
       Swal.fire({
@@ -292,6 +302,10 @@ export default function Index({placeholder}) {
       .join(", ");
   };
 
+  const handlerChangAvatar = () => {
+    console.log("Đổi avatar");
+  }
+
   useEffect(() => {
     usersApi.getChiTietTaiKhoan(successInfoUser?.data?.username)
     .then((response) => {
@@ -308,6 +322,17 @@ export default function Index({placeholder}) {
     return;
   }
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
   return (
     <div className="bootstrap snippet mb-5 mx-4" style={{"backgroundColor":"black"}}>
       <br />
@@ -321,6 +346,65 @@ export default function Index({placeholder}) {
               }`}
               alt="avatar"
             />
+            <div className="text-center mb-2" style={{paddingTop:"0.5rem"}}>
+              <Fab
+                variant="extended"
+                color="secondary"
+                size="medium"
+                onClick={handleClickOpen}
+              >
+                Đổi ảnh đại diện
+              </Fab>
+            </div>
+            <Dialog
+              open={open}
+              TransitionComponent={Transition}
+              keepMounted
+              onClose={handleClose}
+              aria-describedby="alert-dialog-slide-description"
+            >
+            <DialogTitle>{"Chọn ảnh đại diện mà bạn thích nhất"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                  <input type="file" className="form-control" onChange={(e) => {
+
+                      setImage(e.target.files[0])
+                      // formikProp.setFieldValue("smallImageURl", srcImage)
+                      }}/>
+                </DialogContentText>
+              </DialogContent>
+
+              <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                  <div>
+                    <img
+                      src={FAKE_AVATAR}
+                      style={{
+                        width:"18rem",
+                        height:"18rem",
+                      }}
+                      className={`avatar rounded-circle img-thumbnail center${
+                        isDesktop ? "w-60" : "w-30"
+                      }`}
+                      alt="avatar"
+                    />
+                  </div>
+                </DialogContentText>
+                <Fab
+                    variant="extended"
+                    color="secondary"
+                    size="medium"
+                    // onClick={handleClickOpen}
+                  >
+                    Up ảnh
+                </Fab>
+              </DialogContent>
+
+              <DialogActions>
+                <Button onClick={handleClose}>Huỷ bỏ</Button>
+                <Button onClick={handleClose}>Đồng ý</Button>
+              </DialogActions>
+            </Dialog>
             <h1 className="my-2" style={{"color":"white"}}>{successInfoUser?.data?.username}</h1>
           </div>
           {successInfoUser?.data?.role === "[ROLE_ADMIN]" && (

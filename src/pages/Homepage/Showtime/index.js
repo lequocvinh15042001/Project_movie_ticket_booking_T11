@@ -104,7 +104,7 @@ export default function SimpleTabs() {
   }
 
   return (
-    <div style={{ paddingTop: "70px" }} id="lichchieu">
+    <div id="lichchieu">
       <AppBar className={classes.appBar} position="static">
         <Tabs
           classes={{

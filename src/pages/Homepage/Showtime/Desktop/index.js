@@ -5,6 +5,7 @@ import Slider from "react-slick";
 
 import MovieItem from './MovieItem';
 import useStyles from './style';
+import Choose from '../../Carousel/Choose';
 
 export function NextArrow(props) {
   const classes = useStyles();
