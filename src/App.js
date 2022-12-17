@@ -92,7 +92,7 @@ function App() {
 
             <Route
               exact
-              path={["/admin/users", "/admin/movies", "/admin/showtimes", "/admin/reviews", "/admin/ticket", "/admin/events"]}
+              path={["/admin/users", "/admin/movies", "/admin/showtimes", "/admin/reviews", "/admin/ticket", "/admin/events", "/admin/dashboard"]}
             >
               <AdminLayout>
                 <AdminRoute

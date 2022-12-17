@@ -187,21 +187,22 @@ export default function NavBar({ onMobileClose, openMobile }) {
 
   return (
     <>
-      {/* đây là giao diện mobile */}
+     {/* đây là giao diện mobile */}
       {/* <Hidden lgUp>
         <Drawer
           anchor="left"
           classes={{ paper: classes.mobileDrawer }}
-          // onClose={onMobileClose}
-          // open={openMobile} // đóng mở tùy thuộc vào bạn click
+          onClose={onMobileClose}
+          open={openMobile} // đóng mở tùy thuộc vào bạn click
           variant="temporary" // kiểu temporary có một lớp phủ mờ hiện ra cho đến khi bạn chọn xong thì Drawer mới đóng lại
         >
           {content}
         </Drawer>
 
-      </Hidden> */}
+      </Hidden>
+       */}
       {/* đây là giao diện desktop */}
-      <Hidden mdDown>
+      <Hidden mdDown> 
         <Drawer
           anchor="left"
           classes={{ paper: classes.desktopDrawer }}
