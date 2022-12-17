@@ -69,13 +69,13 @@ export default function Login() {
   }, []);
 
   const signinUserSchema = yup.object().shape({
-    usernameOrEmail: yup.string().required("*Username Or Email not be empty !"),
-    password: yup.string().required("*Password not be empty !"),
+    usernameOrEmail: yup.string().required("*Không được bỏ trống !"),
+    password: yup.string().required("*Không được bỏ trống !"),
   });
 
 
   const handleSubmit = (user) => {
-    console.log('người dùng nhập user',user);
+    // console.log('người dùng nhập user',user);
     dispatch(login(user));
   };
   const handleDangKy = () => {
@@ -125,7 +125,7 @@ export default function Login() {
           {() => (
             <Form className="col-sm-10 mx-auto">
               <div className="form-group position-relative">
-                <label>Username Or Email&nbsp;</label>
+                <label>Tên tài khoản hoặc Email&nbsp;</label>
                 <ErrorMessage
                   name="usernameOrEmail"
                   render={(msg) => <small className="text-danger">{msg}</small>}
@@ -134,7 +134,7 @@ export default function Login() {
               </div>
 
               <div className="form-group position-relative">
-                <label>Password&nbsp;</label>
+                <label>Mật khẩu&nbsp;</label>
                 <ErrorMessage
                   name="password"
                   render={(msg) => <small className="text-danger">{msg}</small>}
@@ -166,7 +166,7 @@ export default function Login() {
                 style={{ cursor: "pointer" }}
                 onClick={handleDangKy}
               >
-                * Register
+                * Đăng ký tài khoản
               </p>
               <button
                 style={{
@@ -178,7 +178,7 @@ export default function Login() {
                 type="submit"
                 className="btn btn-success mt-3 container"
               >
-                Login
+                Đăng nhập
               </button>
               {/* error from api */}
               {errorLogin && (

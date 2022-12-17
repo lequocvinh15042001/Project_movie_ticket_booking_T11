@@ -16,13 +16,13 @@ export const login = (user) => { // đăng nhập
   return async (dispatch, getState) => { //     1
     try {//2
       const stateBefore = getState();//   3
-      console.log("Todos before dispatch: ", stateBefore.authReducer);  //4
+      // console.log("Todos before dispatch: ", stateBefore.authReducer);  //4
 
       dispatch({          //5
         type: LOGIN_REQUEST,
       });
       const result = await usersApi.postDangNhap(user);     //6
-      console.log("User nhập:---------",result.data);       //7
+      // console.log("User nhập:---------",result.data);       //7
       
       localStorage.setItem(       //8
         "user",
@@ -39,7 +39,7 @@ export const login = (user) => { // đăng nhập
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Login Successfully",
+        title: "Đăng nhập thành công",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -56,7 +56,7 @@ export const login = (user) => { // đăng nhập
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Login False",
+        title: "Đăng nhập thất bại",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -116,7 +116,7 @@ export const register = (user) => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Register Successfully",
+          title: "Đăng ký thành công",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -126,13 +126,13 @@ export const register = (user) => {
         dispatch({
           type: REGISTER_FAIL,
           payload: {
-            error: "Username or email has been taken!"
+            error: "Username hoặc email đã tồn tại!"
           },
         });
         Swal.fire({
           position: "center",
           icon: "error",
-          title: "Register False",
+          title: "Đăng ký thất bại",
           showConfirmButton: false,
           timer: 1500,
         });

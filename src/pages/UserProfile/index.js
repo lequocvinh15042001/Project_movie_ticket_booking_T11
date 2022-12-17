@@ -133,6 +133,7 @@ export default function Index({placeholder}) {
   const [value, setValue] = React.useState(0);
   const [typePassword, settypePassword] = useState("password");
   const [typePassword2, settypePassword2] = useState("password");
+  const [typePassword3, settypePassword3] = useState("password");
   const [ticket, setTicket] = useState([]);
   const [image, setImage] = useState()
   const [oldPass, setOldPass] = useState()
@@ -188,7 +189,7 @@ export default function Index({placeholder}) {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Update Successfully",
+        title: "Cập nhật thành công",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -215,6 +216,7 @@ export default function Index({placeholder}) {
     // username: yup.string().required("*Username not be empty !"),
     oldpassword: yup.string().required("*Mật khẩu không được bỏ trống !"),
     newpassword: yup.string().required("*Mật khẩu không được bỏ trống !"),
+    renewpassword: yup.string().required("*Mật khẩu không được bỏ trống !"),
     // email: yup
     //   .string()
     //   .required("*Email not be empty !")
@@ -236,12 +238,25 @@ export default function Index({placeholder}) {
   };
 
   const handleSubmitChangePass = (pass) => {
+
     console.log(pass);
     if (loadingUpdateUser) {
       console.log("Thoát");
       return;
     }
-    dispatch(putUserChangePass(pass.newpassword, pass.oldpassword));
+    if(pass.newpassword === pass.renewpassword)
+    {
+      dispatch(putUserChangePass(pass.newpassword, pass.oldpassword));
+    } else{
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Nhập sai mật khẩu vui lòng nhập lại!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+
   };
 
   const handleToggleHidePassword = () => {
@@ -256,6 +271,13 @@ export default function Index({placeholder}) {
       settypePassword2("text");
     } else {
       settypePassword2("password");
+    }
+  };
+  const handleToggleHidePassword3 = () => {
+    if (typePassword3 === "password") {
+      settypePassword3("text");
+    } else {
+      settypePassword3("password");
     }
   };
 
@@ -273,7 +295,7 @@ export default function Index({placeholder}) {
   useEffect(() => {
     usersApi.getChiTietTaiKhoan(successInfoUser?.data?.username)
     .then((response) => {
-      console.log("Chi tiết USER: ",response);
+      // console.log("Chi tiết USER: ",response);
       setImage(response.data?.data?.image)
     })
     .catch((err) => {
@@ -321,7 +343,7 @@ export default function Index({placeholder}) {
                 onClick={() => history.push("/staff/movies")}
               >
                 <NavigationIcon className={classes.extendedIcon} />
-                Đến trang nhân viên
+                Trang nhân viên
               </Fab>
             </div>
           )}
@@ -379,14 +401,6 @@ export default function Index({placeholder}) {
                   selected: classes.tabSelected,
                 }}
                 label="Đổi mật khẩu"
-              />
-              <Tab
-                disableRipple
-                classes={{
-                  root: classes.tabButton,
-                  selected: classes.tabSelected,
-                }}
-                label="Viết Review phim"
               />
             </Tabs>
           </AppBar>
@@ -621,6 +635,7 @@ export default function Index({placeholder}) {
                 // username: successInfoUser?.username ?? "",
                 oldpassword: "",
                 newpassword: "",
+                renewpassword: "",
                 // email: successInfoUser?.email ?? "",
                 // soDt: successInfoUser?.soDT ?? "",
                 // maNhom: "GP09",
@@ -685,6 +700,32 @@ export default function Index({placeholder}) {
                       )}
                     </div>
                   </div>
+                  <div className={`form-group ${classes.password}`}  style={{"color":"white"}}>
+                    <label>Nhập lại mật khẩu mới&nbsp;</label>
+                    <ErrorMessage
+                      name="renewpassword"
+                      render={(msg) => (
+                        <span className="text-danger">{msg}</span>
+                      )}
+                    />
+                    <Field
+                      name="renewpassword"
+                      type={typePassword3}
+                      className="form-control"
+                      onChange={props.handleChange}
+                      // value={value.newpassword}
+                    />
+                    <div
+                      className={classes.eye}
+                      onClick={handleToggleHidePassword3}
+                    >
+                      {typePassword3 !== "password" ? (
+                        <i className="fa fa-eye-slash" style={{"color":"black"}}></i>
+                      ) : (
+                        <i className="fa fa-eye" style={{"color":"black"}}></i>
+                      )}
+                    </div>
+                  </div>
                   <div className="text-left">
                     <button
                       type="submit"
@@ -692,7 +733,7 @@ export default function Index({placeholder}) {
                       disable={loadingUpdateUser.toString()}
                       // onClick={(e) => {handleChangePassword(value.oldpassword, value.newpassword)}}
                     >
-                      Đổi
+                      Đổi mật khẩu
                     </button>
                     {errorUpdateUser && (
                       <div className="alert alert-danger">
