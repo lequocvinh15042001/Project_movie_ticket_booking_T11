@@ -560,7 +560,7 @@ export default function Choose() {
                 selected: classes["menu__item--selected"],
               }}
             > 
-              {suatChieu.room.name}:{suatChieu.startTime}
+              {suatChieu.room.name} chiếu lúc {suatChieu.startTime}
             </MenuItem>
           ))}
         </Select>
