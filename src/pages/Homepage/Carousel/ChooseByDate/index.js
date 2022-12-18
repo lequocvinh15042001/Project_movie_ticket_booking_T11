@@ -19,7 +19,7 @@ import formatDate from "../../../../utilities/formatDate";
 import { HIDDEN_SEARCHTICKET } from "../../../../constants/config";
 import { INIT_DATA } from "../../../../reducers/constants/BookTicket";
 
-export default function Choose() {
+export default function ChooseByDate() {
   const { movieList: movieRender, errorMovieList } = useSelector(
     (state) => state.movieReducer
   );
@@ -560,7 +560,7 @@ export default function Choose() {
                 selected: classes["menu__item--selected"],
               }}
             > 
-              {suatChieu.room.name} chiếu lúc {suatChieu.startTime}
+              {suatChieu.room.name}:{suatChieu.startTime}
             </MenuItem>
           ))}
         </Select>
@@ -587,6 +587,6 @@ export default function Choose() {
   );
 }
 
-Choose.propTypes = {
+ChooseByDate.propTypes = {
   smDown: PropTypes.bool,
 };

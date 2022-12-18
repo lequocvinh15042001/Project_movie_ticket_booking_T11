@@ -17,6 +17,47 @@ import { LOADING_BACKTO_HOME_COMPLETED } from "../../../reducers/constants/Lazy"
 import "./carousel.css";
 import Booking from "./Booking";
 
+import PropTypes from "prop-types";
+import SwipeableViews from "react-swipeable-views";
+// import { useTheme } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import ChooseByBranch from "./ChooseByBranch";
+import ChooseByDate from "./ChooseByDate";
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`action-tabpanel-${index}`}
+      aria-labelledby={`action-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3}}>{children}</Box>}
+    </Typography>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired
+};
+
+function a11yProps(index) {
+  return {
+    id: `action-tab-${index}`,
+    "aria-controls": `action-tabpanel-${index}`
+  };
+}
+
 export default function Carousel() {
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -28,12 +69,12 @@ export default function Carousel() {
     infinite: true,
     // autoplaySpeed: 5000, //speed per sence
     // autoplay: false,
-    // speed: 500,
+    speed: 1000,
     // swipeToSlide: true,
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 3000,
     pauseOnHover: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -66,6 +107,17 @@ export default function Carousel() {
     );
   }
 
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  };
+
+
   return (
     <div id="carousel" className={classes.carousel}>
       <Slider {...settings}>
@@ -94,7 +146,49 @@ export default function Carousel() {
       <Booking/>
       </div> */}
       {/* <SearchStickets /> */}
-      <Choose/>
+
+        <Box
+        sx={{
+          // bgcolor: "background.paper",
+          width: 1024,  
+          height:"100%",
+          position: "relative",
+          left:"14%",
+          textAlign: "center"
+        }}
+      >
+        <AppBar position="static" color="default">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="secondary"
+            textColor="primariry"
+            variant="fullWidth"
+            aria-label="action tabs example"
+          >
+            <Tab label="Đặt vé theo phim" {...a11yProps(0)} />
+            <Tab label="Đặt vé theo rạp" {...a11yProps(1)} />
+            <Tab label="Đặt vé theo ngày" {...a11yProps(2)} />
+          </Tabs>
+        </AppBar>
+        <SwipeableViews
+          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+          index={value}
+          onChangeIndex={handleChangeIndex}
+        >
+          <TabPanel value={value} index={0} >
+            <Choose/>
+          </TabPanel>
+          <TabPanel value={value} index={1} >
+            <ChooseByBranch/> 
+          </TabPanel>
+          <TabPanel value={value} index={2} >
+            <ChooseByDate/>
+          </TabPanel>
+        </SwipeableViews>
+      </Box>
+
+      {/* <Choose/> */}
     </div>
   );
 }

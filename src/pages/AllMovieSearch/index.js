@@ -47,7 +47,7 @@ export default function AllMovieSearch() {
     <div className={classes.container}>
       
       <Slider {...settings}>
-        {listKetQua ?   
+        {/* {listKetQua ?   
             (listKetQua.map((movie) => {
               return (
                 <div className="px-1 align-top" key={movie.id}>
@@ -65,7 +65,16 @@ export default function AllMovieSearch() {
             fontWeight:"bolder",
             padding:"5rem"
           }}>Không tìm thấy kết quả!</h1>
-          }
+          }  */}
+            {listKetQua.map((movie) => {
+              return (
+                <div className="px-1 align-top" key={movie.id}>
+                  <MovieItem
+                    movie={movie}
+                  />
+                </div>
+              )
+          })}
       </Slider>   
     </div>
   );

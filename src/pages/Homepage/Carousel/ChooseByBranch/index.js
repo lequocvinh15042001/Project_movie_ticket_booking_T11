@@ -19,19 +19,24 @@ import formatDate from "../../../../utilities/formatDate";
 import { HIDDEN_SEARCHTICKET } from "../../../../constants/config";
 import { INIT_DATA } from "../../../../reducers/constants/BookTicket";
 
-export default function Choose() {
+export default function ChooseByBranch() {
   const { movieList: movieRender, errorMovieList } = useSelector(
     (state) => state.movieReducer
   );
+  const { theaterList: theaterRender, errorTheaterList } = useSelector(
+    (state) => state.theaterReducer
+  );
+  // console.log(theaterRender);
+
   const {
     thongTinPhongVe,
   } = useSelector((state) => state.bookTicketReducer);
 
-  console.log(movieRender);
+  // console.log(movieRender);
   const [idPhim, setIdPhim]=useState('');
   const [idRap, setIdRap]=useState('');
   const history = useHistory();
-  const [branch, setBranch] = useState([]);
+  const [movie, setMovie] = useState([]);
   const down992px = useMediaQuery(HIDDEN_SEARCHTICKET);
   const [data, setData] = useState({
     // handleSelectPhim
@@ -145,15 +150,16 @@ export default function Choose() {
     if (!phim) { // 2
       return undefined;  //3
     }
+    console.log(phim);
     setData((data) => ({ //4
       ...data,
-      setPhim: phim,
+      setPhim: "",
       startRequest: true,
       openCtr: { ...data.openCtr, rap: true },
       // reset
       rapRender: [],
       cumRapChieuData: [],
-      setRap: "",
+      setRap: phim,
       ngayChieuRender: [],
       lichChieuPhimData: [],
       setNgayXem: "",
@@ -193,32 +199,36 @@ export default function Choose() {
     //     }
     //   });
       // lấy rạp
-      theatersApi.getThongTinLichChieuHeThongRap()  //5
+      theatersApi.getThongTinLichChieuHeThongRapTheoRap(phim.id)  //5
       .then((response) => { //6
-        console.log("all branch: ",response); //7
+        console.log("all phim: ",response); //7
         setData((data) => ({ ...data, startRequest: false })); //8
-        setBranch(response?.data?.data?.content);//9
-        const cumRapChieuData= response?.data?.data?.content?.reduce( //10
+        setMovie(response?.data?.data?.content);//9
+        const cumPhimData= response?.data?.data?.content?.reduce( //10
           (colect, item) => {
             console.log(item);
             return [...colect, item];
           },
           []
         );
-        // const rapRender = cumRapChieuData
-        const rapRender = cumRapChieuData.map((item) => item) //11
+        // // const rapRender = cumRapChieuData
+        //lọc trùng
+        // cumPhimData.reduce((unique, item) =>{
+        //   return unique.includes(item.movie.name) ? unique : [...unique, item.movie.name]
+        // },[])
+       
+        const phimRender = cumPhimData.map((item) => item) //11
         setData((data) => ({ //12
           ...data,
-          rapRender,
-          cumRapChieuData,
+          phimRender,
+          cumPhimData,
         }));
+        
       })
       .catch((err) => { //13
         console.log(err); //14
       });
   };
-
-
 
   // sau khi click chọn Rạp, cần lấy ra prop lichChieuPhim của Rạp đã chọn > lọc ra ngày chiếu để hiển thị
   // input: tenCumRap, cumRapChieuData
@@ -226,7 +236,7 @@ export default function Choose() {
   const handleSelectRap = (e) => {
     setData((data) => ({
       ...data,
-      setRap: e.target.value,
+      setPhim: e.target.value,
       openCtr: { ...data.openCtr, ngayXem: true },
       // reset
       ngayChieuRender: [],
@@ -237,19 +247,21 @@ export default function Choose() {
       setSuatChieu: "",
       maLichChieu: "",
     }));
-    const indexSelect = data.cumRapChieuData.findIndex(
-      (item) => item.name === e.target.value
+    const indexSelect = data.cumPhimData.findIndex(
+      (item) => item.movie.name === e.target.value
       
     ); // lấy ra lichChieuPhimData của một cụm rạp đã chọn, item lichChieuPhimData có thể giống ngày nhưng khác giờ chiếu
-    console.log("indexSelect: ", data.cumRapChieuData[indexSelect].id);
-    setIdRap(data.cumRapChieuData[indexSelect].id)
-    console.log("set phim: ", data.setPhim.id);
-    setIdPhim(data.setPhim.id)
+    console.log(indexSelect)
 
-    theatersApi.getThongTinLichChieuPhim(data.setPhim.id, data.cumRapChieuData[indexSelect].id)
+    console.log("mã phim nè: ", data.cumPhimData[indexSelect].movie.id);
+    setIdPhim(data.cumPhimData[indexSelect].movie.id)
+    console.log("set phim: ", data.setRap.id);
+    setIdRap(data.setRap.id)
+
+    theatersApi.getThongTinLichChieuPhim(data.cumPhimData[indexSelect].id, data.setRap.id)
     .then((response) => {
-      console.log("all lịch chiếu: ",response.data.data.content);
-      const lichChieuPhimData = response.data.data.content
+      console.log("all lịch chiếu: ",response?.data?.data?.content);
+      const lichChieuPhimData = response?.data?.data?.content
       const ngayChieuRender = lichChieuPhimData.map((item) => {
         return item.startDate.slice(0, 10); // tạo mảng mới với item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
       });
@@ -312,8 +324,8 @@ export default function Choose() {
       (item) => item.startDate === e.target.value
       
     ); // lấy ra lichChieuPhimData của một cụm rạp đã chọn, item lichChieuPhimData có thể giống ngày nhưng khác giờ chiếu
-    console.log("indexSelect: ", data.cumRapChieuData[indexSelect].id);
-    console.log("set phim: ", data.setPhim.id);
+    // console.log("indexSelect: ", data.cumPhimData[indexSelect].id);
+    // console.log("set phim: ", data.setRap.id);
 
     theatersApi.getThongTinLichChieuPhim(idPhim, idRap)
     .then((response) => {
@@ -345,6 +357,9 @@ export default function Choose() {
       setSuatChieu: e.target.value,
       // reset
       maLichChieu: "",
+      maRap:"",
+      maPhong:"",
+      maPhim:""
     }));
     const indexMaLichChieuSelect = data.lichChieuPhimDataSelected.findIndex(
       (item) => item.startTime.slice(0, 8) === e.target.value
@@ -352,23 +367,34 @@ export default function Choose() {
     // Lấy được cái mã lịch chiếu rồi
     // Lấy được cái mã lịch chiếu rồi
     // Lấy được cái mã lịch chiếu rồi
-    const maLichChieu =
-      data.lichChieuPhimDataSelected[indexMaLichChieuSelect].id;
-
+    const maLichChieu =data.lichChieuPhimDataSelected[indexMaLichChieuSelect].id;
     const maRap = data.lichChieuPhimDataSelected[indexMaLichChieuSelect].branch.id;
     const maPhong = data.lichChieuPhimDataSelected[indexMaLichChieuSelect].room.id;
-    console.log("maPhong: ", maPhong);
-    setData((data) => ({ ...data, maLichChieu, maRap, maPhong }));
+    // const maPhim = data.lichChieuPhimDataSelected[indexMaLichChieuSelect].movie.id;
+    const maPhim = idPhim;
+    console.log("maPhim: ", maPhim);
+    setData((data) => ({ ...data, maLichChieu, maRap, maPhong, maPhim }));
     
+    // dispatch({
+    //   type: INIT_DATA,
+    //   payload: {
+    //     ...data,
+    //     thongTinPhongVe: data,
+    //   },
+    //   });
+    // console.log(thongTinPhongVe);
+  };
+
+  useEffect(() =>{
     dispatch({
       type: INIT_DATA,
       payload: {
-        // ...data,
+        ...data,
         thongTinPhongVe: data,
       },
       });
-      console.log(thongTinPhongVe);
-  };
+    // console.log(thongTinPhongVe);
+  },[data])
 
   const setNewPhim = (maPhim) => {
     setcurrentPhimPopup(maPhim);
@@ -398,31 +424,31 @@ export default function Choose() {
     <div className={classes.search} id="searchTickets">
       <FormControl focused={false} className={classes.itemFirst}>
         <Autocomplete
-          options={movieRender.data}
+          options={theaterRender?.data?.content}
           getOptionLabel={(option) => option.name}
-          style={{ width: 300 }}
+          style={{ width: 200 }}
           renderInput={(params) => {
             // <SearchIcon />
             return (
               <TextField
                 {...params}
-                label="Tìm phim..."
+                label="Tìm rạp..."
                 variant="standard"
                 className={classes.textField}
               />
             );
           }}
-          renderOption={(phim) => (
-            <CustomPopper
-              key={phim.name}
-              phim={phim}
-              setNewPhim={setNewPhim}
-              currentPhimPopup={currentPhimPopup}
-              rootElementPopup={data.rootElementPopup}
-            />
-          )}
+          // renderOption={(phim) => (
+          //   <CustomPopper
+          //     key={phim.name}
+          //     phim={phim}
+          //     setNewPhim={setNewPhim}
+          //     currentPhimPopup={currentPhimPopup}
+          //     rootElementPopup={data.rootElementPopup}
+          //   />
+          // )}
           popupIcon={<ExpandMoreIcon />}
-          value={data.setPhim ? data.setPhim : null}
+          value={data.setRap ? data.setRap : null}
           onChange={(event, phim) => {
             handleSelectPhim(phim);
           }}
@@ -450,8 +476,8 @@ export default function Choose() {
           onClose={handleCloseRap}
           onOpen={handleOpenRap}
           onChange={handleSelectRap}
-          value={data?.setRap} // tenCumRap
-          renderValue={(value) => `${value ? value : "Chi nhánh rạp"}`} // hiển thị giá trị đã chọn
+          value={data?.setPhim} // tenCumRap
+          renderValue={(value) => `${value ? value : "Phim"}`} // hiển thị giá trị đã chọn
           displayEmpty
           IconComponent={ExpandMoreIcon}
           MenuProps={menuProps}
@@ -466,21 +492,21 @@ export default function Choose() {
                   data?.startRequest
                     ? data?.errorCallApi
                       ? data?.errorCallApi
-                      : "Đang tìm rạp!"
-                    : "Không có rạp, vui lòng chọn lại phim!"
+                      : "Đang tìm phim!"
+                    : "Không phim nào, vui lòng chọn rạp khác!"
                 }`
-              : "Vui lòng chọn phim!"}
+              : "Vui lòng chọn rạp!"}
           </MenuItem>
-          {data?.rapRender?.map((item) => (
+          {data?.phimRender?.map((item) => (
             <MenuItem
-              value={item.name}
+              value={item.movie.name}
               key={item.id}
               classes={{
                 root: classes.menu__item,
                 selected: classes["menu__item--selected"],
               }}
             >
-              {item.name}
+              {item.movie.name}
             </MenuItem>
           ))}
         </Select>
@@ -575,8 +601,8 @@ export default function Choose() {
           }}
           onClick={() =>
             history.push(
-              `/datvechitiet/${data?.maLichChieu}/${data?.maRap}/${data?.setPhim?.id}/${data?.setNgayXem}/${data.maPhong}/${data?.setSuatChieu}`,
-              `/datvechitiet/${data?.maLichChieu}/${data?.maRap}/${data?.setPhim?.id}/${data?.setNgayXem}/${data.maPhong}/${data?.setSuatChieu}`
+              `/datvechitiet/${data?.maLichChieu}/${data?.maRap}/${data?.maPhim}/${data?.setNgayXem}/${data.maPhong}/${data?.setSuatChieu}`,
+              `/datvechitiet/${data?.maLichChieu}/${data?.maRap}/${data?.maPhim}/${data?.setNgayXem}/${data.maPhong}/${data?.setSuatChieu}`
             )
           }
         >
@@ -587,6 +613,6 @@ export default function Choose() {
   );
 }
 
-Choose.propTypes = {
+ChooseByBranch.propTypes = {
   smDown: PropTypes.bool,
 };

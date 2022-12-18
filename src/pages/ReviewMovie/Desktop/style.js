@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
   },
   top: {
     width: "100%",
-    height: "41vw",
+    height: "27vw",
     position: "relative",
   },
 
@@ -33,12 +33,12 @@ const useStyles = makeStyles(theme => ({
   },
   topInfo: {
     position: "absolute",
-    top: "50%",
-    left: "50%",
+    top: "60%",
+    left: "40%",
     transform: "translate(-50%,-50%)",
     width: "100%",
     height: 320,
-    maxWidth: 870,
+    maxWidth: 1000,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -78,21 +78,6 @@ const useStyles = makeStyles(theme => ({
     display: "inline-block",
     textAlign: "center",
     minWidth: "33px"
-  },
-  btnMuaVe: {
-    fontSize: "16px",
-    borderRadius: "4px",
-    background: "0 0",
-    padding: "11px 25px",
-    transition: "all .2s",
-    marginTop: "25px",
-    marginBottom: "20px",
-    backgroundColor: "#fb4226",
-    border: "none",
-    color: "#fff",
-    "&:hover": {
-      backgroundColor: "#b42a14",
-    }
   },
 
   rate: {
