@@ -18,6 +18,11 @@ const theatersApi = {
     return axiosClient.get(path);
   },
 
+  getThongTinLichChieuTheoNgayChieu: (startDate) => {
+    const path = `/schedule/getAll?page=0&size=20&startDate=${startDate}`;
+    return axiosClient.get(path);
+  },
+
   postThemLichChieu: (schedule) => {
     const path = "/schedule/add";
     return axiosClient.post(path, schedule);
@@ -41,6 +46,11 @@ const theatersApi = {
 
   getThongTinLichChieuHeThongRapTheoRap: (branchId) => {
     const path = `/schedule/getAll?page=0&size=20&branchId=${branchId}`;
+    return axiosClient.get(path);
+  },
+
+  getThongTinLichChieuHeThongRapTheoNgayVaRap: (branchId, startDate) => {
+    const path = `/schedule/getAll?page=0&size=20&branchId=${branchId}&startDate=${startDate}`;
     return axiosClient.get(path);
   },
 
