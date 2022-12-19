@@ -1,13 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
 
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import { useSelector } from "react-redux";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ArrowBackIosRoundedIcon from "@material-ui/icons/ArrowBackIosRounded";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
+import PropTypes from "prop-types";
+
+import SwipeableViews from "react-swipeable-views";
+// import { useTheme } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+
+import Theaters from './../Theaters';
+import LichChieuDesktop from '../LichChieuDesktopTheoNgay';
+import LichChieuDesktopTheoNgay from '../LichChieuDesktop';
 
 import Desktop from "./Desktop";
 import useStyles from "./style";
@@ -57,10 +67,41 @@ const filterByDay = (movieList, tuNgay, denNgay) => {
   });
 };
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`action-tabpanel-${index}`}
+      aria-labelledby={`action-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 1}}>{children}</Box>}
+    </Typography>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired
+};
+
+function a11yProps(index) {
+  return {
+    id: `action-tab-${index}`,
+    "aria-controls": `action-tabpanel-${index}`
+  };
+}
+
 export default function SimpleTabs() {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const [value, setValue] = useState({ value: 0, fade: true, notDelay: 0 });
+  const [value1, setValue1] = useState(0);
   const { errorMovieList, movieList } = useSelector(
     (state) => state.movieReducer
   );
@@ -81,6 +122,14 @@ export default function SimpleTabs() {
       clearTimeout(timeout.current);
     };
   }, []);
+
+  const handleChangeBang = (event, newValue) => {
+    setValue1(newValue);
+  };
+
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  }
 
   useEffect(() => {
     // tạm thời chia đôi list danh sách phim ra, một nửa làm phim đang chiếu, một nửa làm phim sắp chiếu
@@ -104,8 +153,8 @@ export default function SimpleTabs() {
   }
 
   return (
-    <div style={{ paddingTop: "20px"}} id="lichchieu">
-      <AppBar className={classes.appBar} position="static">
+    <div style={{ paddingTop: "10px"}} id="lichchieu">
+      {/* <AppBar className={classes.appBar} position="static">
         <Tabs
           classes={{
             root: classes.tabBar,
@@ -118,16 +167,16 @@ export default function SimpleTabs() {
           <Tab
             disableRipple
             className={`${classes.tabButton} ${classes.tabDangChieu}`}
-            label="Book by theater"
+            label="Đặt theo rạp"
           />
           <Tab
             disableRipple
             className={`${classes.tabButton} ${classes.tabSapChieu}`}
-            label="Book by movie"
+            label="Đặt theo phim"
           />
           <Tab
             disableRipple
-            className={`${classes.tabButton} ${classes.tabDangChieu}`}
+            className={`${classes.tabButton} ${classes.tabNgayChieu}`}
             label="Đặt theo ngày"
           />
         </Tabs>
@@ -138,7 +187,47 @@ export default function SimpleTabs() {
         ) : (
           <Mobile arrayData={arrayData} value={value} />
         )}
-      </div>
+      </div> */}
+       <Box
+        sx={{
+          // bgcolor: "background.paper",
+          // width: 1024,  
+          height:"100%",
+          position: "relative",
+          // left:"14%",
+          textAlign: "center"
+        }}
+      >
+        <AppBar position="static" color="default">
+          <Tabs
+            value={value1}
+            onChange={handleChangeBang}
+            indicatorColor="secondary"
+            textColor="primariry"
+            variant="fullWidth"
+            aria-label="action tabs example"
+          >
+            <Tab label="Đặt vé theo rạp" {...a11yProps(0)} />
+            <Tab label="Đặt vé theo phim" {...a11yProps(1)} />
+            <Tab label="Đặt vé theo ngày" {...a11yProps(2)} />
+          </Tabs>
+        </AppBar>
+        <SwipeableViews
+          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+          index={value1}
+          onChangeIndex={handleChangeIndex}
+        >
+          <TabPanel value={value1} index={0} >
+            <Theaters />
+          </TabPanel>
+          <TabPanel value={value1} index={1} >
+            <LichChieuDesktop /> 
+          </TabPanel>
+          <TabPanel value={value1} index={2} >
+            <LichChieuDesktopTheoNgay />
+          </TabPanel>
+        </SwipeableViews>
+      </Box>
     </div>
   );
 }

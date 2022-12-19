@@ -60,6 +60,7 @@ console.log(props.listSachPhim);
     //   ))}
     // </div>
     <div className={classes.lstPhim} hidden={props.hidden}>{/* div root danh sách phim */}
+    <h5 style={{textAlign:"center", paddingTop:"1rem", color:"red", fontWeight:"bolder"}}>Chọn phim</h5>
     {props.listSachPhim?.map(phim => (
       <div className={classes.phim} key={phim.id}>
         <div className={classes.phim__info}>{/* div thong tin phim */}
@@ -70,13 +71,15 @@ console.log(props.listSachPhim);
             <span style={{ style }}>
               Thời lượng: {phim?.duration} phút
             </span>
-            {" - "}
+            {/* {" - "} */}
+            <br/>
             <span style={{ style }}>
             Ngày khởi chiếu: {phim.releaseDate}
             </span>
           </div>
         </div>
         <div>
+          <h6 style={{textAlign:"center", paddingTop:"1rem", color:"red", fontWeight:"medium"}}>Chọn phòng và suất chiếu</h6>
           <LstNgayChieuMoi lstLichChieuTheoPhim={phim} idRap={props.idRap} idPhim={phim.id}/>
         </div>
       </div>

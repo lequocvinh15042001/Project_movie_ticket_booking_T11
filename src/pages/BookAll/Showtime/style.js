@@ -44,14 +44,21 @@ const useStyles = makeStyles(theme => ({
     }
   },
   tabDangChieu: {
-    color: props => props.notDelay ? "#FFFFFF" : "#fa5238",
-    backgroundColor: props => props.notDelay ? "#fa5238" : "#FFFFFF",
+    color: props => props.notDelay ? "#fa5238" : "#FFFFFF",
+    backgroundColor: props => props.notDelay ? "#FFFFFF" : "#fa5238",
     fontSize: props => props.notDelay ? "15px" : "20px",
   },
+
   tabSapChieu: {
     color: props => props.notDelay ? "#fa5238" : "#FFFFFF",
     backgroundColor: props => props.notDelay ? "#FFFFFF" : "#fa5238",
     fontSize: props => props.notDelay ? "20px" : "15px",
+  },
+
+  tabNgayChieu: {
+    color: props => props.notDelay ? "#fa5238" : "#FFFFFF",
+    backgroundColor: props => props.notDelay ? "#FFFFFF" : "#fa5238",
+    fontSize: props => props.notDelay ? "15px" : "20px",
   },
 
   Arrow: {

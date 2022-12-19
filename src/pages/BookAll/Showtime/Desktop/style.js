@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core"
 const useStyles = makeStyles(theme => ({
   container: {
     width: "100vw",
-    maxWidth: 1024,
+    // maxWidth: 1200,
     margin: "auto",
     [theme.breakpoints.down(960)]: {
       width: "60vw",

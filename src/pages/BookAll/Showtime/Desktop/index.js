@@ -7,6 +7,7 @@ import Theaters from './../../Theaters';
 import useStyles from './style';
 import Choose from '../../Choose';
 import LichChieuDesktop from '../../LichChieuDesktop';
+import LichChieuDesktopTheoNgay from '../../LichChieuDesktop';
 
 export function NextArrow(props) {
   const classes = useStyles();
@@ -39,7 +40,7 @@ export default function Desktop({ arrayData, value }) {
     <div className={classes.container}>
       <Slider {...settings}>
         {value.value === 0 ?
-          <Theaters /> : <LichChieuDesktop />
+          <Theaters /> : value.value === 1 ? <LichChieuDesktop /> : <LichChieuDesktopTheoNgay />
         }
       </Slider>
     </div >
