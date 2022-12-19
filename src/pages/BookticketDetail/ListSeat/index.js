@@ -54,7 +54,7 @@ export default function ListSeat() {
   }, []);
   
   const classes = useStyles({
-    color: colorTheater[thongTinPhongVe?.setRap?.slice(0,3).toUpperCase()],
+    // color: colorTheater[thongTinPhongVe?.setRap?.slice(0,3).toUpperCase()],
     //color: "white",
     modalLeftImg: thongTin?.data?.content[0]?.movie?.smallImageURl,
    // modalLeftImg: poster,

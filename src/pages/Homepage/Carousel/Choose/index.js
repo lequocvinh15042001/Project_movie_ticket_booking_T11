@@ -312,10 +312,10 @@ export default function Choose() {
       (item) => item.startDate === e.target.value
       
     ); // lấy ra lichChieuPhimData của một cụm rạp đã chọn, item lichChieuPhimData có thể giống ngày nhưng khác giờ chiếu
-    console.log("indexSelect: ", data.cumRapChieuData[indexSelect].id);
-    console.log("set phim: ", data.setPhim.id);
+    console.log("indexSelect: ", data.lichChieuPhimData[indexSelect].startDate);
+    // console.log("set phim: ", data.setPhim.id);
 
-    theatersApi.getThongTinLichChieuPhim(idPhim, idRap)
+    theatersApi.getThongTinLichCoNgay(idPhim, idRap, data.lichChieuPhimData[indexSelect].startDate)
     .then((response) => {
       console.log("all lịch chiếu: ",response.data.data.content);
       const lichChieuPhimDataSelected = response.data.data.content

@@ -8,7 +8,8 @@ import { colorTheater } from '../../../constants/theaterData'
 export default function SuccessBooking() {
   const { isMobile, amount, email, phone, paymentMethod, listSeatSelected, successBookingTicketMessage, errorBookTicketMessage, danhSachPhongVe: { thongTinPhim }, thongTinPhongVe } = useSelector((state) => state.bookTicketReducer)
   const { currentUser } = useSelector((state) => state.authReducer)
-  const classes = useStyles({ thongTinPhongVe, color: colorTheater[thongTinPhongVe?.setRap.slice(0, 3).toUpperCase()], isMobile })
+  // const classes = useStyles({ thongTinPhongVe, color: colorTheater[thongTinPhongVe?.setRap.slice(0, 3).toUpperCase()], isMobile })
+  const classes = useStyles({ thongTinPhongVe, isMobile })
 
   return (
     <div className={classes.resultBookticket}>
