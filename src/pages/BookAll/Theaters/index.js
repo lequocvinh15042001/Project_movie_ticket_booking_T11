@@ -19,7 +19,7 @@ export default function HeThongRap() {
   const { theaterList, errorTheaterList } = useSelector(
     (state) => state.theaterReducer
   );
-  // console.log("Xuất hệ thống rạp: ", theaterList);
+  console.log("Xuất hệ thống rạp: ", theaterList);
   const [valueHeThongRap, setValueHeThongRap] = React.useState(0);
   const classes = useStyles({ isMobileTheater, underLine });
 
@@ -39,9 +39,10 @@ export default function HeThongRap() {
           value={valueHeThongRap}
           classes={{ indicator: classes.tabs__indicator, root: classes.taps }}
         >
+        <h5 style={{textAlign:"center", paddingTop:"1rem", color:"red", fontWeight:"bolder"}}>Chọn chi nhánh</h5>
           {theaterList?.data?.content?.map((theater, index) => (
             <Tab
-              onClick={() => setValueHeThongRap(index)}
+              onClick={() => setValueHeThongRap(index + 1)}
               disableRipple
               classes={{
                 root: classes.tap,
@@ -49,24 +50,30 @@ export default function HeThongRap() {
               }}
               key={theater?.id}
               label={
-                <img
-                  style={{ width: "60px", height: "60px" }}
-                  src={theater?.imgURL}
-                  alt="theaterLogo"
-                />
+                // <img
+                //   style={{ width: "60px", height: "60px"}}
+                //   src={theater?.imgURL}
+                //   alt="theaterLogo"
+                // />
+                <span>
+                  {theater?.name}
+                </span>
               }
             />
           ))}
         </Tabs>
+        
         {theaterList?.data?.content?.map((theater, index2) => (
           <div
-            hidden={valueHeThongRap !== index2}
+            hidden={valueHeThongRap -1 !== index2}
             key={theater?.id}
             className={classes.cumRap}
+
           >
             {isMobileTheater ? (
               <MobileLstCumrap lstCumRap={theater} />
             ) : (
+              
               <LstCumRap
                 lstCumRap={theater}
                 color={

@@ -29,6 +29,8 @@ function LstCumRap(props) {
   return (
     <div className={classes.flexCumRap}>
       <div className={classes.lstCumRap}>
+      <h5 style={{textAlign:"center", paddingTop:"1rem", color:"red", fontWeight:"bolder"}}>Chọn rạp</h5>
+
         {/* {lstCumRap?.map((cumRap, index) =>
         ( */}
           <div className={classes.cumRap} index={lstCumRap.id} onClick={(e,) => handleChangeCumRap(e)} key={lstCumRap.id} style={{ opacity: valueCumRap === lstCumRap.id ? '1' : '.5' }}>

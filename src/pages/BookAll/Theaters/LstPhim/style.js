@@ -3,7 +3,8 @@ import { makeStyles } from "@material-ui/core"
 const useStyles = makeStyles({
   lstPhim: props => ({
     flex: "0 0 60%",
-    height: "705px",
+    // height: "705px",
+    maxWidth:750,
     overflowY: 'auto',
     borderLeft: "1px solid #ebebec",
     ...props.customScrollbar
@@ -19,13 +20,13 @@ const useStyles = makeStyles({
     display: 'flex',
   },
   phim__img: {
-    width: 60,
-    height: 60,
+    width: 100,
+    height: 150,
     objectFit: "cover",
   },
   phim__text: {
     paddingLeft: "15px", paddingTop: "6px",
-    width: "calc(100% - 50px)",
+    width: "calc(100% - 50)",
   },
   phim__text_name: {
     fontWeight: 700,

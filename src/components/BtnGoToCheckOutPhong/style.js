@@ -4,7 +4,7 @@ const useStyles = makeStyles({
   button: {
     // width: "calc(25% - 10px)",
     fontWeight: 400,
-    padding: "5px 5px",
+    padding: "10px 10px",
     transition: "all .2s",
     backgroundColor: "rgba(246,246,246,.5)",
     borderRadius: "7px",

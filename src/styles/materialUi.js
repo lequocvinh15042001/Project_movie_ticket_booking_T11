@@ -25,7 +25,7 @@ const underLine = {
     left: "50%",
     width: "calc(100% - 40px)",
     transform: "translateX(-50%)",
-    borderBottom: "1px solid rgba(238,238,238,.88)",
+    borderBottom: "2px solid rgba(238,238,238,.88)",
   }
 }
 

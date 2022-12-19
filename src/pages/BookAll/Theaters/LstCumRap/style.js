@@ -7,7 +7,8 @@ const useStyles = makeStyles({
   lstCumRap: props => ({
     flex: "0 0 40%",
     overflowY: 'auto',
-    height: 705,
+    maxWidth:500,
+    // height: 705,
     overflowX: 'hidden',
     borderLeft: "1px solid #ebebec",
     borderBottom: 'none',
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
     // ...props.underLine
   }),
   cumRap__img: {
-    width: 50, height: 50,
+    width: 100, height: 100,
   },
   cumRap__info: {
     paddingLeft: 10,
