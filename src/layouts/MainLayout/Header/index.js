@@ -30,7 +30,7 @@ import Logo from "./../../../assets/LeafSVG";
 import Search from '../Search/Search';
 
 const headMenu = [
-    { nameLink: 'Lịch chiếu', id: "lichchieu" }, 
+    { nameLink: 'Tất cả Phim', id: "lichchieu" }, 
     // { nameLink: 'Branch Theaters', id: "cumrap" }, 
     { nameLink: 'Reviews và Events', id: "tintuc" }, 
     // { nameLink: 'App', id: "ungdung" }

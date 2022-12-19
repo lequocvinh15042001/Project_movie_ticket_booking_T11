@@ -26,7 +26,7 @@ export default function ListSeat() {
   const domToSeatElement = useRef(null);
   const [widthSeat, setWidthSeat] = useState(0);
   const classes = useStyles({
-    color: colorTheater[thongTinPhongVe?.setRap?.slice(0,3).toUpperCase()],
+    // color: colorTheater[thongTinPhongVe?.setRap?.slice(0,3).toUpperCase()],
     //color: "white",
     modalLeftImg: thongTinPhongVe?.setPhim?.smallImageURl,
    // modalLeftImg: poster,

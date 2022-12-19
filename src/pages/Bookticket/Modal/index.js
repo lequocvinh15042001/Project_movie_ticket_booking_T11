@@ -30,7 +30,7 @@ export default function Modal() {
   const history = useHistory();
   const classes = useStyles({
     thongTinPhim,
-    color: colorTheater[thongTinPhim?.tenCumRap.slice(0, 3).toUpperCase()],
+    // color: colorTheater[thongTinPhim?.tenCumRap.slice(0, 3).toUpperCase()],
     isMobile,
   });
   const isBookticket =

@@ -160,7 +160,10 @@ export default function ChooseByDate() {
       lichChieuPhimDataSelected: [],
       setSuatChieu: "",
       maLichChieu: "",
+      cumPhim:[],
+      cumPhimRender:[],
     }));
+    setIdPhim("")
     // theatersApi.getThongTinLichChieuHeThongRapTheoRap(phim.id)  //5
     //   .then((response) => { //6
     //     console.log("all phim: ",response); //7
@@ -194,89 +197,90 @@ export default function ChooseByDate() {
   // sau khi click chọn phim, cần duyệt lấy tất cả cumRapChieu lưu vào cumRapChieuData để xử lý
   // input: maPhim
   // output: setPhim(maPhim), rapRender(maPhim)[tenCumRap], cumRapChieuData(maPhim)[{lichChieuPhim}],
-  const handleSelectPhim = (phim) => {  //1
-    if (!phim) { // 2
-      return undefined;  //3
-    }
-    console.log(phim);
-    setData((data) => ({ //4
-      ...data,
-      setPhim: "",
-      startRequest: true,
-      openCtr: { ...data.openCtr, rap: true },
-      // reset
-      rapRender: [],
-      cumRapChieuData: [],
-      setRap: phim,
-      ngayChieuRender: [],
-      lichChieuPhimData: [],
-      setNgayXem: "",
-      suatChieuRender: [],
-      lichChieuPhimDataSelected: [],
-      setSuatChieu: "",
-      maLichChieu: "",
-    }));
-    // theatersApi
-    //   .getThongTinLichChieuPhim(phim.id)
-    //   .then((result) => {
-    //     console.log(result?.data);
-    //     setData((data) => ({ ...data, startRequest: false }));
-    //     const cumRapChieuData= result?.data?.content?.reduce(
-    //       (colect, item) => {
-    //         console.log(item);
-    //         return [...colect, item];
-    //       },
-    //       []
-    //     );
-    //     // const cumRapChieuData} = result.data.content;
-    //     console.log("cumRapChieuData", cumRapChieuData);
-    //     // const rapRender = cumRapChieuData
-    //     const rapRender = cumRapChieuData.map((item) => item)
-    //     setData((data) => ({
-    //       ...data,
-    //       rapRender,
-    //       cumRapChieuData,
-    //     }));
+  // const handleSelectPhim = (phim) => {  //1
+  //   if (!phim) { // 2
+  //     return undefined;  //3
+  //   }
+  //   console.log(phim);
+  //   setData((data) => ({ //4
+  //     ...data,
+  //     setPhim: "",
+  //     startRequest: true,
+  //     openCtr: { ...data.openCtr, rap: true },
+  //     // reset
+  //     rapRender: [],
+  //     cumRapChieuData: [],
+  //     setRap: phim,
+  //     ngayChieuRender: [],
+  //     lichChieuPhimData: [],
+  //     setNgayXem: "",
+  //     suatChieuRender: [],
+  //     lichChieuPhimDataSelected: [],
+  //     setSuatChieu: "",
+  //     maLichChieu: "",
+ 
+  //   }));
+  //   // theatersApi
+  //   //   .getThongTinLichChieuPhim(phim.id)
+  //   //   .then((result) => {
+  //   //     console.log(result?.data);
+  //   //     setData((data) => ({ ...data, startRequest: false }));
+  //   //     const cumRapChieuData= result?.data?.content?.reduce(
+  //   //       (colect, item) => {
+  //   //         console.log(item);
+  //   //         return [...colect, item];
+  //   //       },
+  //   //       []
+  //   //     );
+  //   //     // const cumRapChieuData} = result.data.content;
+  //   //     console.log("cumRapChieuData", cumRapChieuData);
+  //   //     // const rapRender = cumRapChieuData
+  //   //     const rapRender = cumRapChieuData.map((item) => item)
+  //   //     setData((data) => ({
+  //   //       ...data,
+  //   //       rapRender,
+  //   //       cumRapChieuData,
+  //   //     }));
         
-    //   })
-    //   .catch(function (error) {
-    //     if (error.response) {
-    //       setData((data) => ({ ...data, errorCallApi: error.response.data }));
-    //     } else if (error.request) {
-    //       setData((data) => ({ ...data, errorCallApi: error.message }));
-    //     }
-    //   });
-      // lấy rạp
-      theatersApi.getThongTinLichChieuHeThongRapTheoRap(phim.id)  //5
-      .then((response) => { //6
-        console.log("all phim: ",response); //7
-        setData((data) => ({ ...data, startRequest: false })); //8
-        setMovie(response?.data?.data?.content);//9
-        const cumPhimData= response?.data?.data?.content?.reduce( //10
-          (colect, item) => {
-            console.log(item);
-            return [...colect, item];
-          },
-          []
-        );
-        // // const rapRender = cumRapChieuData
-        //lọc trùng
-        // cumPhimData.reduce((unique, item) =>{
-        //   return unique.includes(item.movie.name) ? unique : [...unique, item.movie.name]
-        // },[])
+  //   //   })
+  //   //   .catch(function (error) {
+  //   //     if (error.response) {
+  //   //       setData((data) => ({ ...data, errorCallApi: error.response.data }));
+  //   //     } else if (error.request) {
+  //   //       setData((data) => ({ ...data, errorCallApi: error.message }));
+  //   //     }
+  //   //   });
+  //     // lấy rạp
+  //     theatersApi.getThongTinLichChieuHeThongRapTheoRap(phim.id)  //5
+  //     .then((response) => { //6
+  //       console.log("all phim: ",response); //7
+  //       setData((data) => ({ ...data, startRequest: false })); //8
+  //       setMovie(response?.data?.data?.content);//9
+  //       const cumPhimData= response?.data?.data?.content?.reduce( //10
+  //         (colect, item) => {
+  //           console.log(item);
+  //           return [...colect, item];
+  //         },
+  //         []
+  //       );
+  //       // // const rapRender = cumRapChieuData
+  //       //lọc trùng
+  //       // cumPhimData.reduce((unique, item) =>{
+  //       //   return unique.includes(item.movie.name) ? unique : [...unique, item.movie.name]
+  //       // },[])
        
-        const phimRender = cumPhimData.map((item) => item) //11
-        setData((data) => ({ //12
-          ...data,
-          phimRender,
-          cumPhimData,
-        }));
+  //       const phimRender = cumPhimData.map((item) => item) //11
+  //       setData((data) => ({ //12
+  //         ...data,
+  //         phimRender,
+  //         cumPhimData,
+  //       }));
         
-      })
-      .catch((err) => { //13
-        console.log(err); //14
-      });
-  };
+  //     })
+  //     .catch((err) => { //13
+  //       console.log(err); //14
+  //     });
+  // };
 
   // sau khi click chọn Rạp, cần lấy ra prop lichChieuPhim của Rạp đã chọn > lọc ra ngày chiếu để hiển thị
   // input: tenCumRap, cumRapChieuData
@@ -291,10 +295,14 @@ export default function ChooseByDate() {
       lichChieuPhimData: [],
       // setNgayXem: "",
       suatChieuRender: [],
+      setPhim:"",
       lichChieuPhimDataSelected: [],
       setSuatChieu: "",
       maLichChieu: "",
-      cumPhim:[],
+      cumPhim: [],
+      cumPhimRender:[],
+      maRap:"",
+      maPhim:""
     }));
     const indexSelect = data.cumRapChieuData.findIndex(
       (item) => item.name === e.target.value
@@ -302,12 +310,11 @@ export default function ChooseByDate() {
     ); // lấy ra lichChieuPhimData của một cụm rạp đã chọn, item lichChieuPhimData có thể giống ngày nhưng khác giờ chiếu
     // console.log(indexSelect)
 
-    // console.log("mã rạp nè: ", data.cumRapChieuData[indexSelect].id);
-    setIdRap(data.cumRapChieuData[indexSelect].id)
+    console.log("mã rạp nè: ", data.cumRapChieuData[indexSelect].id);
     // console.log("set rạp: ", e.target.value);
-    // setIdRap(indexSelect)
+    setIdRap(data.cumRapChieuData[indexSelect].id)
     // console.log(idRap);
-    theatersApi.getThongTinLichChieuHeThongRapTheoNgayVaRap(idRap, data.setNgayXem)
+    theatersApi.getThongTinLichChieuHeThongRapTheoNgayVaRap(data.cumRapChieuData[indexSelect].id, data.setNgayXem)
     .then((response) => {
       console.log("all lịch chiếu: ",response?.data?.data?.content);
       const lichChieuPhimData = response?.data?.data?.content
@@ -319,6 +326,9 @@ export default function ChooseByDate() {
         ...data,
         cumPhim: phimChieuRenderRemoveDuplicates,
         cumPhimRender,
+        maRap: data.cumRapChieuData[indexSelect].id,
+        maPhim:"",
+        lichChieuPhimData:lichChieuPhimData
       }));
     })
     .catch((err) => {
@@ -329,7 +339,7 @@ export default function ChooseByDate() {
   // sau khi click chọn ngày, cần lọc ra lịch chiếu tương ứng, thêm giờ để render
   // input: ngayChieu, lichChieuPhimData
   // output: setNgayXem(ngayChieu), suatChieuRender(lichChieuPhimDataSelected)[suatChieu], lichChieuPhimDataSelected(ngayChieu,lichChieuPhimData)[{ngayChieuGioChieu: "2019-01-01T10:10:00", maLichChieu: "16099"}],
-  const handleSelectNgayXem = (e) => {
+  const handleSelectNgayXem = (e) => { //chọn phim á
     // setData((data) => ({
     //   ...data,
     //   setNgayXem: e.target.value,
@@ -357,7 +367,6 @@ export default function ChooseByDate() {
     //   suatChieuRender,
     //   lichChieuPhimDataSelected,
     // }));
-
     setData((data) => ({
       ...data,
       openCtr: { ...data.openCtr, suatChieu: true },
@@ -367,16 +376,23 @@ export default function ChooseByDate() {
       lichChieuPhimDataSelected: [],
       setSuatChieu: "",
       maLichChieu: "",
+      // cumPhim:[],
+      // cumPhimRender:[],
+      maPhim:""
     }));
+   
+    console.log(e.target.value);
 
     const indexSelect = data.lichChieuPhimData.findIndex(
-      (item) => item.startDate === e.target.value
+      (item) => item.movie.name === e.target.value
       
-    ); // lấy ra lichChieuPhimData của một cụm rạp đã chọn, item lichChieuPhimData có thể giống ngày nhưng khác giờ chiếu
-    // console.log("indexSelect: ", data.cumPhimData[indexSelect].id);
-    // console.log("set phim: ", data.setRap.id);
-
-    theatersApi.getThongTinLichChieuPhim(idPhim, idRap)
+    ); 
+    // lấy ra lichChieuPhimData của một cụm rạp đã chọn, item lichChieuPhimData có thể giống ngày nhưng khác giờ chiếu
+    // console.log("indexSelect: ", data?.lichChieuPhimDataSelected[indexSelect]?.movie?.id);
+    console.log("set id phim chọn: ", indexSelect);
+    setIdPhim(data.lichChieuPhimData[indexSelect].movie.id)
+    console.log(idPhim);
+    theatersApi.getThongTinLichCoNgay(data.lichChieuPhimData[indexSelect].movie.id, idRap, data.setNgayXem)
     .then((response) => {
       console.log("all lịch chiếu: ",response.data.data.content);
       const lichChieuPhimDataSelected = response.data.data.content
@@ -387,6 +403,7 @@ export default function ChooseByDate() {
         ...data,
         suatChieuRender,
         lichChieuPhimDataSelected,
+        maPhim:idPhim,
       }));
     })
     .catch((err) => {
@@ -395,7 +412,7 @@ export default function ChooseByDate() {
 
 
   };
-
+  console.log(idPhim);
   // input: suatChieu
   // output: setSuatChieu(suatChieu), maLichChieu(suatChieu)[maLichChieu]
 
@@ -410,7 +427,7 @@ export default function ChooseByDate() {
       maPhong:"",
       maPhim:""
     }));
-    const indexMaLichChieuSelect = data.lichChieuPhimDataSelected.findIndex(
+    const indexMaLichChieuSelect = data.lichChieuPhimData.findIndex(
       (item) => item.startTime.slice(0, 8) === e.target.value
     );
     // Lấy được cái mã lịch chiếu rồi
@@ -468,60 +485,24 @@ export default function ChooseByDate() {
     return <p>{errorMovieList}</p>;
   }
 
+  var todayDate = new Date().toISOString().slice(0, 10);
+  // console.log(todayDate);
+  var day = new Date()
+  // console.log(day.getDate());
+  var newday = day.getDate() + 7
+  day.setDate(newday)
+  // console.log(day.toISOString().slice(0, 10));
+  var afterDate = day.toISOString().slice(0, 10)
+
   return (
     <div className={classes.search} id="searchTickets">
       <FormControl focused={false} className={classes.itemFirst}>
-        {/* <Autocomplete
-          options={theaterRender?.data?.content}
-          getOptionLabel={(option) => option.name}
-          style={{ width: 200 }}
-          renderInput={(params) => {
-            // <SearchIcon />
-            return (
-              <TextField
-                {...params}
-                label="Tìm rạp..."
-                variant="standard"
-                className={classes.textField}
-              />
-            );
-          }}
-          // renderOption={(phim) => (
-          //   <CustomPopper
-          //     key={phim.name}
-          //     phim={phim}
-          //     setNewPhim={setNewPhim}
-          //     currentPhimPopup={currentPhimPopup}
-          //     rootElementPopup={data.rootElementPopup}
-          //   />
-          // )}
-          popupIcon={<ExpandMoreIcon />}
-          value={data.setRap ? data.setRap : null}
-          onChange={(event, phim) => {
-            handleSelectPhim(phim);
-          }}
-          classes={{
-            popupIndicator: classes.popupIndicator,
-            option: classes.menu__item,
-            listbox: classes.listbox,
-            paper: classes.paper,
-            noOptions: classes.noOptions,
-          }}
-          open={data.openCtr.phim} // control open
-          onClose={handleClosePhim}
-          onOpen={handleOpenPhim}
-          blurOnSelect
-          noOptionsText="Không tìm thấy!"
-        /> */}
         <input 
           type="date"
           style={{ width: 300, height:"100%", fontSize:"1.5rem", fontWeight:"bold"}}
-          // min="2022-12-01"
-          // max="2022-12-25"
+          min= {todayDate}
+          max= {afterDate}
           required
-          // onChange={(event, phim) => {
-          //   handleSelectPhim(phim);  
-          // }}
           onChange={(e) => {
             handleSelectNgayChieu(e);  
           }}
@@ -560,7 +541,7 @@ export default function ChooseByDate() {
         >
           <MenuItem
             value=""
-            style={{ display: data.rapRender.length > 0 ? "none" : "block" }}
+            style={{ display: data?.rapRender?.length > 0 ? "none" : "block" }}
             classes={{ root: classes.menu__item }}
           >
             {data?.setRap
@@ -606,7 +587,7 @@ export default function ChooseByDate() {
           <MenuItem
             value=""
             style={{
-              display: data?.cumPhim?.length > 0 ? "none" : "block",
+              display: data?.rapRender?.length > 0 ? "none" : "block",
             }}
             classes={{ root: classes.menu__item }}
           >
