@@ -168,7 +168,7 @@ export default function ListSeat() {
           </div>
         </div>
         <div className={classes.countDown}>
-          <p className={classes.timeTitle}>Time count down</p>
+          <p className={classes.timeTitle}>Thời gian đặt giới hạn</p>
           <Countdown />
         </div>
       </div>
@@ -201,6 +201,13 @@ export default function ListSeat() {
                       : seat.name.slice(1)}
                   </p>
                 )}
+                {/* {seat.isOccupied === 0 && (
+                  <p className={classes.seatName}>
+                    {Number(seat.name.slice(1)) < 10
+                      ? seat.name.slice(1)
+                      : seat.name.slice(1)}
+                  </p>
+                )} */}
                 {/* label ghế đã có người đặt */}
                 {seat.isOccupied === 1 && (
                   <img

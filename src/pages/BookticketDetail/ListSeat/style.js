@@ -69,12 +69,14 @@ const useStyles = makeStyles({
     left: "-100%",
     transform: "translate(-50%, -50%)",
     fontWeight: 500,
-    fontSize: props => props.widthLabel,
+    fontSize: props => props.
+    widthLabel,
     cursor: "default",
   },
   seatName: {
     position: 'absolute',
     top: "40%",
+    color:"white",
     left: "50%",
     transform: "translate(-50%, -50%)",
     zIndex: 2,
@@ -90,6 +92,7 @@ const useStyles = makeStyles({
   seatIcon: {
     width: '100%',
     height: '100%',
+    paddingBottom:"5px",
   },
   viewCenter: {
     position: "absolute",
