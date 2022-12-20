@@ -27,15 +27,15 @@ const useStyles = makeStyles({
     // ...props.underLine
   }),
   cumRap__img: {
-    width: 100, height: 100,
+    width: 80, height: 80,
   },
   cumRap__info: {
     paddingLeft: 10,
     width: 'calc(100% - 50px)',
   },
   cumRap__address: {
-    fontSize: "12px",
-    color: "#949494",
+    fontSize: "13px",
+    color: "#000",
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap"

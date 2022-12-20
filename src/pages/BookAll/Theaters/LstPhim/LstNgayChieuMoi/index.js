@@ -37,30 +37,10 @@ export default function LstGioChieu(props) {
   //   })
   //   return gioChieuRenDer;
   // }
-
   return (
     <div className={classes.lstNgayChieu}>
+      {MangNgayKhongTrungLap.length === 0 ? <h6 style={{textAlign:"center", padding:"5px",  color:"white", backgroundColor:"black", fontWeight:"medium"}}>Không có suất chiếu hiện tại</h6> : null}
       {MangNgayKhongTrungLap.map(date => (
-        // <Fragment key={date}>
-        //   <p className={classes.ngayChieu}>{formatDate(date).dateFull}</p>
-        //   <div className={classes.groupTime}>
-        //     {lstLichChieuTheoPhim.map(lichChieuTheoPhim => (
-        //       {/* <Fragment key={lstLichChieuTheoPhim.id}>
-        //         <BtnGoToCheckOut 
-        //          lichChieuTheoPhim={lstLichChieuTheoPhim.startTime}
-        //          duration={lstLichChieuTheoPhim.movie?.duration}
-        //          idLich={lstLichChieuTheoPhim.id}
-        //          maPhim={lstLichChieuTheoPhim.movie?.id}
-        //          ngayChieu={lstLichChieuTheoPhim.startDate}
-        //          maPhong={lstLichChieuTheoPhim.room?.id}
-        //          gioChieu={lstLichChieuTheoPhim.startTime}
-        //          maRap={lstLichChieuTheoPhim.branch?.id} 
-        //         />
-        //       </Fragment> */}
-        //     ))}
-        //   </div>
-
-        // </Fragment>
         <Fragment key={date}>
           <p className={classes.ngayChieu}>{formatDate(date).dateFull}</p>
           <div className={classes.groupTime}>

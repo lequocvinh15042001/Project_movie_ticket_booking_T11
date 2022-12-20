@@ -27,10 +27,16 @@ export default function LichChieuDesktopTheoNgay() {
   const [value, setValue] = React.useState(0);
   const [value1, setValue1] = React.useState(0);
   const [idPhim, setIdPhim] = React.useState(7);
+  const [ngay, setNgay] = React.useState(true);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const handleChangeNgay = (event, newValue) => {
+    setNgay(newValue);
+  };
+
 
   const handleChange1 = (event, newValue) => {
     setValue1(newValue);
@@ -70,6 +76,7 @@ export default function LichChieuDesktopTheoNgay() {
 
   const handleSelectNgayChieu =(e) =>{
     console.log(e.target.value);
+    handleChangeNgay(false);
     setData((data) => ({
       ...data,
       maPhim:"",
@@ -274,7 +281,7 @@ export default function LichChieuDesktopTheoNgay() {
         variant="scrollable"
         value={value}
         onChange={handleChange}
-        
+
         classes={{ root: classes.leftSection, indicator: classes.indicator }}
       >
         {/* xuất ra các cái branch */}
@@ -282,6 +289,7 @@ export default function LichChieuDesktopTheoNgay() {
         {rap?.cumRapChieuData?.map(theater => (
           <Tab disableRipple key={theater.id}
           // value={theater.name}
+          disabled={ngay}
           onClick={() => handleChonRap(theater)}
           classes={{ wrapper: classes.wrapper, root: classes.tabRoot }} label={
             <>

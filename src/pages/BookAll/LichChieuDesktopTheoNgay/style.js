@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: "15rem",
   },
   indicator: {
-    backgroundColor: "transparent",
+    // backgroundColor: "transparent",
   },
 
   wrapper: {
@@ -38,12 +38,13 @@ const useStyles = makeStyles((theme) => ({
     ...underLine
   },
   logo: {
-    width: 50,
+    width: 70,
     marginRight: 10,
   },
 
   rightSection: {
     width: "60vw",
+    paddingLeft:"1rem"
   },
 
   listDay: {
@@ -62,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     ...customScrollbar,
   },
   dayItem: {
-    borderRight: "2px solid orange",
+    borderRight: "1px solid black",
     padding: 10,
     fontWeight: 500,
     textAlign: "center",

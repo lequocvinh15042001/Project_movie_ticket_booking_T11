@@ -3,13 +3,11 @@ import React, { useState, useMemo, useEffect } from "react";
 import useStyles from "./style";
 import formatDate from "../../../utilities/formatDate";
 import ItemCumRap from "../../../components/ItemCumRap";
-import { selectDesktopData } from "../../../reducers/selector/MovieDetail";
-import { logger } from "workbox-core/_private";
 import { useSelector } from "react-redux";
 import theatersApi from "../../../api/theatersApi";
 import { useParams } from "react-router-dom";
 
-export default function RightSection({ branch, idRap, idPhim }) {
+export default function RightSection({ idRap, idPhim }) {
   // console.log('branch nè', branch);
   const [lich, setLich] = useState();
   const param = useParams()
@@ -78,11 +76,10 @@ export default function RightSection({ branch, idRap, idPhim }) {
   };
   
   const {theaterList} = useSelector((state) => state.theaterReducer)
-
   return (
     <div>
       <div className={classes.listDay}>
-        {data?.ngayChieuRender.length === 0 && <p style={{ padding: 10 }}>No show time for this film!</p>}
+        {data?.ngayChieuRender.length === 0 && <p style={{ padding: 10 }}>Không có lịch chiếu cho phim này!</p>}
         {data?.ngayChieuRender?.map((day, i) => (
           // <div
           //   className={classes.dayItem}

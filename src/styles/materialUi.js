@@ -4,7 +4,7 @@ const customScrollbar = {
   "&::-webkit-scrollbar": {
     backgroundColor: "#e8e3e3",
     borderRadius: 5,
-    height: "5px",
+    height: "13px",
     width: "5px",
   },
   "&::-webkit-scrollbar-track": {
