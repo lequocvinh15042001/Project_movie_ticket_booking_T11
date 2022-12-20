@@ -19,9 +19,10 @@ export default function LichChieuDesktop({ data }) {
 
   const classes = useStyles();
 
-  const [value, setValue] = React.useState(0);
-  const [value1, setValue1] = React.useState(0);
-  const [idPhim, setIdPhim] = React.useState(7);
+  const [value, setValue] = React.useState(); //cho mặc định để hiển thị sẵn
+  const [value1, setValue1] = React.useState(); //cho mặc định để hiển thị sẵn
+  const [idRap, setIdRap] = React.useState(); //cho mặc định để hiển thị sẵn
+  const [idPhim, setIdPhim] = React.useState();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -33,15 +34,21 @@ export default function LichChieuDesktop({ data }) {
   };
 
   const handlerOn = (event) => {
-    console.log(event);
+    console.log("Chọn phim: ",event);
     setIdPhim(event)
+    // setValue1(event);
+  };
+
+  const handlerOn2 = (event) => {
+    console.log("Chọn rạp ",event);
+    setIdRap(event)
     // setValue1(event);
   };
 
   useEffect(() => {
     moviesApi.getDanhSachPhim()
       .then((response) => {
-        console.log("all Phim: ",response);
+        // console.log("all Phim: ",response);
         setPhim(response?.data?.data);
         // const cumRapChieuData= response?.data?.data?.reduce(
         //   (colect, item) => {
@@ -120,7 +127,8 @@ export default function LichChieuDesktop({ data }) {
         <h5 style={{textAlign:"center", paddingTop:"1rem", color:"red", fontWeight:"bolder"}}>Chọn rạp</h5>
         {/* xuất ra các cái branch */}
         {rap?.cumRapChieuData?.map(theater => (
-          <Tab disableRipple key={theater.id} 
+          <Tab disableRipple key={theater.id}
+          onClick={() => handlerOn2(theater.id)} 
           classes={{ wrapper: classes.wrapper, root: classes.tabRoot }} label={
             <>
               <img className={classes.logo} src={theater.imgURL} alt="logoTheater" />
@@ -133,10 +141,11 @@ export default function LichChieuDesktop({ data }) {
       <div className={classes.rightSection}>
         {rap?.cumRapChieuData?.length === 0 && <p style={{ padding: 10 }}>Không có lịch chiếu!</p>}
         <h5 style={{textAlign:"center", paddingTop:"1rem", color:"red", fontWeight:"bolder"}}>Chọn ngày có sẵn bên dưới</h5>
+        {!idPhim ? <p style={{ padding: 10, fontWeight:"700", fontSize:"large", backgroundColor:"black", color:"white", marginBottom:5 }}>Vui lòng chọn phim!</p> : null}
+        {!idRap ? <p style={{ padding: 10, fontWeight:"700", fontSize:"large", backgroundColor:"black", color:"white" }}>Vui lòng chọn rạp!</p> : null}
         {rap?.cumRapChieuData?.map((theater, i) => (
-          // <div key={theater.id} style={{ display: value === i ? "block" : "none" }}>
           <div key={theater.id} style={{ display: value === i ? "block" : "none" }}>
-            <RightSection branch={theater} idRap={theater.id} idPhim={idPhim} /> 
+            <RightSection idRap={idRap} idPhim={idPhim} /> 
           </div>
         ))}
       </div>

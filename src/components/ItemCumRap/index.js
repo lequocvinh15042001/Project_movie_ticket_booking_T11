@@ -30,7 +30,7 @@ export default function ItemCumRap({ tenCumRap, maLichChieu, lichChieuPhim, diaC
               <Fragment key={lichChieuPhim.id} >
                 <BtnGoToCheckOut lichChieuTheoPhim={lichChieuPhim?.startTime} 
                 duration = {lichChieuPhim?.movie?.duration} 
-                idLich={lichChieuPhim.id} 
+                idLich={lichChieuPhim?.id} 
                 maPhim={maPhim} 
                 ngayChieu={ngayChieu}
                 maPhong={maPhong}

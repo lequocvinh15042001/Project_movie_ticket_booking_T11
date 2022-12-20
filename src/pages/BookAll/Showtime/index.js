@@ -154,40 +154,6 @@ export default function SimpleTabs() {
 
   return (
     <div style={{ paddingTop: "10px"}} id="lichchieu">
-      {/* <AppBar className={classes.appBar} position="static">
-        <Tabs
-          classes={{
-            root: classes.tabBar,
-            flexContainer: classes.flexContainer,
-            indicator: classes.indicator,
-          }}
-          value={value.value}
-          onChange={handleChange}
-        >
-          <Tab
-            disableRipple
-            className={`${classes.tabButton} ${classes.tabDangChieu}`}
-            label="Đặt theo rạp"
-          />
-          <Tab
-            disableRipple
-            className={`${classes.tabButton} ${classes.tabSapChieu}`}
-            label="Đặt theo phim"
-          />
-          <Tab
-            disableRipple
-            className={`${classes.tabButton} ${classes.tabNgayChieu}`}
-            label="Đặt theo ngày"
-          />
-        </Tabs>
-      </AppBar>
-      <div className={classes.listMovie}>
-        {isDesktop ? (
-          <Desktop arrayData={arrayData} value={value} />
-        ) : (
-          <Mobile arrayData={arrayData} value={value} />
-        )}
-      </div> */}
        <Box
         sx={{
           // bgcolor: "background.paper",
@@ -202,8 +168,8 @@ export default function SimpleTabs() {
           <Tabs
             value={value1}
             onChange={handleChangeBang}
-            indicatorColor="secondary"
-            textColor="primariry"
+            indicatorColor="primary"
+            textColor="primary"
             variant="fullWidth"
             aria-label="action tabs example"
           >

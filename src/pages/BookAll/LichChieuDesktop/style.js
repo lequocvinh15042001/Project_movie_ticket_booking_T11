@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: "15rem",
   },
   indicator: {
-    backgroundColor: "transparent",
+    // backgroundColor: "transparent",
   },
 
   wrapper: {

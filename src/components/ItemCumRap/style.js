@@ -21,6 +21,7 @@ const useStyles = makeStyles({
     float: "left",
     display: "inline-block",
     border: "1px solid #ebebec",
+    borderRadius:"50%"
   },
   wrapInfo: {
     paddingLeft: 4
