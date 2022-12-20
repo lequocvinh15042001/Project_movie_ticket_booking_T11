@@ -8,6 +8,7 @@ import React, {
 
 import { DataGrid, GridOverlay, GridToolbar } from "@material-ui/data-grid";
 import { nanoid } from "nanoid";
+import Tooltip from "@material-ui/core/Tooltip";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -33,6 +34,7 @@ import {
 } from "../../reducers/actions/UsersManagement";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Swal from "sweetalert2";
+import renderCellExpand from "../MoviesManagement/RenderCellExpand";
 
 function validateEmail(email) {
   const re =
@@ -163,6 +165,7 @@ export default function UsersManagement() {
           ...user,
           xoa: "",
           id: user.id,
+          image: user.image,
           role: user.role === "ROLE_STAFF" ? true : false,
           ismodify: false,
         })); // id là prop bắt buộc
@@ -659,10 +662,31 @@ export default function UsersManagement() {
         {
           field: "username",
           headerName: "Account",
-          width: 250,
+          width: 180,
           editable: addUser.toggle,
           headerAlign: "center",
           align: "left",
+          headerClassName: "custom-header",
+        },
+        {
+          field: "image",
+          headerName: "Ảnh đại diện",
+          width: 130,
+          renderCell: (params) => (
+            <Tooltip title={params.row.image}>
+              <img
+                style={{
+                  maxWidth: "100%",
+                  height: "100%",
+                  borderRadius: 4,
+                  marginRight: 15,
+                }}
+                src={params.row.image}
+              />
+            </Tooltip>
+          ),
+          headerAlign: "center",
+          align: "center",
           headerClassName: "custom-header",
         },
         // {
@@ -676,8 +700,8 @@ export default function UsersManagement() {
         // },
         {
           field: "name",
-          headerName: "Name",
-          width: 300,
+          headerName: "Tên",
+          width: 250,
           editable: true,
           headerAlign: "center",
           align: "left",

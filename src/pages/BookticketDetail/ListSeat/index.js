@@ -237,7 +237,7 @@ export default function ListSeat() {
         <div className={classes.typeSeats}>
           <div>
             <SeatIcon style={{ color: "#3e515d", fontSize: 27 }} />
-            <p>Normal</p>
+            <p>Ghế thường</p>
           </div>
           {/* <div>
             <SeatIcon style={{ color: "#f7b500", fontSize: 27 }} />
@@ -245,24 +245,24 @@ export default function ListSeat() {
           </div> */}
           <div>
             <SeatIcon style={{ color: "#44c020", fontSize: 27 }} />
-            <p>Choosing</p>
+            <p>Đang chọn</p>
           </div>
           <div>
             <div style={{ position: "relative" }}>
               <p className={classes.posiX}>x</p>
               <SeatIcon style={{ color: "#99c5ff", fontSize: 27 }} />
             </div>
-            <p>Bought</p>
+            <p>Đã đặt</p>
           </div>
         </div>
         <div className={classes.positionView}>
           <span>
             <span className={classes.linecenter} />
-            <span>Center</span>
+            <span>Ở giữ</span>
           </span>
           <span className={classes.line}>
             <span className={classes.linebeautiful} />
-            <span>Good View</span>
+            <span>View đẹp</span>
           </span>
         </div>
       </div>

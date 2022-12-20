@@ -36,6 +36,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import { useSnackbar } from "notistack";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -114,6 +115,7 @@ export default function Index({placeholder}) {
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const classes = useStyles();
   const dispatch = useDispatch();
+  // const  {enqueueSnackbar}  = useSnackbar();
   const { successInfoUser, loadingInfoUser } = useSelector(
     (state) => state.usersManagementReducer
   );
@@ -148,6 +150,7 @@ export default function Index({placeholder}) {
   const [image, setImage] = useState()
   const [oldPass, setOldPass] = useState()
   const [newPass, setNewPass] = useState()
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -244,7 +247,8 @@ export default function Index({placeholder}) {
       console.log("Thoát");
       return;
     }
-    dispatch(putUserUpdate(user));
+    console.log(user);
+    // dispatch(putUserUpdate(user));
   };
 
   const handleSubmitChangePass = (pass) => {
@@ -268,7 +272,6 @@ export default function Index({placeholder}) {
     }
 
   };
-
   const handleToggleHidePassword = () => {
     if (typePassword === "password") {
       settypePassword("text");
@@ -302,6 +305,36 @@ export default function Index({placeholder}) {
       .join(", ");
   };
 
+  const submitImage =() =>{
+    const data  = new FormData()
+    data.append("file", image)
+    data.append("upload_preset", "hh37brtc")
+    data.append("cloud_name", "dfb5p3kus")
+
+    fetch("https://api.cloudinary.com/v1_1/dfb5p3kus/image/upload", {
+      method: "post",
+      body:data
+    })
+    .then((res) => res.json())
+    .then((data) =>{
+      // console.log(data.secure_url);
+      setImage(data.secure_url)
+      // enqueueSnackbar("Thành công", { variant: "success" });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Úp ảnh thành công!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+    })
+    .catch((err) => {
+      console.log(err);
+      // enqueueSnackbar("Thất bại", { variant: "error" });
+    })
+  }
+
   const handlerChangAvatar = () => {
     console.log("Đổi avatar");
   }
@@ -309,7 +342,7 @@ export default function Index({placeholder}) {
   useEffect(() => {
     usersApi.getChiTietTaiKhoan(successInfoUser?.data?.username)
     .then((response) => {
-      // console.log("Chi tiết USER: ",response);
+      console.log("Chi tiết USER: ",response);
       setImage(response.data?.data?.image)
     })
     .catch((err) => {
@@ -328,10 +361,25 @@ export default function Index({placeholder}) {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleChangeAnh = (image) => {
+    const user = {
+      username: successInfoUser?.data?.username ?? "",
+      password: successInfoUser?.data?.password ?? "",
+      email: successInfoUser?.data?.email ?? "",
+      id: successInfoUser?.data?.id ?? "",
+      name: successInfoUser?.data?.name ?? "",
+      image: image ?? "",
+    }
+    dispatch(putUserUpdate(user));
+    console.log("vateee:",user);
     setOpen(false);
   };
 
+  const handleClose = (user) => {
+    setOpen(false);
+  };
+
+  console.log("avt cập nhật: ",image);
 
   return (
     <div className="bootstrap snippet mb-5 mx-4" style={{"backgroundColor":"black"}}>
@@ -340,10 +388,14 @@ export default function Index({placeholder}) {
         <div className="col-sm-2">
           <div className="text-center">
             <img
-              src={FAKE_AVATAR}
+              src={image ? image : FAKE_AVATAR}
               className={`avatar rounded-circle img-thumbnail ${
                 isDesktop ? "w-60" : "w-30"
               }`}
+              // style={{
+              //   width:"100%",
+              //   height:"100%",
+              // }}
               alt="avatar"
             />
             <div className="text-center mb-2" style={{paddingTop:"0.5rem"}}>
@@ -378,13 +430,13 @@ export default function Index({placeholder}) {
                 <DialogContentText id="alert-dialog-slide-description">
                   <div>
                     <img
-                      src={FAKE_AVATAR}
-                      style={{
-                        width:"18rem",
-                        height:"18rem",
-                      }}
+                      src={image ? image : FAKE_AVATAR}
+                      // style={{
+                      //   width:"18rem",
+                      //   height:"18rem",
+                      // }}
                       className={`avatar rounded-circle img-thumbnail center${
-                        isDesktop ? "w-60" : "w-30"
+                        isDesktop ? "w-30" : "w-30"
                       }`}
                       alt="avatar"
                     />
@@ -394,7 +446,7 @@ export default function Index({placeholder}) {
                     variant="extended"
                     color="secondary"
                     size="medium"
-                    // onClick={handleClickOpen}
+                    onClick={submitImage}
                   >
                     Up ảnh
                 </Fab>
@@ -402,7 +454,8 @@ export default function Index({placeholder}) {
 
               <DialogActions>
                 <Button onClick={handleClose}>Huỷ bỏ</Button>
-                <Button onClick={handleClose}>Đồng ý</Button>
+                {/* <Button onClick={handleClose}>Đồng ý</Button> */}
+                <Button onClick={(e) => handleChangeAnh(image)}>Đồng ý</Button>
               </DialogActions>
             </Dialog>
             <h1 className="my-2" style={{"color":"white"}}>{successInfoUser?.data?.username}</h1>

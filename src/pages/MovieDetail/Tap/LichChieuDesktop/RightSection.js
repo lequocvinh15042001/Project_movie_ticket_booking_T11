@@ -84,7 +84,7 @@ export default function RightSection({ branch, idRap }) {
   return (
     <div>
       <div className={classes.listDay}>
-        {data?.ngayChieuRender.length === 0 && <p style={{ padding: 10 }}>No show time for this film!</p>}
+        {data?.ngayChieuRender.length === 0 && <p style={{ padding: 10 }}>Không có lịch chiếu cho phim này!</p>}
         {data?.ngayChieuRender?.map((day, i) => (
           // <div
           //   className={classes.dayItem}

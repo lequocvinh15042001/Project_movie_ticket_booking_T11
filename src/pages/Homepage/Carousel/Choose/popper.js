@@ -12,10 +12,10 @@ const useStyles = makeStyles((theme) => ({
       "0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%)",
   },
   image: {
-    // height: "auto",
-    width: 1000,
-    height: 400,
-    borderRadius: 4,
+    height: "auto",
+    borderRadius: 5,
+    border:"2px solid rgb(250, 56, 68)",
+    marginLeft:"0.5rem"
   },
   info: {
     backgroundColor: "rgb(74 74 74 / 46%)",
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     left: "50%",
     bottom: 51,
     transform: "translateX(-50%)",
-    padding: "8px 23px",
+    padding: "10px 20px",
     background: "linear-gradient(to left, #fb4226, #ce3017 100%)",
     "&:hover": {
       background: "#d01414",
@@ -136,7 +136,7 @@ export default function CustomPopper(props) {
                 className={classes.btnMovieDetail}
                 onClick={() => history.push(`/phim/${phim.id}`)}
               >
-                Click to Detail
+                Chi tiết
               </button>
             </div>
           </div>

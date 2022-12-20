@@ -53,15 +53,15 @@ export default function SuccessBooking() {
           <table className={classes.table}>
             <tbody>
               <tr>
-                <td valign='top' >Showtime:</td>
+                <td valign='top' >Lịch chiếu:</td>
                 <td valign='top'>{`${thongTin?.data?.content[0]?.startTime}, ${thongTin?.data?.content[0]?.startDate}`}</td>
               </tr>
               <tr>
-                <td valign='top'>Room:</td>
+                <td valign='top'>Phòng:</td>
                 <td>{thongTin?.data?.content[0]?.room?.name}</td>
               </tr>
               <tr>
-                <td valign='top'>Seat(s):</td>
+                <td valign='top'>Ghế(s):</td>
                 <td>{listSeatSelected?.join(", ")}</td>
               </tr>
             </tbody>
@@ -70,11 +70,11 @@ export default function SuccessBooking() {
       </div>
       <div>
         <div>
-          <h3 className={classes.infoResult_label}>Ticket Information</h3>
+          <h3 className={classes.infoResult_label}>Thông tin vé</h3>
           <table className={`${classes.table} table`}>
             <tbody>
               <tr>
-                <td valign='top' >Name:</td>
+                <td valign='top' >Tên:</td>
                 <td>{currentUser?.name}</td>
               </tr>
               {/* <tr>
@@ -86,19 +86,19 @@ export default function SuccessBooking() {
                 <td>{email}</td>
               </tr>
               <tr>
-                <td valign='top'>Status:</td>
+                <td valign='top'>Trạng thái:</td>
                 <td>
-                  {successBookingTicketMessage && <span>Booking ticket Successfully <span className={classes.paymentColor}>{paymentMethod}</span></span>}
-                  {errorBookTicketMessage && <span>Booking ticket Fail: <span className={classes.errorColor}>{errorBookTicketMessage}</span></span>}
+                  {successBookingTicketMessage && <span>Đặt vé thành công: <span className={classes.paymentColor}>{paymentMethod}</span></span>}
+                  {errorBookTicketMessage && <span>Đặt vé thất bại: <span className={classes.errorColor}>{errorBookTicketMessage}</span></span>}
                 </td>
               </tr>
               <tr>
-                <td valign='top' >Total:</td>
+                <td valign='top' >Tổng cộng:</td>
                 <td valign='top'><span>{`${amount.toLocaleString('vi-VI')} đ`}</span></td>
               </tr>
             </tbody>
           </table>
-          {successBookingTicketMessage && <p className={classes.noteresult}>Check this ticket into your information!</p>}
+          {successBookingTicketMessage && <p className={classes.noteresult}>Kiểm tra vé trong thông tin cá nhân!</p>}
         </div>
       </div>
     </div>

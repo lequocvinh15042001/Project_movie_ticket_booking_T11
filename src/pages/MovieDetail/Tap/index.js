@@ -66,12 +66,12 @@ export default function CenteredTabs({
 }) {
   const param = useParams(); // mã phim lấy từ url trên trình duyệt
   const { currentUser } = useSelector((state) => state.authReducer);
-  console.log("Current User", currentUser);
+  // console.log("Current User", currentUser);
   // lấy current user thì qua bước nữa là lấy detail của user
 
   //lấy lịch chiếu nè
   const { movieDetailShowtimes, errorMovieDetailShowtimes } = useSelector((state) => state.movieDetailReducer);
-  console.log("Xuất lịch chiếu của movie đã chọn: ", movieDetailShowtimes);
+  // console.log("Xuất lịch chiếu của movie đã chọn: ", movieDetailShowtimes);
 
 
   const {

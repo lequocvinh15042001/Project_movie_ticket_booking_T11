@@ -27,7 +27,7 @@ import ThumbnailYoutube from "./ThumbnailYoutube";
 import Form from "./Form";
 import FormAddEvent from "./FormAddEvent";
 import Swal from "sweetalert2";
-import { getEventsList, putEventUpdate, resetEventList } from "../../reducers/actions/EventsManagement";
+import { getEventsList, postAddEvent, putEventUpdate, resetEventList } from "../../reducers/actions/EventsManagement";
 
 function CustomLoadingOverlay() {
   return (
@@ -218,8 +218,10 @@ export default function MoviesManagement() {
     // dispatch(updateMovieUpload(movieObj));
   };
   const onAddMovie = (movieObj) => {
+    console.log("Dữ liệu event thêm: ", movieObj);
+    enqueueSnackbar("Thành công", { variant: "success" });
     if (!loadingAddEvent) {
-      dispatch(addMovieUpload(movieObj));
+      dispatch(postAddEvent(movieObj));
     }
     setOpenModal(false);
   };
@@ -240,6 +242,8 @@ export default function MoviesManagement() {
       // language: "",
       // rated: "",
       // isShowing: null,
+
+
       brief:"",
       contents: [
         {
@@ -251,7 +255,17 @@ export default function MoviesManagement() {
       title:"",
       mainImage:"",
       status:"",
-      typy:"",
+      type:"",
+
+      // brief: "",
+      // priority: "",
+      // description: "",
+      // image: "",
+      // title: "",
+      // image: "",
+      // status:"",
+      // type:"",
+
     };
     selectedPhim.current = emtySelectedEvent;
     setOpenModal(true);
@@ -335,7 +349,7 @@ export default function MoviesManagement() {
     {
       field: "title",
       headerName: "Title",
-      width: 200,
+      width: 300,
       headerAlign: "center",
       align: "left",
       headerClassName: "custom-header",
@@ -344,7 +358,7 @@ export default function MoviesManagement() {
     {
       field: "mainImage",
       headerName: "Image",
-      width: 200,
+      width: 150,
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
@@ -353,18 +367,18 @@ export default function MoviesManagement() {
     {
       field: "status",
       headerName: "Status",
-      width: 250,
+      width: 150,
       headerAlign: "center",
-      align: "left",
+      align: "center",
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
     },
     {
       field: "type",
       headerName: "Type",
-      width: 250,
+      width: 150,
       headerAlign: "center",
-      align: "left",
+      align: "center",
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
     },
@@ -404,7 +418,7 @@ export default function MoviesManagement() {
               disabled={loadingAddEvent}
               startIcon={<AddBoxIcon />}
             >
-              Add Event
+              Thêm sự kiện, khuyến mãi
             </Button>
           </div>
           <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
@@ -413,7 +427,7 @@ export default function MoviesManagement() {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder="Tìm kiếm..."
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
@@ -448,8 +462,8 @@ export default function MoviesManagement() {
       <Dialog open={openModal}>
         <DialogTitle onClose={() => setOpenModal(false)}>
           {selectedPhim?.current?.brief
-            ? `Edit: ${selectedPhim?.current?.brief}`
-            : "Add new"}
+            ? `Chỉnh sửa: ${selectedPhim?.current?.brief}`
+            : "Tạo mới"}
         </DialogTitle>
         <DialogContent dividers>
           <FormAddEvent

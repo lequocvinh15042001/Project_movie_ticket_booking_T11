@@ -70,7 +70,7 @@ export default function LichChieuDesktop({ data }) {
       </Tabs>
       {/* Để xuất ra các cái thông tin brach cụ thể */}
       <div className={classes.rightSection}>
-        {rap?.cumRapChieuData?.length === 0 && <p style={{ padding: 10 }}>No show time for this film!</p>}
+        {rap?.cumRapChieuData?.length === 0 && <p style={{ padding: 10 }}>Không có lịch chiếu cho phim này!</p>}
         {rap?.cumRapChieuData?.map((theater, i) => (
           <div key={theater.id} style={{ display: value === i ? "block" : "none" }}>
             <RightSection branch={theater} idRap={theater.id} />

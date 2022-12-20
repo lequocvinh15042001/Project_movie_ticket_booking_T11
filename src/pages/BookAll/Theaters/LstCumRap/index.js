@@ -9,7 +9,7 @@ import moviesApi from '../../../../api/moviesApi';
 
 function LstCumRap(props) {
   const { lstCumRap, color } = props;
-  console.log(lstCumRap);
+  // console.log(lstCumRap);
   const [valueCumRap, setValueCumRap] = React.useState(0);
   const [danhSachPhim, setDanhSachPhim] = React.useState([]);
   const classes = useStyles({ underLine, customScrollbar, color });

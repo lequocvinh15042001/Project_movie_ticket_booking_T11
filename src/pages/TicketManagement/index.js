@@ -11,6 +11,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import { useStyles } from "./styles";
 import { getAllTicketByAdminStaff } from "../../reducers/actions/Ticket";
+import { Tooltip } from "@material-ui/core";
 
 function CustomLoadingOverlay() {
   return (
@@ -152,14 +153,35 @@ export default function TicketManagement() {
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
     },
+    // {
+    //   field: "hinhPhim",
+    //   headerName: "Hình ảnh",
+    //   width: 200,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   headerClassName: "custom-header",
+    //   renderCell: (params) => RenderCellExpand(params),
+    // },
     {
       field: "hinhPhim",
       headerName: "Hình ảnh",
       width: 200,
+      renderCell: (params) => (
+        <Tooltip title={params.row.hinhPhim}>
+          <img
+            style={{
+              maxWidth: "100%",
+              height: "100%",
+              borderRadius: 4,
+              marginRight: 15,
+            }}
+            src={params.row.hinhPhim}
+          />
+        </Tooltip>
+      ),
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
-      renderCell: (params) => RenderCellExpand(params),
     },
     {
       field: "gioDat",
