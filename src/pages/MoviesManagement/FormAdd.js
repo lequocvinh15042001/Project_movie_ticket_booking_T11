@@ -11,6 +11,8 @@ import { ThemeProvider } from "@material-ui/styles";
 import FormControl from '@material-ui/core/FormControl';
 import { materialTheme } from './styles';
 import { useStyles } from './styles';
+import Swal from 'sweetalert2';
+import { useSnackbar } from 'notistack';
 
 export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
   const classes = useStyles();
@@ -18,6 +20,7 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
   const [srcImage2, setSrcImage2] = useState(selectedPhim?.largeImageURL)
   const [image, setImage] = useState('')
   const [image2, setImage2] = useState('')
+  const  {enqueueSnackbar}  = useSnackbar();
 
   const setThumbnailPreviews = (e) => {
     let file = e.target;
@@ -29,25 +32,25 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
   }
 
   const movieSchema = yup.object().shape({
-    name: yup.string().required("*Not be empty!"),
-    smallImageURl: yup.string().required("*Please choose image!"),
-    largeImageURL: yup.string().required("*Please choose image!"),
-    shortDescription: yup.string().required("*Not be empty!").min(50, "Mô tả cần 100 ký tự trở lên!"),
-    longDescription: yup.string().required("*Not be empty!").min(50, "Mô tả cần 100 ký tự trở lên!"),
-    director: yup.string().required("*Not be empty!"),
-    actors: yup.string().required("*Not be empty!"),
-    categories: yup.string().required("*Not be empty!"),
+    name: yup.string().required("*Không được bỏ trống!"),
+    smallImageURl: yup.string().required("*Vui lòng chọn hình ảnh nhỏ!"),
+    largeImageURL: yup.string().required("*Vui lòng chọn hình ảnh lớn!"),
+    shortDescription: yup.string().required("*Không được bỏ trống!").min(50, "Mô tả cần 100 ký tự trở lên!"),
+    longDescription: yup.string().required("*Không được bỏ trống!").min(50, "Mô tả cần 100 ký tự trở lên!"),
+    director: yup.string().required("*Không được bỏ trống!"),
+    actors: yup.string().required("*Không được bỏ trống!"),
+    categories: yup.string().required("*Không được bỏ trống!"),
     releaseDate: yup.string().required("*Please choose release date!"),
-    duration: yup.string().required("*Not be empty!"),
-    trailerURL: yup.string().required("*Not be empty!").matches(/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/, "*URL youtube not valid"),
-    language: yup.string().required("*Not be empty!"),
-    rated: yup.string().required("*Not be empty!"),
-    isShowing: yup.string().required("*Not be empty!"),
+    duration: yup.string().required("*Không được bỏ trống!"),
+    trailerURL: yup.string().required("*Không được bỏ trống!").matches(/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/, "*URL youtube không hợp lệ!"),
+    language: yup.string().required("*Không được bỏ trống!"),
+    rated: yup.string().required("*Không được bỏ trống!"),
+    isShowing: yup.string().required("*Không được bỏ trống!"),
     // rated: yup.number().required("*Not be empty!").min(0, "*Điểm đánh giá phải từ 0 đến 10").integer("*Điểm đánh giá phải từ 0 đến 10").max(10, "*Điểm đánh giá phải từ 0 đến 10"),
   })
 
   const handleSubmit = (movieObj) => {
-    console.log("Bay vô add: ", movieObj);
+    // console.log("Bay vô add: ", movieObj);
     // let smallImageURl = movieObj.smallImageURl
     // let fakeImage = { srcImage, id: movieObj.id }
    
@@ -84,12 +87,16 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     .then((data) =>{
       // console.log(data.secure_url);
       setImage(data.secure_url)
-      console.log("SrcImage 1 : ", image);
+      enqueueSnackbar("Thành công", { variant: "success" });
+
     })
     .catch((err) => {
       console.log(err);
+      enqueueSnackbar("Thất bại", { variant: "error" });
+
     })
   }
+
   const submitImage2 =() =>{
     const data  = new FormData()
     data.append("file", image2)
@@ -104,12 +111,16 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     .then((data) =>{
       // console.log(data.secure_url);
       setImage2(data.secure_url)
-      console.log("SrcImage 2: ", image2);
+      enqueueSnackbar("Thành công", { variant: "success" });
+
     }).catch((err) => {
       console.log(err);
+      enqueueSnackbar("Thất bại", { variant: "error" });
+
     })
   }
-
+  console.log("SrcImage 1 : ", image);
+  console.log("SrcImage 2: ", image2);
   return (
     <Formik
       initialValues={{
@@ -128,22 +139,22 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
         rated: selectedPhim.rated,
         isShowing: selectedPhim.isShowing,
       }}
-      // validationSchema={movieSchema}
+      validationSchema={movieSchema}
       onSubmit={handleSubmit}
     >{(formikProp) => (
       <Form >
         <div className="form-group">
-          <label>Movie's Name&nbsp;</label>
+          <label>Tên phim&nbsp;</label>
           <ErrorMessage name="name" render={msg => <span className="text-danger">{msg}</span>} />
           <Field name="name" className="form-control" />
         </div>
         <div className="form-group">
-          <label>Trailer URL&nbsp;</label>
+          <label>Link Trailer&nbsp;</label>
           <ErrorMessage name="trailerURL" render={msg => <span className="text-danger">{msg}</span>} />
           <Field name="trailerURL" className="form-control" />
         </div>
         <div className="form-group">
-          <label>Image&nbsp;</label>
+          <label>Hình ảnh nhỏ&nbsp;</label>
           <ErrorMessage name="smallImageURl" render={msg => <span className="text-danger">{msg}</span>} />
           <div className="form-row">
             <div className="col-2">
@@ -162,12 +173,12 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
 
             </div>
             <button onClick={submitImage} type="button">
-              Upload
+              Úp ảnh
             </button>
           </div>
         </div>
         <div className="form-group">
-          <label>Large Image&nbsp;</label>
+          <label>Hình ảnh lớn&nbsp;</label>
           <ErrorMessage name="largeImageURL" render={msg => <span className="text-danger">{msg}</span>} />
           <div className="form-row">
             <div className="col-2">
@@ -189,7 +200,7 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
                     }/>
             </div>
             <button onClick={submitImage2} type="button">
-              Upload
+              Úp ảnh
             </button>
           </div>
           {/* <div>
@@ -199,32 +210,32 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
           </div> */}
         </div>
         <div className="form-group">
-          <label>Short Description&nbsp;</label>
+          <label>Mô tả ngắn&nbsp;</label>
           <ErrorMessage name="shortDescription" render={msg => <span className="text-danger">{msg}</span>} />
           <Field as="textarea" name="shortDescription" className="form-control" />
         </div>
         <div className="form-group">
-          <label>Long Description&nbsp;</label>
+          <label>Mô tả chi tiết&nbsp;</label>
           <ErrorMessage name="longDescription" render={msg => <span className="text-danger">{msg}</span>} />
           <Field as="textarea" name="longDescription" className="form-control" />
         </div>
         <div className="form-group">
-          <label>Director&nbsp;</label>
+          <label>Đạo diễn&nbsp;</label>
           <ErrorMessage name="director" render={msg => <span className="text-danger">{msg}</span>} />
           <Field name="director" className="form-control" />
         </div>
         <div className="form-group">
-          <label>Actors&nbsp;</label>
+          <label>Diễn viên&nbsp;</label>
           <ErrorMessage name="actors" render={msg => <span className="text-danger">{msg}</span>} />
           <Field name="actors" className="form-control" />
         </div>
         <div className="form-group">
-          <label>Categories&nbsp;</label>
+          <label>Thể loại phim&nbsp;</label>
           <ErrorMessage name="categories" render={msg => <span className="text-danger">{msg}</span>} />
           <Field name="categories" className="form-control" />
         </div>
         <div className="form-group">
-          <label>Release Date&nbsp;</label>
+          <label>Ngày khởi chiếu&nbsp;</label>
           <ErrorMessage name="releaseDate" render={msg => <span className="text-danger">{msg}</span>} />
           <FormControl className={classes.formControl} focused={false}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -239,23 +250,23 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
           </FormControl>
         </div>
         <div className="form-group">
-          <label>Duration&nbsp;</label>
+          <label>Thời lượng phim (phút)&nbsp;</label>
           <ErrorMessage name="duration" render={msg => <span className="text-danger">{msg}</span>} />
           <Field name="duration" type="number" className="form-control" />
         </div>
         <div className="form-group">
-          <label>Language&nbsp;</label>
+          <label>Ngôn ngữ&nbsp;</label>
           <ErrorMessage name="language" render={msg => <span className="text-danger">{msg}</span>} />
           <Field name="language" className="form-control" />
         </div>
         {/* <div className="form-group" hidden={selectedPhim.id ? false : true}> */}
         <div className="form-group">
-          <label>Rate&nbsp;</label>
+          <label>Đánh giá&nbsp;</label>
           <ErrorMessage name="rated" render={msg => <span className="text-danger">{msg}</span>} />
           <Field name="rated" className="form-control" />
         </div>
         <div className="form-group">
-          <label>Is Showing&nbsp;</label>
+          <label>Có đang chiếu không (nếu có chọn 1, ngược lại chọn 0)&nbsp;</label>
           <ErrorMessage name="isShowing" render={msg => <span className="text-danger">{msg}</span>} />
           <Field name="isShowing" type="number"  className="form-control" />
         </div>

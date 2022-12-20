@@ -136,16 +136,6 @@ export default function Carousel() {
           );
         })}
       </Slider>
-      {/* <div style={{"backgroundColor":"white",
-       "paddingBottom":"5rem",
-        "paddingTop":"2rem",
-         "width":"50rem",
-         "height":"20rem",
-           "left":"0",
-           "bottom":"0"}}>
-      <Booking/>
-      </div> */}
-      {/* <SearchStickets /> */}
 
         <Box
         sx={{

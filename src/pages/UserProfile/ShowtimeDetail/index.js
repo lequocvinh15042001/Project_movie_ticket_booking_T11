@@ -128,7 +128,7 @@ export default function SimpleTabs() {
           <Tab
             disableRipple
             className={`${classes.tabButton} ${classes.tabDangChieu}`}
-            label="Showing!"
+            label="Phim đang chiếu!"
             style={{color:"white", backgroundColor:"red"}}
           />
         </Tabs>

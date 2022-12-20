@@ -12,12 +12,6 @@ import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounde
 import Desktop from "./Desktop";
 import useStyles from "./style";
 import Mobile from "./Mobile";
-import {
-  DATE_BEGIN_DANGCHIEU,
-  DATE_END_DANGCHIEU,
-  DATE_BEGIN_SAPCHIEU,
-  DATE_END_SAPCHIEU,
-} from "../../../constants/config";
 
 export function SampleNextArrow(props) {
   const classes = useStyles();

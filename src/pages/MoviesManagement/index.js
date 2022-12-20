@@ -297,7 +297,7 @@ export default function MoviesManagement() {
     },
     {
       field: "name",
-      headerName: "Name",
+      headerName: "Tên phim",
       width: 250,
       headerAlign: "center",
       align: "left",
@@ -319,7 +319,7 @@ export default function MoviesManagement() {
     },
     {
       field: "smallImageURl",
-      headerName: "Image",
+      headerName: "Hình ảnh",
       width: 200,
       headerAlign: "center",
       align: "center",
@@ -328,7 +328,7 @@ export default function MoviesManagement() {
     },
     {
       field: "longDescription",
-      headerName: "Description",
+      headerName: "Mô tả",
       width: 200,
       headerAlign: "center",
       align: "left",
@@ -337,7 +337,7 @@ export default function MoviesManagement() {
     },
     {
       field: "releaseDate",
-      headerName: "Release Date",
+      headerName: "Ngày khởi chiếu",
       width: 160,
       type: "date",
       headerAlign: "center",
@@ -347,7 +347,7 @@ export default function MoviesManagement() {
     },
     {
       field: "rated",
-      headerName: "Rated",
+      headerName: "Đánh giá",
       width: 120,
       headerAlign: "center",
       align: "center",
@@ -371,7 +371,7 @@ export default function MoviesManagement() {
               disabled={loadingAddUploadMovie}
               startIcon={<AddBoxIcon />}
             >
-              Add new movie
+              Thêm phim
             </Button>
           </div>
           <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
@@ -380,7 +380,7 @@ export default function MoviesManagement() {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder="Tìm kiếm..."
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,

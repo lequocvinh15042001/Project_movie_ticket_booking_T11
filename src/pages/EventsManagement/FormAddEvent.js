@@ -84,7 +84,6 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     .then((data) =>{
       // console.log(data.secure_url);
       setImage(data.secure_url)
-      console.log("SrcImage 1 : ", image);
     })
     .catch((err) => {
       console.log(err);
@@ -104,11 +103,12 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     .then((data) =>{
       // console.log(data.secure_url);
       setImage2(data.secure_url)
-      console.log("SrcImage 2: ", image2);
     }).catch((err) => {
       console.log(err);
     })
   }
+  // console.log("SrcImage 1 : ", image);
+  // console.log("SrcImage 2: ", image2);
 
   return (
     <Formik
@@ -122,8 +122,12 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
             image: selectedPhim.image
           },
         ],
+        // priority: selectedPhim?.contents[0]?.priority,
+        // description: selectedPhim?.contents[0]?.description,
+        // image: selectedPhim?.contents[0]?.image,
         title: selectedPhim.title,
-        mainImage: selectedPhim.mainImage,
+        // mainImage: selectedPhim.mainImage,
+        mainImage: selectedPhim.contents[0].image,
 
         // smallImageURl: selectedPhim.smallImageURl,
         // longDescription: selectedPhim.longDescription,
@@ -141,12 +145,12 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     >{(formikProp) => (
       <Form >
         <div className="form-group">
-          <label>Event Brief&nbsp;</label>
+          <label>Tên sự kiện, khuyến mãi&nbsp;</label>
           <ErrorMessage name="brief" render={msg => <span className="text-danger">{msg}</span>} />
           <Field name="brief" className="form-control" />
         </div>
         <div className="form-group">
-          <label>Main Image&nbsp;</label>
+          <label>Hình ảnh chính&nbsp;</label>
           <ErrorMessage name="mainImage" render={msg => <span className="text-danger">{msg}</span>} />
           <div className="form-row">
             <div className="col-2">
@@ -161,16 +165,16 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
 
             </div>
             <button onClick={submitImage} type="button">
-              Upload
+              Úp ảnh
             </button>
           </div>
         </div>
         <div className="form-group">
-          <label>Title&nbsp;</label>
+          <label>Tiêu đề&nbsp;</label>
           <ErrorMessage name="title" render={msg => <span className="text-danger">{msg}</span>} />
           <Field as="textarea" name="title" className="form-control" />
         </div>
-        <button type="submit" className="form-control">Submit</button>
+        <button type="submit" className="form-control">Tạo</button>
       </Form>
     )}</Formik>
   )
