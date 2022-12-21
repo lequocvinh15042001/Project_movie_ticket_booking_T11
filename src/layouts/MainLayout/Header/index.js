@@ -28,6 +28,7 @@ import { getMovieList } from '../../../reducers/actions/Movie';
 import { getTheaters } from '../../../reducers/actions/Theater';
 import Logo from "./../../../assets/LeafSVG";
 import Search from '../Search/Search';
+import { getInfoUser } from '../../../reducers/actions/UsersManagement';
 
 const headMenu = [
     { nameLink: 'Tất cả Phim', id: "lichchieu" }, 
@@ -38,6 +39,9 @@ const headMenu = [
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.authReducer);
+  // console.log("header: ",currentUser);
+  // const { successInfoUser } = useSelector((state) => state.usersManagementReducer);
+  // console.log("header: ", successInfoUser);
   const { isLoadingBackToHome } = useSelector((state) => state.lazyReducer);
   const dispatch = useDispatch();
   let location = useLocation();
@@ -156,7 +160,7 @@ export default function Header() {
               <List disablePadding className={classes.auth}>
                 <ListItem button classes={{ root: clsx(classes.itemAuth, classes.divide) }} onClick={handleUser}>
                   <ListItemIcon classes={{ root: classes.icon }}>
-                    <Avatar alt="avatar" className={classes.avatar} src={FAKE_AVATAR} />
+                    <Avatar alt="avatar" className={classes.avatar} src={currentUser?.image ? currentUser?.image : FAKE_AVATAR} />
                   </ListItemIcon>
                   <ListItemText primary={currentUser?.username} />
                 </ListItem>

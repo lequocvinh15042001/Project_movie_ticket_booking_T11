@@ -7,9 +7,21 @@ export class QuanLyPhimServices {
       method: "GET",
     });
   };
+  layReviewChuaDuyet = () => {
+    return axios({
+      url: "http://20.204.78.133:8080/api/article/getAll?status=CREATE",
+      method: "GET",
+    });
+  };
+  layReviewDuocDuyet = () => {
+    return axios({
+      url: "http://20.204.78.133:8080/api/article/getAll?status=APPROVE",
+      method: "GET",
+    });
+  };
   layChiTietTinTuc = (maTinTuc) => {
     return axios({
-      url: `https://5e9829e75eabe7001681bbfb.mockapi.io/news/${maTinTuc}`,
+      url: `http://20.204.78.133:8080/api/article/getDetail?id=${maTinTuc}`,
       method: "GET",
     });
   };

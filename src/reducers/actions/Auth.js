@@ -50,7 +50,7 @@ export const login = (user) => { // đăng nhập
         type: LOGIN_FAIL,
         payload: {
           // error: error.response?.data?.data ? error.response?.data?.data : error.message,
-          error: "Username, email or password not right!"
+          error: "Tài khoản hoặc mật khẩu không đúng!"
         },
       });
       Swal.fire({
@@ -126,7 +126,7 @@ export const register = (user) => {
         dispatch({
           type: REGISTER_FAIL,
           payload: {
-            error: "Username hoặc email đã tồn tại!"
+            error: "Tên tài khoản hoặc email đã tồn tại!"
           },
         });
         Swal.fire({

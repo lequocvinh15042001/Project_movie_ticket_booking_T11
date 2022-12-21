@@ -12,9 +12,13 @@ import BtnPlay from '../../../components/BtnPlay';
 import TextEditor from '../../../components/TextEditor/TextEditor';
 import { Card, CardBody, Form, Input, Label, Button, Container } from "reactstrap"
 import JoditEditor from 'jodit-react';
+import { useSnackbar } from 'notistack';
+import reviewsApi from "./../../../api/reviewsApi"
+import Swal from 'sweetalert2';
 
 export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
   // console.log("----------MT---------",data);
+
   const [onClickBtnMuave, setOnClickBtnMuave] = useState(0)
   const param = useParams()
   const [quantityComment, setQuantityComment] = useState(0)
@@ -22,12 +26,16 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
   const classes = useStyles({ bannerImg: data?.smallImageURl })
   const [imageNotFound, setImageNotFound] = useState(false)
   let location = useLocation();
+  const [imageHien, setImageHien] = useState('')
+
 
   const editor = useRef(null)
   const [image, setImage] = useState(null)
   const [post, setPost] = useState({
     title: '',
-    content: ''
+    mainImage:'',
+    brief:'',
+    description:''
   })
 
   const handleBtnMuaVe = () => {
@@ -44,7 +52,7 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
   }
 
   const contentFieldChanaged = (data) => {
-    setPost({ ...post, 'content': data })
+    setPost({ ...post, 'description': data })
   }
 
   const handleFileChange=(event)=>{
@@ -52,6 +60,52 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
     setImage(event.target.files[0])
   }
 
+  const createPost = (e) =>{
+    console.log(post);
+    reviewsApi.postAddReview(post)
+    .then((res) =>{
+      console.log("Thành công!", res);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Đăng review thành công, vui lòng chờ duyệt!",
+        showConfirmButton: false,
+        timer: 4000,
+      });
+    })
+    .catch((err) =>{
+      console.log(err);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Đăng review thất bại, kiểm tra lại!",
+        showConfirmButton: false,
+        timer: 4000,
+      });
+    })
+  }
+
+  const submitImage =() =>{
+    const data  = new FormData()
+    data.append("file", imageHien)
+    data.append("upload_preset", "hh37brtc")
+    data.append("cloud_name", "dfb5p3kus")
+
+    fetch("https://api.cloudinary.com/v1_1/dfb5p3kus/image/upload", {
+      method: "post",
+      body:data
+    })
+    .then((res) => res.json())
+    .then((data) =>{
+      // console.log(data.secure_url);
+      setImageHien(data.secure_url)
+      setPost({ ...post, 'mainImage': data.secure_url })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+  console.log("SrcImage 1 : ", imageHien);
   return (
     <div className={classes.desktop}>
       <div className={classes.top}>
@@ -121,12 +175,12 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
                 <CardBody>
                     {/* {JSON.stringify(post)} */}
                     <h3>{data?.name}</h3>
-                    {/* <Form onSubmit={createPost}> */}
+                    <Form onSubmit={createPost}>
                     {/* Sửa chỗ này lại dder nộp nè */}
                     {/* Sửa chỗ này lại dder nộp nè */}
                     {/* Sửa chỗ này lại dder nộp nè */}
                     {/* Goi API */}
-                    <Form >
+                    {/* <Form > */}
                         <div className="my-3">
                             <Label for="title" >Tiêu đề bài viết</Label>
                             <Input
@@ -139,7 +193,18 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
                             />
                         </div>
                         <div className="my-3">
-                            <Label for="content" >Nội dung Review</Label>
+                            <Label for="title" >Mô tả ngắn gọn</Label>
+                            <Input
+                                type="text"
+                                id="brief"
+                                placeholder="Gõ vào đây..."
+                                className="rounded-0"
+                                name="brief"
+                                onChange={fieldChanged}
+                            />
+                        </div>
+                        <div className="my-3">
+                            <Label for="description" >Nội dung Review</Label>
                             {/* <Input
                                 type="textarea"
                                 id="content"
@@ -149,22 +214,45 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
                             /> */}
                             <JoditEditor
                                 ref={editor}
-                                value={post.content}
+                                value={post.description}
                                 onChange={(newContent) => contentFieldChanaged(newContent)}
                             />
                         </div>
                         <div className="mt-3">
                             <Label for="image">Chọn hình ảnh làm banner cho bài Review</Label>
-                            <Input id="image" type="file" onChange={handleFileChange} />
+                            <Input id="image" type="file" 
+                              onChange={(e) => {
+                                setImageHien(e.target.files[0])
+                                console.log(e.target.files[0]);
+                              }} />
+                            <button
+                              type="button"
+                              // type="button"
+                              // onClick={() => handleSubmit()}
+                              onClick={submitImage}
+                              className="btn btn-danger"
+                              // disable={loadingUpdateUser.toString()}
+                            >
+                              Cập nhật ảnh lên
+                            </button>
+                            <img
+                              style={
+                                {
+                                  width:"100%",
+                                  height:"100%",
+                                }
+                              }
+                              src={imageHien ? imageHien : null}
+                            />
                         </div>
                         <Container className="text-center">
-                            <Button style={{margin:"5px"}} type="submit" className="rounded-0" color="primary">Gửi Review</Button>
+                            <Button style={{margin:"5px"}} type="button" onClick={createPost}className="rounded-0" color="primary">Gửi Review</Button>
                             <Button style={{margin:"5px"}} className="rounded-0 ms-2" color="danger">Tải lại trang</Button>
                         </Container>
                     </Form>
                 </CardBody>
-                <div dangerouslySetInnerHTML={{__html:post.content}} />
-                {post.content}
+                {/* <div dangerouslySetInnerHTML={{__html:post.description}} />
+                {post.description} */}
             </Card>
         </div>
     </div>

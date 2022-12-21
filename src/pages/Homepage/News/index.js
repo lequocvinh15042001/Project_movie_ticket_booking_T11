@@ -113,12 +113,12 @@ export default function SimpleTabs() {
                 </a>
               </div> */}
               {
-                eventList?.data?.reverse().slice(0,4).map((event, index) => {
+                eventList?.data?.slice(0,4).map((event, index) => {
                   return(
                   <div className={classes.repons} key={index}>
                     <a href="https://tix.vn/review/7946-review-dinh-thu-oan-khuat-ghost-of-war" className={classes.news}>
                       <img className={classes.fullImg} 
-                      src={event.contents[0]?.image} 
+                      src={event?.mainImage} 
                       alt="news-movie" />
                       <div className="py-3">
                         <h4 className="card-title" style={{color:"white"}}>
@@ -130,7 +130,7 @@ export default function SimpleTabs() {
                                     overflow: "hidden",
                                     textOverflow: "ellipsis"
                           }}>
-                          {event.contents[0]?.description}
+                          {event?.description}
                           </p>
                       </div>
                     </a>

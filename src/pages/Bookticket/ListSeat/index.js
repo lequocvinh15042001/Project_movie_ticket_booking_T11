@@ -105,10 +105,10 @@ export default function ListSeat() {
   };
   const color = (seat) => {
     let color;
-    if (seat.loaiGhe === "normal") {
+    if (seat.type === "NORMAL") {
       color = "#3e515d";
     }
-    if (seat.loaiGhe === "vip") {
+    if (seat.type === "VIP") {
       color = "#f7b500";
     }
     if (seat.selected) {
@@ -171,6 +171,13 @@ export default function ListSeat() {
                       : seat.label.slice(1)}
                   </p>
                 )}
+                {seat.isOccupied === 0 && (
+                  <p className={classes.seatName}>
+                    {Number(seat.name.slice(1)) < 10
+                      ? seat.name.slice(1)
+                      : seat.name.slice(1)}
+                  </p>
+                )}
                 {/* label ghế đã có người đặt */}
                 {seat.isOccupied === 1 && (
                   <img
@@ -185,7 +192,7 @@ export default function ListSeat() {
                   className={classes.seatIcon}
                 />
                 {/* đường viền chỉ vùng ghế */}
-                {seat.label === "E8" &&(
+                {seat.label === "C8" &&(
                   <img
                     className={classes.viewCenter}
                     src="/img/bookticket/seatcenter.png"

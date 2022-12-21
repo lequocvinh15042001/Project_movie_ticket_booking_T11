@@ -120,7 +120,7 @@ export const putEventUpdate = (event) => {
         console.log("Cập nhật: ", result);
         dispatch({
           type: UPDATE_EVENT_SUCCESS,
-          payload: { data: result.data }
+          payload: { data: result.data.data }
         })
       }
       )
