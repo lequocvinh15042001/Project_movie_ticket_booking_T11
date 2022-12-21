@@ -17,15 +17,24 @@ const reviewsApi = {
     return axiosClient.post(path, review);
   },
 
-  deleteReview: (event) => {
-    const path = ``;
-
-    return axiosClient.delete(path);
+  deleteReview: (eventId) => {
+    const path = `article/changeStatus?articleId=${eventId}&status=DELETE`;
+    return axiosClient.put(path);
   },
 
   putEditReview: (event) => {
     const path = `/article/update`;
     return axiosClient.put(path, event);
+  },
+
+  putDuyetReview: (eventId) => {
+    const path = `article/changeStatus?articleId=${eventId}&status=APPROVE`;
+    return axiosClient.put(path);
+  },
+
+  putTuChoiReview: (eventId) => {
+    const path = `article/changeStatus?articleId=${eventId}&status=DENY`;
+    return axiosClient.put(path);
   },
 
 };
