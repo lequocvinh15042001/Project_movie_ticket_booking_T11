@@ -9,7 +9,8 @@ export default function NewsComponent() {
   let [loading, setLoading] = useState(true);
   useEffect(() => {
     qLyPhimService
-      .layTinTuc()
+      .layReviewDuocDuyet()
+      // .layReviewChuaDuyet()
       .then((res) => {
         setDanhSachTinTuc(res.data);
         setLoading(false);
@@ -18,17 +19,19 @@ export default function NewsComponent() {
         console.log(err.response.data);
       });
   }, []);
+  console.log("danhSachTinTuc: ", danhSachTinTuc);
   const history = useHistory();
   const handlerSeeMore =() =>{
     history.push("/review")
   }
   var moment = require("moment");
   const renderTinTuc = () => {
-    return danhSachTinTuc.slice(0,3).map((tinTuc, index) => {
+    return danhSachTinTuc?.data?.reverse().map((tinTuc, index) => {
+      if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE") {
       return (
         <div className="news__items" key={index}>
           <div className="items__img">
-            <img src={tinTuc.image1} alt={tinTuc.image1} />
+            <img src={tinTuc.mainImage} alt={tinTuc.mainImage} />
           </div>
           <div className="items__text">
             <h2 className="items__text-title">
@@ -45,25 +48,27 @@ export default function NewsComponent() {
                 )}
               </NavLink>
             </h2>
-            <p className="items__text-description">{tinTuc.description1}</p>
-            <div className="items__text-author">
+            <p className="items__text-description">{tinTuc.brief}</p>
+            {/* <div className="items__text-author">
               {tinTuc.author}
               <span className="items__text-days">
                 {moment(tinTuc.dayupload).format("hh:mm DD/MM/yyyy")}
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       );
+    }
     });
   };
 
   const renderTinTucHot = () => {
-    return danhSachTinTuc?.slice(0,3).reverse().map((tinTuc, index) => {
+    return danhSachTinTuc?.data?.reverse().map((tinTuc, index) => {
+      if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE") {
       return (
         <div className="news__items" key={index}>
           <div className="items__img">
-            <img src={tinTuc.image2} alt={tinTuc.image2} />
+            <img src={tinTuc.mainImage} alt={tinTuc.mainImage} />
           </div>
           <div className="items__text">
             <h5 className="items__text-title">
@@ -77,6 +82,7 @@ export default function NewsComponent() {
           </div>
         </div>
       );
+      }
     });
   };
   if (loading) {

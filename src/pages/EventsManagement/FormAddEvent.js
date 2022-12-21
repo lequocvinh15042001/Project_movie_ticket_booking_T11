@@ -11,13 +11,17 @@ import { ThemeProvider } from "@material-ui/styles";
 import FormControl from '@material-ui/core/FormControl';
 import { materialTheme } from './styles';
 import { useStyles } from './styles';
+import { useSnackbar } from 'notistack';
 
 export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
   const classes = useStyles();
-  const [srcImage, setSrcImage] = useState(selectedPhim?.contents[0]?.image)
-  const [srcImage2, setSrcImage2] = useState(selectedPhim?.largeImageURL)
+  const [srcImage, setSrcImage] = useState(selectedPhim?.mainImage)
+  const [srcImage1, setSrcImage1] = useState(selectedPhim?.image1)
+  // const [srcImage2, setSrcImage2] = useState(selectedPhim?.image1)
   const [image, setImage] = useState('')
-  const [image2, setImage2] = useState('')
+  const [imageA, setImageA] = useState('')
+  const  {enqueueSnackbar}  = useSnackbar();
+
 
   const setThumbnailPreviews = (e) => {
     let file = e.target;
@@ -47,20 +51,26 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
   })
 
   const handleSubmit = (movieObj) => {
-    console.log("Bay vô add: ", movieObj);
-    // let smallImageURl = movieObj.smallImageURl
     // let fakeImage = { srcImage, id: movieObj.id }
    
     // movieObj = { ...movieObj, releaseDate: movieObj.releaseDate.toLocaleDateString('fr-CA')}
 
-    // if(!movieObj.smallImageURl && !movieObj.largeImageURL){
-    //   movieObj = { ...movieObj,
-    //   smallImageURl: image,
-    //   largeImageURL: image2,
-    // }}
+    if(!movieObj.mainImage && !movieObj.image1){
+      movieObj = { ...movieObj,
+      mainImage: image,
+      image1: imageA,
+    }}
+    const event = {
+      id: movieObj.id,
+      mainImage: movieObj.mainImage,
+      title:movieObj.title,
+      brief:movieObj.brief,
+      description:movieObj.description
+    }
     if (selectedPhim.id) {
       // onUpdate(movieObj, smallImageURl, fakeImage)
-      onUpdate(movieObj)
+    console.log("Bay vô add: ", event);
+    onUpdate(event)
       return
     }
     const newMovieObj = { ...movieObj }
@@ -68,6 +78,7 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     // delete newMovieObj.duration
     // delete newMovieObj.rated
     onAddMovie(newMovieObj)
+    console.log("Bay vô add: ", movieObj);
   }
 
   const submitImage =() =>{
@@ -84,6 +95,7 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     .then((data) =>{
       // console.log(data.secure_url);
       setImage(data.secure_url)
+      enqueueSnackbar("Thành công", { variant: "success" });
     })
     .catch((err) => {
       console.log(err);
@@ -91,7 +103,7 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
   }
   const submitImage2 =() =>{
     const data  = new FormData()
-    data.append("file", image2)
+    data.append("file", imageA)
     data.append("upload_preset", "hh37brtc")
     data.append("cloud_name", "dfb5p3kus")
 
@@ -102,43 +114,26 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     .then((res) => res.json())
     .then((data) =>{
       // console.log(data.secure_url);
-      setImage2(data.secure_url)
+      setImageA(data.secure_url)
+      enqueueSnackbar("Thành công", { variant: "success" });
     }).catch((err) => {
       console.log(err);
     })
   }
-  // console.log("SrcImage 1 : ", image);
-  // console.log("SrcImage 2: ", image2);
+  console.log("SrcImage 1 : ", image);
+  console.log("SrcImage 2: ", imageA);
 
   return (
     <Formik
       initialValues={{
         id: selectedPhim.id,
         brief: selectedPhim.brief,
-        contents:[
-          {
-            priority: null,
-            description: selectedPhim.description,
-            image: selectedPhim.image
-          },
-        ],
-        // priority: selectedPhim?.contents[0]?.priority,
-        // description: selectedPhim?.contents[0]?.description,
-        // image: selectedPhim?.contents[0]?.image,
+        description: selectedPhim.description,
+        image1: selectedPhim.image1,
         title: selectedPhim.title,
-        // mainImage: selectedPhim.mainImage,
-        mainImage: selectedPhim.contents[0].image,
-
-        // smallImageURl: selectedPhim.smallImageURl,
-        // longDescription: selectedPhim.longDescription,
-        // shortDescription: selectedPhim.shortDescription,
-        // largeImageURL: selectedPhim.largeImageURL,
-        // categories: selectedPhim.categories,
-        // releaseDate: selectedPhim?.releaseDate ? new Date(selectedPhim.releaseDate) : new Date(),
-        // duration: selectedPhim.duration,
-        // trailerURL: selectedPhim.trailerURL,
-        // rated: selectedPhim.rated,
-        // isShowing: selectedPhim.isShowing,
+        mainImage: selectedPhim.mainImage,
+        status:selectedPhim.status,
+        type:selectedPhim.type
       }}
       // validationSchema={movieSchema}
       onSubmit={handleSubmit}
@@ -169,10 +164,45 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
             </button>
           </div>
         </div>
+        {/* <div className="form-group">
+          <label>Hình ảnh chi tiết&nbsp;</label>
+          <ErrorMessage name="image1" render={msg => <span className="text-danger">{msg}</span>} />
+          <div className="form-row">
+            <div className="col-2">
+              {srcImage1 ? <img src={srcImage1} id="image-selected" alt="movie" className="img-fluid rounded" /> : <ImageOutlinedIcon style={{ fontSize: 60 }} />}
+            </div>
+            <div className="col-10">
+                <input type="file" name="image1" className="form-control" onChange={(e) => {
+
+                  setImageA(e.target.files[0])
+                  // formikProp.setFieldValue("smallImageURl", srcImage)
+                  }}/>
+
+            </div>
+            <button onClick={submitImage2} type="button">
+              Úp ảnh
+            </button>
+          </div>
+        </div> */}
         <div className="form-group">
           <label>Tiêu đề&nbsp;</label>
           <ErrorMessage name="title" render={msg => <span className="text-danger">{msg}</span>} />
           <Field as="textarea" name="title" className="form-control" />
+        </div>
+        <div className="form-group">
+          <label>Mô tả&nbsp;</label>
+          <ErrorMessage name="description" render={msg => <span className="text-danger">{msg}</span>} />
+          <Field as="textarea" name="description" className="form-control" />
+        </div>
+        <div className="form-group">
+          <label>Trạng thái&nbsp;</label>
+          <ErrorMessage name="status" render={msg => <span className="text-danger">{msg}</span>} />
+          <Field name="status" className="form-control" />
+        </div>
+        <div className="form-group">
+          <label>Loại&nbsp;</label>
+          <ErrorMessage name="type" render={msg => <span className="text-danger">{msg}</span>} />
+          <Field name="type" className="form-control" />
         </div>
         <button type="submit" className="form-control">Tạo</button>
       </Form>

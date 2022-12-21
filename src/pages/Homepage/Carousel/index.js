@@ -6,7 +6,7 @@ import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounde
 import { useHistory } from "react-router-dom";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import homeCarouselData from "../../../constants/homeCarouselData";
 import SearchStickets from "./SearchTickets";
@@ -59,6 +59,9 @@ function a11yProps(index) {
 }
 
 export default function Carousel() {
+  const movieList = useSelector((state) => state.movieReducer.movieList);
+  // console.log("Lấy banner phim nè: ",movieList);
+
   const dispatch = useDispatch();
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
@@ -121,16 +124,16 @@ export default function Carousel() {
   return (
     <div id="carousel" className={classes.carousel}>
       <Slider {...settings}>
-        {homeCarouselData?.map((banner) => {
+        {movieList?.data?.map((banner) => {
           return (
-            <div key={banner.maPhim} className={classes.itemSlider}>
-              <img src={banner?.hinhAnh} alt="banner" className={classes.img} />
+            <div key={banner.id} className={classes.itemSlider}>
+              <img src={banner?.largeImageURL} alt="banner" className={classes.img} />
               <div
                 className={classes.backgroundLinear}
-                onClick={() => history.push(`/phim/${banner.maPhim}`)}
+                onClick={() => history.push(`/phim/${banner.id}`)}
               />
               {isDesktop && (
-                <BtnPlay cssRoot={"play"} urlYoutube={banner.trailer} />
+                <BtnPlay cssRoot={"play"} urlYoutube={banner.trailerURL} />
               )}
             </div>
           );

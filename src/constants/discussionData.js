@@ -1,7 +1,7 @@
 const discussData = [
   {
     avtId: "39-hdcfwed123dfg",
-    username: "duong minh",
+    username: "Lê Quốc Vinh",
     point: 9,
     post:
       "mâu thuẫn chưa đủ sâu! tính cách nv xây dựng vẫn còn hời hợt. tuyến nv dày nhưng không kĩ họ chỉ xuất hiện để cố làm hợp lí mạch phim nên phim nh chỗ khá vô lý. và thêm 1 cái muôn thưở của phim Hàn là thích tạo drama để lấy đồng cảm của ng xem.",

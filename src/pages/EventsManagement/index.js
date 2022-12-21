@@ -28,6 +28,7 @@ import Form from "./Form";
 import FormAddEvent from "./FormAddEvent";
 import Swal from "sweetalert2";
 import { getEventsList, postAddEvent, putEventUpdate, resetEventList } from "../../reducers/actions/EventsManagement";
+import { Tooltip } from "@material-ui/core";
 
 function CustomLoadingOverlay() {
   return (
@@ -177,8 +178,8 @@ export default function MoviesManagement() {
           // window.location.reload();
         }
         swalWithBootstrapButtons.fire(
-          'Deleted!',
-          'Your file has been deleted.',
+          'Đã xoá!',
+          'Bạn đã xoá nó.',
           'success'
         )
       } else if (
@@ -186,8 +187,8 @@ export default function MoviesManagement() {
         result.dismiss === Swal.DismissReason.cancel
       ) {
         swalWithBootstrapButtons.fire(
-          'Cancelled',
-          'Your movie is safe :)',
+          'Đã huỷ',
+          'Huỷ đặt hàng này :)',
           'error'
         )
       }
@@ -200,72 +201,44 @@ export default function MoviesManagement() {
   };
 
   const onUpdate = (movieObj, hinhAnh, fakeImage) => {
-    // if (loadingUpdateEvent || loadingUpdateNoneImageMovie) {
-    if (loadingUpdateEvent) {
-      return undefined;
-    }
-    setOpenModal(false);
-    newImageUpdate.current = fakeImage;
-    if (typeof hinhAnh === "string") {
-      // nếu dùng updateMovieUpload sẽ bị reset danhGia về 10
-      const movieUpdate = eventListDisplay?.find(
-        (event) => event.id === fakeImage.id
-      ); // lẩy ra url gốc, tránh gửi base64 tới backend
-      // movieObj.smallImageURl = movieUpdate.smallImageURl;
-      dispatch(putEventUpdate(movieObj));
-      return undefined;
-    }
-    // dispatch(updateMovieUpload(movieObj));
-  };
+  //   if (loadingUpdateEvent || loadingUpdateNoneImageMovie) {
+  //   if (loadingUpdateEvent) {
+  //     return undefined;
+  //   }
+  //   setOpenModal(false);
+  //   newImageUpdate.current = fakeImage;
+  //   if (typeof hinhAnh === "string") {
+  //     // nếu dùng updateMovieUpload sẽ bị reset danhGia về 10
+  //     const movieUpdate = eventListDisplay?.find(
+  //       (event) => event.id === fakeImage.id
+  //     ); // lẩy ra url gốc, tránh gửi base64 tới backend
+  //     movieObj.smallImageURl = movieUpdate.smallImageURl;
+  //     dispatch(putEventUpdate(movieObj));
+  //     return undefined;
+  //   }
+  //   // return undefined;
+  //   // dispatch(updateMovieUpload(movieObj));
+  // };
+  dispatch(putEventUpdate(movieObj));
+  enqueueSnackbar("Thành công", { variant: "success" });
+  }
   const onAddMovie = (movieObj) => {
     console.log("Dữ liệu event thêm: ", movieObj);
-    enqueueSnackbar("Thành công", { variant: "success" });
     if (!loadingAddEvent) {
       dispatch(postAddEvent(movieObj));
+      enqueueSnackbar("Thành công", { variant: "success" });
     }
     setOpenModal(false);
   };
   const handleAddMovie = () => {
     const emtySelectedEvent = {
-      // id: "",
-      // name: "",
-      // smallImageURl: "",
-      // longDescription: "",
-      // shortDescription: "",
-      // largeImageURL: "",
-      // director: "",
-      // actors: "",
-      // categories: "",
-      // releaseDate: "",
-      // duration: "",
-      // trailerURL: "",
-      // language: "",
-      // rated: "",
-      // isShowing: null,
-
-
       brief:"",
-      contents: [
-        {
-        priority : null,
-        description : "",
-        image : "",
-        },
-      ],
+      description: "",
+      image1 : "",
       title:"",
       mainImage:"",
       status:"",
       type:"",
-
-      // brief: "",
-      // priority: "",
-      // description: "",
-      // image: "",
-      // title: "",
-      // image: "",
-      // status:"",
-      // type:"",
-
     };
     selectedPhim.current = emtySelectedEvent;
     setOpenModal(true);
@@ -331,24 +304,11 @@ export default function MoviesManagement() {
       align: "left",
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
+      hide: true,
     },
-    // {
-    //   field: "trailerURL",
-    //   headerName: "Trailer",
-    //   width: 130,
-    //   renderCell: (params) => (
-    //     <div style={{ display: "inline-block" }}>
-    //       <ThumbnailYoutube urlYoutube={params.row.trailerURL} />
-    //     </div>
-    //   ),
-    //   headerAlign: "center",
-    //   align: "center",
-    //   headerClassName: "custom-header",
-    // },
-
     {
       field: "title",
-      headerName: "Title",
+      headerName: "Tiêu đề",
       width: 300,
       headerAlign: "center",
       align: "left",
@@ -356,18 +316,39 @@ export default function MoviesManagement() {
       renderCell: RenderCellExpand,
     },
     {
+      field: "description",
+      headerName: "Mô tả",
+      width: 250,
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
+    },
+    {
       field: "mainImage",
-      headerName: "Image",
-      width: 150,
+      headerName: "Hình ảnh",
+      width: 200,
+      renderCell: (params) => (
+        <Tooltip title={params.row.mainImage}>
+          <img
+            style={{
+              maxWidth: "100%",
+              height: "100%",
+              borderRadius: 4,
+              marginRight: 15,
+            }}
+            src={params.row.mainImage}
+          />
+        </Tooltip>
+      ),
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
-      renderCell: (params) => RenderCellExpand(params),
     },
     {
       field: "status",
-      headerName: "Status",
-      width: 150,
+      headerName: "Trạng thái",
+      width: 120,
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
@@ -375,8 +356,8 @@ export default function MoviesManagement() {
     },
     {
       field: "type",
-      headerName: "Type",
-      width: 150,
+      headerName: "Loại",
+      width: 120,
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
