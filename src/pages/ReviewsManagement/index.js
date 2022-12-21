@@ -11,6 +11,8 @@ import Dialog from "@material-ui/core/Dialog";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import RenderCellExpand from "./RenderCellExpand";
 import slugify from "slugify";
+import DialogActions from '@mui/material/DialogActions';
+import Fab from "@material-ui/core/Fab";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import { useStyles, DialogContent, DialogTitle } from "./styles";
@@ -25,10 +27,18 @@ import {
 import Action from "./Action";
 import ThumbnailYoutube from "./ThumbnailYoutube";
 import Form from "./Form";
-import FormAddEvent from "./FormAddEvent";
+// import FormAddEvent from "./FormAddEvent";
 import Swal from "sweetalert2";
-import { getEventsList, putEventUpdate, resetEventList } from "../../reducers/actions/EventsManagement";
-import { getReviewsList, resetReviewList } from "../../reducers/actions/ReviewsManagement";
+import { getReviewsList, postAddReview, putReviewUpdate, resetReviewList } from "../../reducers/actions/ReviewsManagement";
+import { Tooltip } from "@material-ui/core";
+import { DialogContentText } from "@mui/material";
+import Slide from '@mui/material/Slide';
+import reviewsApi from "../../api/reviewsApi";
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 function CustomLoadingOverlay() {
   return (
@@ -40,6 +50,7 @@ function CustomLoadingOverlay() {
 
 export default function MoviesManagement() {
   const [reviewListDisplay, setReviewListDisplay] = useState([]);
+  const [reviewListLoc, setReviewListLoc] = useState([]);
   console.log("reviewListDisplay: ", reviewListDisplay);
   const classes = useStyles();
   const  {enqueueSnackbar}  = useSnackbar();
@@ -67,10 +78,11 @@ export default function MoviesManagement() {
   const [openModal, setOpenModal] = React.useState(false);
   const selectedPhim = useRef(null);
   const isMobile = useMediaQuery("(max-width:768px)");
+  const [listReview, setListReview] = useState([])
   useEffect(() => {
     if (
       !reviewList ||
-      successUpdateReview||
+      successUpdateReview ||
       // successUpdateNoneImageMovie ||
       successDelete ||
       errorDelete ||
@@ -99,8 +111,28 @@ export default function MoviesManagement() {
         id: review.id,
       }));
       setReviewListDisplay(newReviewListDisplay);
+
+      // let newReviewListLoc = reviewList?.data?.reduce((review) => {
+      //   if(review?.type === "REVIEWS") {
+      //     return review
+      //   }
+      // });
+      // setReviewListLoc(newReviewListLoc);
     }
+ 
   }, [reviewList]);
+
+  // useEffect(() => {
+  //     let newReviewListLoc = reviewList?.data?.push((review) => {
+  //       if(review?.type === "REVIEWS") {
+  //         return review
+  //       }
+  //       else {return}
+  //     });
+  //     setReviewListLoc(newReviewListLoc);
+  // }, []);
+
+  // console.log(reviewListLoc);
 
   useEffect(() => {
     // delete movie xong thì thông báo
@@ -143,7 +175,7 @@ export default function MoviesManagement() {
   useEffect(() => {
     if (successAddReview) {
       enqueueSnackbar(
-        `Add new review successfully: ${successAddReview.brief}`,
+        `Add new movie successfully: ${successAddReview.brief}`,
         { variant: "success" }
       );
     }
@@ -178,8 +210,8 @@ export default function MoviesManagement() {
           // window.location.reload();
         }
         swalWithBootstrapButtons.fire(
-          'Deleted!',
-          'Your file has been deleted.',
+          'Đã xoá!',
+          'Bạn đã xoá nó.',
           'success'
         )
       } else if (
@@ -187,8 +219,8 @@ export default function MoviesManagement() {
         result.dismiss === Swal.DismissReason.cancel
       ) {
         swalWithBootstrapButtons.fire(
-          'Cancelled',
-          'Your movie is safe :)',
+          'Đã huỷ',
+          'Huỷ đặt hàng này :)',
           'error'
         )
       }
@@ -197,64 +229,214 @@ export default function MoviesManagement() {
   };
   const handleEdit = (reviewItem) => {
     selectedPhim.current = reviewItem;
-    setOpenModal(true);
+    // console.log(selectedPhim.current);
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Chắc chắn duyệt?',
+      text: "Hãy đọc kỹ nội dung trước khi duyệt!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Duyệt ngay!',
+      cancelButtonText: 'Không, dừng lại!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (!loadingDelete) {
+          // nếu click xóa liên tục một user
+          // dispatch(deleteMovie(maPhim));
+          // window.location.reload();
+          reviewsApi.putDuyetReview(reviewItem.id)
+          .then((res) =>{
+            window.location.reload();
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        }
+        swalWithBootstrapButtons.fire(
+          'Đã duyệt!',
+          'DONE.',
+          'success'
+        )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Đã dừng',
+          'Kiểm tra thông tin và nội dung!',
+          'error'
+        )
+      }
+    })
+    // setOpenModal(true);
+  };
+
+  const handleTuChoi = (reviewItem) => {
+    selectedPhim.current = reviewItem;
+    // console.log(selectedPhim.current);
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Chắc chắn từ chối?',
+      text: "Hãy đọc kỹ nội dung!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Bỏ duyệt ngay!',
+      cancelButtonText: 'Không, dừng lại!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (!loadingDelete) {
+          reviewsApi.putTuChoiReview(reviewItem.id)
+          .then((res) =>{
+            window.location.reload();
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        }
+        swalWithBootstrapButtons.fire(
+          'Đã từ chối!',
+          'DONE.',
+          'success'
+        )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Đã dừng',
+          'Kiểm tra thông tin và nội dung!',
+          'error'
+        )
+      }
+    })
+    // setOpenModal(true);
+  };
+
+  const handleDelete = (reviewItem) => {
+    selectedPhim.current = reviewItem;
+    // console.log(selectedPhim.current);
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Chắc chắn Xoá?',
+      text: "Hãy đọc kỹ nội dung!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Xoá ngay!',
+      cancelButtonText: 'Không, dừng lại!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (!loadingDelete) {
+          reviewsApi.deleteReview(reviewItem.id)
+          .then((res) =>{
+            window.location.reload();
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        }
+        swalWithBootstrapButtons.fire(
+          'Đã Xoá!',
+          'DONE.',
+          'success'
+        )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Đã dừng',
+          'Kiểm tra thông tin và nội dung!',
+          'error'
+        )
+      }
+    })
+    // setOpenModal(true);
   };
 
   const onUpdate = (movieObj, hinhAnh, fakeImage) => {
-    // if (loadingUpdateEvent || loadingUpdateNoneImageMovie) {
-    if (loadingUpdateReview) {
-      return undefined;
-    }
-    setOpenModal(false);
-    newImageUpdate.current = fakeImage;
-    if (typeof hinhAnh === "string") {
-      // nếu dùng updateMovieUpload sẽ bị reset danhGia về 10
-      const movieUpdate = reviewListDisplay?.find(
-        (review) => review.id === fakeImage.id
-      ); // lẩy ra url gốc, tránh gửi base64 tới backend
-      // movieObj.smallImageURl = movieUpdate.smallImageURl;
-      dispatch(putEventUpdate(movieObj));
-      return undefined;
-    }
-    // dispatch(updateMovieUpload(movieObj));
-  };
+  //   if (loadingUpdateReview || loadingUpdateNoneImageMovie) {
+  //   if (loadingUpdateReview) {
+  //     return undefined;
+  //   }
+  //   setOpenModal(false);
+  //   newImageUpdate.current = fakeImage;
+  //   if (typeof hinhAnh === "string") {
+  //     // nếu dùng updateMovieUpload sẽ bị reset danhGia về 10
+  //     const movieUpdate = reviewListDisplay?.find(
+  //       (review) => review.id === fakeImage.id
+  //     ); // lẩy ra url gốc, tránh gửi base64 tới backend
+  //     movieObj.smallImageURl = movieUpdate.smallImageURl;
+  //     dispatch(putReviewUpdate(movieObj));
+  //     return undefined;
+  //   }
+  //   // return undefined;
+  //   // dispatch(updateMovieUpload(movieObj));
+  // };
+  dispatch(putReviewUpdate(movieObj));
+  enqueueSnackbar("Thành công", { variant: "success" });
+  }
   const onAddMovie = (movieObj) => {
+    console.log("Dữ liệu review thêm: ", movieObj);
     if (!loadingAddReview) {
-      dispatch(addMovieUpload(movieObj));
+      dispatch(postAddReview(movieObj));
+      enqueueSnackbar("Thành công", { variant: "success" });
     }
     setOpenModal(false);
   };
+  const onXemQua = (movieObj) => {
+    console.log("Dữ liệu review thêm: ", movieObj);
+    selectedPhim.current = movieObj
+    setOpen(true);
+  };
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (user) => {
+    setOpen(false);
+  };
+
   const handleAddMovie = () => {
-    const emtySelectedEvent = {
-      // id: "",
-      // name: "",
-      // smallImageURl: "",
-      // longDescription: "",
-      // shortDescription: "",
-      // largeImageURL: "",
-      // director: "",
-      // actors: "",
-      // categories: "",
-      // releaseDate: "",
-      // duration: "",
-      // trailerURL: "",
-      // language: "",
-      // rated: "",
-      // isShowing: null,
+    const emtySelectedReview = {
       brief:"",
-      contents: [
-        {
-        priority : null,
-        description : "",
-        image : "",
-        },
-      ],
+      description: "",
+      image1 : "",
       title:"",
       mainImage:"",
       status:"",
-      typy:"",
+      type:"",
     };
-    selectedPhim.current = emtySelectedEvent;
+    selectedPhim.current = emtySelectedReview;
     setOpenModal(true);
   };
 
@@ -298,12 +480,14 @@ export default function MoviesManagement() {
     {
       field: "hanhDong",
       headerName: "Action",
-      width: 130,
+      width: 350,
       renderCell: (params) => (
         <Action
           onEdit={handleEdit}
-          // onDeleted={handleDeleteOne}
+          onDeleted={handleDelete}
           phimItem={params.row}
+          onXemQua={onXemQua}
+          onTuChoi={handleTuChoi}
         />
       ),
       headerAlign: "center",
@@ -318,54 +502,63 @@ export default function MoviesManagement() {
       align: "left",
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
+      hide: true,
     },
-    // {
-    //   field: "trailerURL",
-    //   headerName: "Trailer",
-    //   width: 130,
-    //   renderCell: (params) => (
-    //     <div style={{ display: "inline-block" }}>
-    //       <ThumbnailYoutube urlYoutube={params.row.trailerURL} />
-    //     </div>
-    //   ),
-    //   headerAlign: "center",
-    //   align: "center",
-    //   headerClassName: "custom-header",
-    // },
-
     {
       field: "title",
-      headerName: "Title",
-      width: 200,
+      headerName: "Tiêu đề",
+      width: 350,
       headerAlign: "center",
       align: "left",
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
     },
     {
-      field: "mainImage",
-      headerName: "Image",
-      width: 200,
-      headerAlign: "center",
-      align: "center",
-      headerClassName: "custom-header",
-      renderCell: (params) => RenderCellExpand(params),
-    },
-    {
-      field: "status",
-      headerName: "Status",
+      field: "description",
+      headerName: "Chi tiết Review",
       width: 250,
       headerAlign: "center",
       align: "left",
+      headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
+      hide: true,
+    },
+    {
+      field: "mainImage",
+      headerName: "Hình ảnh",
+      width: 200,
+      renderCell: (params) => (
+        <Tooltip title={params.row.mainImage}>
+          <img
+            style={{
+              maxWidth: "100%",
+              height: "100%",
+              borderRadius: 4,
+              marginRight: 15,
+            }}
+            src={params.row.mainImage}
+          />
+        </Tooltip>
+      ),
+      headerAlign: "center",
+      align: "center",
+      headerClassName: "custom-header",
+    },
+    {
+      field: "status",
+      headerName: "Trạng thái",
+      width: 120,
+      headerAlign: "center",
+      align: "center",
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
     },
     {
       field: "type",
-      headerName: "Type",
-      width: 250,
+      headerName: "Loại",
+      width: 120,
       headerAlign: "center",
-      align: "left",
+      align: "center",
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
     },
@@ -396,7 +589,7 @@ export default function MoviesManagement() {
     <div style={{ height: "80vh", width: "100%", backgroundColor:"white"}}>
       <div className={classes.control}>
         <div className="row">
-          <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
+          {/* <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
             <Button
               variant="contained"
               color="primary"
@@ -405,16 +598,16 @@ export default function MoviesManagement() {
               disabled={loadingAddReview}
               startIcon={<AddBoxIcon />}
             >
-              Add Review
+              Thêm sự kiện, khuyến mãi
             </Button>
-          </div>
+          </div> */}
           <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder="Tìm kiếm..."
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
@@ -446,19 +639,39 @@ export default function MoviesManagement() {
         // sort
         sortModel={[{ field: "brief", sort: "asc" }]}
       />
+
       <Dialog open={openModal}>
         <DialogTitle onClose={() => setOpenModal(false)}>
           {selectedPhim?.current?.brief
-            ? `Edit: ${selectedPhim?.current?.brief}`
-            : "Add review"}
+            ? `Chỉnh sửa: ${selectedPhim?.current?.brief}`
+            : "Tạo mới"}
         </DialogTitle>
         <DialogContent dividers>
-          <FormAddEvent
+          {/* <FormAddReview
             selectedPhim={selectedPhim.current}
             onUpdate={onUpdate}
             onAddMovie={onAddMovie}
-          />
+          /> */}
         </DialogContent>
+      </Dialog>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+      <DialogTitle>{selectedPhim.current?.brief}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            <div dangerouslySetInnerHTML={{__html:selectedPhim.current?.description}} />
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Ẩn xuống</Button>
+          {/* <Button onClick={handleClose}>Đồng ý</Button> */}
+          {/* <Button onClick={(e) => handleChangeAnh(image)}>Đồng ý</Button> */}
+        </DialogActions>
       </Dialog>
     </div>
   );
