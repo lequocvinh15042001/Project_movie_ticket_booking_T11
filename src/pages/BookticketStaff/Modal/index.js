@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
+import billsApi from './../../../api/billsApi'
 
 import useStyles from "./style";
 import {
@@ -16,6 +17,7 @@ import { getListSeat } from "../../../reducers/actions/BookTicket";
 import { colorTheater } from "../../../constants/theaterData";
 import ResultBookticket from "../ResultBookticket";
 import bookingApi from "../../../api/bookingApi";
+import Swal from "sweetalert2";
 
 export default function Modal() {
   const {
@@ -26,6 +28,7 @@ export default function Modal() {
     errorBookTicketMessage,
     danhSachPhongVe: { thongTinPhim },
   } = useSelector((state) => state.bookTicketReducer);
+  console.log(successBookingTicketMessage);
   const dispatch = useDispatch();
   const param = useParams(); // lấy dữ liệu param từ URL
   const history = useHistory();
@@ -58,6 +61,45 @@ export default function Modal() {
     history.push("/");
   };
 
+  const handlerThanhToan =() =>{
+    dispatch({ type: RESET_DATA_BOOKTICKET });
+
+    console.log(successBookingTicketMessage?.data?.id);
+    handlerComfirm()
+}
+
+const handlerComfirm = () =>{
+    Swal.fire({
+        title: 'Bạn có chắc muốn thanh toán?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: 'No',
+        customClass: {
+          actions: 'my-actions',
+          cancelButton: 'order-1 right-gap',
+          confirmButton: 'order-2',
+          denyButton: 'order-3',
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+            billsApi.postThanhToan(successBookingTicketMessage?.data?.id)
+            .then((res)=>{
+                console.log(res);
+                Swal.fire('Đã thanh toán!', '', 'success')
+                // history.push("/staff/bills");
+            })
+            .catch((err) =>{
+                console.log(err);
+                Swal.fire('Đã quá hạn thanh toán!', '', 'info')
+            })
+        } else if (result.isDenied) {
+          Swal.fire('Không thanh toán ngay!', '', 'info')
+            // history.push("/staff/bills");
+        }
+      })
+  }
+
   return (
     <Dialog
       open={timeOut || (isBookticket && !isMobile) || alertOver10}
@@ -85,7 +127,7 @@ export default function Modal() {
                 alt="Post-notification"
               />
             </div>
-            <p className={classes.textOver}>Bạn không được chọn quá số lượng ghế đã điền</p>
+            <p className={classes.textOver}>Nhân viên không được chọn quá số lượng ghế đã điền</p>
             <Button
               variant="outlined"
               classes={{ root: classes.btnOver }}
@@ -109,9 +151,9 @@ export default function Modal() {
               </Button>
               <Button
                 classes={{ root: classes.btnResult }}
-                onClick={handleCombackHome}
+                onClick={handlerThanhToan}
               >
-                Về trang chủ
+                Thanh toán cho khách hàng tại quầy
               </Button>
             </div>
           </>

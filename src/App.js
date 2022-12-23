@@ -35,7 +35,9 @@ const BookTickets = lazy(() => import("./pages/Bookticket"));
 const BookTicketsDetail = lazy(() => import("./pages/BookticketDetail"));
 const BookTicketsByStaff = lazy(() => import("./pages/BookticketStaff"));
 const UsersManagement = lazy(() => import("./pages/UsersManagement"));
+const DashBoard = lazy(() => import("./pages/DashBoard/Components/Dashboard"));
 const ReviewsManagement = lazy(() => import("./pages/ReviewsManagement"));
+const BillsManagement = lazy(() => import("./pages/BillsManagement"));
 const EventsManagement = lazy(() => import("./pages/EventsManagement"));
 const MoviesManagement = lazy(() => import("./pages/MoviesManagement"));
 const BookByStaff = lazy(() => import("./pages/BookByStaff"));
@@ -99,9 +101,14 @@ function App() {
 
             <Route
               exact
-              path={["/admin/users", "/admin/movies", "/admin/showtimes", "/admin/reviews", "/admin/ticket", "/admin/events", "/admin/dashboard", "/admin/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/admin/book/"]}
+              path={["/admin/bills", "/admin/users", "/admin/movies", "/admin/showtimes", "/admin/reviews", "/admin/ticket", "/admin/events", "/admin/dashboard", "/admin/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/admin/book/"]}
             >
               <AdminLayout>
+                <AdminRoute
+                  exact
+                  path="/admin/dashboard"
+                  component={DashBoard}
+                />
                 <AdminRoute
                   exact
                   path="/admin/users"
@@ -124,6 +131,11 @@ function App() {
                 />
                 <AdminRoute
                   exact
+                  path="/admin/bills"
+                  component={BillsManagement}
+                />
+                <AdminRoute
+                  exact
                   path="/admin/ticket"
                   component={TicketManagement}
                 />
@@ -142,7 +154,7 @@ function App() {
 
             <Route
               exact
-              path={["/staff/movies", "/staff/book", "/staff/reviews", "/staff/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/staff/showtimes", "/staff/ticket", "/staff/events", "/staff/book/"]}
+              path={["/staff/bills","/staff/movies", "/staff/book", "/staff/reviews", "/staff/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/staff/showtimes", "/staff/ticket", "/staff/events", "/staff/book/"]}
             >
               <StaffLayout>
                 <StaffRoute
@@ -165,10 +177,15 @@ function App() {
                   path="/staff/reviews"
                   component={ReviewsManagement}//viet
                 />
-                <AdminRoute
+                <StaffRoute
                   exact
                   path="/staff/events"
                   component={EventsManagement}
+                />
+                <StaffRoute
+                  exact
+                  path="/staff/bills"
+                  component={BillsManagement}
                 />
                 <StaffRoute
                   exact

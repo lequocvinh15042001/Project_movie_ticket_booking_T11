@@ -5,6 +5,7 @@ import { GET_ALLTICKET_FAIL, GET_ALLTICKET_REQUEST, GET_ALLTICKET_SUCCESS, GET_T
 
 export const getAllTicket = (userId) => {
   return (dispatch) => {
+    console.log(userId);
     dispatch({
       type: GET_TICKET_REQUEST
     })

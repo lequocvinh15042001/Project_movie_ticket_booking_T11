@@ -16,11 +16,25 @@ import {
  GET_INFO_BILL_REQUEST, 
  GET_INFO_BILL_SUCCESS, 
  GET_INFO_BILL_FAIL,
+ GET_BILL_LIST_REQUEST_USER,
+ GET_BILL_LIST_SUCCESS_USER,
+ GET_BILL_LIST_FAIL_USER,
+ GET_BILL_LIST_REQUEST_USER_DTT,
+ GET_BILL_LIST_SUCCESS_USER_DTT,
+ GET_BILL_LIST_FAIL_USER_DTT,
 } from './constants/Bill';
 const initialState = {
   billList: null,
   loadingBillList: false,
   errorBillList: null,
+
+  billListChuaTT: null,
+  loadingBillListChuaTT: false,
+  errorBillListChuaTT: null,
+
+  billListDaTT: null,
+  loadingBillListDaTT: false,
+  errorBillListDaTT: null,
 
   successDelete: "",
   loadingDelete: false,
@@ -58,6 +72,43 @@ const billsManagementReducer = (state = initialState, action) => {
         ...state,
         errorBillList: action.payload.error,
         loadingBillList: false,
+      };
+    }
+
+    case GET_BILL_LIST_REQUEST_USER: {
+      return { ...state, loadingBillListChuaTT: true, errorBillListChuaTT: null };
+    }
+    case GET_BILL_LIST_SUCCESS_USER: {
+      return {
+        ...state,
+        billListChuaTT: action.payload.data,
+        loadingBillListChuaTT: false
+      };
+    }
+    case GET_BILL_LIST_FAIL_USER: {
+      return {
+        ...state,
+        errorBillListChuaTT: action.payload.error,
+        loadingBillListChuaTT: false,
+      };
+    }
+
+
+    case GET_BILL_LIST_REQUEST_USER_DTT: {
+      return { ...state, loadingBillListDaTT: true, errorBillListDaTT: null };
+    }
+    case GET_BILL_LIST_SUCCESS_USER_DTT: {
+      return {
+        ...state,
+        billListDaTT: action.payload.data,
+        loadingBillListDaTT: false
+      };
+    }
+    case GET_BILL_LIST_FAIL_USER_DTT: {
+      return {
+        ...state,
+        errorBillListDaTT: action.payload.error,
+        loadingBillListDaTT: false,
       };
     }
 

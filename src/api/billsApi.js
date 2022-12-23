@@ -6,8 +6,18 @@ const reviewsApi = {
     const path = `/bills/payment?id=${id}`;
     return axiosClient.post(path);
   },
-  getListReview: () => {
-    const path = "/";
+  getListBill: () => {
+    const path = `/bills/getAllBill`;
+    return axiosClient.get(path);
+  },
+
+  getListBillChuThanhToan: () => {
+    const path = `/bills/getUserDashBoard?status=WAITING_PAYMENT`;
+    return axiosClient.get(path);
+  },
+
+  getListBillDaThanhToan: () => {
+    const path = `/bills/getUserDashBoard?status=SUCCESS`;
     return axiosClient.get(path);
   },
 
@@ -21,7 +31,7 @@ const reviewsApi = {
     return axiosClient.post(path, review);
   },
 
-  deleteReview: (eventId) => {
+  deleteBill: (eventId) => {
     const path = `/`;
     return axiosClient.put(path);
   },

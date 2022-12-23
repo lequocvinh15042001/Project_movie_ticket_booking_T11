@@ -1,6 +1,6 @@
 
 import billsApi from '../../api/billsApi';
-import { ADD_BILL_FAIL, ADD_BILL_REQUEST, ADD_EVENT_SUCCESS, DELETE_EVENT_FAIL, DELETE_EVENT_REQUEST, DELETE_EVENT_SUCCESS, GET_EVENT_LIST_FAIL, GET_EVENT_LIST_REQUEST, GET_EVENT_LIST_SUCCESS, RESET_EVENT_LIST, SET_IS_EXIST_EVENT_MODIFIED, UPDATE_EVENT_FAIL, UPDATE_EVENT_REQUEST, UPDATE_EVENT_SUCCESS, GET_BILL_LIST_REQUEST, GET_BILL_LIST_SUCCESS, GET_BILL_LIST_FAIL, RESET_BILL_LIST, UPDATE_BILL_REQUEST, UPDATE_BILL_SUCCESS, UPDATE_BILL_FAIL, ADD_BILL_SUCCESS, SET_IS_EXIST_BILL_MODIFIED, DELETE_BILL_REQUEST, DELETE_BILL_SUCCESS, DELETE_BILL_FAIL } from '../constants/BillsManagement';
+import { ADD_BILL_FAIL, ADD_BILL_REQUEST, GET_BILL_LIST_REQUEST, GET_BILL_LIST_SUCCESS, GET_BILL_LIST_FAIL, RESET_BILL_LIST, UPDATE_BILL_REQUEST, UPDATE_BILL_SUCCESS, UPDATE_BILL_FAIL, ADD_BILL_SUCCESS, SET_IS_EXIST_BILL_MODIFIED, DELETE_BILL_REQUEST, DELETE_BILL_SUCCESS, DELETE_BILL_FAIL, GET_BILL_LIST_REQUEST_USER, GET_BILL_LIST_SUCCESS_USER, GET_BILL_LIST_FAIL_USER, GET_BILL_LIST_REQUEST_USER_DTT, GET_BILL_LIST_SUCCESS_USER_DTT, GET_BILL_LIST_FAIL_USER_DTT } from '../constants/Bill';
 
 export const getBillsList = () => {
   return (dispatch) => {
@@ -26,6 +26,57 @@ export const getBillsList = () => {
       )
   }
 }
+
+export const getBillsChuaThanhToan = () => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_BILL_LIST_REQUEST_USER
+    })
+    billsApi.getListBillChuThanhToan()
+      .then(result => {
+        console.log(result.data);
+        dispatch({
+          type: GET_BILL_LIST_SUCCESS_USER,
+          payload: { data: result.data }
+        })
+      }
+      )
+      .catch(
+        error => {
+          dispatch({
+            type: GET_BILL_LIST_FAIL_USER,
+            payload: { error: error.response?.data ? error.response.data : error.message, }
+          })
+        }
+      )
+  }
+}
+
+export const getBillsDaThanhToan = () => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_BILL_LIST_REQUEST_USER_DTT
+    })
+    billsApi.getListBillDaThanhToan()
+      .then(result => {
+        console.log(result.data);
+        dispatch({
+          type: GET_BILL_LIST_SUCCESS_USER_DTT,
+          payload: { data: result.data }
+        })
+      }
+      )
+      .catch(
+        error => {
+          dispatch({
+            type: GET_BILL_LIST_FAIL_USER_DTT,
+            payload: { error: error.response?.data ? error.response.data : error.message, }
+          })
+        }
+      )
+  }
+}
+
 // useEffect(() => {
 //   if (successUpdateUser) {
 //     Swal.fire({
@@ -42,7 +93,7 @@ export const deleteBill = (bill) => {
     dispatch({
       type: DELETE_BILL_REQUEST
     })
-    billsApi.deleteEvent(bill)
+    billsApi.deleteBill(bill)
       .then(result => {
         console.log(result);
 

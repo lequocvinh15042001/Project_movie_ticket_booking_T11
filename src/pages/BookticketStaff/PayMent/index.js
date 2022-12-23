@@ -74,7 +74,7 @@ export default function PayMent() {
     values: {
       email: email,
       phone: phone,
-      paymentMethod: paymentMethod,
+      // paymentMethod: paymentMethod,
       thongTinPhongVe: thongTinPhongVe,
     },
     errors: {
@@ -105,6 +105,8 @@ export default function PayMent() {
     }));
   };
 
+  console.log(listSeatSelected);
+  
   console.log(param.maPhim, param.maRap, param.ngayChieu, param.gioChieu, param.maPhong);
   useEffect(() => {
     // lấy thongTinPhim và danhSachGhe
@@ -136,7 +138,7 @@ export default function PayMent() {
         payload: {
           email: dataSubmit.values.email,
           phone: dataSubmit.values.phone,
-          paymentMethod: dataSubmit.values.paymentMethod,
+          // paymentMethod: dataSubmit.values.paymentMethod,
         },
       });
       // khi không có lỗi và đủ dữ liệu thì set data sẵn sàng đặt vé và ngược lại, set activeStep = 1 nếu đủ dữ liệu và chưa đặt vé
@@ -145,7 +147,7 @@ export default function PayMent() {
         !dataSubmit.errors.phone &&
         dataSubmit.values.email &&
         dataSubmit.values.phone &&
-        dataSubmit.values.paymentMethod &&
+        // dataSubmit.values.paymentMethod &&
         isSelectedSeat
       ) {
         dispatch({
@@ -171,19 +173,41 @@ export default function PayMent() {
       values: {
         email: email,
         phone: phone,
-        paymentMethod: paymentMethod,
+        // paymentMethod: paymentMethod,
       },
       // errors: { email: emailErrors.email, phone: phoneErrors.phone },
     }));
   }, [listSeat]); // khi reload listSeat sẽ được cập nhật kèm theo, email, phone mặc định của tài khoản
 
-  const handleBookTicket = () => {
+  const SwalConfirm = () => {
     Swal.fire({
-      title: 'Do you want to book this?',
+      title: 'Bạn có chắc chắn muốn đặt nó?',
       showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: 'Yes',
-      denyButtonText: 'No',
+      confirmButtonText: 'Có',
+      denyButtonText: 'Không, chưa chắc',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2',
+        denyButton: 'order-3',
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Đã đặt!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Okay, do not book!', '', 'info')
+      }
+    })
+    
+  }
+  const handleBookTicket = () => {
+    Swal.fire({
+      title: 'Bạn có chắc muốn đặt?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Có chứ',
+      denyButtonText: 'Không, chưa chắc lắm',
       customClass: {
         actions: 'my-actions',
         cancelButton: 'order-1 right-gap',
@@ -211,11 +235,20 @@ export default function PayMent() {
           console.log("Gửi đi: ",userId, scheduleId, listSeatIds);
           dispatch(bookTicket({userId, scheduleId, listSeatIds} ));
         }
-        Swal.fire('Booked!', '', 'success')
+        Swal.fire('Đã đặt!', '', 'success')
       } else if (result.isDenied) {
-        Swal.fire('Okay, do not book!', '', 'info')
+        Swal.fire('Okay, không đặt nó!', '', 'info')
       }
     })
+
+    // khi đủ dữ liệu và chưa có lần đặt vé nào trước đó thì mới cho đặt vé
+
+
+      // SwalConfirm()
+
+      
+      // dispatch(bookTicket({ maLichChieu: 40396, danhSachVe: [{ maGhe: 9122569, giaVe: 75000 }], taiKhoanNguoiDung }))
+    
   };
   const onFocus = (e) => {
     setDataFocus({ ...dataFocus, [e.target.name]: true });
@@ -240,37 +273,37 @@ export default function PayMent() {
 
         {/* thông tin phim và rạp */}
         <div className={classes.payMentItem}>
-        <p className={classes.tenPhim}>{thongTin?.data?.content[0]?.movie?.name}</p>
+          <p className={classes.tenPhim}>{thongTin?.data?.content[0]?.movie?.name}</p>
           <p>{thongTin?.data?.content[0]?.branch.name}</p>
           <div style={{display:"flex", justifyContent:"space-between"}}>
-            <p>Room:</p>
+            <p>Phòng:</p>
             <span>{thongTin?.data?.content[0]?.room?.name}</span>
           </div>
           <div style={{display:"flex", justifyContent:"space-between"}}>
-            <p>Date:</p>
+            <p>Ngày chiếu:</p>
             <span>{thongTin?.data?.content[0]?.startDate}</span>
           </div>
           <div style={{display:"flex", justifyContent:"space-between"}}>
-            <p>Time:</p>
+            <p>Giờ chiếu:</p>
             <span>{thongTin?.data?.content[0]?.startTime}</span>
           </div>
           <div style={{display:"flex", justifyContent:"space-between"}}>
-            <p>Duration:</p>
+            <p>Thời lượng:</p>
             <span>{thongTin?.data?.content[0]?.movie?.duration} Minutes</span>
           </div>
           <div style={{display:"flex", justifyContent:"space-between"}}>
-            <p>Category: </p>
+            <p>Thể loại: </p>
             <span>{thongTin?.data?.content[0]?.movie?.categories}</span>
           </div>
           <div style={{display:"flex", justifyContent:"space-between"}}>
-            <p>Language: </p>
+            <p>Ngôn ngữ: </p>
             <span>{thongTin?.data?.content[0]?.movie?.language}</span>
           </div>
         </div>
 
         {/* ghế đã chọn */}
         <div className={`${classes.seatInfo} ${classes.payMentItem}`}>
-          <span>{`Seat ${listSeatSelected?.join(", ")}`}</span>
+          <span>{`Ghế: ${listSeatSelected?.join(", ")}`}</span>
           <p className={classes.amountLittle}>
             {`${amount.toLocaleString("vi-VI")} đ`}
           </p>
@@ -326,13 +359,13 @@ export default function PayMent() {
 
         {/* hình thức thanh toán */}
         <div className={classes.selectedPayMentMethod}>
-          <label className={classes.label}>Payments Type</label>
+          {/* <label className={classes.label}>Phương thức thanh toán</label>
           <p className={classes.toggleNotice}>
-              Please select the seat to display the appropriate payment method...
-          </p>
+              Vui lòng chọn ghế để hiển thị Phương thức thanh toán...
+          </p> */}
 
           <div className={classes.formPayment}>
-            <div className={classes.formPaymentItem}>
+            {/* <div className={classes.formPaymentItem}>
               <input
                 className={classes.input}
                 type="radio"
@@ -347,7 +380,7 @@ export default function PayMent() {
                 alt="zalopay"
               />
               <label>ZaloPay</label>
-            </div>
+            </div> */}
             {/* <div className={classes.formPaymentItem}>
               <input
                 className={classes.input}
@@ -382,7 +415,7 @@ export default function PayMent() {
               />
               <label>Thẻ ATM nội địa</label>
             </div> */}
-            <div className={classes.formPaymentItem}>
+            {/* <div className={classes.formPaymentItem}>
               <input
                 className={classes.input}
                 type="radio"
@@ -399,7 +432,7 @@ export default function PayMent() {
                 alt="cuahang"
               />
               <label>Pay at the counter</label>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -410,24 +443,24 @@ export default function PayMent() {
             disabled={!isReadyPayment}
             onClick={handleBookTicket}
           >
-            <p className={classes.txtDatVe}>Book this</p>
+            <p className={classes.txtDatVe}>ĐẶT NGAY</p>
           </button>
         </div>
       </div>
 
       {/* notice */}
       <div className={classes.notice}>
-        <img
+        {/* <img
           className={classes.imgNotice}
           src="/img/bookticket/exclamation.png"
           alt="notice"
-        />
-        <span>Tickets purchased cannot be exchanged or refunded</span>
+        /> */}
+        {/* <span>Tickets purchased cannot be exchanged or refunded</span>
         <p>
           Ticket code will be sent via text message{" "}
-          {/* <span className={classes.contactColor}></span> (Email) or{" "}
-          <span className={classes.contactColor}>Email</span> đã nhập. */}
-        </p>
+          <span className={classes.contactColor}></span> (Email) or{" "}
+          <span className={classes.contactColor}>Email</span> đã nhập.
+        </p> */}
       </div>
     </aside>
   );

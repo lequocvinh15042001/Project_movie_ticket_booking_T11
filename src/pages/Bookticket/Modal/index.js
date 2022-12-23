@@ -58,7 +58,7 @@ export default function Modal() {
   };
 
   const handleThanhToan = () => {
-    history.push(`/payment/${successBookingTicketMessage?.data?.id}`);
+    history.push(`/payment/${successBookingTicketMessage?.data?.id}/${successBookingTicketMessage?.data?.price}`);
   };
 
   return (

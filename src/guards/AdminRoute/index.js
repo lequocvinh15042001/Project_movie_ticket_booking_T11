@@ -13,7 +13,7 @@ function AdminRoute(props) {
   let location = useLocation();
   return (
     <Route {...rest} render={(routeProps) => {
-      if (currentUser && currentUser?.data?.role !== undefined) {
+      if (currentUser?.data?.role !== undefined) {
         // if (currentUser) {
         if (currentUser?.data?.role === "[ROLE_ADMIN]") { 
           return <ComponentAdmin {...routeProps} />
