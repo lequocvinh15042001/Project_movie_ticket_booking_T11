@@ -19,6 +19,7 @@ const enhanced = compose(
 );
 const store = createStore(rootReducer, enhanced);
 
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

@@ -30,7 +30,7 @@ const items = [
     title: 'Quản lý phim'
   },
   {
-    href: '#',
+    href: '/staff/reviews',
     icon: PostAddIcon,
     title: 'Quản lý Review'
   },
@@ -45,7 +45,12 @@ const items = [
     title: 'Quản lý vé'
   },
   {
-    href: '/staff/book',
+    href: '/staff/bills/',
+    icon: PostAddIcon,
+    title: 'Hoá đơn, thanh toán'
+  },
+  {
+    href: '/staff/book/',
     icon: PostAddIcon,
     title: 'Đặt cho người dùng'
   },
@@ -62,7 +67,9 @@ const useStyles = makeStyles(() => ({
   },
   desktopDrawer: {
     width: 256,
-    top: 64,
+    // top: 64,
+    position:'relative',
+    
     height: 'calc(100% - 64px)'
   },
   avatar: {
@@ -116,8 +123,8 @@ export default function NavBar({ onMobileClose, openMobile }) {
   }, [location.pathname]);
 
   const user = {
-    avatar: FAKE_AVATAR,
-    jobTitle: 'Staff',
+    avatar: userStaff?.image,
+    jobTitle: 'Nhân viên',
     name: userStaff?.name,
   };
 

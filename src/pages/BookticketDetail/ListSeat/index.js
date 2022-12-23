@@ -27,6 +27,7 @@ export default function ListSeat() {
   console.log("------sdas-", thongTinPhongVe);
   const domToSeatElement = useRef(null);
   const [widthSeat, setWidthSeat] = useState(0);
+  const [soGhe, setSoGhe] = useState(1);
 
   const [thongTin, setThongTin] = useState()
   const param = useParams();
@@ -100,7 +101,8 @@ export default function ListSeat() {
       []
     );
     // thông báo nếu chọn quá 10 ghế
-    if (newListSeatSelected.length === 11) {
+    if (newListSeatSelected.length > soGhe) {
+      console.log("dispatch: ", soGhe);
       dispatch({
         type: SET_ALERT_OVER10,
       });
@@ -118,7 +120,14 @@ export default function ListSeat() {
     // tính lại tổng tiền
     const amount = newListSeat?.reduce((amount, seat) => {
       if (seat.selected) {
-        return (amount += 70000);
+        if(seat.type === "NORMAL")
+        {
+          return (amount += 70000);
+        }
+        else {
+          return (amount += 80000)
+        }
+
       }
       return amount;
     }, 0);
@@ -150,6 +159,14 @@ export default function ListSeat() {
     return color;
   };
 
+  const handlerSoGhe =(e) =>{
+    setSoGhe(e.target.value);
+  }
+  console.log("soGhe: ",soGhe);
+  const handlerXacNhanSoGhe =()=>{
+    // setSoGhe(soGhe)
+    console.log("xác nhận", soGhe);
+  }
   return (
     <main className={classes.listSeat}>
       {/* thông tin phim */}
@@ -166,6 +183,36 @@ export default function ListSeat() {
               thongTin && formatDate(thongTin?.data?.content[0]?.startDate).dayToday
             } - ${thongTin?.data?.content[0]?.startDate} - ${thongTin?.data?.content[0]?.movie?.rated}`}</p>
           </div>
+          <input
+            style={{
+              display:"flex",
+              justifyContent:"center",
+              textAlign:"center",
+              margin:"1rem",
+              border:"1px solid orange",
+              backgroundColor:"black",
+              color:"white",
+              height:"2rem",
+              witdth:"3rem",
+              fontSize:"1.5rem"
+            }}
+            value={soGhe}
+            type="number"
+            min="1"
+            max="80"
+            placeholder="Số ghế!"
+            onChange={(e) => handlerSoGhe(e)}
+          />
+          <h4
+          style={{
+            display:"flex",
+            justifyContent:"center",
+            textAlign:"center",
+            marginTop:"1.2rem",
+            height:"2rem",
+            witdth:"3rem",
+          }}
+          > Ghế</h4>
         </div>
         <div className={classes.countDown}>
           <p className={classes.timeTitle}>Thời gian đặt giới hạn</p>

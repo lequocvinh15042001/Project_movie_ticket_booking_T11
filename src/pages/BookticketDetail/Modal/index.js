@@ -49,12 +49,19 @@ export default function Modal() {
   };
   const handleAlertOver10 = () => {
     dispatch({ type: RESET_ALERT_OVER10 });
+    window.location.reload()
   };
 
   const handleCombackHome = () => {
     dispatch({ type: RESET_DATA_BOOKTICKET });
     dispatch({ type: LOADING_BACKTO_HOME });
     history.push("/");
+  };
+
+  const handleThanhToan = () => {
+    // console.log(successBookingTicketMessage?.data?.id);
+    history.push(`/payment/${successBookingTicketMessage?.data?.id}/${successBookingTicketMessage?.data?.price}`);
+    console.log(successBookingTicketMessage);
   };
 
   return (
@@ -84,7 +91,7 @@ export default function Modal() {
                 alt="Post-notification"
               />
             </div>
-            <p className={classes.textOver}>Bạn không được chọn quá 10 ghế</p>
+            <p className={classes.textOver}>Bạn không được chọn quá số ghế đã chọn</p>
             <Button
               variant="outlined"
               classes={{ root: classes.btnOver }}
@@ -111,6 +118,18 @@ export default function Modal() {
                 onClick={handleCombackHome}
               >
                 Về trang chủ
+              </Button>
+              <Button
+                classes={{ root: classes.btnResult }}
+                onClick={handleThanhToan}
+              >
+                Thanh toán ngay!
+              </Button>
+              <Button
+                classes={{ root: classes.btnResult }}
+                onClick={handleReBooking}
+              >
+                Thanh toán sau!
               </Button>
             </div>
           </>

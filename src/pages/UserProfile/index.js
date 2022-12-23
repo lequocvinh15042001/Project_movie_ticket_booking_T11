@@ -37,6 +37,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { useSnackbar } from "notistack";
+import { getBillsChuaThanhToan, getBillsList } from "../../reducers/actions/Bill";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -115,13 +116,13 @@ export default function Index({placeholder}) {
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const classes = useStyles();
   const dispatch = useDispatch();
-  // const  {enqueueSnackbar}  = useSnackbar();
+  // const  enqueueSnackbar  = useSnackbar();
   const { successInfoUser, loadingInfoUser } = useSelector(
     (state) => state.usersManagementReducer
   );
   console.log("successInfoUser: ", successInfoUser);
   const { currentUser } = useSelector((state) => state.authReducer);
-  console.log(currentUser);
+  // console.log(currentUser);
 
   const { commentList } = useSelector((state) => state.movieDetailReducer);
   const { ticketList } = useSelector((state) => state.ticketReducer);
@@ -142,6 +143,17 @@ export default function Index({placeholder}) {
 
   // console.log(loadingUpdateUser);
 
+  let {
+    billListChuaTT,
+    loadingBillListChuaTT,
+    billListDaTT,
+    loadingBillListDaTT,
+    // loadingUpdateNoneImageMovie,
+    // successUpdateNoneImageMovie,
+    // errorUpdateNoneImageMovie,
+  } = useSelector((state) => state.billsManagementReducer);
+
+
   const [value, setValue] = React.useState(0);
   const [typePassword, settypePassword] = useState("password");
   const [typePassword2, settypePassword2] = useState("password");
@@ -151,6 +163,25 @@ export default function Index({placeholder}) {
   const [oldPass, setOldPass] = useState()
   const [newPass, setNewPass] = useState()
 
+  // useEffect(() => {
+  //   if (
+  //     !billListChuaTT
+  //   ) {
+  //     dispatch(getBillsChuaThanhToan());
+  //   }
+  // }, [
+  // ]);
+
+  // useEffect(() => {
+  //   if (
+  //     !billListDaTT
+  //   ) {
+  //     dispatch(getBillsChuaThanhToan());
+  //   }
+  // }, [
+  // ]);
+  // console.log(billListChuaTT);
+  // console.log(billListDaTT);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -167,7 +198,9 @@ export default function Index({placeholder}) {
     // .catch((err) =>{
     //   console.log(err);
     // })
-    dispatch(getAllTicket(successInfoUser?.data?.id))
+    // if(!ticketList){
+      dispatch(getAllTicket(successInfoUser?.data?.id ? successInfoUser?.data?.id : currentUser?.data?.id))
+    // }
     dispatch(getComment());
 
     return () => dispatch(resetUserList());
@@ -320,14 +353,13 @@ export default function Index({placeholder}) {
       // console.log(data.secure_url);
       setImage(data.secure_url)
       // enqueueSnackbar("Thành công", { variant: "success" });
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Úp ảnh thành công!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-
+      // Swal.fire({
+      //   position: "center",
+      //   icon: "success",
+      //   title: "Úp ảnh thành công!",
+      //   showConfirmButton: false,
+      //   timer: 1500,
+      // });
     })
     .catch((err) => {
       console.log(err);
@@ -388,7 +420,7 @@ export default function Index({placeholder}) {
         <div className="col-sm-2">
           <div className="text-center">
             <img
-              src={image ? image : FAKE_AVATAR}
+              src={successInfoUser?.data?.image ? successInfoUser?.data?.image : FAKE_AVATAR}
               className={`avatar rounded-circle img-thumbnail ${
                 isDesktop ? "w-60" : "w-30"
               }`}
@@ -538,6 +570,14 @@ export default function Index({placeholder}) {
                   selected: classes.tabSelected,
                 }}
                 label="Đổi mật khẩu"
+              />
+              <Tab
+                disableRipple
+                classes={{
+                  root: classes.tabButton,
+                  selected: classes.tabSelected,
+                }}
+                label="Thanh toán hoá đơn"
               />
             </Tabs>
           </AppBar>
@@ -881,6 +921,86 @@ export default function Index({placeholder}) {
                 </Form>
               )}
             </Formik>
+          </TabPanel>
+
+          <TabPanel
+            value={value}
+            index={3}
+            style={{ padding: isDesktop ? "0px 0px" : "0px 16px", backgroundColor:"white", borderRadius: "5px"}}
+            isDesktop={isDesktop}
+          >
+            <div className="table-responsive">
+              <table className="table table-striped table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Review</th>
+                    <th scope="col">Phim</th>
+                    <th scope="col">Thời lượng</th>
+                    <th scope="col">Ngày đặt</th>
+                    <th scope="col">Rạp</th>
+                    <th scope="col">Mã vé</th>
+                    <th scope="col">Ghế</th>
+                    {/* <th scope="col">Cost(vnđ)</th> */}
+                    <th scope="col">VNĐ</th>
+                    <th scope="col">QR Code</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ticketList === [] ? handlerError() : 
+                  ticketList?.data?.map((sticket, i) => (
+                      <tr key={sticket.id} className={classes.td}>
+                        <th scope="row">{i + 1}</th>
+                        <td>
+                          <a class="btn btn-primary" 
+                              href={`/phim/${sticket?.schedule?.movie?.id}/write-review`} 
+                              role="button">Viết Review
+                          </a>
+                        </td>
+                        <td>{sticket?.schedule?.movie?.name}</td>
+                        <td>{sticket?.schedule?.movie?.duration}min</td>
+                        <td>
+                          {new Date(sticket?.bill?.createdTime).toLocaleDateString()},{" "}
+                          {new Date(sticket?.bill?.createdTime).toLocaleTimeString(
+                            "en-US",
+                            { hour: "2-digit", minute: "2-digit" }
+                          )}
+                        </td>
+                        <td>
+                          {sticket?.schedule?.room?.name},{" "}
+                          {sticket?.schedule?.branch?.name}
+          
+                          {/* {sticket?.schedule?.branch?.address} */}
+                        </td>
+                        <td>{sticket?.id}</td>
+                        {/* <td>{getIdSeat(sticket.seat)}</td> */}
+                        <td>{sticket?.seat?.name}</td>
+                        <td>
+                          {new Intl.NumberFormat("it-IT", {
+                            style: "decimal",
+                          }).format(sticket?.schedule?.price)}
+                        </td>
+                        <td>
+                          <img
+                          // src={sticket?.qrImageURL}
+                          style={{width:50, height:50}}
+                          src="https://www.1check.vn/qrcodegen/qr.png"
+                          alt="QR code"
+                          >
+                          </img>
+                        </td>
+                        {/* <td>
+                          {new Intl.NumberFormat("it-IT", {
+                            style: "decimal",
+                          }).format(sticket?.schedule?.price)}
+                        </td> */}
+                      </tr>
+                    ))
+                    .reverse()}
+                  
+                </tbody>
+              </table>
+            </div>
           </TabPanel>
 
           <TabPanel value={value} index={3}>

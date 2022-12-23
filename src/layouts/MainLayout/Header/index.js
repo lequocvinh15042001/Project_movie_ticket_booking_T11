@@ -39,7 +39,10 @@ const headMenu = [
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.authReducer);
-  // console.log("header: ",currentUser);
+  console.log("header: ",currentUser);
+  const { successInfoUser, loadingInfoUser } = useSelector(
+    (state) => state.usersManagementReducer
+  );
   // const { successInfoUser } = useSelector((state) => state.usersManagementReducer);
   // console.log("header: ", successInfoUser);
   const { isLoadingBackToHome } = useSelector((state) => state.lazyReducer);
@@ -160,9 +163,9 @@ export default function Header() {
               <List disablePadding className={classes.auth}>
                 <ListItem button classes={{ root: clsx(classes.itemAuth, classes.divide) }} onClick={handleUser}>
                   <ListItemIcon classes={{ root: classes.icon }}>
-                    <Avatar alt="avatar" className={classes.avatar} src={currentUser?.image ? currentUser?.image : FAKE_AVATAR} />
+                    <Avatar alt="avatar" className={classes.avatar} src={currentUser?.data?.image ? currentUser?.data?.image : successInfoUser?.data?.image? successInfoUser?.data?.image: FAKE_AVATAR} />
                   </ListItemIcon>
-                  <ListItemText primary={currentUser?.username} />
+                  <ListItemText primary={currentUser?.data?.username} />
                 </ListItem>
                 <ListItem button classes={{ root: classes.itemAuth }} onClick={handleLogout}>
                   <ListItemText primary="Đăng xuất" />
@@ -213,9 +216,9 @@ export default function Header() {
           {currentUser ?
             <ListItem button classes={{ root: clsx(classes.itemAuth, classes.divide, classes.hover) }} onClick={handleUser}>
               <ListItemIcon classes={{ root: classes.icon }}>
-                <Avatar alt="avatar" className={classes.avatar} src={FAKE_AVATAR} />
+                <Avatar alt="avatar" className={classes.avatar} src={currentUser?.data?.image ? currentUser?.data?.image : successInfoUser?.data?.image? successInfoUser?.data?.image: FAKE_AVATAR} />
               </ListItemIcon>
-              <ListItemText className={classes.username} primary={currentUser?.username} />
+              <ListItemText className={classes.username} primary={currentUser?.data?.username} />
             </ListItem>
             :
             <ListItem button classes={{ root: classes.listItem }} onClick={handleLogin}>

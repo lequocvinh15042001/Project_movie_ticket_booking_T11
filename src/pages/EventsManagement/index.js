@@ -309,7 +309,7 @@ export default function MoviesManagement() {
     {
       field: "title",
       headerName: "Tiêu đề",
-      width: 300,
+      width: 500,
       headerAlign: "center",
       align: "left",
       headerClassName: "custom-header",
@@ -323,6 +323,7 @@ export default function MoviesManagement() {
       align: "left",
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
+      hide:true,
     },
     {
       field: "mainImage",
@@ -348,7 +349,7 @@ export default function MoviesManagement() {
     {
       field: "status",
       headerName: "Trạng thái",
-      width: 120,
+      width: 180,
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
@@ -357,7 +358,7 @@ export default function MoviesManagement() {
     {
       field: "type",
       headerName: "Loại",
-      width: 120,
+      width: 150,
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",

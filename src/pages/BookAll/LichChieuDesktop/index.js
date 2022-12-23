@@ -267,8 +267,8 @@ export default function LichChieuDesktopTheoNgay() {
       <input
           type="date"
           style={{ width: 200, fontSize:"1.5rem", fontWeight:"bold", marginLeft:"10px", textAlign:"center"}}
-          // min= {todayDate}
-          // max= {afterDate}
+          min= {todayDate}
+          max= {afterDate}
           required
           onChange={(e) => {
             handleSelectNgayChieu(e);  

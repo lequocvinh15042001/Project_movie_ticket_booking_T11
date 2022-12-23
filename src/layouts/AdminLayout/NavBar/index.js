@@ -25,6 +25,11 @@ import usersApi from '../../../api/usersApi';
 
 const items = [
   {
+    href: '/admin/dashboard',
+    icon: PeopleAltIcon,
+    title: 'Thống kê'
+  },
+  {
     href: '/admin/movies',
     icon: MovieIcon,
     title: 'Quản lý phim'
@@ -54,6 +59,12 @@ const items = [
     icon: PostAddIcon,
     title: 'Quản lý lịch chiếu'
   }, 
+  {
+    href: '/admin/bills/',
+    icon: PostAddIcon,
+    title: 'Hoá đơn, thanh toán'
+  },
+
 ];
 
 const useStyles = makeStyles(() => ({
@@ -62,7 +73,8 @@ const useStyles = makeStyles(() => ({
   },
   desktopDrawer: {
     width: 256,
-    top: 64,
+    // top: 64,
+    position:'relative',
     height: 'calc(100% - 64px)'
   },
   avatar: {
@@ -79,6 +91,8 @@ export default function NavBar({ onMobileClose, openMobile }) {
   const dispatch = useDispatch();
   const [userAdmin, setUserAdmin]= useState();
   const { currentUser } = useSelector((state) => state.authReducer);
+
+  console.log(userAdmin);
 
   useEffect(() => {
     dispatch({
@@ -116,8 +130,8 @@ export default function NavBar({ onMobileClose, openMobile }) {
   // }, [location.pathname]);
 
   const user = {
-    avatar: FAKE_AVATAR,
-    jobTitle: 'Admin',
+    avatar: userAdmin?.image,
+    jobTitle: 'Quản trị viên',
     name: userAdmin?.name,
   };
 

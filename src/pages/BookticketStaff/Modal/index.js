@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
+import billsApi from './../../../api/billsApi'
 
 import useStyles from "./style";
 import {
@@ -16,6 +17,7 @@ import { getListSeat } from "../../../reducers/actions/BookTicket";
 import { colorTheater } from "../../../constants/theaterData";
 import ResultBookticket from "../ResultBookticket";
 import bookingApi from "../../../api/bookingApi";
+import Swal from "sweetalert2";
 
 export default function Modal() {
   const {
@@ -26,6 +28,7 @@ export default function Modal() {
     errorBookTicketMessage,
     danhSachPhongVe: { thongTinPhim },
   } = useSelector((state) => state.bookTicketReducer);
+  console.log(successBookingTicketMessage);
   const dispatch = useDispatch();
   const param = useParams(); // lấy dữ liệu param từ URL
   const history = useHistory();
@@ -49,6 +52,7 @@ export default function Modal() {
   };
   const handleAlertOver10 = () => {
     dispatch({ type: RESET_ALERT_OVER10 });
+    window.location.reload()
   };
 
   const handleCombackHome = () => {
@@ -56,6 +60,45 @@ export default function Modal() {
     dispatch({ type: LOADING_BACKTO_HOME });
     history.push("/");
   };
+
+  const handlerThanhToan =() =>{
+    dispatch({ type: RESET_DATA_BOOKTICKET });
+
+    console.log(successBookingTicketMessage?.data?.id);
+    handlerComfirm()
+}
+
+const handlerComfirm = () =>{
+    Swal.fire({
+        title: 'Bạn có chắc muốn thanh toán?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: 'No',
+        customClass: {
+          actions: 'my-actions',
+          cancelButton: 'order-1 right-gap',
+          confirmButton: 'order-2',
+          denyButton: 'order-3',
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+            billsApi.postThanhToan(successBookingTicketMessage?.data?.id)
+            .then((res)=>{
+                console.log(res);
+                Swal.fire('Đã thanh toán!', '', 'success')
+                // history.push("/staff/bills");
+            })
+            .catch((err) =>{
+                console.log(err);
+                Swal.fire('Đã quá hạn thanh toán!', '', 'info')
+            })
+        } else if (result.isDenied) {
+          Swal.fire('Không thanh toán ngay!', '', 'info')
+            // history.push("/staff/bills");
+        }
+      })
+  }
 
   return (
     <Dialog
@@ -67,9 +110,9 @@ export default function Modal() {
         !isBookticket && ( // không thông báo hết giờ khi đã có kết quả đặt vé
           <div className={classes.padding}>
             <p>
-              Times out! Please booking ticket in 5 minutes.
+              Hết giờ! Vui lòng đặt trong vòng 5 phút.
               <span className={classes.txtClick} onClick={handleTimeOut}>
-                Book again!
+                Đặt lại!
               </span>
             </p>
           </div>
@@ -84,13 +127,13 @@ export default function Modal() {
                 alt="Post-notification"
               />
             </div>
-            <p className={classes.textOver}>You don't choose over 10 seats</p>
+            <p className={classes.textOver}>Nhân viên không được chọn quá số lượng ghế đã điền</p>
             <Button
               variant="outlined"
               classes={{ root: classes.btnOver }}
               onClick={handleAlertOver10}
             >
-              ok
+              Okay
             </Button>
           </div>
         )}
@@ -103,14 +146,14 @@ export default function Modal() {
                 classes={{ root: classes.btnResult }}
                 onClick={handleReBooking}
               >
-                {successBookingTicketMessage && "Book this movie again!"}
-                {errorBookTicketMessage && "Try book again"}
+                {successBookingTicketMessage && "Đặt thêm ghế cho phim này!"}
+                {errorBookTicketMessage && "Cố gắng thử lại"}
               </Button>
               <Button
                 classes={{ root: classes.btnResult }}
-                onClick={handleCombackHome}
+                onClick={handlerThanhToan}
               >
-                Go to Homepage
+                Thanh toán cho khách hàng tại quầy
               </Button>
             </div>
           </>

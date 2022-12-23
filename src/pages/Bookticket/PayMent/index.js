@@ -61,6 +61,7 @@ export default function PayMent() {
     errorBookTicketMessage,
     thongTinPhongVe,
   } = useSelector((state) => state.bookTicketReducer);
+  console.log(successBookingTicketMessage);
   console.log(maLichChieu, danhSachVe, taiKhoanNguoiDung);
   console.log("danhSachVe: ",danhSachVe);
   const dispatch = useDispatch();
@@ -214,37 +215,37 @@ export default function PayMent() {
 
         {/* thông tin phim và rạp */}
         <div className={classes.payMentItem}>
-        <p className={classes.tenPhim}>{thongTinPhongVe?.data?.content[0]?.movie?.name}</p>
+          <p className={classes.tenPhim}>{thongTinPhongVe?.data?.content[0]?.movie?.name}</p>
           <p>{thongTinPhongVe?.data?.content[0]?.branch.name}</p>
           <div style={{display:"flex", justifyContent:"space-between"}}>
-            <p>Room:</p>
+            <p>Phòng:</p>
             <span>{thongTinPhongVe?.data?.content[0]?.room?.name}</span>
           </div>
           <div style={{display:"flex", justifyContent:"space-between"}}>
-            <p>Date:</p>
+            <p>Ngày chiếu:</p>
             <span>{thongTinPhongVe?.data?.content[0]?.startDate}</span>
           </div>
           <div style={{display:"flex", justifyContent:"space-between"}}>
-            <p>Time:</p>
+            <p>Giờ chiếu:</p>
             <span>{thongTinPhongVe?.data?.content[0]?.startTime}</span>
           </div>
           <div style={{display:"flex", justifyContent:"space-between"}}>
-            <p>Duration:</p>
+            <p>Thời lượng:</p>
             <span>{thongTinPhongVe?.data?.content[0]?.movie?.duration} Minutes</span>
           </div>
           <div style={{display:"flex", justifyContent:"space-between"}}>
-            <p>Category: </p>
+            <p>Thể loại: </p>
             <span>{thongTinPhongVe?.data?.content[0]?.movie?.categories}</span>
           </div>
           <div style={{display:"flex", justifyContent:"space-between"}}>
-            <p>Language: </p>
+            <p>Ngôn ngữ: </p>
             <span>{thongTinPhongVe?.data?.content[0]?.movie?.language}</span>
           </div>
         </div>
 
         {/* ghế đã chọn */}
         <div className={`${classes.seatInfo} ${classes.payMentItem}`}>
-          <span>{`Seat ${listSeatSelected?.join(", ")}`}</span>
+          <span>{`Ghế: ${listSeatSelected?.join(", ")}`}</span>
           <p className={classes.amountLittle}>
             {`${amount.toLocaleString("vi-VI")} đ`}
           </p>
@@ -300,13 +301,13 @@ export default function PayMent() {
 
         {/* hình thức thanh toán */}
         <div className={classes.selectedPayMentMethod}>
-          <label className={classes.label}>Payments Type</label>
+          {/* <label className={classes.label}>Phương thức thanh toán</label>
           <p className={classes.toggleNotice}>
-              Please select the seat to display the appropriate payment method...
-          </p>
+              Vui lòng chọn ghế để hiển thị Phương thức thanh toán...
+          </p> */}
 
           <div className={classes.formPayment}>
-            <div className={classes.formPaymentItem}>
+            {/* <div className={classes.formPaymentItem}>
               <input
                 className={classes.input}
                 type="radio"
@@ -321,7 +322,7 @@ export default function PayMent() {
                 alt="zalopay"
               />
               <label>ZaloPay</label>
-            </div>
+            </div> */}
             {/* <div className={classes.formPaymentItem}>
               <input
                 className={classes.input}
@@ -356,7 +357,7 @@ export default function PayMent() {
               />
               <label>Thẻ ATM nội địa</label>
             </div> */}
-            <div className={classes.formPaymentItem}>
+            {/* <div className={classes.formPaymentItem}>
               <input
                 className={classes.input}
                 type="radio"
@@ -373,7 +374,7 @@ export default function PayMent() {
                 alt="cuahang"
               />
               <label>Pay at the counter</label>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -384,24 +385,24 @@ export default function PayMent() {
             disabled={!isReadyPayment}
             onClick={handleBookTicket}
           >
-            <p className={classes.txtDatVe}>Book this</p>
+            <p className={classes.txtDatVe}>ĐẶT NGAY</p>
           </button>
         </div>
       </div>
 
       {/* notice */}
       <div className={classes.notice}>
-        <img
+        {/* <img
           className={classes.imgNotice}
           src="/img/bookticket/exclamation.png"
           alt="notice"
-        />
-        <span>Tickets purchased cannot be exchanged or refunded</span>
+        /> */}
+        {/* <span>Tickets purchased cannot be exchanged or refunded</span>
         <p>
           Ticket code will be sent via text message{" "}
-          {/* <span className={classes.contactColor}></span> (Email) or{" "}
-          <span className={classes.contactColor}>Email</span> đã nhập. */}
-        </p>
+          <span className={classes.contactColor}></span> (Email) or{" "}
+          <span className={classes.contactColor}>Email</span> đã nhập.
+        </p> */}
       </div>
     </aside>
   );
