@@ -30,7 +30,7 @@ const items = [
     title: 'Quản lý phim'
   },
   {
-    href: '#',
+    href: '/staff/reviews',
     icon: PostAddIcon,
     title: 'Quản lý Review'
   },
@@ -45,7 +45,7 @@ const items = [
     title: 'Quản lý vé'
   },
   {
-    href: '/staff/book',
+    href: '/staff/book/',
     icon: PostAddIcon,
     title: 'Đặt cho người dùng'
   },

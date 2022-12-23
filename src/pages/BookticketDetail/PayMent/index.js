@@ -63,6 +63,7 @@ export default function PayMent() {
     errorBookTicketMessage,
     thongTinPhongVe,
   } = useSelector((state) => state.bookTicketReducer);
+  console.log(successBookingTicketMessage);
   console.log(maLichChieu, danhSachVe, taiKhoanNguoiDung);
   console.log("danhSachVe: ",danhSachVe);
   const dispatch = useDispatch();
@@ -74,7 +75,7 @@ export default function PayMent() {
     values: {
       email: email,
       phone: phone,
-      paymentMethod: paymentMethod,
+      // paymentMethod: paymentMethod,
       thongTinPhongVe: thongTinPhongVe,
     },
     errors: {
@@ -138,7 +139,7 @@ export default function PayMent() {
         payload: {
           email: dataSubmit.values.email,
           phone: dataSubmit.values.phone,
-          paymentMethod: dataSubmit.values.paymentMethod,
+          // paymentMethod: dataSubmit.values.paymentMethod,
         },
       });
       // khi không có lỗi và đủ dữ liệu thì set data sẵn sàng đặt vé và ngược lại, set activeStep = 1 nếu đủ dữ liệu và chưa đặt vé
@@ -147,7 +148,7 @@ export default function PayMent() {
         !dataSubmit.errors.phone &&
         dataSubmit.values.email &&
         dataSubmit.values.phone &&
-        dataSubmit.values.paymentMethod &&
+        // dataSubmit.values.paymentMethod &&
         isSelectedSeat
       ) {
         dispatch({
@@ -173,7 +174,7 @@ export default function PayMent() {
       values: {
         email: email,
         phone: phone,
-        paymentMethod: paymentMethod,
+        // paymentMethod: paymentMethod,
       },
       // errors: { email: emailErrors.email, phone: phoneErrors.phone },
     }));
@@ -359,13 +360,13 @@ export default function PayMent() {
 
         {/* hình thức thanh toán */}
         <div className={classes.selectedPayMentMethod}>
-          <label className={classes.label}>Phương thức thanh toán</label>
+          {/* <label className={classes.label}>Phương thức thanh toán</label>
           <p className={classes.toggleNotice}>
               Vui lòng chọn ghế để hiển thị Phương thức thanh toán...
-          </p>
+          </p> */}
 
           <div className={classes.formPayment}>
-            <div className={classes.formPaymentItem}>
+            {/* <div className={classes.formPaymentItem}>
               <input
                 className={classes.input}
                 type="radio"
@@ -380,7 +381,7 @@ export default function PayMent() {
                 alt="zalopay"
               />
               <label>ZaloPay</label>
-            </div>
+            </div> */}
             {/* <div className={classes.formPaymentItem}>
               <input
                 className={classes.input}
@@ -415,7 +416,7 @@ export default function PayMent() {
               />
               <label>Thẻ ATM nội địa</label>
             </div> */}
-            <div className={classes.formPaymentItem}>
+            {/* <div className={classes.formPaymentItem}>
               <input
                 className={classes.input}
                 type="radio"
@@ -432,7 +433,7 @@ export default function PayMent() {
                 alt="cuahang"
               />
               <label>Pay at the counter</label>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -450,17 +451,17 @@ export default function PayMent() {
 
       {/* notice */}
       <div className={classes.notice}>
-        <img
+        {/* <img
           className={classes.imgNotice}
           src="/img/bookticket/exclamation.png"
           alt="notice"
-        />
-        <span>Tickets purchased cannot be exchanged or refunded</span>
+        /> */}
+        {/* <span>Tickets purchased cannot be exchanged or refunded</span>
         <p>
           Ticket code will be sent via text message{" "}
-          {/* <span className={classes.contactColor}></span> (Email) or{" "}
-          <span className={classes.contactColor}>Email</span> đã nhập. */}
-        </p>
+          <span className={classes.contactColor}></span> (Email) or{" "}
+          <span className={classes.contactColor}>Email</span> đã nhập.
+        </p> */}
       </div>
     </aside>
   );

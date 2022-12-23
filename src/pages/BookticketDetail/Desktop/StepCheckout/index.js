@@ -63,7 +63,7 @@ export default function Stepcheckout() {
         ))}
       </Stepper>
       <div className={classes.account} onClick={handleUser}>
-        <img src={FAKE_AVATAR} alt="avatar" className={classes.avatar} />
+        <img src={currentUser.image} alt="avatar" className={classes.avatar} />
         <p className={classes.hoTen}>{currentUser.name}</p>
       </div>
     </div>

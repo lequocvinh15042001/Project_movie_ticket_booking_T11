@@ -7,6 +7,7 @@ import ModalTrailer from "./components/ModalTrailer";
 import TriggerLoadingLazy from "./components/TriggerLoadingLazy";
 import Loading from "./components/Loading";
 import { theme } from "./constants/config";
+import PaymentUser from "./pages/PaymentUser";
 
 // layout
 const MainLayout = lazy(() => import("./layouts/MainLayout"));
@@ -58,7 +59,7 @@ function App() {
         <ModalTrailer />
         <Suspense fallback={<TriggerLoadingLazy />}> 
           <Switch>
-            <Route exact path={["/search/:search", "/", "/phim/:maPhim", "/taikhoan", "/review/:maTin", "/schedule", "/review", "/bookall", "/event-all", "/phim/:maPhim/write-review", "/detail-review/:maTin"]}>
+            <Route exact path={["/search/:search", "/", "/phim/:maPhim", "/taikhoan", "/review/:maTin", "/schedule", "/review", "/bookall", "/event-all", "/phim/:maPhim/write-review", "/detail-review/:maTin", "payment/:maBill/total"]}>
               <MainLayout>
                 <Route exact path="/" component={Homepage} />
                 <Route exact path="/review" component={ReviewAll} />
@@ -90,9 +91,15 @@ function App() {
               component={BookTicketsDetail}
             />
 
+            <CheckoutRoute
+              exact
+              path="/payment/:maBill/:total"
+              component={PaymentUser}
+            />
+
             <Route
               exact
-              path={["/admin/users", "/admin/movies", "/admin/showtimes", "/admin/reviews", "/admin/ticket", "/admin/events", "/admin/dashboard"]}
+              path={["/admin/users", "/admin/movies", "/admin/showtimes", "/admin/reviews", "/admin/ticket", "/admin/events", "/admin/dashboard", "/admin/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/admin/book/"]}
             >
               <AdminLayout>
                 <AdminRoute
@@ -125,12 +132,17 @@ function App() {
                   path="/admin/events"
                   component={EventsManagement}
                 />
+                <CheckoutRoute
+                exact
+                path="/admin/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu"
+                component={BookTicketsByStaff}
+               />
               </AdminLayout>
             </Route>
 
             <Route
               exact
-              path={["/staff/movies", "/staff/book", "/staff/reviews", "/staff/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/staff/showtimes", "/staff/ticket", "/staff/events"]}
+              path={["/staff/movies", "/staff/book", "/staff/reviews", "/staff/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/staff/showtimes", "/staff/ticket", "/staff/events", "/staff/book/"]}
             >
               <StaffLayout>
                 <StaffRoute

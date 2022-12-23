@@ -54,6 +54,11 @@ const items = [
     icon: PostAddIcon,
     title: 'Quản lý lịch chiếu'
   }, 
+  {
+    href: '/admin/book/',
+    icon: PostAddIcon,
+    title: 'Đặt cho người dùng'
+  },
 ];
 
 const useStyles = makeStyles(() => ({
