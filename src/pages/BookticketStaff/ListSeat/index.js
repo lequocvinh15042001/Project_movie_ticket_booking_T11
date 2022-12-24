@@ -282,7 +282,7 @@ console.log(thongTin);
             display:"flex",
             position:"absolute",
             top:"27.8%",
-            left:"31%",
+            left:"45%",
             // justifyContent:"center",
             // textAlign:"center",
             // marginTop:"1.2rem",

@@ -281,7 +281,7 @@ export default function Index({placeholder}) {
       return;
     }
     console.log(user);
-    // dispatch(putUserUpdate(user));
+    dispatch(putUserUpdate(user));
   };
 
   const handleSubmitChangePass = (pass) => {
