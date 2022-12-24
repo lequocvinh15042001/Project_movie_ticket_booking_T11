@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -7,11 +7,15 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Title from "./Title";
+import billsApi from "./../../../api/billsApi"
+
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
   return { id, date, name, shipTo, paymentMethod, amount };
 }
+
+
 
 const rows = [
   createData(
@@ -63,37 +67,51 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Orders() {
+
+  const [data, setData] = useState({
+  })
+
+  useEffect(() => {
+    billsApi.getBillDashBoardSortAZ()
+    .then((res) =>{
+      console.log(res);
+      setData(
+        res.data
+      )
+    })
+    .catch((err) =>{
+      console.log(err);
+    })
+  },[])
+
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
+      <Title>Thống kê khách hàng thanh toán nhiều nhất hệ thống</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell>Khách hàng</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Số lượng giao dịch hiện tại</TableCell>
+            <TableCell>Tổng số tiền</TableCell>
+            <TableCell>Tổng số vé</TableCell>
+            <TableCell align="right">VISA</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{row.amount}</TableCell>
+          {data?.map(row => (
+            <TableRow key={row?.id}>
+              <TableCell>{row?.name}</TableCell>
+              <TableCell>{row?.email}</TableCell>
+              <TableCell>{row?.transactionCount}</TableCell>
+              <TableCell>{row?.incomeAmount}</TableCell>
+              <TableCell>{row?.ticketAmount}</TableCell>
+              <TableCell align="right">"VISA ⠀•••• 1283"</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="javascript:;">
-          See more orders
-        </Link>
-      </div>
     </React.Fragment>
   );
 }

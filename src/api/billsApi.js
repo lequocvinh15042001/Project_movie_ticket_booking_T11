@@ -2,6 +2,21 @@ import axiosClient from "./axiosClient";
 
 const reviewsApi = {
 
+  getBillDashBoard: () => {
+    const path = `/bills/getBillDashBoard?fromDate=2022-12-01&toDate=2022-12-31&status=SUCCESS`;
+    return axiosClient.get(path);
+  },
+
+  getBillDashBoardSortAZ: () => {
+    const path = `/bills/getUserDashBoard?status=SUCCESS`;
+    return axiosClient.get(path);
+  },
+
+  getBillDashBoardHetHan: () => {
+    const path = `/bills/getBillDashBoard?fromDate=2022-12-01&toDate=2022-12-31&status=EXPIRATION`;
+    return axiosClient.get(path);
+  },
+
   postThanhToan:(id) =>{
     const path = `/bills/payment?id=${id}`;
     return axiosClient.post(path);

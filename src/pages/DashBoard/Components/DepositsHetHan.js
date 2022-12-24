@@ -3,7 +3,7 @@ import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Title from "./Title";
-import billsApi from "./../../../api/billsApi"
+import billsApi from "../../../api/billsApi"
 
 const useStyles = makeStyles({
   depositContext: {
@@ -15,7 +15,8 @@ const useStyles = makeStyles({
 
 export default function Deposits() {
 
-  const [data, setData] = useState({
+
+  const [data2, setData2] = useState({
     totalIncome:"",
     totalTicket:"",
     totalTransaction:"",
@@ -23,10 +24,10 @@ export default function Deposits() {
   })
 
   useEffect(() => {
-    billsApi.getBillDashBoard()
+    billsApi.getBillDashBoardHetHan()
     .then((res) =>{
       console.log(res);
-      setData(
+      setData2(
         res.data
       )
     })
@@ -39,24 +40,16 @@ export default function Deposits() {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Tổng doanh thu đạt được</Title>
+      <Title>Doanh thu đáng được nhận nếu người dùng thanh toán</Title>
       <Typography component="p" variant="h4">
-        {data?.totalIncome}VND
+        {data2?.totalIncome}VND
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         Từ 01/12/2022 - 31/12/2022
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        Số lượng vé được đặt: {data?.totalTicket}
+        Số lượng GD không thành công: {data2?.totalTransaction}
       </Typography>
-      <Typography color="textSecondary" className={classes.depositContext}>
-        Số lượng GD thành công: {data?.totalTransaction}
-      </Typography>
-      <div>
-        <Link color="primary" href="javascript:;">
-          Xem chi tiết
-        </Link>
-      </div>
     </React.Fragment>
   );
 }
