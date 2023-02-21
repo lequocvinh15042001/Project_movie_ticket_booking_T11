@@ -12,10 +12,10 @@ const reviewsApi = {
     return axiosClient.post(path, event);
   },
 
-  postAddReview: (review) => {
-    const path = "/article/addNewReview";
-    return axiosClient.post(path, review);
-  },
+  // postAddReview: (review) => {
+  //   const path = "/article/addNewReview";
+  //   return axiosClient.post(path, review);
+  // },
 
   deleteReview: (eventId) => {
     const path = `article/changeStatus?articleId=${eventId}&status=DELETE`;

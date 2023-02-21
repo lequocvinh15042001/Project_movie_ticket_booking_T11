@@ -8,6 +8,7 @@ import TriggerLoadingLazy from "./components/TriggerLoadingLazy";
 import Loading from "./components/Loading";
 import { theme } from "./constants/config";
 import PaymentUser from "./pages/PaymentUser";
+import { getAllByAltText } from "@testing-library/react";
 
 // layout
 const MainLayout = lazy(() => import("./layouts/MainLayout"));

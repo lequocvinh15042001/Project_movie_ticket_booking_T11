@@ -41,10 +41,10 @@ const reviewsApi = {
     return axiosClient.post(path, event);
   },
 
-  postAddReview: (review) => {
-    const path = "/";
-    return axiosClient.post(path, review);
-  },
+  // postAddReview: (review) => {
+  //   const path = "/";
+  //   return axiosClient.post(path, review);
+  // },
 
   deleteBill: (eventId) => {
     const path = `/`;
