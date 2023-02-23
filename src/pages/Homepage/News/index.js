@@ -31,16 +31,16 @@ export default function SimpleTabs() {
   const dispatch = useDispatch();
   let {
     eventList,
-    loadingEventList,
-    loadingDelete,
+    // loadingEventList,
+    // loadingDelete,
     errorDelete,
     successDelete,
     successUpdateEvent,
-    errorUpdateEvent,
-    loadingUpdateEvent,
-    loadingAddEvent,
+    // errorUpdateEvent,
+    // loadingUpdateEvent,
+    // loadingAddEvent,
     successAddEvent,
-    errorAddEvent,
+    // errorAddEvent,
     // loadingUpdateNoneImageMovie,
     // successUpdateNoneImageMovie,
     // errorUpdateNoneImageMovie,
@@ -58,17 +58,11 @@ export default function SimpleTabs() {
     ) {
       dispatch(getEventsList());
     }
-  }, [
-    successUpdateEvent,
-    // successUpdateNoneImageMovie,
-    successDelete,
-    errorDelete,
-    successAddEvent,
-  ]);
+  }, []);
 
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [tinTuc, setTinTuc] = React.useState([]);
+  // const [tinTuc, setTinTuc] = React.useState([]);
   const history = useHistory();
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -220,6 +214,7 @@ export default function SimpleTabs() {
           </div>
           </TabPanel>
         </Fade>
+
         {/* Này của PHIM 24 giờ */}
         <Fade timeout={400} in={value === 1}>
           <TabPanel value={value} index={1}>

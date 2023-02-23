@@ -18,7 +18,7 @@ export default class Footer extends Component {
                   </li>
                   <li className="list__item">
                     <a className="list__link" href="/#">
-                      Brand Guidelines
+                      Thương hiệu uỷ quyền
                     </a>
                   </li>
                 </ul>
@@ -28,18 +28,18 @@ export default class Footer extends Component {
                 <ul className="above__list">
                   <li className="list__item">
                     <a className="list__link" href="/#">
-                      Usage Agreement
+                      Thoả thuận sử dụng
                     </a>
                   </li>
                   <li className="list__item">
                     <a className="list__link" href="/#">
-                      Privacy Policy
+                      Chính sách bảo mật
                     </a>
                   </li>
                 </ul>
               </div>
               <div className="above__item img__col col-3 tix-coop">
-                <p className="above__title">PARTNER</p>
+                <p className="above__title">THÀNH VIÊN</p>
                 <ul className="img__list">
                   <li className="img__item">
                     <a className="img__link" href="/#">
@@ -107,7 +107,7 @@ export default class Footer extends Component {
                   </li>
                 </ul>
               </div>
-              <div className="above__item mobile__app col-2">
+              {/* <div className="above__item mobile__app col-2">
                 <p className="above__title">MOBILE APP</p>
                 <ul className="logo__list">
                   <li className="logo__item">
@@ -127,7 +127,7 @@ export default class Footer extends Component {
                     </a>
                   </li>
                 </ul>
-              </div>
+              </div> */}
               <div className="above__item text-center col-2 tix-social">
                 <p className="above__title">SOCIAL</p>
                 <ul className="logo__list">
@@ -158,7 +158,7 @@ export default class Footer extends Component {
             <div className="below__row justify-content-center align-items-center row">
               <div className="below__middle col-md-9 col-sm-12 col-xs-12">
                 <div className="middle__title">
-                  TIỂU LUẬN CHUYÊN NGÀNH
+                  KHOÁ LUẬN TỐT NGHIỆP
                   <br/>
                   Nhóm tác giả:
                   <br/>
@@ -170,7 +170,7 @@ export default class Footer extends Component {
                     Trương Minh Phương
                   </a>
                 </div>
-                <span>
+                {/* <span>
                   <span>Số Điện Thoại (Hotline): 03766 212 99</span>
                   <br />
                   <span>
@@ -184,7 +184,7 @@ export default class Footer extends Component {
                       19110269@student.hcmute.edu.vn
                     </a>
                   </span>
-                </span>
+                </span> */}
               </div>
               <div className="below__left col-md-3 col-xs-12 col-sm-12">
                 <Logo fillColor={"rgb(250, 82, 56)"}/>
