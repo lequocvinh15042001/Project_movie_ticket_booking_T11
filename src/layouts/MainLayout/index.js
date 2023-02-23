@@ -33,7 +33,7 @@ export default function MainLayout(props) {
       <Footer />
       <ScrollToTop showUnder={160}>
         <NavigationIcon 
-        style={{color:"orange", width:"52px", height:"52px", 
+        style={{color:"rgb(250, 82, 56)", width:"40px", height:"40px", 
          borderRadius:"50%", backgroundColor:"white"}}/>
       </ScrollToTop>
     </div>

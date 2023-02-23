@@ -1,5 +1,5 @@
 import React from 'react'
-import post from "../../assets/posterBG.jpg"
+// import post from "../../assets/posterBG.jpg"
 
 export default function index() {
   const style = {

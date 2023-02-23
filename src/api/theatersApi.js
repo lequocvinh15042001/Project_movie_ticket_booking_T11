@@ -86,10 +86,10 @@ const theatersApi = {
 },
 
   //lấy thông tin các cum rap của 1 hệ thống
-  getListCumRapTheoHeThong: (maHeThongRap) => {
-    const path = `/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}`;
-    return axiosClient.get(path);
-  },
+  // getListCumRapTheoHeThong: (maHeThongRap) => {
+  //   const path = `/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}`;
+  //   return axiosClient.get(path);
+  // },
 
 };
 
