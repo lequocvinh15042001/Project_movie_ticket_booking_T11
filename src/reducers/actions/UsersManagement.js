@@ -82,7 +82,7 @@ export const resetUserList = () => {
 export const putUserChangePass = (newPassword, oldPassword) => {
 
   return (dispatch) => {
-    console.log("truyền vô cập nhật pass: ", newPassword, oldPassword);
+    // console.log("truyền vô cập nhật pass: ", newPassword, oldPassword);
 
     usersApi.editPassword(newPassword, oldPassword)
       .then(result => {
@@ -90,7 +90,7 @@ export const putUserChangePass = (newPassword, oldPassword) => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Update Successfully",
+          title: "Cập nhật thành công!",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -106,7 +106,7 @@ export const putUserChangePass = (newPassword, oldPassword) => {
           Swal.fire({
             position: "center",
             icon: "error",
-            title: "Password was wrong",
+            title: "Nhập mật khẩu sai!",
             showConfirmButton: false,
             timer: 1500,
           });

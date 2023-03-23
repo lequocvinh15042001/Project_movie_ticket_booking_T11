@@ -129,7 +129,7 @@ export default function Index({placeholder}) {
   const movieList = useSelector((state) => state.movieReducer.movieList);
 
 
-  console.log("Vé đã đăt",ticketList);
+  console.log("Vé đã đặt",ticketList);
 
   const [dataShort, setdataShort] = useState({
     ticket: 0,
