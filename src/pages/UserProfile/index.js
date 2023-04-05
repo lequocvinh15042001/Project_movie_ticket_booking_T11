@@ -36,8 +36,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
-import { useSnackbar } from "notistack";
-import { getBillsChuaThanhToan, getBillsList } from "../../reducers/actions/Bill";
+// import { useSnackbar } from "notistack";
+// import { getBillsChuaThanhToan, getBillsList } from "../../reducers/actions/Bill";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -126,10 +126,13 @@ export default function Index({placeholder}) {
 
   const { commentList } = useSelector((state) => state.movieDetailReducer);
   const { ticketList } = useSelector((state) => state.ticketReducer);
+  // const { billList } = useSelector((state) => state.billReducer);
   const movieList = useSelector((state) => state.movieReducer.movieList);
 
 
   console.log("Vé đã đặt",ticketList);
+  // console.log("Bill đã đặt",billList);
+  
 
   const [dataShort, setdataShort] = useState({
     ticket: 0,
@@ -751,7 +754,7 @@ export default function Index({placeholder}) {
                 <tbody>
                   {ticketList === [] ? handlerError() : 
                   ticketList?.data?.map((sticket, i) => (
-                      <tr key={sticket.id} className={classes.td}>
+                      <tr key={sticket?.id} className={classes.td}>
                         <th scope="row">{i + 1}</th>
                         <td>
                           <a class="btn btn-primary" 
@@ -923,6 +926,7 @@ export default function Index({placeholder}) {
             </Formik>
           </TabPanel>
 
+        {/* Thanh toán hóa đơn */}
           <TabPanel
             value={value}
             index={3}
@@ -949,7 +953,7 @@ export default function Index({placeholder}) {
                 <tbody>
                   {ticketList === [] ? handlerError() : 
                   ticketList?.data?.map((sticket, i) => (
-                      <tr key={sticket.id} className={classes.td}>
+                      <tr key={sticket?.id} className={classes.td}>
                         <th scope="row">{i + 1}</th>
                         <td>
                           <a class="btn btn-primary" 
