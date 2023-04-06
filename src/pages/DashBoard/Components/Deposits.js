@@ -27,7 +27,7 @@ export default function Deposits() {
     .then((res) =>{
       console.log(res);
       setData(
-        res.data
+        res?.data
       )
     })
     .catch((err) =>{
@@ -41,22 +41,24 @@ export default function Deposits() {
     <React.Fragment>
       <Title>Tổng doanh thu đạt được</Title>
       <Typography component="p" variant="h4">
-        {data?.totalIncome}VND
+        {`${data?.totalIncome.toLocaleString("vi-VI")} VND`}
+        {/* {data?.totalIncome}VND */}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        Từ 01/12/2022 - 31/12/2022
+        Từ 01/12/2022 - 01/05/2023
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         Số lượng vé được đặt: {data?.totalTicket}
+        {/* {`${data?.totalTicket?.toLocaleString("vi-VI")} đ`} */}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         Số lượng GD thành công: {data?.totalTransaction}
       </Typography>
-      <div>
+      {/* <div>
         <Link color="primary" href="javascript:;">
           Xem chi tiết
         </Link>
-      </div>
+      </div> */}
     </React.Fragment>
   );
 }
