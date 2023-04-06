@@ -23,7 +23,7 @@ const data = [
   createData("15:00", 250),
   createData("18:00", 190),
   createData("21:00", 730),
-  createData("24:00", undefined)
+  createData("24:00", 0)
 ];
 
 export default function Chart() {

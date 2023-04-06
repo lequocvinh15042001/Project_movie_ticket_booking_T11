@@ -52,7 +52,7 @@ export default function ChartSideBySide() {
         <Series
           pane="topPane"
           valueField="ticketAmount"
-          name="Lượng vé bán ra"
+          name="Số vé bán ra"
         >
           <Label
             visible={true}
@@ -79,7 +79,7 @@ export default function ChartSideBySide() {
         </ValueAxis>
         <ValueAxis pane="topPane">
           <Grid visible={true} />
-          <Title text="Lượng vé bán ra" />
+          <Title text="Số vé bán ra" />
         </ValueAxis>
 
         <Legend
@@ -97,5 +97,9 @@ function temperatureCustomizeText({ valueText }) {
 }
 
 function precipitationCustomizeText({ valueText }) {
-  return `${valueText.toLocaleString("vi-VI")} đồng`;
+  const formattedValue = Number(valueText).toLocaleString("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
+  return `${formattedValue}`;
 }

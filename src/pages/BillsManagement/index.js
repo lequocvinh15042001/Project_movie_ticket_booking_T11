@@ -8,25 +8,25 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import Dialog from "@material-ui/core/Dialog";
-import AddBoxIcon from "@material-ui/icons/AddBox";
+// import AddBoxIcon from "@material-ui/icons/AddBox";
 import RenderCellExpand from "./RenderCellExpand";
 import slugify from "slugify";
-import DialogActions from '@mui/material/DialogActions';
-import Fab from "@material-ui/core/Fab";
+// import DialogActions from '@mui/material/DialogActions';
+// import Fab from "@material-ui/core/Fab";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import { useStyles, DialogContent, DialogTitle } from "./styles";
-import {
-  getMovieListManagement,
-  deleteMovie,
-  updateMovieUpload,
-  resetMoviesManagement,
-  updateMovie,
-  addMovieUpload,
-} from "../../reducers/actions/Movie";
+// import {
+//   getMovieListManagement,
+//   deleteMovie,
+//   updateMovieUpload,
+//   resetMoviesManagement,
+//   updateMovie,
+//   addMovieUpload,
+// } from "../../reducers/actions/Movie";
 import Action from "./Action";
-import ThumbnailYoutube from "./ThumbnailYoutube";
-import Form from "./Form";
+// import ThumbnailYoutube from "./ThumbnailYoutube";
+// import Form from "./Form";
 // import FormAddEvent from "./FormAddEvent";
 import Swal from "sweetalert2";
 import { getBillsList, postAddBill, putBillUpdate, resetBillList } from "../../reducers/actions/Bill";
@@ -37,9 +37,9 @@ import billsApi from "../../api/billsApi";
 import formatDate from "../../utilities/formatDate";
 
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+// const Transition = React.forwardRef(function Transition(props, ref) {
+//   return <Slide direction="up" ref={ref} {...props} />;
+// });
 
 function CustomLoadingOverlay() {
   return (
@@ -49,7 +49,7 @@ function CustomLoadingOverlay() {
   );
 }
 
-export default function MoviesManagement() {
+export default function BillsManagement() {
   const [billListDisplay, setBillListDisplay] = useState([]);
   const [billListLoc, setBillListLoc] = useState([]);
   console.log("billListDisplay: ", billListDisplay);
@@ -95,7 +95,7 @@ export default function MoviesManagement() {
     };
   }, []);
   useEffect(() => {
-    if (billList) {
+    if (billList && billList.length) {
       let newBillListDisplay = billList?.map((bill) => ({
         ...bill,
         hanhDong: "",
@@ -120,7 +120,7 @@ export default function MoviesManagement() {
       // setBillListLoc(newBillListLoc);
     }
 
-  }, [billList]);
+  }, []);
 
   // useEffect(() => {
   //     let newBillListLoc = billList?.data?.push((bill) => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import "./NewsComponent.scss";
 import { NavLink } from "react-router-dom";
-import { qLyPhimService } from "../../services/QuanLyPhimServices";
+// import { qLyPhimService } from "../../services/QuanLyPhimServices";
 import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import eventsApi from "../../api/eventsApi";
@@ -23,12 +23,12 @@ export default function NewsComponent() {
     eventsApi
       .getListEvent()
       .then((res) => {
-        setDanhSachTinTuc(res.data);
+        setDanhSachTinTuc(res?.data);
         setLoading(false);
         console.log("Lấy tin tức",res);
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err);
       });
   }, []);
   var moment = require("moment");
