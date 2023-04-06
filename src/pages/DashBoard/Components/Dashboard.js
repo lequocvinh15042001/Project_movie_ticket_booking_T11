@@ -199,11 +199,11 @@ export default function Dashboard() {
         {/* <Container maxWidth="lg" className={classes.container}> */}
           <Grid container spacing={3}>
             {/* Chart */}
-            <Grid item xs={12} md={8} lg={12}>
+            {/* <Grid item xs={12} md={8} lg={12}>
               <Paper className={fixedHeightPaper}>
-                {/* <Chart /> */}
+                <Chart />
               </Paper>
-            </Grid>
+            </Grid> */}
 
              {/* Biểu đồ cột */}
              <Grid item xs={12} md={8} lg={12}>

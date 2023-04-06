@@ -16,7 +16,7 @@ export default function NewsComponent() {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err);
       });
   }, []);
   console.log("danhSachTinTuc: ", danhSachTinTuc);
@@ -31,15 +31,15 @@ export default function NewsComponent() {
       return (
         <div className="news__items" key={index}>
           <div className="items__img">
-            <img src={tinTuc.mainImage} alt={tinTuc.mainImage} />
+            <img src={tinTuc?.mainImage} alt={tinTuc?.mainImage} />
           </div>
           <div className="items__text">
             <h2 className="items__text-title">
               <NavLink
                 className="items__text-link"
-                to={`/review/${tinTuc.id}`}
+                to={`/review/${tinTuc?.id}`}
               >
-                {tinTuc.title || (
+                {tinTuc?.title || (
                   <SkeletonTheme color="#202020" highlightColor="#111111">
                     <h2>
                       <Skeleton count={3} duration={2} />
@@ -48,7 +48,7 @@ export default function NewsComponent() {
                 )}
               </NavLink>
             </h2>
-            <p className="items__text-description">{tinTuc.brief}</p>
+            <p className="items__text-description">{tinTuc?.brief}</p>
             {/* <div className="items__text-author">
               {tinTuc.author}
               <span className="items__text-days">
