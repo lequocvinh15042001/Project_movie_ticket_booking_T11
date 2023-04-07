@@ -27,7 +27,7 @@ import {
 } from "../../reducers/actions/UsersManagement";
 import { getComment } from "../../reducers/actions/MovieDetail";
 import usersApi from "../../api/usersApi";
-import { getAllTicket } from "../../reducers/actions/Ticket";
+import { getAllTicket, getAllTicketByUserId } from "../../reducers/actions/Ticket";
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -36,6 +36,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import { getBillsChuaThanhToan } from "../../reducers/actions/Bill";
 // import { useSnackbar } from "notistack";
 // import { getBillsChuaThanhToan, getBillsList } from "../../reducers/actions/Bill";
 
@@ -126,12 +127,12 @@ export default function Index({placeholder}) {
 
   const { commentList } = useSelector((state) => state.movieDetailReducer);
   const { ticketList } = useSelector((state) => state.ticketReducer);
-  // const { billList } = useSelector((state) => state.billReducer);
+  const { billList } = useSelector((state) => state.billsManagementReducer);
   const movieList = useSelector((state) => state.movieReducer.movieList);
 
 
   console.log("Vé đã đặt",ticketList);
-  // console.log("Bill đã đặt",billList);
+  console.log("Bill đã đặt",billList);
   
 
   const [dataShort, setdataShort] = useState({
@@ -146,16 +147,17 @@ export default function Index({placeholder}) {
 
   // console.log(loadingUpdateUser);
 
-  let {
+  const {
     billListChuaTT,
-    loadingBillListChuaTT,
-    billListDaTT,
-    loadingBillListDaTT,
+    // loadingBillListChuaTT,
+    // billListDaTT,
+    // loadingBillListDaTT,
     // loadingUpdateNoneImageMovie,
     // successUpdateNoneImageMovie,
     // errorUpdateNoneImageMovie,
   } = useSelector((state) => state.billsManagementReducer);
 
+  console.log(billListChuaTT);
 
   const [value, setValue] = React.useState(0);
   const [typePassword, settypePassword] = useState("password");
@@ -166,14 +168,13 @@ export default function Index({placeholder}) {
   const [oldPass, setOldPass] = useState()
   const [newPass, setNewPass] = useState()
 
-  // useEffect(() => {
-  //   if (
-  //     !billListChuaTT
-  //   ) {
-  //     dispatch(getBillsChuaThanhToan());
-  //   }
-  // }, [
-  // ]);
+  useEffect(() => {
+    if (
+      !billListChuaTT
+    ) {
+      dispatch(getBillsChuaThanhToan(successInfoUser?.data?.id));
+    }
+  }, []);
 
   // useEffect(() => {
   //   if (
@@ -202,7 +203,9 @@ export default function Index({placeholder}) {
     //   console.log(err);
     // })
     // if(!ticketList){
-      dispatch(getAllTicket(successInfoUser?.data?.id ? successInfoUser?.data?.id : currentUser?.data?.id))
+      // dispatch(getAllTicketByUserId(successInfoUser?.data?.id ? successInfoUser?.data?.id : currentUser?.data?.id))
+      dispatch(getAllTicket(successInfoUser?.data?.id))
+
     // }
     dispatch(getComment());
 
@@ -938,53 +941,54 @@ export default function Index({placeholder}) {
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Review</th>
-                    <th scope="col">Phim</th>
-                    <th scope="col">Thời lượng</th>
-                    <th scope="col">Ngày đặt</th>
-                    <th scope="col">Rạp</th>
+                    <th scope="col">Action</th>
                     <th scope="col">Mã vé</th>
-                    <th scope="col">Ghế</th>
-                    {/* <th scope="col">Cost(vnđ)</th> */}
+                    <th scope="col">Đặt lúc</th>
+                    <th scope="col">Trạng thái</th>
                     <th scope="col">VNĐ</th>
-                    <th scope="col">QR Code</th>
+                    {/* <th scope="col">Rạp</th>
+                    
+                    <th scope="col">Ghế</th> */}
+                    {/* <th scope="col">Cost(vnđ)</th> */}
+                    {/* <th scope="col">QR Code</th> */}
                   </tr>
                 </thead>
                 <tbody>
-                  {ticketList === [] ? handlerError() : 
-                  ticketList?.data?.map((sticket, i) => (
-                      <tr key={sticket?.id} className={classes.td}>
+                  {billListChuaTT === [] ? handlerError() : 
+                  billListChuaTT?.map((billListChua, i) => (
+                      <tr key={billListChua?.id} className={classes.td}>
                         <th scope="row">{i + 1}</th>
                         <td>
-                          <a class="btn btn-primary" 
-                              href={`/phim/${sticket?.schedule?.movie?.id}/write-review`} 
-                              role="button">Viết Review
+                          <a class="btn btn-warning" 
+                              href={`/payment/${billListChua?.id}/${billListChua.price}`} 
+                              role="button">Thanh toán
                           </a>
                         </td>
-                        <td>{sticket?.schedule?.movie?.name}</td>
-                        <td>{sticket?.schedule?.movie?.duration}min</td>
+                        <td>{billListChua?.id}</td>
+                        {/* <td>{sticket?.schedule?.movie?.name}</td>
+                        <td>{sticket?.schedule?.movie?.duration}min</td> */}
                         <td>
-                          {new Date(sticket?.bill?.createdTime).toLocaleDateString()},{" "}
-                          {new Date(sticket?.bill?.createdTime).toLocaleTimeString(
+                          {new Date(billListChua?.createdTime).toLocaleDateString()},{" "}
+                          {new Date(billListChua?.createdTime).toLocaleTimeString(
                             "en-US",
                             { hour: "2-digit", minute: "2-digit" }
                           )}
                         </td>
-                        <td>
-                          {sticket?.schedule?.room?.name},{" "}
-                          {sticket?.schedule?.branch?.name}
+                        {/* <td> */}
+                          {/* {sticket?.schedule?.room?.name},{" "}
+                          {sticket?.schedule?.branch?.name} */}
           
                           {/* {sticket?.schedule?.branch?.address} */}
-                        </td>
-                        <td>{sticket?.id}</td>
+                        {/* </td> */}
                         {/* <td>{getIdSeat(sticket.seat)}</td> */}
-                        <td>{sticket?.seat?.name}</td>
+                        {/* <td>{sticket?.seat?.name}</td> */}
+                        <td>{billListChua?.status}</td>
                         <td>
                           {new Intl.NumberFormat("it-IT", {
                             style: "decimal",
-                          }).format(sticket?.schedule?.price)}
+                          }).format(billListChua?.price)}
                         </td>
-                        <td>
+                        {/* <td>
                           <img
                           // src={sticket?.qrImageURL}
                           style={{width:50, height:50}}
@@ -992,7 +996,7 @@ export default function Index({placeholder}) {
                           alt="QR code"
                           >
                           </img>
-                        </td>
+                        </td> */}
                         {/* <td>
                           {new Intl.NumberFormat("it-IT", {
                             style: "decimal",

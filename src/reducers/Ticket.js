@@ -1,5 +1,5 @@
 import {
-    GET_TICKET_REQUEST, GET_TICKET_SUCCESS, GET_TICKET_FAIL, GET_ALLTICKET_REQUEST, GET_ALLTICKET_SUCCESS, GET_ALLTICKET_FAIL,
+    GET_TICKET_REQUEST, GET_TICKET_SUCCESS, GET_TICKET_FAIL, GET_ALLTICKET_REQUEST, GET_ALLTICKET_SUCCESS, GET_TICKETUSER_FAIL,GET_TICKETUSER_SUCCESS, GET_TICKETUSER_REQUEST,  GET_ALLTICKET_FAIL,
   } from './constants/Ticket';
   
   const initialState = {
@@ -10,6 +10,10 @@ import {
     allTicketList: [],
     loadingAllTicketList: false,
     errorAllTicketList: null,
+
+    ticketUserList: [],
+    loadingTicketUserList: false,
+    errorTicketUserList: null,
   }
   
   const ticketReducer = (state = initialState, action) => {
@@ -51,6 +55,26 @@ import {
           ...state,
           errorAllTicketList: action.payload.errorAllTicketList,
           loadingAllTicketList: false,
+        };
+      }
+
+      case GET_TICKETUSER_REQUEST: {
+        return {
+          ...state, loadingTicketUserList: true, errorTicketUserList: null
+        }
+      }
+      case GET_TICKETUSER_SUCCESS: {
+        return {
+          ...state,
+          ticketUserList: action.payload.data,
+          loadingTicketUserList: false
+        }
+      }
+      case GET_TICKETUSER_FAIL: {
+        return {
+          ...state,
+          errorTicketUserList: action.payload.errorTicketUserList,
+          loadingTicketUserList: false,
         };
       }
   

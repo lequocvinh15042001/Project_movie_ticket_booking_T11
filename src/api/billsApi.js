@@ -41,6 +41,11 @@ const reviewsApi = {
     return axiosClient.get(path);
   },
 
+  getListBillChuaThanhToanBoiUser: (id) => {
+    const path = `/bills/getAllBill?status=WAITING_PAYMENT&userId=${id}`;
+    return axiosClient.get(path);
+  },
+
   getListBillDaThanhToan: () => {
     const path = `/bills/getUserDashBoard?status=SUCCESS`;
     return axiosClient.get(path);
