@@ -27,12 +27,12 @@ export const getBillsList = () => {
   }
 }
 
-export const getBillsChuaThanhToan = () => {
+export const getBillsChuaThanhToan = (id) => {
   return (dispatch) => {
     dispatch({
       type: GET_BILL_LIST_REQUEST_USER
     })
-    billsApi.getListBillChuThanhToan()
+    billsApi.getListBillChuaThanhToanBoiUser(id)
       .then(result => {
         console.log(result.data);
         dispatch({
