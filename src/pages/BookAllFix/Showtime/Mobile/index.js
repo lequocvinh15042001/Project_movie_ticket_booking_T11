@@ -13,10 +13,10 @@ export default function Mobile({ arrayData, value }) {
   const history = useHistory();
 
   useEffect(() => {
-    const dailyMovieList = arrayData.dailyMovieList?.slice(0, 3);
-    const comingMovieList = arrayData.comingMovieList?.slice(0, 3);
-    const dailyMovieListMore = arrayData.dailyMovieList;
-    const comingMovieListMore = arrayData.comingMovieList;
+    const dailyMovieList = arrayData?.dailyMovieList?.slice(0, 3);
+    const comingMovieList = arrayData?.comingMovieList?.slice(0, 3);
+    const dailyMovieListMore = arrayData?.dailyMovieList;
+    const comingMovieListMore = arrayData?.comingMovieList;
     if (!openMore) {
       setData((data) => ({ ...data, dailyMovieList, comingMovieList }));
     }
