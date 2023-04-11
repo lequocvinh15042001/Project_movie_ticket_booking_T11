@@ -4,6 +4,25 @@ import { NavLink,useHistory } from "react-router-dom";
 import { qLyPhimService } from "../../services/QuanLyPhimServices";
 import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 150,
+  },
+});
+
 export default function NewsComponent() {
   let [danhSachTinTuc, setDanhSachTinTuc] = useState([]);
   let [loading, setLoading] = useState(true);
@@ -61,26 +80,55 @@ export default function NewsComponent() {
     }
     });
   };
-
+  const classes = useStyles();
   const renderTinTucHot = () => {
     return danhSachTinTuc?.data?.reverse().map((tinTuc, index) => {
       if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE") {
       return (
-        <div className="news__items" key={index}>
-          <div className="items__img">
-            <img src={tinTuc.mainImage} alt={tinTuc.mainImage} />
-          </div>
-          <div className="items__text">
-            <h5 className="items__text-title">
-              <NavLink
-                className="items__text-link"
-                to={`/review/${tinTuc.id}`}
-              >
-                {tinTuc.title}
-              </NavLink>
-            </h5>
-          </div>
-        </div>
+        // <div className="news__items" key={index}>
+        //   <div className="items__img">
+        //     <img src={tinTuc.mainImage} alt={tinTuc.mainImage} />
+        //   </div>
+        //   <div className="items__text">
+        //     <h5 className="items__text-title">
+        //       <NavLink
+        //         className="items__text-link"
+        //         to={`/review/${tinTuc.id}`}
+        //       >
+        //         {tinTuc.title}
+        //       </NavLink>
+        //     </h5>
+        //   </div>
+        // </div>
+        <Card className={classes.root} key={index}>
+          <CardActionArea>
+            <CardMedia
+              className={classes.media}
+              image={tinTuc.mainImage}
+              title={tinTuc.title}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+
+                  <NavLink
+                className="items__text-link"  
+                  to={`/review/${tinTuc.id}`}
+                >
+                 {tinTuc.title}
+               </NavLink>
+                {/* {tinTuc.title} */}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          {/* <CardActions>
+            <Button size="small" color="primary">
+              Đọc thêm
+            </Button>
+            <Button size="small" color="primary">
+              Viết Review
+            </Button>
+          </CardActions> */}
+        </Card>
       );
       }
     });
@@ -104,7 +152,7 @@ export default function NewsComponent() {
               {renderTinTuc()}
             </div>
             <div className="news__right col-md-4 col-sm-12">
-              <h3 className="news__title">Hot News</h3>
+              <h3 className="news__title">Hot</h3>
               {renderTinTucHot()}
             </div>
           </div>
