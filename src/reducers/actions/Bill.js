@@ -1,6 +1,7 @@
 
 import billsApi from '../../api/billsApi';
-import { ADD_BILL_FAIL, ADD_BILL_REQUEST, GET_BILL_LIST_REQUEST, GET_BILL_LIST_SUCCESS, GET_BILL_LIST_FAIL, RESET_BILL_LIST, UPDATE_BILL_REQUEST, UPDATE_BILL_SUCCESS, UPDATE_BILL_FAIL, ADD_BILL_SUCCESS, SET_IS_EXIST_BILL_MODIFIED, DELETE_BILL_REQUEST, DELETE_BILL_SUCCESS, DELETE_BILL_FAIL, GET_BILL_LIST_REQUEST_USER, GET_BILL_LIST_SUCCESS_USER, GET_BILL_LIST_FAIL_USER, GET_BILL_LIST_REQUEST_USER_DTT, GET_BILL_LIST_SUCCESS_USER_DTT, GET_BILL_LIST_FAIL_USER_DTT } from '../constants/Bill';
+import { ADD_BILL_FAIL, ADD_BILL_REQUEST, GET_BILL_LIST_REQUEST, GET_BILL_LIST_SUCCESS, GET_BILL_LIST_FAIL, RESET_BILL_LIST, UPDATE_BILL_REQUEST, UPDATE_BILL_SUCCESS, UPDATE_BILL_FAIL, ADD_BILL_SUCCESS, SET_IS_EXIST_BILL_MODIFIED, DELETE_BILL_REQUEST, DELETE_BILL_SUCCESS, DELETE_BILL_FAIL, GET_BILL_LIST_REQUEST_USER, GET_BILL_LIST_SUCCESS_USER, GET_BILL_LIST_FAIL_USER, GET_BILL_LIST_REQUEST_USER_DTT, GET_BILL_LIST_SUCCESS_USER_DTT, GET_BILL_LIST_FAIL_USER_DTT
+, GET_BILL_LIST_REQUEST_USER_DTT_ID, GET_BILL_LIST_SUCCESS_USER_DTT_ID, GET_BILL_LIST_FAIL_USER_DTT_ID } from '../constants/Bill';
 
 export const getBillsList = () => {
   return (dispatch) => {
@@ -9,7 +10,7 @@ export const getBillsList = () => {
     })
     billsApi.getListBill()
       .then(result => {
-        console.log(result.data);
+        console.log("Bill nè");
         dispatch({
           type: GET_BILL_LIST_SUCCESS,
           payload: { data: result.data }
@@ -208,7 +209,30 @@ export const postAddBill = (bill) => {
       })
   }
 }
-
+export const getBillsUserId = (id) => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_BILL_LIST_REQUEST_USER_DTT_ID
+    })
+    billsApi.getListBillUserId(id)
+      .then(result => {
+        console.log(result.data);
+        dispatch({
+          type: GET_BILL_LIST_SUCCESS_USER_DTT_ID,
+          payload: { data: result.data }
+        })
+      }
+      )
+      .catch(
+        error => {
+          dispatch({
+            type: GET_BILL_LIST_FAIL_USER_DTT_ID,
+            payload: { error: error.response?.data ? error.response.data : error.message, }
+          })
+        }
+      )
+  }
+}
 // //chỉnh lại cái type
 // export const postAddBill = (bill) => {
 //   return (dispatch) => {
