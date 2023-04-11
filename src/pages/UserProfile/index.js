@@ -1123,7 +1123,7 @@ export default function Index({placeholder}) {
           <CircularProgress style={{ margin: "auto" }} />
         </div>
       )}
-      <ShowtimeUser />
+      {/* <ShowtimeUser /> */}
     </div>
   );
 }
