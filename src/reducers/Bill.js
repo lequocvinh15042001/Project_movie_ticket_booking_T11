@@ -22,6 +22,9 @@ import {
  GET_BILL_LIST_REQUEST_USER_DTT,
  GET_BILL_LIST_SUCCESS_USER_DTT,
  GET_BILL_LIST_FAIL_USER_DTT,
+ GET_BILL_LIST_REQUEST_USER_DTT_ID,
+ GET_BILL_LIST_SUCCESS_USER_DTT_ID,
+ GET_BILL_LIST_FAIL_USER_DTT_ID,
 } from './constants/Bill';
 const initialState = {
   billList: null,
@@ -35,6 +38,10 @@ const initialState = {
   billListDaTT: null,
   loadingBillListDaTT: false,
   errorBillListDaTT: null,
+
+  billListUserId: null,
+  loadingBillListUserId: false,
+  errorBillListUserId: null,
 
   successDelete: "",
   loadingDelete: false,
@@ -109,6 +116,24 @@ const billsManagementReducer = (state = initialState, action) => {
         ...state,
         errorBillListDaTT: action.payload.error,
         loadingBillListDaTT: false,
+      };
+    }
+
+    case GET_BILL_LIST_REQUEST_USER_DTT_ID: {
+      return { ...state, loadingBillListUserId: true, errorBillListUserId: null };
+    }
+    case GET_BILL_LIST_SUCCESS_USER_DTT_ID: {
+      return {
+        ...state,
+        billListUserId: action.payload.data,
+        loadingBillListUserId: false
+      };
+    }
+    case GET_BILL_LIST_FAIL_USER_DTT_ID: {
+      return {
+        ...state,
+        errorBillListUserId: action.payload.error,
+        loadingBillListUserId: false,
       };
     }
 

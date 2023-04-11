@@ -51,6 +51,11 @@ const reviewsApi = {
     return axiosClient.get(path);
   },
 
+  getListBillUserId: (id) => {
+    const path = `/bills/getUserDashBoard?status=SUCCESS&userId=${id}`;
+    return axiosClient.get(path);
+  },
+
   postAddReview: (event) => {
     const path = "/";
     return axiosClient.post(path, event);

@@ -36,7 +36,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
-import { getBillsChuaThanhToan } from "../../reducers/actions/Bill";
+import { getBillsChuaThanhToan, getBillsUserId } from "../../reducers/actions/Bill";
 // import { useSnackbar } from "notistack";
 // import { getBillsChuaThanhToan, getBillsList } from "../../reducers/actions/Bill";
 
@@ -122,25 +122,27 @@ export default function Index({placeholder}) {
     (state) => state.usersManagementReducer
   );
   console.log("successInfoUser: ", successInfoUser);
-  const { currentUser } = useSelector((state) => state.authReducer);
+  // const { currentUser } = useSelector((state) => state.authReducer);
   // console.log(currentUser);
 
-  const { commentList } = useSelector((state) => state.movieDetailReducer);
+  // const { commentList } = useSelector((state) => state.movieDetailReducer);
   const { ticketList } = useSelector((state) => state.ticketReducer);
-  const { billList } = useSelector((state) => state.billsManagementReducer);
-  const movieList = useSelector((state) => state.movieReducer.movieList);
+  // const { billList } = useSelector((state) => state.billsManagementReducer);
+  const { billListUserId } = useSelector((state) => state.billsManagementReducer);
+  // const movieList = useSelector((state) => state.movieReducer.movieList);
 
 
   console.log("Vé đã đặt",ticketList);
-  console.log("Bill đã đặt",billList);
+  // console.log("Bill đã đặt",billList);
+
   
 
-  const [dataShort, setdataShort] = useState({
-    ticket: 0,
-    posts: 0,
-    likePosts: 0,
-    total: 0,
-  });
+  // const [dataShort, setdataShort] = useState({
+  //   ticket: 0,
+  //   posts: 0,
+  //   likePosts: 0,
+  //   total: 0,
+  // });
   const { successUpdateUser, errorUpdateUser, loadingUpdateUser } = useSelector(
     (state) => state.usersManagementReducer
   );
@@ -168,13 +170,13 @@ export default function Index({placeholder}) {
   const [oldPass, setOldPass] = useState()
   const [newPass, setNewPass] = useState()
 
-  useEffect(() => {
-    if (
-      !billListChuaTT
-    ) {
-      dispatch(getBillsChuaThanhToan(successInfoUser?.data?.id));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (
+  //     !billListChuaTT
+  //   ) {
+  //     dispatch(getBillsChuaThanhToan(successInfoUser?.data?.id));
+  //   }
+  // }, []);
 
   // useEffect(() => {
   //   if (
@@ -193,7 +195,7 @@ export default function Index({placeholder}) {
   useEffect(() => {
     // dispatch(getInfoUser({ username: currentUser?.username }));
     dispatch(getInfoUser());
-
+    dispatch(getBillsChuaThanhToan(successInfoUser?.data?.id));
     // usersApi.getTicket(successInfoUser.data.id)
     // .then((res) => {
     //   setTicket(res)
@@ -205,6 +207,7 @@ export default function Index({placeholder}) {
     // if(!ticketList){
       // dispatch(getAllTicketByUserId(successInfoUser?.data?.id ? successInfoUser?.data?.id : currentUser?.data?.id))
       dispatch(getAllTicket(successInfoUser?.data?.id))
+      dispatch(getBillsUserId(successInfoUser?.data?.id))
 
     // }
     dispatch(getComment());
@@ -424,19 +427,20 @@ export default function Index({placeholder}) {
       <br />
       <div className="row">
         <div className="col-sm-2">
-          <div className="text-center">
+          <div className="text-center" style={{marginTop:"15px"}}>
             <img
               src={successInfoUser?.data?.image ? successInfoUser?.data?.image : FAKE_AVATAR}
-              className={`avatar rounded-circle img-thumbnail ${
-                isDesktop ? "w-60" : "w-30"
-              }`}
-              // style={{
-              //   width:"100%",
-              //   height:"100%",
-              // }}
+              // className={`avatar rounded-circle img-thumbnail ${
+              //   isDesktop ? "w-60" : "w-30"
+              // }`}
+              style={{
+                width:"100%",
+                height:"100%",
+                marginBottom:"1rem"
+              }}
               alt="avatar"
             />
-            <div className="text-center mb-2" style={{paddingTop:"0.5rem"}}>
+            <div className="text-center mb-2" style={{paddingTop:"0.5"}}>
               <Fab
                 variant="extended"
                 color="secondary"
@@ -469,13 +473,14 @@ export default function Index({placeholder}) {
                   <div>
                     <img
                       src={image ? image : FAKE_AVATAR}
-                      // style={{
-                      //   width:"18rem",
-                      //   height:"18rem",
-                      // }}
-                      className={`avatar rounded-circle img-thumbnail center${
-                        isDesktop ? "w-30" : "w-30"
-                      }`}
+                      style={{
+                        width:"40%",
+                        height:"40%",
+                        marginBottom:"1rem",
+                      }}
+                      // className={`avatar rounded-circle img-thumbnail center${
+                      //   isDesktop ? "w-30" : "w-30"
+                      // }`}
                       alt="avatar"
                     />
                   </div>
