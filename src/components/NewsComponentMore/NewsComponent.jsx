@@ -31,13 +31,15 @@ export default function NewsComponent() {
         console.log(err);
       });
   }, []);
+  console.log(danhSachTinTuc);
   var moment = require("moment");
   const renderTinTuc = () => {
     return danhSachTinTuc?.data?.map((tinTuc, index) => {
+      if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE")
       return (
         <div className="news__items" key={index}>
           <div className="items__img">
-            <img src={tinTuc?.contents[0]?.image} alt={tinTuc?.contents[0]?.image} />
+            <img src={tinTuc?.mainImage} alt={tinTuc?.mainImage} />
           </div>
           <div className="items__text">
             <h2 className="items__text-title">
@@ -54,7 +56,7 @@ export default function NewsComponent() {
                 )}
               </NavLink>
             </h2>
-            <p className="items__text-description">{tinTuc?.contents[0]?.description}</p>
+            {/* <p className="items__text-description">{tinTuc?.contents[0]?.description}</p> */}
             <div className="items__text-author">
               {/* {tinTuc.author} */}
               {/* <span className="items__text-days">
@@ -69,10 +71,11 @@ export default function NewsComponent() {
 
   const renderTinTucHot = () => {
     return danhSachTinTuc?.data?.reverse().map((tinTuc, index) => {
+      if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE")      
       return (
         <div className="news__items" key={index}>
           <div className="items__img">
-            <img src={tinTuc?.contents[1]?.image} alt={tinTuc?.contents[1]?.image} />
+            <img src={tinTuc?.mainImage} alt={tinTuc?.mainImage} />
           </div>
           <div className="items__text">
             <h5 className="items__text-title">
