@@ -1,5 +1,5 @@
 import eventsApi from '../../api/eventsApi';
-import { ADD_EVENT_FAIL, ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, DELETE_EVENT_FAIL, DELETE_EVENT_REQUEST, DELETE_EVENT_SUCCESS, GET_EVENT_LIST_FAIL, GET_EVENT_LIST_REQUEST, GET_EVENT_LIST_SUCCESS, RESET_EVENT_LIST, SET_IS_EXIST_EVENT_MODIFIED, UPDATE_EVENT_FAIL, UPDATE_EVENT_REQUEST, UPDATE_EVENT_SUCCESS } from '../constants/EventsManagement';
+import { ADD_EVENT_FAIL, ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, DELETE_EVENT_FAIL, DELETE_EVENT_REQUEST, DELETE_EVENT_SUCCESS, GET_EVENT_DETAIL_FAIL, GET_EVENT_DETAIL_REQUEST, GET_EVENT_DETAIL_SUCCESS, GET_EVENT_LIST_FAIL, GET_EVENT_LIST_REQUEST, GET_EVENT_LIST_SUCCESS, RESET_EVENT_LIST, SET_IS_EXIST_EVENT_MODIFIED, UPDATE_EVENT_FAIL, UPDATE_EVENT_REQUEST, UPDATE_EVENT_SUCCESS } from '../constants/EventsManagement';
 
 export const getEventsList = () => {
   return (dispatch) => {
@@ -19,6 +19,31 @@ export const getEventsList = () => {
         error => {
           dispatch({
             type: GET_EVENT_LIST_FAIL,
+            payload: { error: error.response?.data ? error.response.data : error.message, }
+          })
+        }
+      )
+  }
+}
+
+export const getEventsDetail = (id) => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_EVENT_DETAIL_REQUEST
+    })
+    eventsApi.getDetailEvent(id)
+      .then(result => {
+        console.log(result.data);
+        dispatch({
+          type: GET_EVENT_DETAIL_SUCCESS,
+          payload: { data: result.data }
+        })
+      }
+      )
+      .catch(
+        error => {
+          dispatch({
+            type: GET_EVENT_DETAIL_FAIL,
             payload: { error: error.response?.data ? error.response.data : error.message, }
           })
         }

@@ -5,7 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import Fade from '@material-ui/core/Fade';
-import { useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 
 import useStyles from './style'
 import Seperate from '../../../components/Seperate';
@@ -21,6 +21,7 @@ function TabPanel(props) {
   </div>
   );
 }
+
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
@@ -69,7 +70,7 @@ export default function SimpleTabs() {
   };
 
 
-  // console.log(eventList);
+  console.log(eventList?.data);
   const handlerSeeMore =() =>{
     history.push("/event-all")
   }
@@ -109,11 +110,12 @@ export default function SimpleTabs() {
               {
                 eventList?.data?.slice(0,4).map((event, index) => {
                   return(
-                  <div className={classes.repons} key={index}>
-                    <a href="https://tix.vn/review/7946-review-dinh-thu-oan-khuat-ghost-of-war" className={classes.news}>
+                  <div className={classes.repons} key={index} style={{cursor: "pointer"}}>
+                    <NavLink to={`/detail-news/${event?.id}`} className={classes.news}>
                       <img className={classes.fullImg} 
                       src={event?.mainImage} 
-                      alt="news-movie" />
+                      alt="news-movie" 
+                      />
                       <div className="py-3">
                         <h4 className="card-title" style={{color:"white"}}>
                           {event.brief}
@@ -127,7 +129,7 @@ export default function SimpleTabs() {
                           {event?.description}
                           </p>
                       </div>
-                    </a>
+                    </NavLink>
                   </div>)
                 })
               }

@@ -13,9 +13,8 @@ import TextEditor from '../../../components/TextEditor/TextEditor';
 import { Card, CardBody, Form, Input, Label, Button, Container } from "reactstrap"
 import JoditEditor from 'jodit-react';
 import { useSnackbar } from 'notistack';
-import reviewsApi from "./../../../api/reviewsApi"
+import reviewsApi from "../../../api/reviewsApi"
 import Swal from 'sweetalert2';
-import CircularIntegration from '../../../utilities/CircularIntegration';
 
 export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
   // console.log("----------MT---------",data);
@@ -123,7 +122,7 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
             {imageNotFound && <div className={classes.withOutImage}></div>}
           </div>
           <div className={classes.shortInfo}> 
-            {/* <p>{formatDate(data?.releaseDate?.slice(0, 10)).YyMmDd}</p> */}
+            <p>{formatDate(data?.releaseDate?.slice(0, 10)).YyMmDd}</p>
             <p><span className={classes.c18}>{data?.rated}</span></p>
             <p className={classes.movieName}>{data?.name}</p>
             {/* <p>{`${thoiLuong ?? "120"} phút - ${danhGia}`} - 2D/Digital</p> */}
@@ -226,7 +225,7 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
                                 setImageHien(e.target.files[0])
                                 console.log(e.target.files[0]);
                               }} />
-                            {/* <button
+                            <button
                               type="button"
                               // type="button"
                               // onClick={() => handleSubmit()}
@@ -235,24 +234,17 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
                               // disable={loadingUpdateUser.toString()}
                             >
                               Cập nhật ảnh lên
-                            </button> */}
-                            {
-                              imageHien ?                             
-                              <div onClick={submitImage}>
-                              <CircularIntegration data={"Cập nhật ảnh lên"}/>
-                              </div> : null
-                            }
-
+                            </button>
                             <img
                               style={
                                 {
-                                  width:"50%",
-                                  height:"50%",
+                                  width:"100%",
+                                  height:"100%",
                                 }
                               }
                               src={imageHien ? imageHien : null}
                             />
-                            </div>
+                        </div>
                         <Container className="text-center">
                             <Button style={{margin:"5px"}} type="button" onClick={createPost}className="rounded-0" color="primary">Gửi Review</Button>
                             <Button style={{margin:"5px"}} className="rounded-0 ms-2" color="danger">Tải lại trang</Button>

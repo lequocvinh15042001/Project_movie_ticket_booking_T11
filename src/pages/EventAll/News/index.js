@@ -9,6 +9,7 @@ import Fade from '@material-ui/core/Fade';
 import useStyles from './style'
 import { getEventsList } from '../../../reducers/actions/EventsManagement';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 function TabPanel(props) {
   const { isMobile, children, value, index, ...other } = props;
@@ -83,9 +84,9 @@ export default function SimpleTabs() {
             <div className="row">
               {
                 eventList?.data?.map((event, index) => {
-                  return(
+                  if(event?.type === "NEWS") return(
                   <div className={classes.repons} key={index}>
-                    <a href="https://tix.vn/review/7946-review-dinh-thu-oan-khuat-ghost-of-war" className={classes.news}>
+                    <NavLink to={`/detail-news/${event?.id}`} className={classes.news}>
                       <img className={classes.fullImg} 
                       src={event?.mainImage} 
                       alt="news-movie" />
@@ -102,7 +103,7 @@ export default function SimpleTabs() {
                           {event?.description}
                           </p>
                       </div>
-                    </a>
+                    </NavLink>
                   </div>)
                 })
               }
