@@ -16,7 +16,8 @@ import { useTheme } from "@material-ui/core/styles";
 import NavigationIcon from "@material-ui/icons/Navigation";
 import Fab from "@material-ui/core/Fab";
 import { useHistory } from "react-router-dom";
-import ShowtimeUser from "./../UserProfile/ShowtimeUser/index"
+// import ShowtimeUser from "./../UserProfile/ShowtimeUser/index"
+import CircularIntegration from "./../../utilities/CircularIntegration"
 
 import { FAKE_AVATAR } from "../../constants/config";
 import {
@@ -485,14 +486,17 @@ export default function Index({placeholder}) {
                     />
                   </div>
                 </DialogContentText>
-                <Fab
+                {/* <Fab
                     variant="extended"
                     color="secondary"
                     size="medium"
                     onClick={submitImage}
                   >
                     Up ảnh
-                </Fab>
+                </Fab> */}
+                <div onClick={submitImage}>
+                  <CircularIntegration data={"Tải ảnh lên"} />
+                </div>
               </DialogContent>
 
               <DialogActions>

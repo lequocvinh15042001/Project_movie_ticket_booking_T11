@@ -5,12 +5,17 @@ import {
   ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, ADD_EVENT_FAIL,
   SET_IS_EXIST_EVENT_MODIFIED,
   GET_INFO_EVENT_REQUEST, GET_INFO_EVENT_SUCCESS, GET_INFO_EVENT_FAIL, UPDATE_EVENT_SUCCESS,
+  GET_EVENT_DETAIL_REQUEST, GET_EVENT_DETAIL_SUCCESS, GET_EVENT_DETAIL_FAIL,
 } from './constants/EventsManagement';
 const initialState = {
   eventList: null,
   loadingEventList: false,
   errorEventList: null,
 
+  eventDetail: null,
+  loadingEventDetail: false,
+  errorEventDetail: null,
+  
   successDelete: "",
   loadingDelete: false,
   errorDelete: null,
@@ -130,6 +135,23 @@ const eventsManagementReducer = (state = initialState, action) => {
         ...state,
         errorInfoEvent: action.payload.error,
         loadingInfoEvent: false,
+      };
+    }
+    case GET_EVENT_DETAIL_REQUEST: {
+      return { ...state, loadingEventDetail: true, errorEventDetail: null };
+    }
+    case GET_EVENT_DETAIL_SUCCESS: {
+      return {
+        ...state,
+        eventDetail: action.payload.data,
+        loadingEventDetail: false
+      };
+    }
+    case GET_EVENT_DETAIL_FAIL: {
+      return {
+        ...state,
+        errorEventDetail: action.payload.error,
+        loadingEventDetail: false,
       };
     }
     default:

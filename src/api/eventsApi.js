@@ -7,6 +7,11 @@ const eventsApi = {
     return axiosClient.get(path);
   },
 
+  getDetailEvent: (id) => {
+    const path = `/article/getDetail?id=${id}`;
+    return axiosClient.get(path);
+  },
+
   postAddEvent: (event) => {
     const path = "/article/addNew";
     return axiosClient.post(path, event);

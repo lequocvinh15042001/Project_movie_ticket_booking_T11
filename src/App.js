@@ -49,6 +49,7 @@ const LoginAdmin = lazy(() => import("./pages/LoginAdmin"));
 const LoginStaff = lazy(() => import("./pages/LoginStaff"));
 const Register = lazy(() => import("./pages/Register"));
 const DetailNews = lazy(() => import("./pages/DetailNews"));
+const NewsDetail = lazy(() => import("./pages/NewsDetail"));
 const DetailReview = lazy(() => import("./pages/DetailReview"));
 // const DetailEvent = lazy(() => import("./pages/DetailEvent"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -62,7 +63,7 @@ function App() {
         <ModalTrailer />
         <Suspense fallback={<TriggerLoadingLazy />}> 
           <Switch>
-            <Route exact path={["/search/:search", "/", "/phim/:maPhim", "/taikhoan", "/review/:maTin", "/schedule", "/review", "/bookall", "/event-all", "/phim/:maPhim/write-review", "/detail-review/:maTin", "payment/:maBill/total"]}>
+            <Route exact path={["/search/:search", "/", "/phim/:maPhim", "/taikhoan", "/review/:maTin", "/schedule", "/review", "/bookall", "/event-all", "/phim/:maPhim/write-review", "/detail-review/:maTin", "payment/:maBill/total", "/detail-news/:maTin"]}>
               <MainLayout>
                 <Route exact path="/" component={Homepage} />
                 <Route exact path="/review" component={ReviewAll} />
@@ -74,6 +75,7 @@ function App() {
                 <Route exact path="/phim/:maPhim/write-review" component={ReviewMovie} />
                 <Route exact path="/review/:maTin" component={DetailNews} />
                 <Route exact path="/detail-review/:maTin" component={DetailReview} />
+                <Route exact path="/detail-news/:maTin" component={NewsDetail} />
                 <UserProfileRoute
                   exact
                   path="/taikhoan"
