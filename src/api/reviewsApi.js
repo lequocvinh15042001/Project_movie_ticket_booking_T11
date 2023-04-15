@@ -8,7 +8,7 @@ const reviewsApi = {
   },
 
   postAddReview: (event) => {
-    const path = "/article/addNew";
+    const path = "/article/addNewReview";
     return axiosClient.post(path, event);
   },
 

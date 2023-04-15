@@ -10,7 +10,7 @@ export const getBillsList = () => {
     })
     billsApi.getListBill()
       .then(result => {
-        console.log("Bill nè");
+        console.log("Bill nsè");
         dispatch({
           type: GET_BILL_LIST_SUCCESS,
           payload: { data: result.data }

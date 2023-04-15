@@ -31,7 +31,7 @@ export default function TicketManagement() {
       loadingAllTicketList,
     }
    = useSelector((state) => state.ticketReducer);
-  // console.log(allTicketList);
+  console.log(allTicketList);
   const dispatch = useDispatch();
   const [valueSearch, setValueSearch] = useState("");
   const clearSetSearch = useRef(0);

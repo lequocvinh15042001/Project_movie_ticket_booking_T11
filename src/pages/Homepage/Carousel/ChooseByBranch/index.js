@@ -572,8 +572,16 @@ export default function ChooseByBranch() {
                 selected: classes["menu__item--selected"],
               }}
             >
-              <div>{formatDate(ngayChieu).dayToday}</div>
-              <div>{formatDate(ngayChieu).dateShort}</div>
+            {
+                new Date(ngayChieu) && new Date(ngayChieu).getTime() > new Date().getTime() ?     
+                  <div>
+                    {formatDate(ngayChieu)?.dayToday}, {" "}
+                    {formatDate(ngayChieu)?.dateShort}
+                  </div> 
+                  : ""
+              }
+              {/* <div>{formatDate(ngayChieu).dayToday}</div>
+              <div>{formatDate(ngayChieu).dateShort}</div> */}
             </MenuItem>
           ))}
         </Select>

@@ -12,7 +12,15 @@ import billsApi from "../../../api/billsApi"
 
 
 export default function PieChartSmallValue() {
+
   const [data, setData] = useState({
+    tiLe:null,
+  })
+
+  const [count, setCount] = useState({
+    soLuongVe:"",
+    soLuongVeBanRa:"",
+    ngayBan:"",
   })
   
   useEffect(() => {
@@ -21,12 +29,17 @@ export default function PieChartSmallValue() {
       setData(
         res?.data?.dayTransactionReports
       )
-      console.log("Pie:",data);
+    console.log("Pheheheie:",data);
+
     })
     .catch((err) =>{
       console.log(err);
     })
   },[])
+  console.log(data);
+
+  // const seriesValue = data.map(item => item.transactionCount / item.ticketAmount);
+  // console.log(seriesValue);
 
   return (
     <React.Fragment>
@@ -38,7 +51,7 @@ export default function PieChartSmallValue() {
       >
         <Series
           argumentField="dateTran"
-          valueField="incomeAmount"
+          valueField={data => data.transactionCount/data.ticketAmount}
         >
           <Label visible={true} customizeText={formatLabel} format="fixedPoint">
             <Connector visible={true} width={1} />

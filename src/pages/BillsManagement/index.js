@@ -59,18 +59,20 @@ export default function BillsManagement() {
     billList,
     loadingBillList,
     loadingDelete,
-    errorDelete,
-    successDelete,
-    successUpdateBill,
-    errorUpdateBill,
+    // errorDelete,
+    // successDelete,
+    // successUpdateBill,
+    // errorUpdateBill,
     loadingUpdateBill,
-    loadingAddBill,
-    successAddBill,
-    errorAddBill,
+    // loadingAddBill,
+    // successAddBill,
+    // errorAddBill,
     // loadingUpdateNoneImageMovie,
     // successUpdateNoneImageMovie,
     // errorUpdateNoneImageMovie,
   } = useSelector((state) => state.billsManagementReducer);
+  
+  console.log(billList);
   const dispatch = useDispatch();
   const newImageUpdate = useRef("");
   const callApiChangeImageSuccess = useRef(false);
@@ -88,18 +90,17 @@ export default function BillsManagement() {
     }
   }, [
   ]); // khi vừa thêm phim mới xong mà xóa liên backend sẽ báo lỗi xóa không được nhưng thực chất đã xóa thành công > errorDeleteMovie nhưng vẫn tiến hành làm mới lại danh sách
-
   useEffect(() => {
     return () => {
       dispatch(resetBillList());
     };
   }, []);
   useEffect(() => {
-    if (billList && billList.length) {
+    if (billList || billList?.length) {
       let newBillListDisplay = billList?.map((bill) => ({
         ...bill,
         hanhDong: "",
-        id: bill.id,
+        id: bill?.id,
         email:bill?.user?.email,
         idUser:bill?.user?.id,
         imageUser:bill?.user?.image,
@@ -120,7 +121,7 @@ export default function BillsManagement() {
       // setBillListLoc(newBillListLoc);
     }
 
-  }, []);
+  }, [billList]);
 
   // useEffect(() => {
   //     let newBillListLoc = billList?.data?.push((bill) => {
@@ -512,12 +513,13 @@ export default function BillsManagement() {
     },
     {
       field: "price",
-      headerName: "Đơn giá",
+      headerName: "Giá (vnđ)",
+      type: "number",
       width: 130,
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
-      renderCell: RenderCellExpand,
+      // renderCell: RenderCellExpand,
     },
     {
       field: "usernameUser",
@@ -539,19 +541,19 @@ export default function BillsManagement() {
       hide: true,
     },
     
-    {
-      field: "status",
-      headerName: "Trạng thái",
-      width: 180,
-      headerAlign: "center",
-      align: "center",
-      headerClassName: "custom-header",
-      renderCell: RenderCellExpand,
-    },
+    // {
+    //   field: "status",
+    //   headerName: "Trạng thái",
+    //   width: 180,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   headerClassName: "custom-header",
+    //   renderCell: RenderCellExpand,
+    // },
     {
       field: "id",
-      headerName: "Mã hoá đơn",
-      width: 130,
+      headerName: "Mã bill",
+      width: 100,
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
@@ -559,7 +561,7 @@ export default function BillsManagement() {
     },
     {
       field: "idUser",
-      headerName: "ID Người đặt",
+      headerName: "ID đặt",
       width: 120,
       headerAlign: "center",
       align: "center",
@@ -569,33 +571,33 @@ export default function BillsManagement() {
     {
       field: "email",
       headerName: "Email",
-      width: 120,
+      width: 200,
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
     },
-    {
-      field: "imageUser",
-      headerName: "Hình ảnh",
-      width: 200,
-      renderCell: (params) => (
-        <Tooltip title={params.row.mainImage}>
-          <img
-            style={{
-              maxWidth: "100%",
-              height: "100%",
-              borderRadius: 4,
-              marginRight: 15,
-            }}
-            src={params.row.mainImage}
-          />
-        </Tooltip>
-      ),
-      headerAlign: "center",
-      align: "center",
-      headerClassName: "custom-header",
-    },
+    // {
+    //   field: "imageUser",
+    //   headerName: "Hình ảnh",
+    //   width: 200,
+    //   renderCell: (params) => (
+    //     <Tooltip title={params.row.mainImage}>
+    //       <img
+    //         style={{
+    //           maxWidth: "100%",
+    //           height: "100%",
+    //           borderRadius: 4,
+    //           marginRight: 15,
+    //         }}
+    //         src={params.row.mainImage}
+    //       />
+    //     </Tooltip>
+    //   ),
+    //   headerAlign: "center",
+    //   align: "center",
+    //   headerClassName: "custom-header",
+    // },
     
     // {
     //   field: "releaseDate",

@@ -510,7 +510,7 @@ export default function Choose() {
           >
             Không có lịch chiếu!
           </MenuItem>
-          {data.ngayChieuRender.map((ngayChieu) => (
+          {data?.ngayChieuRender?.map((ngayChieu) => (
             <MenuItem
               value={ngayChieu}
               key={ngayChieu}
@@ -519,8 +519,24 @@ export default function Choose() {
                 selected: classes["menu__item--selected"],
               }}
             >
-              <div>{formatDate(ngayChieu).dayToday}</div>
-              <div>{formatDate(ngayChieu).dateShort}</div>
+              {
+                new Date(ngayChieu) && new Date(ngayChieu).getTime() > new Date().getTime() ?     
+                  <div>
+                    {formatDate(ngayChieu)?.dayToday}, {" "}
+                    {formatDate(ngayChieu)?.dateShort}
+                  </div> 
+                  : ""
+              }
+              {/* <div>
+              {ngayChieu && ngayChieu.getTime() > new Date().getTime() ? (
+                <>
+                  <span>{formatDate(ngayChieu)?.dayToday}</span>
+                  <span>{formatDate(ngayChieu)?.dateShort}</span>
+                </>
+              ):null}
+            </div> */}
+              {/* <div>{formatDate(ngayChieu).dayToday}</div>
+              <div>{formatDate(ngayChieu).dateShort}</div> */}
             </MenuItem>
           ))}
         </Select>
