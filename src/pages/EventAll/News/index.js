@@ -30,16 +30,16 @@ export default function SimpleTabs() {
   const dispatch = useDispatch();
   let {
     eventList,
-    loadingEventList,
-    loadingDelete,
+    // loadingEventList,
+    // loadingDelete,
     errorDelete,
     successDelete,
     successUpdateEvent,
-    errorUpdateEvent,
-    loadingUpdateEvent,
-    loadingAddEvent,
+    // errorUpdateEvent,
+    // loadingUpdateEvent,
+    // loadingAddEvent,
     successAddEvent,
-    errorAddEvent,
+    // errorAddEvent,
     // loadingUpdateNoneImageMovie,
     // successUpdateNoneImageMovie,
     // errorUpdateNoneImageMovie,
@@ -58,11 +58,11 @@ export default function SimpleTabs() {
       dispatch(getEventsList());
     }
   }, [
-    successUpdateEvent,
+    // successUpdateEvent,
     // successUpdateNoneImageMovie,
-    successDelete,
-    errorDelete,
-    successAddEvent,
+    // successDelete,
+    // errorDelete,
+    // successAddEvent,
   ]);
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -84,7 +84,8 @@ export default function SimpleTabs() {
             <div className="row">
               {
                 eventList?.data?.map((event, index) => {
-                  if(event?.type === "NEWS") return(
+                  // if(event?.type === "NEWS") return(
+                  if(event) return(
                   <div className={classes.repons} key={index}>
                     <NavLink to={`/detail-news/${event?.id}`} className={classes.news}>
                       <img className={classes.fullImg} 

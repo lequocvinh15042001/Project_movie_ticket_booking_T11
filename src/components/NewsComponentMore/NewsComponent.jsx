@@ -35,7 +35,8 @@ export default function NewsComponent() {
   var moment = require("moment");
   const renderTinTuc = () => {
     return danhSachTinTuc?.data?.map((tinTuc, index) => {
-      if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE")
+      // if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE")
+      if(tinTuc?.status === "APPROVE")
       return (
         <div className="news__items" key={index}>
           <div className="items__img">
@@ -71,7 +72,8 @@ export default function NewsComponent() {
 
   const renderTinTucHot = () => {
     return danhSachTinTuc?.data?.reverse().map((tinTuc, index) => {
-      if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE")      
+      // if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE")
+      if(tinTuc?.status === "APPROVE")
       return (
         <div className="news__items" key={index}>
           <div className="items__img">
