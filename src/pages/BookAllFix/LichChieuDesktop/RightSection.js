@@ -26,9 +26,14 @@ export default function RightSection({ branch, idRap, idPhim }) {
       console.log("all lịch chiếu: ",response.data.data.content);
       const lichChieuPhimData = response.data.data.content
       const ngayChieuRender = lichChieuPhimData.map((item) => {
+        if(new Date(item.startDate).getTime() > new Date().getTime())
         return (item.startDate); // tạo mảng mới với item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
       });
-      const ngayChieuRenderRemoveDuplicates = [...new Set(ngayChieuRender)]; // xóa đi phần tử trùng lặp để hiển thị
+      const filteredArray = ngayChieuRender?.filter((element) => {
+        return element !== undefined;
+      });
+
+      const ngayChieuRenderRemoveDuplicates = [...new Set(filteredArray)]; // xóa đi phần tử trùng lặp để hiển thị
       setData((data) => ({
         ...data,
         ngayChieuRender: ngayChieuRenderRemoveDuplicates,
