@@ -646,7 +646,7 @@ export default function UsersManagement() {
       [
         {
           field: "id",
-          headerName: "ID",
+          headerName: "Xóa",
           width: 100,
           renderCell: (params) => (
             <ButtonDelete
@@ -661,8 +661,8 @@ export default function UsersManagement() {
         },
         {
           field: "username",
-          headerName: "Account",
-          width: 180,
+          headerName: "Tên tài khoản",
+          width: 160,
           editable: addUser.toggle,
           headerAlign: "center",
           align: "left",
@@ -670,7 +670,7 @@ export default function UsersManagement() {
         },
         {
           field: "image",
-          headerName: "Ảnh đại diện",
+          headerName: "Ảnh",
           width: 130,
           renderCell: (params) => (
             <Tooltip title={params.row.image}>
@@ -700,7 +700,7 @@ export default function UsersManagement() {
         // },
         {
           field: "name",
-          headerName: "Tên",
+          headerName: "Họ và tên",
           width: 250,
           editable: true,
           headerAlign: "center",
@@ -728,7 +728,7 @@ export default function UsersManagement() {
         // },
         {
           field: "role",
-          headerName: "isStaff",
+          headerName: "Nhân viên",
           width: 145,
           editable: true,
           type: "boolean",
@@ -826,9 +826,9 @@ export default function UsersManagement() {
             >
               {addUser.toggle
                 ? addUser.isFilledIn
-                  ? "Add Staff"
-                  : "User Management"
-                : "Add Staff"}
+                  ? "THÊM NHÂN VIÊN"
+                  : "QUẢN LÝ USER"
+                : "THÊM NHÂN VIÊN"}
             </Button>
           </div>
           <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
@@ -860,9 +860,9 @@ export default function UsersManagement() {
             >
               {addUser.toggle
                 ? addUser.isFilledIn
-                  ? "Add User"
-                  : "User Management"
-                : "Add User"}
+                  ? "THÊM KHÁCH HÀNG"
+                  : "QUẢN LÝ USER"
+                : "THÊM KHÁCH HÀNG"}
             </Button>
           </div>
           <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">
@@ -908,7 +908,7 @@ export default function UsersManagement() {
                 setsortBy({ field: "role", sort: "desc" })
               }
             >
-              Staff Account
+              TÀI KHOẢN NHÂN VIÊN
             </Button>
           </div>
           <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">

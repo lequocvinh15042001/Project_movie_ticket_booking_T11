@@ -12,6 +12,7 @@ import FormControl from '@material-ui/core/FormControl';
 import { materialTheme } from './styles';
 import { useStyles } from './styles';
 import { useSnackbar } from 'notistack';
+import CircularIntegration from '../../utilities/CircularIntegration';
 
 export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
   const classes = useStyles();
@@ -159,9 +160,13 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
                   }}/>
 
             </div>
-            <button onClick={submitImage} type="button">
+            {/* <button onClick={submitImage} type="button">
               Úp ảnh
-            </button>
+            </button> */}
+            <CircularIntegration
+              onClick={submitImage}
+              data={"Up ảnh lên"}
+            />
           </div>
         </div>
         {/* <div className="form-group">

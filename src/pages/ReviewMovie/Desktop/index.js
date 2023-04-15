@@ -33,10 +33,12 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
   const editor = useRef(null)
   const [image, setImage] = useState(null)
   const [post, setPost] = useState({
-    title: '',
     mainImage:'',
+    title: '',
     brief:'',
-    description:''
+    description:'',
+    categoryId: 1,
+    keyword: ''
   })
 
   const handleBtnMuaVe = () => {
@@ -217,6 +219,17 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
                                 ref={editor}
                                 value={post.description}
                                 onChange={(newContent) => contentFieldChanaged(newContent)}
+                            />
+                        </div>
+                        <div className="my-3">
+                            <Label for="title" >Thêm keyword</Label>
+                            <Input
+                                type="text"
+                                id="keyword"
+                                placeholder="Nhập keyword"
+                                className="rounded-0"
+                                name="keyword"
+                                onChange={fieldChanged}
                             />
                         </div>
                         <div className="mt-3">

@@ -22,6 +22,11 @@ const reviewsApi = {
     return axiosClient.get(path);
   },
 
+  getTicketSalePerDay: () => {
+    const path = `/bills/getBillDashBoard?fromDate=2019-01-01&toDate=2023-05-01&status=SUCCESS`;
+    return axiosClient.get(path);
+  },
+
   getBillPieChart: () => {
     const path = `/bills/getBillDashBoard?fromDate=2019-01-01&toDate=2023-05-01&status=SUCCESS`;
     return axiosClient.get(path);
@@ -31,8 +36,9 @@ const reviewsApi = {
     const path = `/bills/payment?id=${id}`;
     return axiosClient.post(path);
   },
+  // fix
   getListBill: () => {
-    const path = `/bills/getAllBill`;
+    const path = `/bills/getAllBill?status=WAITING_PAYMENT`;
     return axiosClient.get(path);
   },
 

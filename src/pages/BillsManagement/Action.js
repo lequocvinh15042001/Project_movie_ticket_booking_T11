@@ -24,7 +24,7 @@ export default function ButtonDelete({ onDeleted, phimItem, onEdit, onTuChoi }) 
 
               }}
             >
-              $ Thanh toán
+              Thanh toán
         </button>
         {/* </IconButton> */}
       </Tooltip>

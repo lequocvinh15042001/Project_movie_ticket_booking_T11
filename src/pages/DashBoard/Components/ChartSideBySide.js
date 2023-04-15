@@ -38,7 +38,7 @@ export default function ChartSideBySide() {
         id="chart"
         dataSource={data?.dayTransactionReports}
         defaultPane="bottomPane"
-        title="Giao dịch theo ngày"
+        title="GIAO DỊCH THEO NGÀY"
       >
         <CommonSeriesSettings argumentField="dateTran" />
         {/* <Series
@@ -52,7 +52,7 @@ export default function ChartSideBySide() {
         <Series
           pane="topPane"
           valueField="ticketAmount"
-          name="Số vé bán ra"
+          name="Số vé bán ra/Ngày"
         >
           <Label
             visible={true}
@@ -62,7 +62,7 @@ export default function ChartSideBySide() {
         <Series
           type="bar"
           valueField="incomeAmount"
-          name="Ngày"
+          name="VND/Ngày"
         >
           <Label
             visible={true}

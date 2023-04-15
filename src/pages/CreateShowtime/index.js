@@ -60,11 +60,11 @@ export default function CreateShowTime() {
   let {
     movieList2,
     scheduleList2,
-    errorDeleteSchedule,
-    successDeleteSchedule,
-    successUpdateSchedule,
-    successAddUploadSchedule,
-    successUpdateNoneImageSchedule,
+    // errorDeleteSchedule,
+    // successDeleteSchedule,
+    // successUpdateSchedule,
+    // successAddUploadSchedule,
+    // successUpdateNoneImageSchedule,
   } = useSelector((state) => state.movieReducer);
 
   const dispatch = useDispatch();
@@ -88,7 +88,7 @@ export default function CreateShowTime() {
     ngayChieuGioChieu: "",
 
     setGiaVe: "",
-    giaVeRender: [70000, 100000, 120000, 150000],
+    giaVeRender: [70000, 80000],
 
     setPhong:"",
     phongRender:[101, 202, 303, 404],
@@ -544,7 +544,7 @@ export default function CreateShowTime() {
     },
     {
       field: "tenCumRap",
-      headerName: "Branch",
+      headerName: "Chi nhánh",
       width: 200,
       headerAlign: "center",
       align: "left",
@@ -553,7 +553,7 @@ export default function CreateShowTime() {
     },
     {
       field: "diaChi",
-      headerName: "Address",
+      headerName: "Địa chỉ",
       width: 250,
       headerAlign: "center",
       align: "left",
@@ -568,11 +568,11 @@ export default function CreateShowTime() {
     //   align: "center",
     //   headerClassName: "custom-header",
     // },
-    { field: "maRap", headerName: "Branch Id", hide: true, width: 130 },
-    { field: "maPhim", headerName: "Movie Id", hide: true, width: 130 },
+    { field: "maRap", headerName: "Mã rạp", hide: true, width: 130 },
+    { field: "maPhim", headerName: "Mã phim", hide: true, width: 130 },
     {
       field: "tenPhim",
-      headerName: "Movie",
+      headerName: "Phim",
       width: 250,
       headerAlign: "center",
       align: "left",
@@ -581,7 +581,7 @@ export default function CreateShowTime() {
     },
     {
       field: "maPhong",
-      headerName: "Room",
+      headerName: "Phòng",
       width: 90,
       headerAlign: "center",
       align: "left",
@@ -599,7 +599,7 @@ export default function CreateShowTime() {
     },
     {
       field: "giaVe",
-      headerName: "Price(vnđ)",
+      headerName: "Giá vé(vnđ)",
       width: 130,
       type: "number",
       headerAlign: "center",

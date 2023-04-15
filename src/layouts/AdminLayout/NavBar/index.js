@@ -62,7 +62,7 @@ const items = [
   {
     href: '/admin/bills/',
     icon: PostAddIcon,
-    title: 'Hoá đơn, thanh toán'
+    title: 'Thanh toán'
   },
 
 ];

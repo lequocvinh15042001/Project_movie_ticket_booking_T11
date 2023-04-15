@@ -354,7 +354,7 @@ export default function MoviesManagement() {
         if (!loadingDelete) {
           reviewsApi.deleteReview(reviewItem.id)
           .then((res) =>{
-            window.location.reload();
+            // window.location.reload();
             console.log(res);
           })
           .catch((err) => {

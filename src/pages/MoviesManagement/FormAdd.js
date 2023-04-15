@@ -13,6 +13,7 @@ import { materialTheme } from './styles';
 import { useStyles } from './styles';
 import Swal from 'sweetalert2';
 import { useSnackbar } from 'notistack';
+import CircularIntegration from '../../utilities/CircularIntegration';
 
 export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
   const classes = useStyles();
@@ -33,8 +34,8 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
 
   const movieSchema = yup.object().shape({
     name: yup.string().required("*Không được bỏ trống!"),
-    smallImageURl: yup.string().required("*Vui lòng chọn hình ảnh nhỏ!"),
-    largeImageURL: yup.string().required("*Vui lòng chọn hình ảnh lớn!"),
+    // smallImageURl: yup.string().required("*Vui lòng chọn hình ảnh nhỏ!"),
+    // largeImageURL: yup.string().required("*Vui lòng chọn hình ảnh lớn!"),
     shortDescription: yup.string().required("*Không được bỏ trống!").min(50, "Mô tả cần 100 ký tự trở lên!"),
     longDescription: yup.string().required("*Không được bỏ trống!").min(50, "Mô tả cần 100 ký tự trở lên!"),
     director: yup.string().required("*Không được bỏ trống!"),
@@ -172,9 +173,14 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
                   }}/>
 
             </div>
-            <button onClick={submitImage} type="button">
+            {/* <button onClick={submitImage} type="button">
               Úp ảnh
-            </button>
+            </button> */}
+            <CircularIntegration
+              type="button"
+              onClick={submitImage}
+              data={"Up ảnh nhỏ"}
+            />
           </div>
         </div>
         <div className="form-group">
@@ -199,9 +205,14 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
                   }
                     }/>
             </div>
-            <button onClick={submitImage2} type="button">
+            {/* <button onClick={submitImage2} type="button">
               Úp ảnh
-            </button>
+            </button> */}
+            <CircularIntegration
+              type="button"
+              onClick={submitImage2}
+              data={"Up ảnh lớn"}
+            />
           </div>
           {/* <div>
             <button onClick={submitImage} type="button">

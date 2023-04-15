@@ -47,7 +47,7 @@ const items = [
   {
     href: '/staff/bills/',
     icon: PostAddIcon,
-    title: 'Hoá đơn, thanh toán'
+    title: 'Thanh toán'
   },
   {
     href: '/staff/book/',
