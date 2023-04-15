@@ -6,9 +6,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: "rgb(10, 32, 41)",
   },
   top: {
-    width: "100%",
-    height: "27vw",
-    position: "relative",
+    width: "100vh",
+    height: "70vw",
+    position: "static",
   },
 
   bannerBlur: {
@@ -33,8 +33,8 @@ const useStyles = makeStyles(theme => ({
   },
   topInfo: {
     position: "absolute",
-    top: "60%",
-    left: "40%",
+    top: "40%",
+    left: "30%",
     transform: "translate(-50%,-50%)",
     width: "100%",
     height: 300,
@@ -81,16 +81,17 @@ const useStyles = makeStyles(theme => ({
   },
 
   c19: {
-    marginRight: "0px",
-    verticalAlign: "13%",
+    position:"static",
+    // marginTop: "30rem",
+    // verticalAlign: "13%",
     backgroundColor: "white",
-    color: "black",
-    fontSize: "14px",
+    // color: "black",
+    // fontSize: "14px",
     borderRadius: "4px",
-    padding: "5px",
+    padding: "2rem",
     display: "inline-block",
     // textAlign: "center",
-    minWidth: "100px"
+    // minWidth: "100px"
   },
 
   rate: {

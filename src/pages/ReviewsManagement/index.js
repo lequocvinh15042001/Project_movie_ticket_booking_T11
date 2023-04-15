@@ -254,7 +254,7 @@ export default function MoviesManagement() {
           // window.location.reload();
           reviewsApi.putDuyetReview(reviewItem.id)
           .then((res) =>{
-            window.location.reload();
+            // window.location.reload();
             console.log(res);
           })
           .catch((err) => {
@@ -304,7 +304,7 @@ export default function MoviesManagement() {
         if (!loadingDelete) {
           reviewsApi.putTuChoiReview(reviewItem.id)
           .then((res) =>{
-            window.location.reload();
+            // window.location.reload();
             console.log(res);
           })
           .catch((err) => {
