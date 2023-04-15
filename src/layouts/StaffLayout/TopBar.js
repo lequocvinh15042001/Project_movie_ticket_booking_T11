@@ -17,6 +17,7 @@ import { useHistory } from "react-router-dom";
 
 import { LOGOUT } from '../../reducers/constants/Auth';
 import { LOADING_BACKTO_HOME } from '../../reducers/constants/Lazy';
+import Swal from 'sweetalert2';
 const TopBar = ({
   onMobileNavOpen,
   ...rest
@@ -24,6 +25,43 @@ const TopBar = ({
   const [notifications] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const handleLogout = () => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Đăng xuất!',
+      text: "Chắc chắn bạn muốn đăng xuất?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Okay, ngay bây giờ!',
+      cancelButtonText: 'Không, dừng lại!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch({ type: LOGOUT })
+        swalWithBootstrapButtons.fire(
+          'Đã đăng xuất!',
+          'DONE.',
+          'success'
+        )
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Đã dừng',
+          'Không đăng xuất!',
+          'error'
+        )
+      }
+    })
+  }
 
   const handleClickLogo = () => {
     dispatch({ type: LOADING_BACKTO_HOME })
@@ -60,7 +98,7 @@ const TopBar = ({
             </Badge>
           </IconButton>
           <Tooltip title="Log out">
-            <IconButton color="inherit" onClick={() => dispatch({ type: LOGOUT })}>
+            <IconButton color="inherit" onClick={handleLogout}>
               <InputIcon />
             </IconButton>
           </Tooltip>

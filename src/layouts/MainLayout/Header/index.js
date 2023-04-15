@@ -30,11 +30,14 @@ import Logo from "./../../../assets/LeafSVG";
 import Search from '../Search/Search';
 import { getInfoUser } from '../../../reducers/actions/UsersManagement';
 
+import Swal from "sweetalert2";
+
+
 const headMenu = [
     { nameLink: 'Tất cả Phim', id: "lichchieu" }, 
     // { nameLink: 'Branch Theaters', id: "cumrap" }, 
     { nameLink: 'Reviews và Events', id: "tintuc" }, 
-    // { nameLink: 'App', id: "ungdung" }
+    // { nameLink: 'Đăng ký Content Creator', id: "ungdung" }
   ]
 
 export default function Header() {
@@ -75,8 +78,41 @@ export default function Header() {
   }, [isLoadingBackToHome])
 
   const handleLogout = () => {
-    setOpenDrawer(false)
-    dispatch({ type: LOGOUT })
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Đăng xuất!',
+      text: "Chắc chắn bạn muốn đăng xuất?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Okay, ngay bây giờ!',
+      cancelButtonText: 'Không, dừng lại!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setOpenDrawer(false)
+        dispatch({ type: LOGOUT })
+        swalWithBootstrapButtons.fire(
+          'Đã đăng xuất!',
+          'DONE.',
+          'success'
+        )
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Đã dừng',
+          'Không đăng xuất!',
+          'error'
+        )
+      }
+    })
   }
   const handleLogin = () => {
     history.push("/dangnhap", location.pathname) // truyền kèm location.pathname để đăng nhập xong quay lại
