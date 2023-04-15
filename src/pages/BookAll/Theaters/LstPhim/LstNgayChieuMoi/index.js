@@ -22,11 +22,17 @@ export default function LstGioChieu(props) {
   },[])
   // console.log(lstLichChieuTheoPhim);
   const mangChiChuaNgay = lstLichChieuTheoPhim?.content?.map(item => {  // tạo mảng mới chỉ chứa ngày
+    if(new Date(item.startDate).getTime() > new Date().getTime())
     return item.startDate.slice(0, 10);// item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
   })
   // console.log(mangChiChuaNgay);
 
-  const MangNgayKhongTrungLap = [...new Set(mangChiChuaNgay)] // xóa đi ngày trùng lặp > dùng mảng này để render số phần tử
+  const filteredArray = mangChiChuaNgay.filter((element) => {
+    return element !== undefined;
+  });
+  // console.log("filteredArray: ", filteredArray);
+
+  const MangNgayKhongTrungLap = [...new Set(filteredArray)] // xóa đi ngày trùng lặp > dùng mảng này để render số phần tử
 
   // const filterByDay = (date) => { // lọc ra item từ mảng gốc
   //   const gioChieuRenDer = lstLichChieuTheoPhim.filter(item => {
