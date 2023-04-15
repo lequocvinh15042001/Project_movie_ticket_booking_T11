@@ -281,12 +281,18 @@ export default function ChooseByBranch() {
       console.log("all lịch chiếu: ",response?.data?.data?.content);
       data.lichChieuPhimData = response?.data?.data?.content
       const ngayChieuRender = data.lichChieuPhimData.map((item) => {
+        if(new Date(item.startDate).getTime() > new Date().getTime())
         return item.startDate.slice(0, 10); // tạo mảng mới với item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
       });
       const ngayChieuRenderRemoveDuplicates = [...new Set(ngayChieuRender)]; // xóa đi phần tử trùng lặp để hiển thị
+
+      const filteredArray = ngayChieuRenderRemoveDuplicates.filter((element) => {
+        return element !== undefined;
+      });
+
       setData((data) => ({
         ...data,
-        ngayChieuRender: ngayChieuRenderRemoveDuplicates,
+        ngayChieuRender: filteredArray,
         lichChieuPhimData: data.lichChieuPhimData ? data.lichChieuPhimData : [],
       }));
     })
@@ -572,16 +578,8 @@ export default function ChooseByBranch() {
                 selected: classes["menu__item--selected"],
               }}
             >
-            {
-                new Date(ngayChieu) && new Date(ngayChieu).getTime() > new Date().getTime() ?     
-                  <div>
-                    {formatDate(ngayChieu)?.dayToday}, {" "}
-                    {formatDate(ngayChieu)?.dateShort}
-                  </div> 
-                  : ""
-              }
-              {/* <div>{formatDate(ngayChieu).dayToday}</div>
-              <div>{formatDate(ngayChieu).dateShort}</div> */}
+              <div>{formatDate(ngayChieu).dayToday}</div>
+              <div>{formatDate(ngayChieu).dateShort}</div>
             </MenuItem>
           ))}
         </Select>
