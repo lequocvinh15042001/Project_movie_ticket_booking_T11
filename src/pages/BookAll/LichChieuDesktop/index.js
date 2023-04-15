@@ -180,8 +180,15 @@ export default function LichChieuDesktopTheoNgay() {
       console.log("all ngày chiếu: ",response.data.data.content);
       const lichChieuPhimDataSelected = response.data.data.content
       const suatChieuRender = lichChieuPhimDataSelected.map((item) => {
+        // if(new Date(item.startDate).getTime() > new Date().getTime())
         return item;
       });
+
+      // const filteredArray = suatChieuRender.filter((element) => {
+      //   return element !== undefined;
+      // });
+      // console.log("filteredArray: ", filteredArray);
+      
       setData((data) => ({
         ...data,
         suatChieuRender,
