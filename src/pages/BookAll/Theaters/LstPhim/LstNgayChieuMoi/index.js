@@ -27,7 +27,7 @@ export default function LstGioChieu(props) {
   })
   // console.log(mangChiChuaNgay);
 
-  const filteredArray = mangChiChuaNgay.filter((element) => {
+  const filteredArray = mangChiChuaNgay?.filter((element) => {
     return element !== undefined;
   });
   // console.log("filteredArray: ", filteredArray);
