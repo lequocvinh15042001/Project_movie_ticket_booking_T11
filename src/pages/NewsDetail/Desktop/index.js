@@ -22,10 +22,10 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
           {imageNotFound && <div className={classes.withOutImage}></div>}
         </div>
         <div className={classes.topInfo}>
-          <div className={classes.imgTrailer}>
+          {/* <div className={classes.imgTrailer}>
             <img src={data?.mainImage} alt="poster" style={{ display: "none" }} onError={(e) => { e.target.onerror = null; setImageNotFound(true) }} />
             {imageNotFound && <div className={classes.withOutImage}></div>}
-          </div>
+          </div> */}
           <div className={classes.shortInfo}> 
             {/* <p>{formatDate(data?.releaseDate?.slice(0, 10)).YyMmDd}</p> */}
             <p><span className={classes.c18}>{data?.type}</span></p>
@@ -34,9 +34,10 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
             <p className={classes.c19}>
               {data?.title}
             </p>
-            <p className={classes.c19}>
+            {/* <p className={classes.c19}>
               {data?.description}
-            </p>
+            </p> */}
+            <div dangerouslySetInnerHTML={{__html:data?.description}} className={classes.c19} />
             {/* <button className={classes.btnMuaVe} onClick={handleBtnMuaVe}>{location?.state?.comingMovie ? "Thông tin phim" : "Mua vé"}</button> */}
           </div>
         </div>

@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from "react-router-dom";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import { getMovieDetails, getMovieShowtimes } from '../../reducers/actions/MovieDetail';
+// import { getMovieDetails, getMovieShowtimes } from '../../reducers/actions/MovieDetail';
 import { DISPLAY_MOBILE_HOMEPAGE } from '../../constants/config'
-import { RESET_MOVIEDETAIL_REDUCER, RESET_MOVIE_DETAIL_REDUCER } from '../../reducers/constants/MovieDetail';
+// import { RESET_MOVIEDETAIL_REDUCER, RESET_MOVIE_DETAIL_REDUCER } from '../../reducers/constants/MovieDetail';
 import Mobile from './Mobile';
 import Desktop from './Desktop';
 import { logger } from 'workbox-core/_private';
@@ -39,9 +39,10 @@ export default function Index() {
   }
     return (
     <>
-      {  isMobile ? <Mobile movieDetailShowtimes={null} isMobile={isMobile} /> 
-          : 
-            <Desktop movieDetailShowtimes={eventDetail?.data} isMobile={isMobile} />}
+      {/* {  isMobile ? <Mobile movieDetailShowtimes={null} isMobile={isMobile} /> 
+          :  */}
+            <Desktop movieDetailShowtimes={eventDetail?.data} isMobile={isMobile} />
+      {/* } */}
     </>
   )
 }
