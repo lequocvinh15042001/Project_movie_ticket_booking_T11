@@ -5,6 +5,9 @@ import Typography from "@material-ui/core/Typography";
 import Title from "./Title";
 import billsApi from "../../../api/billsApi"
 
+import { Chart } from "react-google-charts";
+
+
 const useStyles = makeStyles({
   depositContext: {
     flex: 1
@@ -14,7 +17,12 @@ const useStyles = makeStyles({
 
 
 export default function Deposits() {
-
+  const [data, setData] = useState({
+    totalIncome:"",
+    totalTicket:"",
+    totalTransaction:"",
+    listDateTran:[],
+  })
 
   const [data2, setData2] = useState({
     totalIncome:"",
@@ -22,11 +30,23 @@ export default function Deposits() {
     totalTransaction:"",
     listDateTran:[],
   })
+  useEffect(() => {
+    billsApi.getBillDashBoard()
+    .then((res) =>{
+      console.log(res);
+      setData(
+        res?.data
+      )
+    })
+    .catch((err) =>{
+      console.log(err);
+    })
+  },[])
 
   useEffect(() => {
     billsApi.getBillDashBoardHetHan()
     .then((res) =>{
-      console.log(res);
+      console.log("đứhbsjhda",res);
       setData2(
         res?.data
       )
@@ -36,6 +56,14 @@ export default function Deposits() {
     })
   },[])
 
+  const data1 = [
+    ["Task", "Hours per Day"],
+    ["Số lượng giao dịch thành công", data?.totalTransaction],
+    ["Số lượng giao dịch thất bại", data2?.totalTransaction],
+  ];
+  const options = {
+    title: "Tỷ lệ giao dịch thất bại",
+  };
 
   const classes = useStyles();
   return (
@@ -51,6 +79,15 @@ export default function Deposits() {
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
         Số lượng GD không thành công: <span style={{color:"red"}}>{data2?.totalTransaction}</span>
       </Typography>
+
+      <Chart
+      chartType="PieChart"
+      data={data1}
+      options={options}
+      width={"100%"}
+      height={"200px"}
+    />
+
     </React.Fragment>
   );
 }
