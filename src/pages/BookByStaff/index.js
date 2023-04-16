@@ -47,7 +47,7 @@ export default function BookByStaff() {
 
   const classes = useStyles();
   const  {enqueueSnackbar}  = useSnackbar();
-  let {
+  const {
     scheduleList2,
     loadingScheduleList2,
     loadingDeleteSchedule,
@@ -91,31 +91,33 @@ export default function BookByStaff() {
     ) {
       // dispatch(getMovieListManagement());
       // console.log("branch: ",branch);
-      dispatch(getScheduleListManagement(branch))
+      dispatch(getScheduleListManagement(branch.toString()))
     }
-  }, [
-    successUpdateSchedule,
-    successUpdateNoneImageSchedule,
-    successDeleteSchedule,
-    errorDeleteSchedule,
-    successAddUploadSchedule,
-  ]); // khi vừa thêm phim mới xong mà xóa liên backend sẽ báo lỗi xóa không được nhưng thực chất đã xóa thành công > errorDeleteMovie nhưng vẫn tiến hành làm mới lại danh sách
+    else dispatch(getScheduleListManagement(branch.toString()))
+
+  }, [branch]); // khi vừa thêm phim mới xong mà xóa liên backend sẽ báo lỗi xóa không được nhưng thực chất đã xóa thành công > errorDeleteMovie nhưng vẫn tiến hành làm mới lại danh sách
   
-  useEffect(() => {
-      dispatch(getScheduleListManagement((branch.toString())))
-      // console.log("scheduleList2: ",scheduleList2);
-      // setScheduleListDisplay(scheduleList2)
-  }, [branch]);
+  // useEffect(() => {
+  //     dispatch(getScheduleListManagement((branch.toString())))
+  //     // console.log("scheduleList2: ",scheduleList2);
+  //     // setScheduleListDisplay(scheduleList2)
+  // }, [branch]);
 
-  useEffect(() => {
-    return () => {
-      dispatch(resetScheduleManagement());
-    };
-  }, []);
+  // useEffect(() => {
+  //   // return () => {
+  //   //   dispatch(resetScheduleManagement());
+  //   // };
+  //   if (
+  //     !scheduleList2
+  //   ) {
+  //     dispatch(getScheduleListManagement());
+  //   }
+  // }, []);
 
+  //này mới chọn để hiển thị trên màn hình khi chọn branch nè
   useEffect(() => {
-    if (scheduleList2) {
-      let newScheduleListDisplay = scheduleList2?.data?.content?.map((schedule) => ({
+    if (scheduleList2 || scheduleList2?.length) {
+      let newScheduleListDisplay = scheduleList2?.map((schedule) => ({
         ...schedule,
         hanhDong: "",
         id: schedule.id,
@@ -133,6 +135,7 @@ export default function BookByStaff() {
 
   }, [scheduleList2]);
 
+  // console.log("lịch 2:", scheduleListDisplay);
   // useEffect(() => {
   //   // delete movie xong thì thông báo
   //   if (errorDeleteSchedule === "Delete Success but backend return error") {
@@ -164,12 +167,7 @@ export default function BookByStaff() {
         { variant: "error" }
       );
     }
-  }, [
-    successUpdateSchedule,
-    errorUpdateSchedule,
-    successUpdateNoneImageSchedule,
-    errorUpdateNoneImageSchedule,
-  ]);
+  }, []);
   // console.log("scheduleListDisplay: ", scheduleListDisplay);
   useEffect(() => {
     if (successAddUploadSchedule) {
@@ -181,7 +179,7 @@ export default function BookByStaff() {
     if (errorAddUploadSchedule) {
       enqueueSnackbar(errorAddUploadSchedule, { variant: "error" });
     }
-  }, [successAddUploadSchedule, errorAddUploadSchedule]);
+  }, []);
 
   // xóa một phim
   const handleDeleteOne = (maPhim) => {
@@ -456,7 +454,9 @@ export default function BookByStaff() {
   ];
 
   const modifySlugify = { lower: true, locale: "vi" };
-
+  const handlerError = () =>{
+    console.log("Vô handler error");
+  }
   return (
     <div style={{ height: "80vh", width: "100%", backgroundColor:"white"}}>
       <div className={classes.control}>
@@ -507,6 +507,8 @@ export default function BookByStaff() {
           </div>
         </div>
       </div>
+      {scheduleListDisplay === undefined ? 
+        handlerError() :
       <DataGrid
         className={classes.rootDataGrid}
         rows={onFilter()}
@@ -527,6 +529,7 @@ export default function BookByStaff() {
         // sort
         // sortModel={[{ field: "name", sort: "asc" }]}
       />
+      }
 
       {/* <Dialog open={openModal}>
         <DialogTitle onClose={() => setOpenModal(false)}>

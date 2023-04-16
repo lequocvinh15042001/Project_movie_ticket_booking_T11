@@ -18,22 +18,24 @@ import { DataGrid } from '@mui/x-data-grid';
 // }
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70, type: 'number' },
-  { field: 'name', headerName: 'Tên', width: 200 },
-  { field: 'email', headerName: 'Email', width: 250, align: "left"},
-  { field: 'ticketAmount', headerName: 'Số lượng vé đã mua', width: 200, type: 'number', align: 'center' },
+  { field: 'id', headerName: 'ID', width: 50, type: 'number' },
+  { field: 'name', headerName: 'Tên', width: 150 },
+  { field: 'username', headerName: 'Username', width: 150 },
+  { field: 'email', headerName: 'Email', width: 200, align: "left"},
+  { field: 'transactionCount', headerName: 'Số lượng giao dịch đã thanh toán', width: 230, type: 'number', align: 'center' },
   // {
   //   field: 'age',
   //   headerName: 'Age',
   //   type: 'number',
   //   width: 90,
   // },
+  { field: 'ticketAmount', headerName: 'Số vé đã đặt', width: 130, type: 'number', align: 'center' },
   {
     // {`${data2?.totalInce.toLocaleString("vi-VI")} VND`}
     field: 'incomeAmount',
-    headerName: 'Tiêu dùng',
+    headerName: 'Tiêu dùng(vnđ)',
     description: 'This column has a value getter and is not sortable.',
-    width: 160,
+    width: 130,
     type: 'number',
     // valueGetter: (params) =>
     //   `${params.row.name || ''} ${params.row.incomeAmount || ''}`,

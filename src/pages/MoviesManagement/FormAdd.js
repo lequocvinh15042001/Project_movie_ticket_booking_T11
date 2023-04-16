@@ -86,7 +86,7 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     })
     .then((res) => res.json())
     .then((data) =>{
-      // console.log(data.secure_url);
+      console.log("úp ảnh nhỏ: ",data.secure_url);
       setImage(data.secure_url)
       enqueueSnackbar("Thành công", { variant: "success" });
 
@@ -110,7 +110,7 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     })
     .then((res) => res.json())
     .then((data) =>{
-      // console.log(data.secure_url);
+      console.log("ups ảnh lớn: ",data.secure_url);
       setImage2(data.secure_url)
       enqueueSnackbar("Thành công", { variant: "success" });
 
@@ -176,11 +176,14 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
             {/* <button onClick={submitImage} type="button">
               Úp ảnh
             </button> */}
-            <CircularIntegration
-              type="button"
-              onClick={submitImage}
-              data={"Up ảnh nhỏ"}
-            />
+              
+            <div onClick={submitImage}>
+              <CircularIntegration
+                type="button"
+                data={"Up ảnh nhỏ"}
+              />
+            </div>
+
           </div>
         </div>
         <div className="form-group">
@@ -208,11 +211,12 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
             {/* <button onClick={submitImage2} type="button">
               Úp ảnh
             </button> */}
-            <CircularIntegration
-              type="button"
-              onClick={submitImage2}
-              data={"Up ảnh lớn"}
-            />
+            <div onClick={submitImage2}>
+              <CircularIntegration
+                type="button"
+                data={"Up ảnh lớn"}
+              />
+            </div>
           </div>
           {/* <div>
             <button onClick={submitImage} type="button">

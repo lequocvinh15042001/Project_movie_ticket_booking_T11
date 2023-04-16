@@ -90,14 +90,14 @@ export const getScheduleListManagement = (idRap) => {
         console.log("Lấy lch: ", result);
         dispatch({
           type: GET_SCHEDULE_LIST_SUCCESS2,
-          payload: { data: result.data },
+          payload: { data: result.data.data.content },
         });
       })
       .catch((error) => {
         dispatch({
           type: GET_SCHEDULE_LIST_FAIL2,
           payload: {
-            errorScheduleList: error.response?.data
+            errorScheduleList2: error.response?.data
               ? error.response.data
               : error.message,
           },
