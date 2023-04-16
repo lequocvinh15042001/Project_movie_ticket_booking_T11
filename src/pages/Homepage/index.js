@@ -94,6 +94,8 @@ export default function Homepage() {
       <Showtime />
       {/* <Theaters /> */}
       <News />
+      
+      {/* Này là Review */}
       <NewsComponent />
        {/* <HomeApp /> */}
     </div>

@@ -46,15 +46,15 @@ export default function NewsComponent() {
   var moment = require("moment");
   const renderTinTuc = () => {
     return danhSachTinTuc?.data?.reverse().map((tinTuc, index) => {
-      // if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE") {
-        if(tinTuc?.status === "APPROVE") {
+      if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE") {
+        // if(tinTuc?.status === "APPROVE") {
       return (
         <div className="news__items" key={index}>
           <div className="items__img">
             <img src={tinTuc?.mainImage} alt={tinTuc?.mainImage} />
           </div>
           <div className="items__text">
-            <h2 className="items__text-title">
+            <h4 className="items__text-title">
               <NavLink
                 className="items__text-link"
                 to={`/review/${tinTuc?.id}`}
@@ -67,14 +67,14 @@ export default function NewsComponent() {
                   </SkeletonTheme>
                 )}
               </NavLink>
-            </h2>
+            </h4>
             <p className="items__text-description">{tinTuc?.brief}</p>
-            {/* <div className="items__text-author">
-              {tinTuc.author}
+            <div className="items__text-author">
+              Tác giả:{" "}{tinTuc?.createdBy}
               <span className="items__text-days">
-                {moment(tinTuc.dayupload).format("hh:mm DD/MM/yyyy")}
+                Ngày cập nhật{" "}{moment(tinTuc?.dayupload).format("hh:mm DD/MM/yyyy")}
               </span>
-            </div> */}
+            </div>
           </div>
         </div>
       );
@@ -84,8 +84,8 @@ export default function NewsComponent() {
   const classes = useStyles();
   const renderTinTucHot = () => {
     return danhSachTinTuc?.data?.reverse().map((tinTuc, index) => {
-      // if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE") {
-        if(tinTuc?.status === "APPROVE") {
+      if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE") {
+        // if(tinTuc?.status === "APPROVE") {
       return (
         // <div className="news__items" key={index}>
         //   <div className="items__img">
