@@ -1,7 +1,7 @@
 
 import billsApi from '../../api/billsApi';
 import { ADD_BILL_FAIL, ADD_BILL_REQUEST, GET_BILL_LIST_REQUEST, GET_BILL_LIST_SUCCESS, GET_BILL_LIST_FAIL, RESET_BILL_LIST, UPDATE_BILL_REQUEST, UPDATE_BILL_SUCCESS, UPDATE_BILL_FAIL, ADD_BILL_SUCCESS, SET_IS_EXIST_BILL_MODIFIED, DELETE_BILL_REQUEST, DELETE_BILL_SUCCESS, DELETE_BILL_FAIL, GET_BILL_LIST_REQUEST_USER, GET_BILL_LIST_SUCCESS_USER, GET_BILL_LIST_FAIL_USER, GET_BILL_LIST_REQUEST_USER_DTT, GET_BILL_LIST_SUCCESS_USER_DTT, GET_BILL_LIST_FAIL_USER_DTT
-, GET_BILL_LIST_REQUEST_USER_DTT_ID, GET_BILL_LIST_SUCCESS_USER_DTT_ID, GET_BILL_LIST_FAIL_USER_DTT_ID } from '../constants/Bill';
+, GET_BILL_LIST_REQUEST_USER_DTT_ID, GET_BILL_LIST_SUCCESS_USER_DTT_ID, GET_BILL_LIST_FAIL_USER_DTT_ID, GET_BILL_LIST_REQUEST_TTTQ, GET_BILL_LIST_SUCCESS_TTTQ, GET_BILL_LIST_FAIL_TTTQ } from '../constants/Bill';
 
 export const getBillsList = () => {
   return (dispatch) => {
@@ -46,6 +46,31 @@ export const getBillsChuaThanhToan = (id) => {
         error => {
           dispatch({
             type: GET_BILL_LIST_FAIL_USER,
+            payload: { error: error.response?.data ? error.response.data : error.message, }
+          })
+        }
+      )
+  }
+}
+
+export const getBillsTTTaiQuay = () => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_BILL_LIST_REQUEST_TTTQ
+    })
+    billsApi.getListBillChuThanhToan()
+      .then(result => {
+        console.log("TTTQ",result.data);
+        dispatch({
+          type: GET_BILL_LIST_SUCCESS_TTTQ,
+          payload: { data: result.data }
+        })
+      }
+      )
+      .catch(
+        error => {
+          dispatch({
+            type: GET_BILL_LIST_FAIL_TTTQ,
             payload: { error: error.response?.data ? error.response.data : error.message, }
           })
         }

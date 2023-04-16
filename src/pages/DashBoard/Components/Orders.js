@@ -142,7 +142,9 @@ export default function Orders() {
   //   </React.Fragment>
   // );
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <>
+      <h5 style={{textAlign:"center", color: "blue", textTransform:"uppercase", fontWeight:"bold", marginTop:"1rem"}}>Khách hàng thân thiết</h5>
+      <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -151,5 +153,7 @@ export default function Orders() {
         checkboxSelection
       />
     </div>
+    </>
+
   );
 }

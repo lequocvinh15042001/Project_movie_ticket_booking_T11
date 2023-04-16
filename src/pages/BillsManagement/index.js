@@ -29,7 +29,7 @@ import Action from "./Action";
 // import Form from "./Form";
 // import FormAddEvent from "./FormAddEvent";
 import Swal from "sweetalert2";
-import { getBillsList, postAddBill, putBillUpdate, resetBillList } from "../../reducers/actions/Bill";
+import { getBillsList, getBillsTTTaiQuay, postAddBill, putBillUpdate, resetBillList } from "../../reducers/actions/Bill";
 import { Tooltip } from "@material-ui/core";
 import { DialogContentText } from "@mui/material";
 import Slide from '@mui/material/Slide';
@@ -70,9 +70,12 @@ export default function BillsManagement() {
     // loadingUpdateNoneImageMovie,
     // successUpdateNoneImageMovie,
     // errorUpdateNoneImageMovie,
+    billListTTTaiQuay,
+    loadingBillListTTTaiQuay,
+    errorBillListTTTaiQuay,
   } = useSelector((state) => state.billsManagementReducer);
   
-  console.log(billList);
+  console.log(billListTTTaiQuay);
   const dispatch = useDispatch();
   const newImageUpdate = useRef("");
   const callApiChangeImageSuccess = useRef(false);
@@ -84,20 +87,19 @@ export default function BillsManagement() {
   const [listBill, setListBill] = useState([])
   useEffect(() => {
     if (
-      !billList
+      !billListTTTaiQuay
     ) {
-      dispatch(getBillsList());
+      dispatch(getBillsTTTaiQuay());
     }
-  }, [
-  ]); // khi vừa thêm phim mới xong mà xóa liên backend sẽ báo lỗi xóa không được nhưng thực chất đã xóa thành công > errorDeleteMovie nhưng vẫn tiến hành làm mới lại danh sách
-  useEffect(() => {
-    return () => {
-      dispatch(resetBillList());
-    };
-  }, []);
+  }, []); // khi vừa thêm phim mới xong mà xóa liên backend sẽ báo lỗi xóa không được nhưng thực chất đã xóa thành công > errorDeleteMovie nhưng vẫn tiến hành làm mới lại danh sách
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(resetBillList());
+  //   };
+  // }, []);
   useEffect(() => {
     if (billList || billList?.length) {
-      let newBillListDisplay = billList?.map((bill) => ({
+      const newBillListDisplay = billList?.map((bill, index) => ({
         ...bill,
         hanhDong: "",
         id: bill?.id,
@@ -121,7 +123,7 @@ export default function BillsManagement() {
       // setBillListLoc(newBillListLoc);
     }
 
-  }, [billList]);
+  }, []);
 
   // useEffect(() => {
   //     let newBillListLoc = billList?.data?.push((bill) => {
@@ -666,7 +668,7 @@ export default function BillsManagement() {
         loading={
           loadingUpdateBill ||
           loadingDelete ||
-          loadingBillList 
+          loadingBillListTTTaiQuay 
           // loadingUpdateNoneImageMovie
         }
         components={{

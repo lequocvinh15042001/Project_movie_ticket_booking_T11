@@ -45,15 +45,8 @@ export default function ReviewsDetailComponent(props) {
   };
   const renderTinTuc = () => {
     return (
-      <div className="news__form"             
-        style={{
-        backgroundColor:"white", 
-        paddingTop:"1rem"
-      }}>
-        <h1 className="news__form--title mb-2"             
-            style={{
-              color:"black",
-            }}>{tinTuc?.data?.title}</h1>
+      <div className="news__form">
+        <h1 className="news__form--title mb-2">{tinTuc?.data?.title}</h1>
         <div className="below__title">
           <div className="title--info">
             <div className="info--author" style={{color:"red"}}>

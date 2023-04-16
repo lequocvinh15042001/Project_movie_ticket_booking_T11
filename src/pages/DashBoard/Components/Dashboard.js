@@ -25,6 +25,7 @@ import Orders from "./Orders";
 import ChartSideBySide from "./ChartSideBySide";
 import PieChartSmallValue from "./PieChartSmallValue";
 import TicketPerDay from "./TicketPerDay";
+import UserDash from "./UserDash";
 
 function Copyright() {
   // classes created because it is needed in the footer.
@@ -223,6 +224,12 @@ export default function Dashboard() {
             <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
                 <DepositsHetHan />
+              </Paper>
+            </Grid>
+
+            <Grid item xs={12} md={4} lg={4}>
+              <Paper className={fixedHeightPaper}>
+                <UserDash />
               </Paper>
             </Grid>
 

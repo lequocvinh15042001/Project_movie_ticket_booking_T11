@@ -118,6 +118,7 @@ export default function NavBar({ onMobileClose, openMobile }) {
               error: error.response?.data?.data ? error.response.data?.data : error.message,
             }
           })
+          return null;
         }
       )
   },[])
@@ -177,7 +178,7 @@ export default function NavBar({ onMobileClose, openMobile }) {
         <Tooltip title="User information">
           <Avatar
             className={classes.avatar}
-            src={user.avatar}
+            src={user?.avatar}
             onClick={handleUser}
           />
         </Tooltip>
@@ -186,13 +187,13 @@ export default function NavBar({ onMobileClose, openMobile }) {
           color="textPrimary"
           variant="h5"
         >
-          {user.name}
+          {user?.name}
         </Typography>
         <Typography
           color="textSecondary"
           variant="body2"
         >
-          {user.jobTitle}
+          {user?.jobTitle}
         </Typography>
       </Box>
     </Box>

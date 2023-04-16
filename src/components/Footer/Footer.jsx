@@ -38,7 +38,7 @@ export default class Footer extends Component {
                   </li>
                 </ul>
               </div>
-              <div className="above__item img__col col-3 tix-coop">
+              {/* <div className="above__item img__col col-3 tix-coop">
                 <p className="above__title">THÀNH VIÊN</p>
                 <ul className="img__list">
                   <li className="img__item">
@@ -106,7 +106,7 @@ export default class Footer extends Component {
                     </a>
                   </li>
                 </ul>
-              </div>
+              </div> */}
               {/* <div className="above__item mobile__app col-2">
                 <p className="above__title">MOBILE APP</p>
                 <ul className="logo__list">
