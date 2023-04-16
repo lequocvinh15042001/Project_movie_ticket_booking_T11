@@ -5,18 +5,13 @@ import Typography from "@material-ui/core/Typography";
 import Title from "./Title";
 import billsApi from "./../../../api/billsApi"
 
-
-import CanvasJSReact from './canvasjs.react';
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+import { Chart } from "react-google-charts";
 
 const useStyles = makeStyles({
   depositContext: {
     flex: 1
   }
 });
-
-
 
 export default function Deposits() {
 
@@ -40,32 +35,17 @@ export default function Deposits() {
     })
   },[])
 
+  const data1 = [
+    ["Task", "Hours per Day"],
+    ["Số vé được đặt", data?.totalTicket],
+    ["Số vé Giao dịch", data?.totalTransaction],
+  ];
   const options = {
-    exportEnabled: true,
-    animationEnabled: true,
-    title: {
-      text: "Website Traffic Sources"
-    },
-    data: [{
-      type: "pie",
-      startAngle: 75,
-      toolTipContent: "<b>{label}</b>: {y}%",
-      showInLegend: "true",
-      legendText: "{label}",
-      indexLabelFontSize: 16,
-      indexLabel: "{label} - {y}%",
-      dataPoints: [
-        { y: 18, label: "Direct" },
-        { y: 49, label: "Organic Search" },
-        { y: 9, label: "Paid Search" },
-        { y: 5, label: "Referral" },
-        { y: 19, label: "Social" }
-      ]
-    }]
-  }
+    title: "Tỷ lệ số vé GD/Số vé được đặt",
+  };
+
   const classes = useStyles();
   return (
-    <>
     <React.Fragment>
       <Title>Doanh thu đạt được</Title>
       <Typography component="p" variant="h4">
@@ -87,10 +67,14 @@ export default function Deposits() {
           Xem chi tiết
         </Link>
       </div> */}
-    </React.Fragment>
-    <CanvasJSChart options = {options}
-				/* onRef={ref => this.chart = ref} */
-			/>
-    </>
+
+    <Chart
+      chartType="PieChart"
+      data={data1}
+      options={options}
+      width={"100%"}
+      height={"200px"}
+    />
+  </React.Fragment>
   );
 }

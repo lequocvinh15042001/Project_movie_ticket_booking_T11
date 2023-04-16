@@ -7,6 +7,9 @@ import billsApi from "../../../api/billsApi"
 import { useDispatch, useSelector } from "react-redux";
 import { getUsersList, resetUserList } from "../../../reducers/actions/UsersManagement";
 
+import { Chart } from "react-google-charts";
+
+
 const useStyles = makeStyles({
   depositContext: {
     flex: 1
@@ -44,6 +47,16 @@ export default function UserDash() {
     })
     },[])
 
+    const data4 = [
+      ["Task", "Hours per Day"],
+      ["Số lượng tài khoản đăng ký", usersList?.data?.length],
+      ["Số khách dùng dịch vụ", data3?.length],
+      ["Số khách chưa dùng DV đặt vé", usersList?.data?.length - data3?.length],
+    ];
+    const options = {
+      title: "Tỷ lệ khách hàng dùng dịch vụ",
+    };
+
 
   const classes = useStyles();
   return (
@@ -62,6 +75,14 @@ export default function UserDash() {
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
         Số khách chưa dùng DV đặt vé: <span style={{color:"red"}}>{usersList?.data?.length - data3?.length}</span>
       </Typography>
+
+      <Chart
+      chartType="PieChart"
+      data={data4}
+      options={options}
+      width={"100%"}
+      height={"200px"}
+    />
     </React.Fragment>
   );
 }
