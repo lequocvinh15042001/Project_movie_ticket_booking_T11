@@ -132,17 +132,23 @@ export default function CreateShowTime() {
   //   successAddUploadSchedule,
   // ]); // khi vừa thêm phim mới xong m
   
-  useEffect(() => {
-    if (movieList2 === null) {
-      dispatch(getMovieListManagement());
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (movieList2 === null) {
+  //     dispatch(getMovieListManagement());
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   if (scheduleList2 === null) {
+  //     dispatch(getAllScheduleListManagement());
+  //   }
+  // }, []);
 
   useEffect(() => {
-    if (scheduleList2 === null) {
-      dispatch(getAllScheduleListManagement());
-    }
-  }, []);
+    dispatch(getMovieListManagement());
+    dispatch(getAllScheduleListManagement());
+
+  },[])
 
   // useEffect(() => {
   //   const showTimeList = theaterList2?.reduce((collect1, heThongRap) => {
