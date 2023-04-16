@@ -1,48 +1,100 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import Button from '@mui/material/Button';
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ShareIcon from "@material-ui/icons/Share";
 import "./ReviewsDetailComponent.scss";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import eventsApi from "../../api/eventsApi";
+import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
+
 export default function ReviewsDetailComponent(props) {
   console.log(props.tinTuc);
   let { tinTuc, danhSachTinTuc } = props;
+  let [danhSachTinTucHot, setDanhSachTinTucHot] = useState([]);
+  let [loading, setLoading] = useState(true);
+
   var moment = require("moment");
+  useEffect(() => {
+    eventsApi
+      .getListEvent()
+      .then((res) => {
+        setDanhSachTinTucHot(res?.data);
+        setLoading(false);
+        console.log("Lấy tin tức",res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  console.log(danhSachTinTucHot);
+  // const renderTinTucHot = () => {
+  //   return danhSachTinTuc.slice(0, 5).map((tinTuc, index) => {
+  //     return (
+  //       <div className="news__items" key={index} 
+  //       style={{
+  //         backgroundColor:"white",
+  //       }}>
+  //         <div className="items__img">
+  //           <img src={tinTuc.image2} alt={tinTuc.image2} />
+  //         </div>
+  //         <div className="items__text">
+  //           <h5 className="items__text-title">
+  //             <NavLink
+  //               className="items__text-link"
+  //               to={`/review/${tinTuc.id}`}
+  //             >
+  //               {tinTuc.title}
+  //             </NavLink>
+  //           </h5>
+  //         </div>
+  //       </div>
+  //     );
+  //   });
+  // };
+
+  // Chỉnh ở đây
   const renderTinTucHot = () => {
-    return danhSachTinTuc.slice(0, 5).map((tinTuc, index) => {
+    return danhSachTinTucHot?.data?.reverse().map((tinTuc, index) => {
+      if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE")
+      // if(tinTuc?.status === "APPROVE")
       return (
-        <div className="news__items" key={index} 
-        style={{
-          backgroundColor:"white",
-        }}>
+        <div className="news__items" key={index}>
           <div className="items__img">
-            <img src={tinTuc.image2} alt={tinTuc.image2} />
+            <img src={tinTuc?.mainImage} alt={tinTuc?.mainImage} />
           </div>
           <div className="items__text">
-            <h5 className="items__text-title">
+            <h6 className="items__text-title">
               <NavLink
                 className="items__text-link"
                 to={`/review/${tinTuc.id}`}
               >
-                {tinTuc.title}
+                {tinTuc?.brief || (
+                  <SkeletonTheme color="#202020" highlightColor="#111111">
+                    <h2>
+                      <Skeleton count={3} duration={2} />
+                    </h2>
+                  </SkeletonTheme>
+                )}
               </NavLink>
-            </h5>
+            </h6>
           </div>
         </div>
       );
     });
   };
 
-  const renderHinhAnh = () => {
-    if (tinTuc.image3 === "none") {
-      return null;
-    } else {
-      return (
-        <div className="news__form--img">
-          <img src={tinTuc.image3} alt={tinTuc.image3} />
-        </div>
-      );
-    }
-  };
+  // const renderHinhAnh = () => {
+  //   if (tinTuc.image3 === "none") {
+  //     return null;
+  //   } else {
+  //     return (
+  //       <div className="news__form--img">
+  //         <img src={tinTuc.image3} alt={tinTuc.image3} />
+  //       </div>
+  //     );
+  //   }
+  // };
   const renderTinTuc = () => {
     return (
       <div className="news__form">
@@ -50,9 +102,9 @@ export default function ReviewsDetailComponent(props) {
         <div className="below__title">
           <div className="title--info">
             <div className="info--author" style={{color:"red"}}>
-              Reviewer: Lê Quốc Vinh
+              Tác giả:{" "}{tinTuc?.data?.createdBy}
               <span className="info--days" style={{color:"blue"}}>
-                Update: {" "}
+                Updated lúc {" "}
                 {moment(tinTuc.dayupload).format("hh:mm DD/MM/yyyy")}
               </span>
             </div>
@@ -100,36 +152,25 @@ export default function ReviewsDetailComponent(props) {
             </div>
           </div>
         </div>
+
+        <div style={{display:"block"}}>
+          <h6 style={{marginTop:"1rem"}}>TAG: {" "}
+            <Button color="secondary">{tinTuc?.data?.keyword}</Button>
+          </h6>
+        </div>
       </div>
     );
   };
-  
+  if (loading) {
+    return <SpinnerLoading />;
+  } else {
   return (
     <div className="news__container container">
       <div className="news__content row">
         <div className="news__left col-md-9 col-sm-12">
           {renderTinTuc()}
           <div>
-              <h5 style={{color:"white"}}>Các bài viết liên quan</h5>
-              <div style={{display:"block"}}>
-                <ul style={{width: "100%", listStyle: "none" }}>
-                  <li>
-                    <a href="#">
-                    ➞ Black Adam: Cứu tinh cho vũ trụ DC mở rộng?
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                    ➞  Black Adam: Cứu tinh cho vũ trụ DC mở rộng?
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                    ➞  Black Adam: Cứu tinh cho vũ trụ DC mở rộng?
-                    </a>
-                  </li>
-                </ul>
-              </div>
+              
           </div>
 
         </div>
@@ -140,4 +181,5 @@ export default function ReviewsDetailComponent(props) {
       </div>
     </div>
   );
+}
 }

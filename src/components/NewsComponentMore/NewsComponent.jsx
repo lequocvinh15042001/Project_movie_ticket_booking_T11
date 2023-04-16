@@ -35,15 +35,15 @@ export default function NewsComponent() {
   var moment = require("moment");
   const renderTinTuc = () => {
     return danhSachTinTuc?.data?.map((tinTuc, index) => {
-      // if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE")
-      if(tinTuc?.status === "APPROVE")
+      if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE")
+      // if(tinTuc?.status === "APPROVE")
       return (
         <div className="news__items" key={index}>
           <div className="items__img">
             <img src={tinTuc?.mainImage} alt={tinTuc?.mainImage} />
           </div>
           <div className="items__text">
-            <h2 className="items__text-title">
+            <h4 className="items__text-title">
               <NavLink
                 className="items__text-link"
                 to={`/review/${tinTuc.id}`}
@@ -56,13 +56,13 @@ export default function NewsComponent() {
                   </SkeletonTheme>
                 )}
               </NavLink>
-            </h2>
-            {/* <p className="items__text-description">{tinTuc?.contents[0]?.description}</p> */}
+            </h4>
+            <p className="items__text-description">{tinTuc?.brief}</p>
             <div className="items__text-author">
-              {/* {tinTuc.author} */}
-              {/* <span className="items__text-days">
-                {moment(tinTuc.dayupload).format("hh:mm DD/MM/yyyy")}
-              </span> */}
+              Tác giả:{" "}{tinTuc?.createdBy}
+              <span className="items__text-days">
+                Ngày cập nhật{" "}{moment(tinTuc?.dayupload).format("hh:mm DD/MM/yyyy")}
+              </span>
             </div>
           </div>
         </div>
@@ -72,22 +72,28 @@ export default function NewsComponent() {
 
   const renderTinTucHot = () => {
     return danhSachTinTuc?.data?.reverse().map((tinTuc, index) => {
-      // if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE")
-      if(tinTuc?.status === "APPROVE")
+      if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE")
+      // if(tinTuc?.status === "APPROVE")
       return (
         <div className="news__items" key={index}>
           <div className="items__img">
             <img src={tinTuc?.mainImage} alt={tinTuc?.mainImage} />
           </div>
           <div className="items__text">
-            <h5 className="items__text-title">
+            <h6 className="items__text-title">
               <NavLink
                 className="items__text-link"
-                to={`/review/${tinTuc?.id}`}
+                to={`/review/${tinTuc.id}`}
               >
-                {tinTuc?.brief}
+                {tinTuc?.brief || (
+                  <SkeletonTheme color="#202020" highlightColor="#111111">
+                    <h2>
+                      <Skeleton count={3} duration={2} />
+                    </h2>
+                  </SkeletonTheme>
+                )}
               </NavLink>
-            </h5>
+            </h6>
           </div>
         </div>
       );

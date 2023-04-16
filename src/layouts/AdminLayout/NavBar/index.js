@@ -59,11 +59,11 @@ const items = [
     icon: PostAddIcon,
     title: 'Quản lý lịch chiếu'
   }, 
-  {
-    href: '/admin/bills/',
-    icon: PostAddIcon,
-    title: 'Thanh toán'
-  },
+  // {
+  //   href: '/admin/bills/',
+  //   icon: PostAddIcon,
+  //   title: 'Thanh toán'
+  // },
 
 ];
 
