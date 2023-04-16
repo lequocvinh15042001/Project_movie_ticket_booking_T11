@@ -57,7 +57,7 @@ export default function CreateShowTime() {
   // const movieList2 = useSelector((state) => state.movieReducer);
   // console.log("movieList2: ", movieList2);
 
-  let {
+  const {
     movieList2,
     scheduleList2,
     // errorDeleteSchedule,

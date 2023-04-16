@@ -91,7 +91,7 @@ const TopBar = ({
           <IconButton color="inherit">
             <Badge
               badgeContent={notifications.length}
-              color="primary"
+              color="secondary"
               variant="dot"
             >
               <NotificationsIcon />

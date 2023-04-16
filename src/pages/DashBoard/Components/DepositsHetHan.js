@@ -48,8 +48,8 @@ export default function Deposits() {
       <Typography color="textSecondary" className={classes.depositContext}>
         Từ 01/12/2022 - 01/05/2023
       </Typography>
-      <Typography color="textSecondary" className={classes.depositContext}>
-        Số lượng GD không thành công: {data2?.totalTransaction}
+      <Typography color="textSecondary" className={classes.depositContext} variant="h6">
+        Số lượng GD không thành công: <span style={{color:"red"}}>{data2?.totalTransaction}</span>
       </Typography>
     </React.Fragment>
   );

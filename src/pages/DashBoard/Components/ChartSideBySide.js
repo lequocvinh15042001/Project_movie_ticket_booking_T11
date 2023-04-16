@@ -32,13 +32,14 @@ export default function ChartSideBySide() {
   },[])
 
   return (
-    <React.Fragment>
+    <>
+        <h5 style={{textAlign:"center", color: "blue", textTransform:"uppercase", fontWeight:"bold", marginTop:"1rem"}}>giao dịch hằng ngày</h5>
+        <React.Fragment>
       <Paper>
       <Chart
         id="chart"
         dataSource={data?.dayTransactionReports}
         defaultPane="bottomPane"
-        title="GIAO DỊCH THEO NGÀY"
       >
         <CommonSeriesSettings argumentField="dateTran" />
         {/* <Series
@@ -90,6 +91,8 @@ export default function ChartSideBySide() {
       </Chart>
       </Paper>
     </React.Fragment>
+    </>
+    
   );
 }
 function temperatureCustomizeText({ valueText }) {

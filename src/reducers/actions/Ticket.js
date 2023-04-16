@@ -63,7 +63,7 @@ export const getAllTicketByAdminStaff = () => {
        console.log("all ticket API: ", result);
         dispatch({
           type: GET_ALLTICKET_SUCCESS,
-          payload: { data: result?.data}
+          payload: { data: result?.data?.data?.content}
         })
       })
       .catch(

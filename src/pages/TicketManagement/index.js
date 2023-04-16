@@ -25,7 +25,7 @@ export default function TicketManagement() {
   const [ticketListDisplay, setTicketListDisplay] = useState([]);
   const classes = useStyles();
   // const  {enqueueSnackbar}  = useSnackbar();
-  let 
+   const 
     {
       allTicketList,
       loadingAllTicketList,
@@ -38,13 +38,13 @@ export default function TicketManagement() {
   // const isMobile = useMediaQuery("(max-width:768px)");
 
   useEffect(() => {
-    // if (!allTicketList){
+    if (allTicketList){
       dispatch(getAllTicketByAdminStaff());
-    // }
+    }
   }, []); 
   
   useEffect(() => {
-    const ticketListDis = allTicketList?.data?.content?.reduce((collect1, ticket) => {
+    const ticketListDis = allTicketList?.reduce((collect1, ticket) => {
         return [
           ...collect1,
           { ...ticket,
