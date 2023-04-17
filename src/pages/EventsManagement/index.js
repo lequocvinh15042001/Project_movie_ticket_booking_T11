@@ -284,7 +284,7 @@ export default function MoviesManagement() {
     {
       field: "hanhDong",
       headerName: "Action",
-      width: 130,
+      width: 100,
       renderCell: (params) => (
         <Action
           onEdit={handleEdit}
