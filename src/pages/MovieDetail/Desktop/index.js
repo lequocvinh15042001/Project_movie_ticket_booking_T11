@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useParams } from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
@@ -12,6 +12,7 @@ import Tap from '../Tap';
 import BtnPlay from '../../../components/BtnPlay';
 import { dataFakeImgTheater } from '../../../constants/theaterData';
 import ShowtimeDetail  from "../../UserProfile/ShowtimeDetail/index"
+import Showtime from "./../../../pages/Homepage/Showtime";
 
 export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
   console.log("----------MT---------",data);
@@ -69,7 +70,8 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
         </div>
       </div>
       <Tap data={data} onClickBtnMuave={onClickBtnMuave} onIncreaseQuantityComment={onIncreaseQuantityComment} isMobile={isMobile} />
-      <ShowtimeDetail />
+      {/* <ShowtimeDetail /> */}
+      {/* <Showtime /> */}
     </div>
   )
 }

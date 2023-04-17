@@ -35,6 +35,7 @@ export const getMovieList = () => {
     });
     try {
       const result = await moviesApi.getDanhSachPhim();
+      console.log(result);
       dispatch({
         type: GET_MOVIE_LIST_SUCCESS,
         payload: { data: result.data },

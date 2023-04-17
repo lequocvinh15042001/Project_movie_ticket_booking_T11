@@ -167,7 +167,7 @@ export default function Index({placeholder}) {
   const [typePassword2, settypePassword2] = useState("password");
   const [typePassword3, settypePassword3] = useState("password");
   const [ticket, setTicket] = useState([]);
-  const [image, setImage] = useState()
+  const [image, setImage] = useState(successInfoUser?.data?.image)
   const [oldPass, setOldPass] = useState()
   const [newPass, setNewPass] = useState()
 
@@ -214,7 +214,7 @@ export default function Index({placeholder}) {
     dispatch(getComment());
 
     return () => dispatch(resetUserList());
-  }, []);
+  }, [successInfoUser?.data?.id]);
 
   // useEffect(() => {
   //   if (commentList) {
@@ -471,7 +471,7 @@ export default function Index({placeholder}) {
 
               <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                  <div>
+                  <div style={{textAlign:"center"}}>
                     <img
                       src={image ? image : FAKE_AVATAR}
                       style={{
