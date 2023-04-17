@@ -12,6 +12,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useStyles } from "./styles";
 import { getAllTicketByAdminStaff } from "../../reducers/actions/Ticket";
 import { Tooltip } from "@material-ui/core";
+import formatDate from "../../utilities/formatDate";
 
 function CustomLoadingOverlay() {
   return (
@@ -31,25 +32,27 @@ export default function TicketManagement() {
       loadingAllTicketList,
     }
    = useSelector((state) => state.ticketReducer);
-  console.log(allTicketList);
   const dispatch = useDispatch();
   const [valueSearch, setValueSearch] = useState("");
   const clearSetSearch = useRef(0);
   // const isMobile = useMediaQuery("(max-width:768px)");
 
   useEffect(() => {
-    if (allTicketList){
+    if (allTicketList.length === 0){
+      console.log("Load lại all ticket");
       dispatch(getAllTicketByAdminStaff());
     }
   }, []); 
   
   useEffect(() => {
+    if(allTicketList && allTicketList.length !== 0)
+    {
     const ticketListDis = allTicketList?.reduce((collect1, ticket) => {
         return [
           ...collect1,
           { ...ticket,
             tenNguoiDat: ticket?.bill?.user?.name,
-            ngayDat: new Date(ticket?.bill?.createdTime).toLocaleDateString(),
+            ngayDat: new Date(ticket?.bill?.createdTime.slice(0,10)).toLocaleDateString(),
             gioDat: new Date(ticket?.bill?.createdTime).toLocaleTimeString(),
               //   "en-US",
               //   { hour: "2-digit", minute: "2-digit" }
@@ -73,9 +76,10 @@ export default function TicketManagement() {
       },[])
       // console.log(ticketListDis);
       setTicketListDisplay(ticketListDis);
+      }
   }, []);
 
-
+  console.log("allTicketList", allTicketList);
 
   const handleInputSearchChange = (props) => {
     clearTimeout(clearSetSearch.current);
@@ -119,8 +123,8 @@ export default function TicketManagement() {
   const columns = [
     {
       field: "maVe",
-      headerName: "Mã",
-      width: 90,
+      headerName: "No",
+      width: 80,
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
@@ -164,8 +168,8 @@ export default function TicketManagement() {
     // },
     {
       field: "hinhPhim",
-      headerName: "Hình ảnh",
-      width: 200,
+      headerName: "Ảnh",
+      width: 100,
       renderCell: (params) => (
         <Tooltip title={params.row.hinhPhim}>
           <img
@@ -200,6 +204,7 @@ export default function TicketManagement() {
       align: "center",
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
+      // valueFormatter: (params) => formatDate(params.value.slice(0, 10)).dateFull,
     },
     {
       field: "rapChieu",
@@ -222,11 +227,12 @@ export default function TicketManagement() {
     {
       field: "ngayChieu",
       headerName: "Ngày chiếu",
-      width: 140,
+      width: 230,
       type: "date",
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
+      valueFormatter: (params) => formatDate(params.value.slice(0, 10)).dateFull,
       // valueFormatter: (params) => params.value.slice(0, 10),
     },
     {

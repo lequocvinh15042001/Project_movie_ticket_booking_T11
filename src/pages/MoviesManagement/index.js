@@ -27,6 +27,7 @@ import ThumbnailYoutube from "./ThumbnailYoutube";
 import Form from "./Form";
 import FormAdd from "./FormAdd";
 import Swal from "sweetalert2";
+import formatDate from "../../utilities/formatDate";
 
 function CustomLoadingOverlay() {
   return (
@@ -329,7 +330,7 @@ export default function MoviesManagement() {
     {
       field: "longDescription",
       headerName: "Mô tả",
-      width: 200,
+      width: 170,
       headerAlign: "center",
       align: "left",
       headerClassName: "custom-header",
@@ -338,12 +339,12 @@ export default function MoviesManagement() {
     {
       field: "releaseDate",
       headerName: "Ngày khởi chiếu",
-      width: 160,
+      width: 190,
       type: "date",
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
-      valueFormatter: (params) => params.value.slice(0, 10),
+      valueFormatter: (params) => formatDate(params.value.slice(0, 10)).dateFull,
     },
     {
       field: "rated",

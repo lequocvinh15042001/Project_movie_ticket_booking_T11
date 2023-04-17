@@ -89,6 +89,7 @@ export default function AdminLayout(props) {
   return (
     // package notistack: popup thông báo nhỏ gọn
     <SnackbarProvider maxSnack={3}>
+      <>
       {/* <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} style={{backgroundColor:"black"}}/> */}
       <TopBar style={{backgroundColor:"black"}}/>
       <div className="row">
@@ -105,6 +106,7 @@ export default function AdminLayout(props) {
           {props.children}
         </div>
       </div>
+      </>
     </SnackbarProvider>
   )
 }

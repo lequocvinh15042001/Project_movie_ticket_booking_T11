@@ -35,8 +35,10 @@ import Swal from "sweetalert2";
 
 const headMenu = [
     { nameLink: 'Tất cả Phim', id: "lichchieu" }, 
+    { nameLink: 'Đặt vé', id: "schedule" }, 
     // { nameLink: 'Branch Theaters', id: "cumrap" }, 
     { nameLink: 'Reviews và Events', id: "tintuc" }, 
+
     // { nameLink: 'Đăng ký Content Creator', id: "ungdung" }
   ]
 
@@ -132,22 +134,28 @@ export default function Header() {
     }, 50);
   }
   const handleClickLink = (id) => {
-    setOpenDrawer(false)
-    if (location.pathname === "/") {
-      scroller.scrollTo(id, {
-        duration: 800,
-        smooth: 'easeInOutQuart'
-      })
-    } else {
-      dispatch({ type: LOADING_BACKTO_HOME })
-      setTimeout(() => {
-        history.push("/", id)
-      }, 50);
+    if(id === "schedule")
+    {
+      history.push("/schedule")
+    }
+    else {
+        setOpenDrawer(false)
+        if (location.pathname === "/") {
+          scroller.scrollTo(id, {
+            duration: 1200,
+            smooth: 'easeInOutQuart'
+          })
+        } else {
+          dispatch({ type: LOADING_BACKTO_HOME })
+          setTimeout(() => {
+            history.push("/", id)
+          }, 50);
+        }
     }
   }
-  const handleClickLink2 = () => {
-    history.push("/schedule")
-  }
+  // const handleClickLink2 = () => {
+  //   history.push("/schedule")
+  // }
 
   const handleUser = () => {
     history.push("/taikhoan")
@@ -177,6 +185,9 @@ export default function Header() {
             {" "}
             <span style={{ height: 50, color:"rgb(250, 82, 56)", fontWeight:"800" }}>GOLDENNEW TICKET</span>
           </div>
+          <div>
+            <Search />
+          </div>
           <div className={classes.linkTobody}>
             <Grid
               container
@@ -184,15 +195,15 @@ export default function Header() {
               justify="space-between"
               alignItems="center"
             >
-              <span className={classes.link} onClick={() => handleClickLink2()}>Đặt vé</span>
+              {/* <span className={classes.link} onClick={() => handleClickLink2()}>Đặt vé</span> */}
               {headMenu.map((link) => (
                 <span key={link.id} className={classes.link} onClick={() => handleClickLink(link.id)}>{link.nameLink}</span>
               ))}
             </Grid>
           </div>
-          <div>
+          {/* <div>
             <Search />
-          </div>
+          </div> */}
           {/* user account */}
           <div className={classes.user}>
             {currentUser ?
