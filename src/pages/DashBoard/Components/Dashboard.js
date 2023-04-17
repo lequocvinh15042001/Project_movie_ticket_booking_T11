@@ -26,6 +26,7 @@ import ChartSideBySide from "./ChartSideBySide";
 import PieChartSmallValue from "./PieChartSmallValue";
 import TicketPerDay from "./TicketPerDay";
 import UserDash from "./UserDash";
+import Ranking from "./Ranking";
 
 function Copyright() {
   // classes created because it is needed in the footer.
@@ -201,18 +202,19 @@ export default function Dashboard() {
         {/* <Container maxWidth="lg" className={classes.container}> */}
           <Grid container spacing={3}>
             {/* Chart */}
-            <Grid item xs={12} md={8} lg={12}>
+            <Grid item xs={12} md={6} lg={4}>
                <Paper className={fixedHeightPaper}>
                  <TicketPerDay />
                </Paper>
              </Grid>
 
              {/* Biểu đồ cột */}
-             <Grid item xs={12} md={8} lg={12}>
+             <Grid item xs={12} md={6} lg={8}>
                <Paper className={fixedHeightPaper}>
                  <ChartSideBySide />
                </Paper>
              </Grid>
+
 
             {/* BIỂU ĐỒ TRÒN*/}
             <Grid item xs={12} md={4} lg={4}>
@@ -232,12 +234,13 @@ export default function Dashboard() {
                 <UserDash />
               </Paper>
             </Grid>
-
-            {/* <Grid item xs={12} md={4} lg={12}>
-              <Paper className={fixedHeightPaper}>
-                <PieChartSmallValue />
+            {/* BIỂU ĐỒ TRÒN*/}
+          
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Ranking />
               </Paper>
-            </Grid> */}
+            </Grid>
 
             {/* Recent Orders */}
             <Grid item xs={12}>
