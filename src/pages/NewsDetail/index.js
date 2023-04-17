@@ -7,9 +7,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 // import { getMovieDetails, getMovieShowtimes } from '../../reducers/actions/MovieDetail';
 import { DISPLAY_MOBILE_HOMEPAGE } from '../../constants/config'
 // import { RESET_MOVIEDETAIL_REDUCER, RESET_MOVIE_DETAIL_REDUCER } from '../../reducers/constants/MovieDetail';
-import Mobile from './Mobile';
-import Desktop from './Desktop';
-import { logger } from 'workbox-core/_private';
+// import Mobile from './Mobile';
+// import Desktop from './Desktop';
+// import { logger } from 'workbox-core/_private';
 import { getEventsDetail, getEventsList } from '../../reducers/actions/EventsManagement';
 import TinTucDetailComponent from '../../components/TinTucDetailComponent/TinTucDetailComponent';
 

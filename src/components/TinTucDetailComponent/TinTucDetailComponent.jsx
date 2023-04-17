@@ -22,12 +22,18 @@ export default function TinTucDetailComponent(props) {
         <div className="below__title">
           <div className="title--info">
             <div className="info--author" style={{color:"red"}}>
-              LOẠI:{" "}{tinTuc?.type}
+              {tinTuc?.type} - TIN TỨC VÀ SỰ KIỆN
             </div>
           </div>
         </div>
         <div dangerouslySetInnerHTML={{__html:tinTuc?.description}} />
+        <div style={{display:"block"}}>
+          <h6 style={{marginTop:"1rem"}}>TAG: {" "}
+            <Button color="secondary">{tinTuc?.keyword}</Button>
+          </h6>
+        </div>
       </div>
+      
     );
   };
   if (!tinTuc) {

@@ -40,7 +40,7 @@ export default function Desktop({ arrayData, value }) {
     <div className={classes.container}>
       <Slider {...settings}>
         {value.value === 0 ?
-          arrayData.dailyMovieList?.data?.map((movie) => {
+          arrayData?.dailyMovieList?.data?.map((movie) => {
             return (
               <div className="px-1 align-top" key={movie.id}>
                 <MovieItem
@@ -49,7 +49,7 @@ export default function Desktop({ arrayData, value }) {
               </div>
             )
           }) :
-          arrayData.dailyMovieList?.data?.map((movie) => {
+          arrayData?.comingMovieList?.data?.map((movie) => {
             return (
               <div className="px-1 align-top" key={movie.id}>
                 <MovieItem
