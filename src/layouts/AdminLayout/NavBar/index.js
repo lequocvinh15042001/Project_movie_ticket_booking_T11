@@ -155,13 +155,13 @@ export default function NavBar({ onMobileClose, openMobile }) {
       {/* đây là phần menu lựa chọn */}
       <Box p={2}>
         <List>
-          {items.map((item) => (
+          {items?.map((item) => (
             // NavItem hiện thị ra icon và title
             <NavItem
-              href={item.href}
-              key={item.title}
-              title={item.title}
-              icon={item.icon}
+              href={item?.href}
+              key={item?.title}
+              title={item?.title}
+              icon={item?.icon}
             />
           ))}
         </List>

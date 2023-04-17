@@ -76,7 +76,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: "4px",
     padding: "0 5px",
     display: "inline-block",
-    textAlign: "center",
+    // textAlign: "center",
     minWidth: "33px"
   },
   btnMuaVe: {

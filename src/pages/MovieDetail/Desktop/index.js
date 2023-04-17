@@ -47,7 +47,7 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
             {imageNotFound && <div className={classes.withOutImage}></div>}
           </div>
           <div className={classes.shortInfo}> 
-            <p>{formatDate(data?.releaseDate?.slice(0, 10)).YyMmDd}</p>
+            <p>Ngày khởi chiếu:{" "}{formatDate(data?.releaseDate?.slice(0, 10)).dateFull}</p>
             <p><span className={classes.c18}>{data?.rated}</span></p>
             <p className={classes.movieName}>{data?.name}</p>
             {/* <p>{`${thoiLuong ?? "120"} phút - ${danhGia}`} - 2D/Digital</p> */}

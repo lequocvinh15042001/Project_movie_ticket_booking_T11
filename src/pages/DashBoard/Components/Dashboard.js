@@ -214,7 +214,7 @@ export default function Dashboard() {
                </Paper>
              </Grid>
 
-            {/* Recent Deposits */}
+            {/* BIỂU ĐỒ TRÒN*/}
             <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
                 <Deposits />

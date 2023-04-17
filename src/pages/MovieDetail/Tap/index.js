@@ -326,7 +326,7 @@ export default function CenteredTabs({
                   Ngày khởi chiếu
                 </p>
                 <p className={`float-left ${classes.contentInfo}`}>
-                  {formatDate(data?.releaseDate?.slice(0, 10)).YyMmDd}
+                  {formatDate(data?.releaseDate?.slice(0, 10)).dateFull}
                 </p>
               </div>
               <div className="row mb-2">
