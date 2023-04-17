@@ -16,11 +16,11 @@ export default function ButtonDelete({ onDeleted, phimItem, onEdit }) {
           <DeleteForeverIcon />
         </IconButton>
       </Tooltip> */}
-      <Tooltip title={isMovieSetShowtime ? "Can Delete" : "Can't Delete"}>
+      {/* <Tooltip title={isMovieSetShowtime ? "Can Delete" : "Can't Delete"}>
         <IconButton color="primary" style={{ color: isMovieSetShowtime ? "#f50057" : "#00000042" }} onClick={() => onDeleted(phimItem.id)} >
           <DeleteForeverIcon />
         </IconButton>
-      </Tooltip>
+      </Tooltip> */}
 
       <Tooltip title="Edit">
         <IconButton color="primary" style={{ color: "#b24332" }} onClick={() => onEdit(phimItem)} >

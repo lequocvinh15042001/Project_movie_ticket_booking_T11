@@ -84,7 +84,8 @@ export default function SimpleTabs() {
             <div className="row">
               {
                 eventList?.data?.map((event, index) => {
-                  if(event?.type === "NEWS") return(
+                  if(event?.status === "CREATE" && event?.status !== "DELETE"  && event?.type === "NEWS")
+                  return(
                   // if(event) return(
                   <div className={classes.repons} key={index}>
                     <NavLink to={`/detail-news/${event?.id}`} className={classes.news}>
@@ -101,7 +102,7 @@ export default function SimpleTabs() {
                                     overflow: "hidden",
                                     textOverflow: "ellipsis"
                           }}>
-                          {event?.description}
+                          {event?.title}
                           </p>
                       </div>
                     </NavLink>
