@@ -12,6 +12,7 @@ import AddBoxIcon from "@material-ui/icons/AddBox";
 import RenderCellExpand from "./RenderCellExpand";
 import slugify from "slugify";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import RefreshButton from "../../utilities/RefreshButton"
 
 import { useStyles, DialogContent, DialogTitle } from "./styles";
 import {
@@ -84,6 +85,11 @@ export default function MoviesManagement() {
     errorDeleteMovie,
     successAddUploadMovie,
   ]); // khi vừa thêm phim mới xong mà xóa liên backend sẽ báo lỗi xóa không được nhưng thực chất đã xóa thành công > errorDeleteMovie nhưng vẫn tiến hành làm mới lại danh sách
+
+  const handleReload = () => {
+    dispatch(getMovieListManagement());
+    // return
+  }
 
   useEffect(() => {
     return () => {
@@ -375,7 +381,7 @@ export default function MoviesManagement() {
               Thêm phim
             </Button>
           </div>
-          <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
+          <div className={`col-12 col-md-4 ${classes.itemCtro}`}>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -390,6 +396,9 @@ export default function MoviesManagement() {
                 onChange={(evt) => handleInputSearchChange(evt.target.value)}
               />
             </div>
+          </div>
+          <div className={`col-12 col-md-2 ${classes.itemCtro}`} onClick={handleReload}>
+            <RefreshButton />
           </div>
         </div>
       </div>

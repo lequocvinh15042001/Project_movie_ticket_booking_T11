@@ -9,6 +9,7 @@ import RenderCellExpand from "./RenderCellExpand";
 import Tooltip from "@material-ui/core/Tooltip";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
+import RefreshButton from "../../utilities/RefreshButton"
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -256,6 +257,13 @@ export default function CreateShowTime() {
       openCtr: { ...data.openCtr, heThongRap: true },
     }));
   };
+
+  const handleReload = () => {
+    console.log("Load lại");
+    dispatch(getMovieListManagement());
+    dispatch(getAllScheduleListManagement());
+  }
+
   const handleOpenCumRap = () => {
     setData((data) => ({
       ...data,
@@ -938,7 +946,7 @@ export default function CreateShowTime() {
               Tạo lịch
             </Button>
           </div>
-          <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
+          <div className={`col-12 col-md-4 ${classes.itemCtro}`}>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -952,6 +960,9 @@ export default function CreateShowTime() {
                 onChange={(evt) => handleInputSearchChange(evt.target.value)}
               />
             </div>
+          </div>
+          <div className={`col-12 col-md-2 ${classes.itemCtro}`} onClick={handleReload}>
+            <RefreshButton />
           </div>
         </div>
       </div>

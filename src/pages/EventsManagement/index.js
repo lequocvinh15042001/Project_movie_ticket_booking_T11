@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import { useSnackbar } from "notistack";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from "@material-ui/icons/Search";
+import RefreshButton from "../../utilities/RefreshButton"
 import InputBase from "@material-ui/core/InputBase";
 import Dialog from "@material-ui/core/Dialog";
 import AddBoxIcon from "@material-ui/icons/AddBox";
@@ -219,9 +220,15 @@ export default function MoviesManagement() {
   //   // return undefined;
   //   // dispatch(updateMovieUpload(movieObj));
   // };
+  
   dispatch(putEventUpdate(movieObj));
   enqueueSnackbar("Thành công", { variant: "success" });
   }
+
+  const handleReload = () => {
+    dispatch(getEventsList());
+  }
+
   const onAddMovie = (movieObj) => {
     console.log("Dữ liệu event thêm: ", movieObj);
     if (!loadingAddEvent) {
@@ -403,7 +410,7 @@ export default function MoviesManagement() {
               Thêm sự kiện, khuyến mãi
             </Button>
           </div>
-          <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
+          <div className={`col-12 col-md-4 ${classes.itemCtro}`}>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -418,6 +425,9 @@ export default function MoviesManagement() {
                 onChange={(evt) => handleInputSearchChange(evt.target.value)}
               />
             </div>
+          </div>
+          <div className={`col-12 col-md-2 ${classes.itemCtro}`} onClick={handleReload}>
+            <RefreshButton />
           </div>
         </div>
       </div>
