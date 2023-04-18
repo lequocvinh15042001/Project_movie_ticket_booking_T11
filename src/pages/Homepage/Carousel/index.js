@@ -146,11 +146,14 @@ export default function Carousel() {
           width: 1024,  
           height:"100%",
           position: "relative",
-          left:"14%",
-          textAlign: "center"
+          // left:"13%",
+          textAlign: "center",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, 0%)"
         }}
       >
-        <AppBar position="static" color="default">
+        <AppBar position="relative" color="default">
           <Tabs
             value={value}
             onChange={handleChange}

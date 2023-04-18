@@ -3,7 +3,8 @@ import { customScrollbar } from '../../../../styles/materialUi';
 const useStyle = makeStyles({
   // search bar
   search: {
-    display: props => props.down992px ? "none" : 'flex',
+    // display: props => props.down992px ? "none" : 'flex',
+    display: props => props.down992px ? "flex" : 'flex',
     maxWidth: "1024px",
     // margin: "auto",
     height: "120px",

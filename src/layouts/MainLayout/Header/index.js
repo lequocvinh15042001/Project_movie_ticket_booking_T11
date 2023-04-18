@@ -185,9 +185,9 @@ export default function Header() {
             {" "}
             <span style={{ height: 50, color:"rgb(250, 82, 56)", fontWeight:"800" }}>GOLDENNEW TICKET</span>
           </div>
-          <div>
-            <Search />
-          </div>
+          {/* Tìm kiếm */}
+          <Search />
+          {/* Tìm kiếm */}
           <div className={classes.linkTobody}>
             <Grid
               container

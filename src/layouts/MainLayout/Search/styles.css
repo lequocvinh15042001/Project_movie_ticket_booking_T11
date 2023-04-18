@@ -1,23 +1,23 @@
 
 .search-container {
-    width: 280px;
-    position:absolute;
-    display: flex;
+    max-width: 280px;
+    position:fixed;
+    display: inline-block;
     flex-direction: column;
-    left:63%;
-    top:20%;
+    left:55%;
     text-align: center;
-    justify-content: center;
+    justify-items: center;
   }
   
   .dropdown {
     background-color: rgb(1, 1, 1);
     display: flex;
+    position:absolute;
     flex-direction: column;
     color:rgb(255, 255, 255);
     font-size:8;
     padding-left:1rem;
-    width: 515px;
+    width: 600px;
   }
   
   .dropdown:empty {
@@ -32,7 +32,7 @@
   }
   
   input {
-    width: 220px;
+    max-width: 400px;
     padding: 5px;
     border-radius: 5px;
     border:none;
@@ -40,6 +40,6 @@
   }
   
   .search-inner {
-    display: flex;
+    /* display: flex; */
     padding: 4px;
   }
