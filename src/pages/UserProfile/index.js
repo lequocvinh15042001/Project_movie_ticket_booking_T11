@@ -38,6 +38,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { getBillsChuaThanhToan, getBillsUserId } from "../../reducers/actions/Bill";
+import formatDate from "../../utilities/formatDate";
 // import { useSnackbar } from "notistack";
 // import { getBillsChuaThanhToan, getBillsList } from "../../reducers/actions/Bill";
 
@@ -753,6 +754,7 @@ export default function Index({placeholder}) {
                     <th scope="col">#</th>
                     <th scope="col">Review</th>
                     <th scope="col">Phim</th>
+                    <th scope="col">Suất chiếu</th>
                     <th scope="col">Thời lượng</th>
                     <th scope="col">Ngày đặt</th>
                     <th scope="col">Rạp</th>
@@ -775,7 +777,8 @@ export default function Index({placeholder}) {
                           </a>
                         </td>
                         <td>{sticket?.schedule?.movie?.name}</td>
-                        <td>{sticket?.schedule?.movie?.duration}min</td>
+                        <td>{sticket?.schedule?.startTime}{", "}{formatDate(sticket?.schedule?.startDate).dateFull}</td>
+                        <td>{sticket?.schedule?.movie?.duration}{" "}phút</td>
                         <td>
                           {new Date(sticket?.bill?.createdTime).toLocaleDateString()},{" "}
                           {new Date(sticket?.bill?.createdTime).toLocaleTimeString(
