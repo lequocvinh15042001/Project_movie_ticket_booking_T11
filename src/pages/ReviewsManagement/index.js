@@ -14,6 +14,7 @@ import slugify from "slugify";
 import DialogActions from '@mui/material/DialogActions';
 import Fab from "@material-ui/core/Fab";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import RefreshButton from "../../utilities/RefreshButton"
 
 import { useStyles, DialogContent, DialogTitle } from "./styles";
 import {
@@ -122,6 +123,9 @@ export default function MoviesManagement() {
  
   }, [reviewList]);
 
+  const handleReload = () => {
+    dispatch(getReviewsList());
+  }
   // useEffect(() => {
   //     let newReviewListLoc = reviewList?.data?.push((review) => {
   //       if(review?.type === "REVIEWS") {
@@ -616,6 +620,9 @@ export default function MoviesManagement() {
                 onChange={(evt) => handleInputSearchChange(evt.target.value)}
               />
             </div>
+          </div>
+          <div className={`col-12 col-md-2 ${classes.itemCtro}`} onClick={handleReload}>
+            <RefreshButton />
           </div>
         </div>
       </div>

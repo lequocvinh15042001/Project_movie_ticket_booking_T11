@@ -7,11 +7,12 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import RenderCellExpand from "./RenderCellExpand";
 import slugify from "slugify";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import RefreshButton from "../../utilities/RefreshButton"
+// import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import { useStyles } from "./styles";
 import { getAllTicketByAdminStaff } from "../../reducers/actions/Ticket";
-import { Tooltip } from "@material-ui/core";
+import { Button, Tooltip } from "@material-ui/core";
 import formatDate from "../../utilities/formatDate";
 
 function CustomLoadingOverlay() {
@@ -37,17 +38,21 @@ export default function TicketManagement() {
   const clearSetSearch = useRef(0);
   // const isMobile = useMediaQuery("(max-width:768px)");
 
-  useEffect(() => {
-    if (allTicketList.length === 0){
-      console.log("Load lại all ticket");
-      dispatch(getAllTicketByAdminStaff());
-    }
-  }, []); 
+  const handleReload = () => {
+    dispatch(getAllTicketByAdminStaff());
+    // return
+  }
+  // useEffect(() => {
+  //   if (allTicketList.length === 0){
+  //     console.log("Load lại all ticket");
+  //     dispatch(getAllTicketByAdminStaff());
+  //   }
+  // }, []); 
   
   useEffect(() => {
     if(allTicketList && allTicketList.length !== 0)
     {
-    const ticketListDis = allTicketList?.reduce((collect1, ticket) => {
+    const ticketListDis = allTicketList.reduce((collect1, ticket) => {
         return [
           ...collect1,
           { ...ticket,
@@ -74,12 +79,12 @@ export default function TicketManagement() {
           },
         ];
       },[])
-      // console.log(ticketListDis);
+      // console.log("ticketListDis", ticketListDis);
       setTicketListDisplay(ticketListDis);
       }
-  }, []);
+  }, [allTicketList]);
 
-  console.log("allTicketList", allTicketList);
+  // console.log("allTicketList", allTicketList);
 
   const handleInputSearchChange = (props) => {
     clearTimeout(clearSetSearch.current);
@@ -271,6 +276,21 @@ export default function TicketManagement() {
                 onChange={(evt) => handleInputSearchChange(evt.target.value)}
               />
             </div>
+            <div  style={{marginTop: "1rem"}}>
+            <div onClick={handleReload}>
+              <RefreshButton />
+            </div>
+            {/* <Button
+              variant="contained"
+              color="primary"
+              // className={classes.addMovie}
+              onClick={handleReload}
+              // disabled={loadingAddUploadMovie}
+              // startIcon={<AddBoxIcon />}
+            >
+              Refresh
+            </Button> */}
+          </div>
           </div>
         </div>
       </div>
