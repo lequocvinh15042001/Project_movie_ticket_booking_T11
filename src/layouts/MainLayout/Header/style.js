@@ -29,15 +29,15 @@ const useStyles = makeStyles((theme) => ({
   },
   linkTobody: {
     display: props => props.isDesktop ? "block" : "none",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: "fixed",
+    // top: "50%",
+    left: "25%",
+    // transform: "translate(-50%, -50%)",
     [theme.breakpoints.down(899)]: {
-      left: "42%",
+      left: "25%",
     },
     [theme.breakpoints.down(773)]: {
-      left: "39%",
+      left: "25%",
     },
   },
   link: {

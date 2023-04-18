@@ -45,7 +45,7 @@ export default function Search() {
         <div className="search-inner">
           <input type="text" value={value ? value : ""} onChange={onChange} placeholder="Tìm phim..." />
           <button style={{backgroundColor:"#fb4226", color:"white", padding:"5px", borderRadius:"5px", border:"none"}} 
-          onClick={() => onSearchBatKy(value)}> Search </button>
+          onClick={() => onSearchBatKy(value)}> Tìm kiếm </button>
         </div>
         <div className="dropdown">
           {value ? (movieList?.data?.filter((item) => {
