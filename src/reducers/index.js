@@ -10,11 +10,13 @@ import movieDetailReducer from "./MovieDetail";
 import modalTrailerReducer from "./ModalTrailer";
 import ticketReducer from "./Ticket";
 import lazyReducer from "./Lazy";
+import categoryManagementReducer from "./Category";
 import billsManagementReducer from "./Bill";
 
 const rootReducer = combineReducers({
   authReducer, movieReducer, usersManagementReducer,
   theaterReducer, bookTicketReducer, movieDetailReducer,
-  modalTrailerReducer, lazyReducer, ticketReducer, eventsManagementReducer, reviewsManagementReducer, billsManagementReducer
+  modalTrailerReducer, lazyReducer, ticketReducer, eventsManagementReducer, 
+  reviewsManagementReducer, billsManagementReducer, categoryManagementReducer
 });
 export default rootReducer;

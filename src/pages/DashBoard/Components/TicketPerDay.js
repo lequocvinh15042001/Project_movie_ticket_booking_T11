@@ -31,7 +31,7 @@ export default function TicketPerDay() {
 
     return(
       <>
-        <h5 style={{textAlign:"center", color: "blue", textTransform:"uppercase", fontWeight:"bold", marginTop:"1rem"}}>Số lượng vé bán theo ngày</h5>
+        <h5 style={{textAlign:"center", color: "blue", textTransform:"uppercase", fontWeight:"bold", marginTop:"1rem"}}>Số lượng giao dịch theo ngày</h5>
         <Chart
             dataSource={data?.dayTransactionReports}
             rotated={true}

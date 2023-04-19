@@ -23,7 +23,7 @@ import Deposits from "./Deposits";
 import DepositsHetHan from "./DepositsHetHan";
 import Orders from "./Orders";
 import ChartSideBySide from "./ChartSideBySide";
-import PieChartSmallValue from "./PieChartSmallValue";
+// import PieChartSmallValue from "./PieChartSmallValue";
 import TicketPerDay from "./TicketPerDay";
 import UserDash from "./UserDash";
 import Ranking from "./Ranking";
