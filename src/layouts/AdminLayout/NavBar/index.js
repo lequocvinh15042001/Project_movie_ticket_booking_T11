@@ -45,6 +45,11 @@ const items = [
     title: 'Quản lý Review'
   },
   {
+    href: '/admin/category',
+    icon: PostAddIcon,
+    title: 'Quản lý Category'
+  }, 
+  {
     href: '/admin/events',
     icon: PostAddIcon,
     title: 'Quản lý sự kiện'
