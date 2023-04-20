@@ -6,13 +6,14 @@ import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import { isOverflown } from "@material-ui/data-grid";
 import { useStyles } from "./styles";
+import { useStyles2 } from "./styles2";
 import Fade from "@material-ui/core/Fade";
 import Slider from "@material-ui/core/Slider";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const GridCellExpand = function GridCellExpand(props) {
   const { width, value, field } = props;
-  const classes = useStyles({ field });
+  const classes = useStyles2({ field });
   const wrapper = useRef(null);
   const cellDiv = useRef(null);
   const cellValue = useRef(null);
@@ -24,7 +25,7 @@ const GridCellExpand = function GridCellExpand(props) {
 
   const handleMouseEnter = (e) => {
     let isCurrentlyOverflown =
-      field === "mainImage" ? true : isOverflown(cellValue.current);
+      field === "image" ? true : isOverflown(cellValue.current);
     let elementAL = isMobile ? document.querySelector("body") : cellDiv.current;
     setShowPopper(isCurrentlyOverflown);
     setAnchorEl(elementAL);
@@ -61,7 +62,7 @@ const GridCellExpand = function GridCellExpand(props) {
         }}
       />
       <div ref={cellValue} className="cellValue">
-        {field !== "mainImage" ? (
+        {field !== "image" ? (
           value
         ) : (
           <div className={classes.contentImage}>
@@ -81,7 +82,7 @@ const GridCellExpand = function GridCellExpand(props) {
           open={showFullCell && anchorEl !== null}
           anchorEl={anchorEl}
           style={{
-            width: field === "mainImage" ? widthImage.widthImage : width,
+            width: field === "image" ? widthImage.widthImage : width,
             marginLeft: -17,
           }}
           placement={isMobile ? "right-start" : "right"}
@@ -89,7 +90,7 @@ const GridCellExpand = function GridCellExpand(props) {
         >
           {({ TransitionProps }) => (
             <Fade {...TransitionProps} timeout={350}>
-              {field === "mainImage" ? (
+              {field === "image" ? (
                 <img
                   style={{ width: "100%", height: "100%", borderRadius: 4 }}
                   src={value}
