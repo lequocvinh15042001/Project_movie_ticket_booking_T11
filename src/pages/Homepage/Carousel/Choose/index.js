@@ -537,7 +537,7 @@ export default function Choose() {
                   : ""
               } */}
               <div>{formatDate(ngayChieu).dayToday}</div>
-              <div>{formatDate(ngayChieu).dateShort}</div>
+              <div>{formatDate(ngayChieu).dateFull}</div>
             </MenuItem>
           ))}
         </Select>
