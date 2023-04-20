@@ -43,6 +43,7 @@ const BillsManagement = lazy(() => import("./pages/BillsManagement"));
 const EventsManagement = lazy(() => import("./pages/EventsManagement"));
 const MoviesManagement = lazy(() => import("./pages/MoviesManagement"));
 const CategoryManagement = lazy(() => import("./pages/CategoryManagement"));
+const BranchManagement = lazy(() => import("./pages/BranchManagement"));
 const BookByStaff = lazy(() => import("./pages/BookByStaff"));
 const CreateShowtime = lazy(() => import("./pages/CreateShowtime"));
 const TicketManagement = lazy(() => import("./pages/TicketManagement"));
@@ -106,7 +107,7 @@ function App() {
 
             <Route
               exact
-              path={["/admin/category", "/admin/bills", "/admin/users", "/admin/movies", "/admin/showtimes", "/admin/reviews", "/admin/ticket", "/admin/events", "/admin/dashboard", "/admin/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/admin/book/"]}
+              path={["/admin/branch","/admin/category", "/admin/bills", "/admin/users", "/admin/movies", "/admin/showtimes", "/admin/reviews", "/admin/ticket", "/admin/events", "/admin/dashboard", "/admin/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/admin/book/"]}
             >
               <AdminLayout>
                 <AdminRoute
@@ -159,12 +160,17 @@ function App() {
                   path="/admin/category"
                   component={CategoryManagement}
                 />
+                <AdminRoute
+                  exact
+                  path="/admin/branch"
+                  component={BranchManagement}
+                />
               </AdminLayout>
             </Route>
 
             <Route
               exact
-              path={["/staff/category", "/staff/bills","/staff/movies", "/staff/book", "/staff/reviews", "/staff/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/staff/showtimes", "/staff/ticket", "/staff/events", "/staff/book/"]}
+              path={["/staff/branch","/staff/category", "/staff/bills","/staff/movies", "/staff/book", "/staff/reviews", "/staff/book/:maLichChieu/:maRap/:maPhim/:ngayChieu/:maPhong/:gioChieu", "/staff/showtimes", "/staff/ticket", "/staff/events", "/staff/book/"]}
             >
               <StaffLayout>
                 <StaffRoute
@@ -206,6 +212,11 @@ function App() {
                   exact
                   path="/staff/category"
                   component={CategoryManagement}
+                />
+                <StaffRoute
+                  exact
+                  path="/staff/branch"
+                  component={BranchManagement}
                 />
                 <CheckoutRoute
                 exact

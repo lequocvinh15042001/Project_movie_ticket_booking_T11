@@ -24,7 +24,7 @@ const GridCellExpand = function GridCellExpand(props) {
 
   const handleMouseEnter = (e) => {
     let isCurrentlyOverflown =
-      field === "smallImageURl" ? true : isOverflown(cellValue.current);
+      field === "mainImage" ? true : isOverflown(cellValue.current);
     let elementAL = isMobile ? document.querySelector("body") : cellDiv.current;
     setShowPopper(isCurrentlyOverflown);
     setAnchorEl(elementAL);
@@ -61,7 +61,7 @@ const GridCellExpand = function GridCellExpand(props) {
         }}
       />
       <div ref={cellValue} className="cellValue">
-        {field !== "smallImageURl" ? (
+        {field !== "mainImage" ? (
           value
         ) : (
           <div className={classes.contentImage}>
@@ -81,7 +81,7 @@ const GridCellExpand = function GridCellExpand(props) {
           open={showFullCell && anchorEl !== null}
           anchorEl={anchorEl}
           style={{
-            width: field === "smallImageURl" ? widthImage.widthImage : width,
+            width: field === "mainImage" ? widthImage.widthImage : width,
             marginLeft: -17,
           }}
           placement={isMobile ? "right-start" : "right"}
@@ -89,7 +89,7 @@ const GridCellExpand = function GridCellExpand(props) {
         >
           {({ TransitionProps }) => (
             <Fade {...TransitionProps} timeout={350}>
-              {field === "smallImageURl" ? (
+              {field === "mainImage" ? (
                 <img
                   style={{ width: "100%", height: "100%", borderRadius: 4 }}
                   src={value}

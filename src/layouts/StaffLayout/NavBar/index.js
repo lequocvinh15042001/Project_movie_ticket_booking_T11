@@ -30,6 +30,11 @@ const items = [
     title: 'Quản lý phim'
   },
   {
+    href: '/staff/branch',
+    icon: PostAddIcon,
+    title: 'Quản lý chi nhánh rạp'
+  },
+  {
     href: '/staff/reviews',
     icon: PostAddIcon,
     title: 'Quản lý Review'

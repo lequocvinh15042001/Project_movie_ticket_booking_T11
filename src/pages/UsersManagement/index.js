@@ -34,7 +34,7 @@ import {
 } from "../../reducers/actions/UsersManagement";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Swal from "sweetalert2";
-import renderCellExpand from "../MoviesManagement/RenderCellExpand";
+import renderCellExpand from "../UsersManagement/RenderCellExpand";
 
 function validateEmail(email) {
   const re =
@@ -672,19 +672,20 @@ export default function UsersManagement() {
           field: "image",
           headerName: "Ảnh",
           width: 130,
-          renderCell: (params) => (
-            <Tooltip title={params.row.image}>
-              <img
-                style={{
-                  maxWidth: "100%",
-                  height: "100%",
-                  borderRadius: 4,
-                  marginRight: 15,
-                }}
-                src={params.row.image}
-              />
-            </Tooltip>
-          ),
+          // renderCell: (params) => (
+          //   <Tooltip title={params.row.image}>
+          //     <img
+          //       style={{
+          //         maxWidth: "100%",
+          //         height: "100%",
+          //         borderRadius: 4,
+          //         marginRight: 15,
+          //       }}
+          //       src={params.row.image}
+          //     />
+          //   </Tooltip>
+          // ),
+          renderCell: (params) => renderCellExpand(params),
           headerAlign: "center",
           align: "center",
           headerClassName: "custom-header",

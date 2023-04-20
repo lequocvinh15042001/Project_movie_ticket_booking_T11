@@ -8,6 +8,7 @@ import theaterReducer from "./Theater";
 import bookTicketReducer from "./BookTicket";
 import movieDetailReducer from "./MovieDetail";
 import modalTrailerReducer from "./ModalTrailer";
+import branchManagementReducer from "./Branch";
 import ticketReducer from "./Ticket";
 import lazyReducer from "./Lazy";
 import categoryManagementReducer from "./Category";
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   authReducer, movieReducer, usersManagementReducer,
   theaterReducer, bookTicketReducer, movieDetailReducer,
   modalTrailerReducer, lazyReducer, ticketReducer, eventsManagementReducer, 
-  reviewsManagementReducer, billsManagementReducer, categoryManagementReducer
+  reviewsManagementReducer, billsManagementReducer, categoryManagementReducer,
+  branchManagementReducer
 });
 export default rootReducer;

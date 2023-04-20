@@ -40,6 +40,11 @@ const items = [
     title: 'Quản lý người dùng'
   },
   {
+    href: '/admin/branch',
+    icon: PostAddIcon,
+    title: 'Quản lý chi nhánh rạp'
+  }, 
+  {
     href: '/admin/reviews',
     icon: PostAddIcon,
     title: 'Quản lý Review'

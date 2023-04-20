@@ -30,6 +30,7 @@ import FormAddEvent from "./FormAddEvent";
 import Swal from "sweetalert2";
 import { getEventsList, postAddEvent, putEventUpdate, resetEventList } from "../../reducers/actions/EventsManagement";
 import { Tooltip } from "@material-ui/core";
+import renderCellExpand from "./RenderCellExpand";
 
 function CustomLoadingOverlay() {
   return (
@@ -336,19 +337,20 @@ export default function MoviesManagement() {
       field: "mainImage",
       headerName: "Hình ảnh",
       width: 200,
-      renderCell: (params) => (
-        <Tooltip title={params.row.mainImage}>
-          <img
-            style={{
-              maxWidth: "100%",
-              height: "100%",
-              borderRadius: 4,
-              marginRight: 15,
-            }}
-            src={params.row.mainImage}
-          />
-        </Tooltip>
-      ),
+      // renderCell: (params) => (
+      //   <Tooltip title={params.row.mainImage}>
+      //     <img
+      //       style={{
+      //         maxWidth: "100%",
+      //         height: "100%",
+      //         borderRadius: 4,
+      //         marginRight: 15,
+      //       }}
+      //       src={params.row.mainImage}
+      //     />
+      //   </Tooltip>
+      // ),
+      renderCell: (params) => RenderCellExpand(params),
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",

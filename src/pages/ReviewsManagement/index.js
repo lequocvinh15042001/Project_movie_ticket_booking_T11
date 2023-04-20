@@ -35,6 +35,7 @@ import { Tooltip } from "@material-ui/core";
 import { DialogContentText } from "@mui/material";
 import Slide from '@mui/material/Slide';
 import reviewsApi from "../../api/reviewsApi";
+import renderCellExpand from "./RenderCellExpand";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -531,19 +532,20 @@ export default function MoviesManagement() {
       field: "mainImage",
       headerName: "Hình ảnh",
       width: 200,
-      renderCell: (params) => (
-        <Tooltip title={params.row.mainImage}>
-          <img
-            style={{
-              maxWidth: "100%",
-              height: "100%",
-              borderRadius: 4,
-              marginRight: 15,
-            }}
-            src={params.row.mainImage}
-          />
-        </Tooltip>
-      ),
+      // renderCell: (params) => (
+      //   <Tooltip title={params.row.mainImage}>
+      //     <img
+      //       style={{
+      //         maxWidth: "100%",
+      //         height: "100%",
+      //         borderRadius: 4,
+      //         marginRight: 15,
+      //       }}
+      //       src={params.row.mainImage}
+      //     />
+      //   </Tooltip>
+      // ),
+      renderCell: (params) => RenderCellExpand(params),
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
