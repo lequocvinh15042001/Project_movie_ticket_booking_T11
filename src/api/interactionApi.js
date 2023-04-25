@@ -1,0 +1,27 @@
+import axiosClient from "./axiosClient";
+
+const interactionApi = {
+
+  getAllLikeBaiViet: (articleId) => {
+    const path = `/interaction/v1/like/getAll/${articleId}`;
+    return axiosClient.get(path);
+  },
+
+  getAllCommentBaiViet: (articleId) => {
+    const path = `/interaction/v1/comment/getAll/${articleId}?page=0&size=20`;
+    return axiosClient.get(path);
+  },
+
+  postLikeVaHuyThichBaiViet: (data) => {
+    const path = `/interaction/v1/like/add`;
+    return axiosClient.post(path, data);
+  },
+
+  postThemComment: (data) => {
+    const path = `/interaction/v1/comment/add`;
+    return axiosClient.post(path, data);
+  },
+
+};
+
+export default interactionApi;
