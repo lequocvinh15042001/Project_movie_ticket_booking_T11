@@ -12,6 +12,7 @@ import branchManagementReducer from "./Branch";
 import ticketReducer from "./Ticket";
 import lazyReducer from "./Lazy";
 import categoryManagementReducer from "./Category";
+import interactionReducer from "./Interaction";
 import billsManagementReducer from "./Bill";
 
 const rootReducer = combineReducers({
@@ -19,6 +20,6 @@ const rootReducer = combineReducers({
   theaterReducer, bookTicketReducer, movieDetailReducer,
   modalTrailerReducer, lazyReducer, ticketReducer, eventsManagementReducer, 
   reviewsManagementReducer, billsManagementReducer, categoryManagementReducer,
-  branchManagementReducer
+  branchManagementReducer, interactionReducer
 });
 export default rootReducer;
