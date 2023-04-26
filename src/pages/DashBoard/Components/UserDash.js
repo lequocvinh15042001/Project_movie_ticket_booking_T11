@@ -70,10 +70,10 @@ export default function UserDash() {
         Từ 01/12/2022 - 01/05/2023
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
-        Số khách dùng dịch vụ: <span style={{color:"red"}}>{data3?.length}</span>
+        Số khách dùng dịch vụ: <span style={{color:"red"}}>{data3?.length}{" "} người</span>
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
-        Số khách chưa dùng DV đặt vé: <span style={{color:"red"}}>{usersList?.data?.length - data3?.length}</span>
+        Số khách chưa đặt vé: <span style={{color:"red"}}>{usersList?.data?.length - data3?.length}{" "} người</span>
       </Typography>
 
       <Chart

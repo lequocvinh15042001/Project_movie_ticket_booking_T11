@@ -68,7 +68,7 @@ export default function Deposits() {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Doanh thu đáng được nhận nếu người dùng thanh toán</Title>
+      <Title>Giá trị vé hết hạn</Title>
       <Typography component="p" variant="h4">
         {/* {data2?.totalIncome}VND */}
         {`${data2?.totalIncome.toLocaleString("vi-VI")} VND`}
@@ -77,7 +77,11 @@ export default function Deposits() {
         Từ 01/12/2022 - 01/05/2023
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
-        Số lượng GD không thành công: <span style={{color:"red"}}>{data2?.totalTransaction}</span>
+        Số lượng GD không thành công: <span style={{color:"red"}}>{data2?.totalTransaction}{" "}lần</span>
+      </Typography>
+
+      <Typography color="textSecondary" className={classes.depositContext} variant="h6">
+        Trong số ngày giao dịch: <span style={{color:"red"}}>{data2?.dayTransactionReports?.length}{" "}ngày</span>
       </Typography>
 
       <Chart
