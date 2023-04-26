@@ -73,7 +73,7 @@ export default function NewsComponent({reviewerDetailShowtimes, reviewList }) {
 
               <span className="items__text-days">
                 Ngày cập nhật{" "}{moment(tinTuc?.dayupload).format("hh:mm DD/MM/yyyy")}
-              </span>
+              </span>              
             </div>
           </div>
         </div>
