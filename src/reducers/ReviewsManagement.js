@@ -16,11 +16,18 @@ import {
  GET_INFO_REVIEW_REQUEST, 
  GET_INFO_REVIEW_SUCCESS, 
  GET_INFO_REVIEW_FAIL,
+ GET_REVIEW_LISTBYUSER_REQUEST,
+ GET_REVIEW_LISTBYUSER_SUCCESS,
+ GET_REVIEW_LISTBYUSER_FAIL,
 } from './constants/ReviewsManagement';
 const initialState = {
   reviewList: null,
   loadingReviewList: false,
   errorReviewList: null,
+
+  reviewListByUser: null,
+  loadingReviewListByUser: false,
+  errorReviewListByUser: null,
 
   successDelete: "",
   loadingDelete: false,
@@ -58,6 +65,24 @@ const reviewsManagementReducer = (state = initialState, action) => {
         ...state,
         errorReviewList: action.payload.error,
         loadingReviewList: false,
+      };
+    }
+
+    case GET_REVIEW_LISTBYUSER_REQUEST: {
+      return { ...state, loadingReviewListByUser: true, errorReviewListByUser: null };
+    }
+    case GET_REVIEW_LISTBYUSER_SUCCESS: {
+      return {
+        ...state,
+        reviewListByUser: action.payload.data,
+        loadingReviewListByUser: false
+      };
+    }
+    case GET_REVIEW_LISTBYUSER_FAIL: {
+      return {
+        ...state,
+        errorReviewListByUser: action.payload.error,
+        loadingReviewListByUser: false,
       };
     }
 

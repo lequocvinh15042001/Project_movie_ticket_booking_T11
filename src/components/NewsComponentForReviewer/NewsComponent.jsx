@@ -23,21 +23,15 @@ const useStyles = makeStyles({
   },
 });
 
-export default function NewsComponent() {
-  let [danhSachTinTuc, setDanhSachTinTuc] = useState([]);
+export default function NewsComponent({reviewerDetailShowtimes, reviewList }) {
+  let [danhSachTinTuc, setDanhSachTinTuc] = useState();
   let [loading, setLoading] = useState(true);
+  console.log("Danh sách nè: ", reviewList);
+
   useEffect(() => {
-    qLyPhimService
-      .layReviewDuocDuyet()
-      // .layReviewChuaDuyet()
-      .then((res) => {
-        setDanhSachTinTuc(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+      setDanhSachTinTuc(reviewList);
+      setLoading(false);
+  }, [reviewList]);
   console.log("danhSachTinTuc: ", danhSachTinTuc);
   const history = useHistory();
   const handlerSeeMore =() =>{
@@ -45,7 +39,7 @@ export default function NewsComponent() {
   }
   var moment = require("moment");
   const renderTinTuc = () => {
-    return danhSachTinTuc?.data?.reverse().map((tinTuc, index) => {
+    return danhSachTinTuc?.map((tinTuc, index) => {
       if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE") {
         // if(tinTuc?.status === "APPROVE") {
       return (
@@ -89,7 +83,7 @@ export default function NewsComponent() {
   };
   const classes = useStyles();
   const renderTinTucHot = () => {
-    return danhSachTinTuc?.data?.reverse().map((tinTuc, index) => {
+    return danhSachTinTuc?.map((tinTuc, index) => {
       if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE") {
         // if(tinTuc?.status === "APPROVE") {
       return (
@@ -149,23 +143,19 @@ export default function NewsComponent() {
         <div className="news__header">
           <div className="overlay">
             <div className="title__description">
-                Latest Reviews
+                CÁC BÀI REVIEW CỦA {reviewerDetailShowtimes?.name}
             </div>
           </div>
         </div>
         <div className="news__container container">
           <div className="news__content row">
             <div className="news__left col-md-12 col-sm-12">
-              <h3 className="news__title">Reviews</h3>
               {renderTinTuc()}
             </div>
             {/* <div className="news__right col-md-4 col-sm-12">
               <h3 className="news__title">Hot</h3>
               {renderTinTucHot()}
             </div> */}
-          </div>
-          <div className="readMore">
-            <button className="btn__readmore" type="button" onClick={handlerSeeMore}>See More</button>
           </div>
         </div>
         </div>

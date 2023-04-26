@@ -7,6 +7,11 @@ const reviewsApi = {
     return axiosClient.get(path);
   },
 
+  getListReviewByUser: (username) => {
+    const path = `/article/getAll?username=${username}`;
+    return axiosClient.get(path);
+  },
+
   postAddReview: (event) => {
     const path = "/article/addNewReview";
     return axiosClient.post(path, event);

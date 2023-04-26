@@ -76,6 +76,13 @@ const usersApi = {
     const path = `/user/${username}`;
     return axiosClient.get(path);
   },
+
+  getChiTietTaiKhoanReviewer: (username) => {
+    // console.log(username);
+    const path = `/user/${username}`;
+    return axiosClient.get(path);
+  },
+
 };
 
 export default usersApi;

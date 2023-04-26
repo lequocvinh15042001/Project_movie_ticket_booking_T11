@@ -1,6 +1,6 @@
 import eventsApi from '../../api/eventsApi';
 import reviewsApi from '../../api/reviewsApi';
-import { ADD_REVIEW_FAIL, ADD_REVIEW_REQUEST, ADD_EVENT_SUCCESS, DELETE_EVENT_FAIL, DELETE_EVENT_REQUEST, DELETE_EVENT_SUCCESS, GET_EVENT_LIST_FAIL, GET_EVENT_LIST_REQUEST, GET_EVENT_LIST_SUCCESS, RESET_EVENT_LIST, SET_IS_EXIST_EVENT_MODIFIED, UPDATE_EVENT_FAIL, UPDATE_EVENT_REQUEST, UPDATE_EVENT_SUCCESS, GET_REVIEW_LIST_REQUEST, GET_REVIEW_LIST_SUCCESS, GET_REVIEW_LIST_FAIL, RESET_REVIEW_LIST, UPDATE_REVIEW_REQUEST, UPDATE_REVIEW_SUCCESS, UPDATE_REVIEW_FAIL, ADD_REVIEW_SUCCESS, SET_IS_EXIST_REVIEW_MODIFIED, DELETE_REVIEW_REQUEST, DELETE_REVIEW_SUCCESS, DELETE_REVIEW_FAIL } from '../constants/ReviewsManagement';
+import { ADD_REVIEW_FAIL, ADD_REVIEW_REQUEST, ADD_EVENT_SUCCESS, DELETE_EVENT_FAIL, DELETE_EVENT_REQUEST, DELETE_EVENT_SUCCESS, GET_EVENT_LIST_FAIL, GET_EVENT_LIST_REQUEST, GET_EVENT_LIST_SUCCESS, RESET_EVENT_LIST, SET_IS_EXIST_EVENT_MODIFIED, UPDATE_EVENT_FAIL, UPDATE_EVENT_REQUEST, UPDATE_EVENT_SUCCESS, GET_REVIEW_LIST_REQUEST, GET_REVIEW_LIST_SUCCESS, GET_REVIEW_LIST_FAIL, RESET_REVIEW_LIST, UPDATE_REVIEW_REQUEST, UPDATE_REVIEW_SUCCESS, UPDATE_REVIEW_FAIL, ADD_REVIEW_SUCCESS, SET_IS_EXIST_REVIEW_MODIFIED, DELETE_REVIEW_REQUEST, DELETE_REVIEW_SUCCESS, DELETE_REVIEW_FAIL, GET_REVIEW_LISTBYUSER_REQUEST, GET_REVIEW_LISTBYUSER_SUCCESS, GET_REVIEW_LISTBYUSER_FAIL } from '../constants/ReviewsManagement';
 
 export const getReviewsList = () => {
   return (dispatch) => {
@@ -69,6 +69,31 @@ export const resetReviewList = () => {
     dispatch({
       type: RESET_REVIEW_LIST
     })
+  }
+}
+
+export const getReviewsListByUser = (username) => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_REVIEW_LISTBYUSER_REQUEST
+    })
+    reviewsApi.getListReviewByUser(username)
+      .then(result => {
+        console.log("danh sách review bởi user",result.data);
+        dispatch({
+          type: GET_REVIEW_LISTBYUSER_SUCCESS,
+          payload: { data: result.data.data }
+        })
+      }
+      )
+      .catch(
+        error => {
+          dispatch({
+            type: GET_REVIEW_LISTBYUSER_FAIL,
+            payload: { error: error.response?.data ? error.response.data : error.message, }
+          })
+        }
+      )
   }
 }
 
