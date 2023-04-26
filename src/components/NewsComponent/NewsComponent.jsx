@@ -13,6 +13,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import LikeButton from "./LikeButton/LikeButton";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
   root: {
@@ -24,6 +26,8 @@ const useStyles = makeStyles({
 });
 
 export default function NewsComponent() {
+  const {successInfoUser} = useSelector((state) => state.usersManagementReducer)
+  // console.log("usẻ thích", successInfoUser);
   let [danhSachTinTuc, setDanhSachTinTuc] = useState([]);
   let [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -81,6 +85,9 @@ export default function NewsComponent() {
                 Ngày cập nhật{" "}{moment(tinTuc?.dayupload).format("hh:mm DD/MM/yyyy")}
               </span>
             </div>
+          </div>
+          <div>
+            <LikeButton userId={successInfoUser?.data?.id} articleId={tinTuc?.id}/>
           </div>
         </div>
       );

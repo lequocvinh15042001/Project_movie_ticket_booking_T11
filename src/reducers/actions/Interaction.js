@@ -65,6 +65,7 @@ export const getListCommentBaiViet = (articleId) => {
 
 export const postLikeUnlikeBaiViet = (data) => {
     return (dispatch) => {
+      console.log(data);
         dispatch({
         type: POST_LIKEUNLIKE_REQUEST
         })
