@@ -4,7 +4,7 @@ import {
   UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAIL,
   ADD_USER_REQUEST, ADD_USER_SUCCESS, ADD_USER_FAIL,
   SET_IS_EXIST_USER_MODIFIED,
-  GET_INFO_USER_REQUEST, GET_INFO_USER_SUCCESS, GET_INFO_USER_FAIL,
+  GET_INFO_USER_REQUEST, GET_INFO_USER_SUCCESS, GET_INFO_USER_FAIL, GET_INFO_REVIEWER_REQUEST, GET_INFO_REVIEWER_SUCCESS, GET_INFO_REVIEWER_FAIL,
 } from './constants/UsersManagement';
 const initialState = {
   usersList: null,
@@ -28,6 +28,10 @@ const initialState = {
   successInfoUser: null,
   loadingInfoUser: false,
   errorInfoUser: null,
+
+  successInfoReviewer: null,
+  loadingInfoReviewer: false,
+  errorInfoReviewer: null,
 }
 
 const usersManagementReducer = (state = initialState, action) => {
@@ -132,6 +136,25 @@ const usersManagementReducer = (state = initialState, action) => {
         loadingInfoUser: false,
       };
     }
+
+    case GET_INFO_REVIEWER_REQUEST: {
+      return { ...state, loadingInfoReviewer: true, errorInfoReviewer: null };
+    }
+    case GET_INFO_REVIEWER_SUCCESS: {
+      return {
+        ...state,
+        successInfoReviewer: action.payload.data,
+        loadingInfoReviewer: false
+      };
+    }
+    case GET_INFO_REVIEWER_FAIL: {
+      return {
+        ...state,
+        errorInfoReviewer: action.payload.error,
+        loadingInfoReviewer: false,
+      };
+    }
+
     default:
       return state;
   }

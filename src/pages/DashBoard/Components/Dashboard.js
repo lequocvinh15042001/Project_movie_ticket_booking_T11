@@ -27,6 +27,7 @@ import ChartSideBySide from "./ChartSideBySide";
 import TicketPerDay from "./TicketPerDay";
 import UserDash from "./UserDash";
 import Ranking from "./Ranking";
+import TienDoUser from "./TienDoUser";
 
 function Copyright() {
   // classes created because it is needed in the footer.
@@ -201,15 +202,21 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         {/* <Container maxWidth="lg" className={classes.container}> */}
           <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={6} lg={4}>
+            {/* Biểu đồ theo dỗi tiến độ user */}
+            <Grid item xs={12} md={6} lg={12}>
                <Paper className={fixedHeightPaper}>
                  <TicketPerDay />
                </Paper>
              </Grid>
 
+             <Grid item xs={12} md={6} lg={12}>
+               <Paper className={fixedHeightPaper}>
+                 {/* <TienDoUser /> */}
+               </Paper>
+             </Grid>
+
              {/* Biểu đồ cột */}
-             <Grid item xs={12} md={6} lg={8}>
+             <Grid item xs={12} md={6} lg={12}>
                <Paper className={fixedHeightPaper}>
                  <ChartSideBySide />
                </Paper>
