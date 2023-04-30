@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Modal, Avatar, Button, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@material-ui/core';
 import { Comment as CommentIcon, Share as ShareIcon, Favorite as FavoriteIcon } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import SpinnerLoading from '../components/SpinnerLoading/SpinnerLoading';
 import formatDate from '../utilities/formatDate';
+import SeeDetail from './SeeDetail';
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     width: "100%",
   },
-//   expand: {
-//     marginLeft: 'auto',
-//   },
+  expand: {
+    marginLeft: 'auto',
+  },
   avatar: {
     backgroundColor: theme.palette.secondary.main,
   },
@@ -47,22 +50,25 @@ export default function PostReviewer({reviewerDetailShowtimes, reviewList }) {
 //     console.log(tinTuc);
 //   }
 
-  const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
+const [open, setOpen] = useState(false);
+const [scroll, setScroll] = useState('paper');
+
+const handleClickOpen = (scrollType) => () => {
     setOpen(true);
-  };
+    setScroll(scrollType);
+};
 
-  const handleClose = () => {
+const handleClose = () => {
     setOpen(false);
-  };
+};
 
   const renderTinTuc = () => {
     return danhSachTinTuc?.map((tinTuc, index) => {
       if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE") {
       return (
-        <div key={index}>
-        <Card className={classes.root}>
+        <div key={tinTuc.id}>
+        <Card className={classes.root} key={tinTuc.id}>
             <CardHeader
                 avatar={
                 <Avatar aria-label="recipe" className={classes.avatar}>
@@ -72,24 +78,24 @@ export default function PostReviewer({reviewerDetailShowtimes, reviewList }) {
                 subheader={formatDate(tinTuc?.createdAt).dateFull} // ngày đăng
             />
             <img className={classes.media} src={tinTuc?.mainImage} alt="post image" />
+
         <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
                 {tinTuc?.brief}
             </Typography>
-            <div onClick={handleOpen} style={{ cursor: "pointer", ":hover": { cursor: "pointer" } }}>
-                <span>Xem thêm...</span>
-            </div>
 
-            <Modal open={open} onClose={handleClose}>
-                <div>
-                <h2>Modal Title</h2>
-                <p>Modal content goes here</p>
-                <Button variant="contained" color="secondary" onClick={handleClose}>
-                    Close Modal
-                </Button>
-                </div>
-            </Modal>
+        <div onClick={handleClickOpen('paper')} style={{ cursor: "pointer", ":hover": { cursor: "pointer" } }}>
+            <span>Xem thêm...</span>
+        </div>
         </CardContent>
+
+        <SeeDetail
+            open={open}
+            handleClose={handleClose}
+            scroll={scroll}
+            title={tinTuc.title}
+            description={tinTuc.description}
+        />
 
         <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
@@ -106,6 +112,7 @@ export default function PostReviewer({reviewerDetailShowtimes, reviewList }) {
             </IconButton>
         </CardActions>
       </Card>
+
       </div>
       );
     }
@@ -117,13 +124,13 @@ export default function PostReviewer({reviewerDetailShowtimes, reviewList }) {
   } else {
     return (
       <div>
-        {/* <div className="news__header">
+        <div className="news__header">
           <div className="overlay">
             <div className="title__description">
                 CÁC BÀI REVIEW CỦA {reviewerDetailShowtimes?.name}
             </div>
           </div>
-        </div> */}
+        </div>
         <div className="news__container container">
           <div className="news__content row">
             <div className="news__left col-md-12 col-sm-12">
