@@ -15,6 +15,7 @@ import ShowtimeDetail  from "../../UserProfile/ShowtimeDetail/index"
 import Showtime from "./../../../pages/Homepage/Showtime";
 import { FAKE_AVATAR } from '../../../constants/config';
 import NewsComponent from '../../../components/NewsComponentForReviewer/NewsComponent';
+import PostReviewer from '../../PostReviewer';
 
 export default function Desktop({ reviewerDetailShowtimes: data, reviewList: reviewList1, isMobile }, ) {
   console.log("----------MT---------",reviewList1);
@@ -84,7 +85,9 @@ export default function Desktop({ reviewerDetailShowtimes: data, reviewList: rev
       {/* <Tap data={data} onClickBtnMuave={onClickBtnMuave} onIncreaseQuantityComment={onIncreaseQuantityComment} isMobile={isMobile} /> */}
       {/* <ShowtimeDetail /> */}
       {/* <Showtime /> */}
-      <NewsComponent reviewerDetailShowtimes={data} reviewList={reviewList1}/>
+      {/* <NewsComponent reviewerDetailShowtimes={data} reviewList={reviewList1}/> */}
+
+      <PostReviewer reviewerDetailShowtimes={data} reviewList={reviewList1}/>
     </div>
   )
 }
