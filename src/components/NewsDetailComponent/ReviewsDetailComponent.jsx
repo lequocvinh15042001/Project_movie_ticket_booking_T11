@@ -102,7 +102,12 @@ export default function ReviewsDetailComponent(props) {
         <div className="below__title">
           <div className="title--info">
             <div className="info--author" style={{color:"red"}}>
-              Tác giả:{" "}{tinTuc?.data?.createdBy}
+            Tác giả:
+            <NavLink
+                to={`/reviewer/${tinTuc?.data?.createdBy}`}
+              >
+                {" "}{tinTuc?.data?.createdBy}
+            </NavLink>
               <span className="info--days" style={{color:"blue"}}>
                 Updated lúc {" "}
                 {moment(tinTuc.dayupload).format("hh:mm DD/MM/yyyy")}

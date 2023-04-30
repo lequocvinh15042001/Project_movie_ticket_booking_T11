@@ -15,6 +15,7 @@ import ShowtimeDetail  from "../../UserProfile/ShowtimeDetail/index"
 import Showtime from "./../../../pages/Homepage/Showtime";
 import { FAKE_AVATAR } from '../../../constants/config';
 import NewsComponent from '../../../components/NewsComponentForReviewer/NewsComponent';
+import PostReviewer from '../../PostReviewer';
 
 export default function Desktop({ reviewerDetailShowtimes: data, reviewList: reviewList1, isMobile }, ) {
   console.log("----------MT---------",reviewList1);
@@ -50,9 +51,9 @@ export default function Desktop({ reviewerDetailShowtimes: data, reviewList: rev
           </div>
           <div className={classes.shortInfo}> 
             <p className={classes.movieName}>{data?.name}</p>
-            <p className={classes.c18}>Email:{" "}{data?.email}</p>
-            <p><span className={classes.c18}>Tên tài khoản:{" "}{data?.username}</span></p>
-            <p className={classes.c18}>Tiểu sử:{" "} {data?.bio ? data?.bio : "Không có tiểu sử"}</p>
+            <p>Email:{" "}{data?.email}</p>
+            <p><span>Tên tài khoản:{" "}{data?.username}</span></p>
+            <p>Tiểu sử:{" "} {data?.bio ? data?.bio : "Không có tiểu sử"}</p>
             {/* <p>{`${thoiLuong ?? "120"} phút - ${danhGia}`} - 2D/Digital</p> */}
             {/* <button className={classes.btnMuaVe} onClick={handleBtnMuaVe}>{location?.state?.comingMovie ? "Thông tin phim" : "Mua vé"}</button> */}
           </div>
@@ -84,7 +85,9 @@ export default function Desktop({ reviewerDetailShowtimes: data, reviewList: rev
       {/* <Tap data={data} onClickBtnMuave={onClickBtnMuave} onIncreaseQuantityComment={onIncreaseQuantityComment} isMobile={isMobile} /> */}
       {/* <ShowtimeDetail /> */}
       {/* <Showtime /> */}
-      <NewsComponent reviewerDetailShowtimes={data} reviewList={reviewList1}/>
+      {/* <NewsComponent reviewerDetailShowtimes={data} reviewList={reviewList1}/> */}
+
+      <PostReviewer reviewerDetailShowtimes={data} reviewList={reviewList1}/>
     </div>
   )
 }
