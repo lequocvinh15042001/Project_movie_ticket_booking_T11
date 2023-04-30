@@ -50,9 +50,9 @@ export default function Desktop({ reviewerDetailShowtimes: data, reviewList: rev
           </div>
           <div className={classes.shortInfo}> 
             <p className={classes.movieName}>{data?.name}</p>
-            <p className={classes.c18}>Email:{" "}{data?.email}</p>
-            <p><span className={classes.c18}>Tên tài khoản:{" "}{data?.username}</span></p>
-            <p className={classes.c18}>Tiểu sử:{" "} {data?.bio ? data?.bio : "Không có tiểu sử"}</p>
+            <p>Email:{" "}{data?.email}</p>
+            <p><span>Tên tài khoản:{" "}{data?.username}</span></p>
+            <p>Tiểu sử:{" "} {data?.bio ? data?.bio : "Không có tiểu sử"}</p>
             {/* <p>{`${thoiLuong ?? "120"} phút - ${danhGia}`} - 2D/Digital</p> */}
             {/* <button className={classes.btnMuaVe} onClick={handleBtnMuaVe}>{location?.state?.comingMovie ? "Thông tin phim" : "Mua vé"}</button> */}
           </div>

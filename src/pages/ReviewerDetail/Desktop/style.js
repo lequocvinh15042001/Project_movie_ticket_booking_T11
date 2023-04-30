@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     left: 0,
     bottom: 0,
     right: 0,
-    backgroundImage: props => `url(${props.bannerImg})`,
+    // backgroundImage: props => `url(${props.bannerImg})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
   },
   shortInfo: {
     width: "59%",
-    padding: "0px 15px"
+    padding: "0px 15px",
   },
   movieName: {
     fontSize: 24,
