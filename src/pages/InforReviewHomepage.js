@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getListCommentBaiViet, getListLikeBaiViet } from '../reducers/actions/Interaction';
 import SeeComment from "./SeeComment"
 
-export default function InforReviewPost({idReviewPost}) {
+export default function InforReviewHomepage({idReviewPost}) {
 
     const {likeList} = useSelector( (state) => state.interactionReducer)
     const {commentList} = useSelector( (state) => state.interactionReducer)
-    const [selectedPost, setSelectedPost] = useState(null);
+    // const [selectedPost, setSelectedPost] = useState(null);
 
-    const [soLike, setSoLike] = useState(likeList?.length);
-    const [soCmt, setSoCmt] = useState(commentList?.number);
+    const [soLike, setSoLike] = useState(0);
+    const [soCmt, setSoCmt] = useState(0);
 
     const dispatch = useDispatch();
     console.log(commentList);
@@ -20,9 +20,9 @@ export default function InforReviewPost({idReviewPost}) {
     // useEffect(() => {
     //     dispatch(getListLikeBaiViet(idReviewPost))
     //     dispatch(getListCommentBaiViet(idReviewPost))
-    //     if(likeList && commentList){
-    //         setSoLike(likeList.length)
-    //         setSoCmt(commentList.number)
+    //     if(!soLike && !soCmt){
+    //         setSoLike(likeList?.length)
+    //         setSoCmt(commentList?.number)
     //     }
     // },[])
 
@@ -38,43 +38,36 @@ export default function InforReviewPost({idReviewPost}) {
         }
     }, [likeList, commentList]);
 
-    const [open, setOpen] = useState(false);
-    const [scroll, setScroll] = useState('paper');
+    // const [open, setOpen] = useState(false);
+    // const [scroll, setScroll] = useState('paper');
 
-    const handleClickOpen = (tinTuc) => {
-    setSelectedPost(tinTuc);
-    setOpen(true);
-    };
+    // const handleClickOpen = (tinTuc) => {
+    // setSelectedPost(tinTuc);
+    // setOpen(true);
+    // };
 
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
 
     console.log(soLike);
     console.log(soCmt);
 
     return(
     <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-        <FavoriteIcon />
-        <Typography>{soLike}</Typography>
+        <IconButton aria-label="add to favorites" style={{color: "white"}}>
+            <FavoriteIcon />
+            <Typography>{soLike} {" "} lượt thích</Typography>
+            </IconButton>
+        <IconButton aria-label="comment" style={{color: "white"}}>
+            <CommentIcon />
+            <Typography>{soCmt}  {" "} lượt bình luận</Typography>
         </IconButton>
-        <IconButton aria-label="comment">
-        <CommentIcon onClick={() => handleClickOpen()}  />
-        <Typography>{soCmt}</Typography>
-        </IconButton>
-        {/* <IconButton aria-label="share">
-        <ShareIcon />
-        <Typography>10</Typography>
+        {/* <IconButton aria-label="share" style={{color: "white"}}>
+            <ShareIcon />
+            <Typography>10  {" "} lượt chia sẻ</Typography>
         </IconButton> */}
-        <SeeComment
-            open={open}
-            handleClose={handleClose}
-            scroll={scroll}
-            title={selectedPost?.title}
-            description={selectedPost?.description}
-        />
     </CardActions>
     );
 }
