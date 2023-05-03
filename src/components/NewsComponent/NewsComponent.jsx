@@ -15,6 +15,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import LikeButton from "./LikeButton/LikeButton";
 import { useSelector } from "react-redux";
+import { IconButton } from "@material-ui/core";
+
+import { Comment as CommentIcon, Share as ShareIcon, Favorite as FavoriteIcon } from '@material-ui/icons';
+
 
 const useStyles = makeStyles({
   root: {
@@ -85,10 +89,37 @@ export default function NewsComponent() {
                 Ngày cập nhật{" "}{moment(tinTuc?.dayupload).format("hh:mm DD/MM/yyyy")}
               </span>
             </div>
+
+            {/* Hiển thị số lượng */}
+            {/* <div style={{display: "flex"}}>
+              <div className="items__text-likes">
+                <i className="fas fa-heart"></i> {tinTuc?.likes?.length}
+              </div>
+              <div className="items__text-comments">
+                <i className="fas fa-comment"></i> {tinTuc?.comments?.length}
+              </div>
+            </div> */}
+            {/* <div> */}
+            <CardActions disableSpacing>
+                <IconButton aria-label="add to favorites" style={{color: "white"}}>
+                  <FavoriteIcon />
+                  <Typography>100 {" "} lượt thích</Typography>
+                  </IconButton>
+                <IconButton aria-label="comment" style={{color: "white"}}>
+                  <CommentIcon />
+                  <Typography>20  {" "} lượt bình luận</Typography>
+                </IconButton>
+                <IconButton aria-label="share" style={{color: "white"}}>
+                  <ShareIcon />
+                  <Typography>10  {" "} lượt chia sẻ</Typography>
+                </IconButton>
+              </CardActions>
+            {/* </div> */}
           </div>
-          <div>
+          {/* <div>
             <LikeButton userId={successInfoUser?.data?.id} articleId={tinTuc?.id}/>
-          </div>
+          </div> */}
+
         </div>
       );
     }

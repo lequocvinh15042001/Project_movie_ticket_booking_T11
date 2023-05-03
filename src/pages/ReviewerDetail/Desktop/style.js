@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
   },
   top: {
     width: "100%",
-    height: "41vw",
+    height: "60vh",
     position: "relative",
   },
 
@@ -58,7 +58,6 @@ const useStyles = makeStyles(theme => ({
   img: {
     width: "100%",
     borderRadius: 4,
-
   },
   shortInfo: {
     width: "59%",

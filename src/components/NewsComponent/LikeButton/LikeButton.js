@@ -24,16 +24,26 @@ export default function LikeButton({userId, articleId}){
 
   console.log("danh sách nè chời ơi ", likeList);
 
+  const handleLikeButtonClick = async () => {
+    setLiked(!liked);
+    setClicked(true);
+    await dispatch(postLikeUnlikeBaiViet({userId, articleId}));
+    await dispatch(getListLikeBaiViet(articleId));
+  };
+
   return (
     <button
-      onClick={() => {
-        setLiked(!liked);
-        setClicked(true);
-        dispatch(postLikeUnlikeBaiViet({userId, articleId}))
-        dispatch(getListLikeBaiViet(articleId))
-        setSoLike(likeList.length)
-        console.log("set nè");
-      }}
+      // onClick={() => {
+      //   setLiked(!liked);
+      //   setClicked(true);
+      //   dispatch(postLikeUnlikeBaiViet({userId, articleId}))
+      //   dispatch(getListLikeBaiViet(articleId))
+      //   setSoLike(likeList.length)
+      //   console.log("set nè");
+      // }}
+
+      onClick={handleLikeButtonClick}
+
       onAnimationEnd={() => setClicked(false)}
       className={cn("like-button-wrapper", {
         liked,
