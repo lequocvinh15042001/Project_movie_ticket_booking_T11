@@ -87,7 +87,7 @@ export default function Desktop({ reviewerDetailShowtimes: data, reviewList: rev
       {/* <Showtime /> */}
       {/* <NewsComponent reviewerDetailShowtimes={data} reviewList={reviewList1}/> */}
 
-      <PostReviewer reviewerDetailShowtimes={data} reviewList={reviewList1}/>
+      <PostReviewer reviewerDetailShowtimes={data} reviewList={reviewList1} avatar ={data?.image}/>
     </div>
   )
 }

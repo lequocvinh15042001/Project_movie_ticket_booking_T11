@@ -54,7 +54,7 @@ export default function Deposits() {
         {/* {data?.totalIncome}VND */}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext} >
-        Từ 01/12/2022 - 01/05/2023
+        Từ 01/12/2022 - 01/12/2023
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
         Số lượng vé được đặt: <span style={{color:"red"}}>{data?.totalTicket}{" "} vé</span>

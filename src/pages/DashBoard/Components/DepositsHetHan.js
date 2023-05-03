@@ -74,7 +74,7 @@ export default function Deposits() {
         {`${data2?.totalIncome.toLocaleString("vi-VI")} VND`}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        Từ 01/12/2022 - 01/05/2023
+        Từ 01/12/2022 - 01/12/2023
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
         Số lượng GD không thành công: <span style={{color:"red"}}>{data2?.totalTransaction}{" "}lần</span>

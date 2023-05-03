@@ -3,7 +3,7 @@ import axiosClient from "./axiosClient";
 const reviewsApi = {
 
   getBillDashBoard: () => {
-    const path = `/bills/getBillDashBoard?fromDate=2022-12-01&toDate=2023-05-01&status=SUCCESS`;
+    const path = `/bills/getBillDashBoard?fromDate=2022-12-01&toDate=2023-12-01&status=SUCCESS`;
     return axiosClient.get(path);
   },
 
@@ -13,22 +13,22 @@ const reviewsApi = {
   },
 
   getBillDashBoardHetHan: () => {
-    const path = `/bills/getBillDashBoard?fromDate=2022-12-01&toDate=2023-05-01&status=EXPIRATION`;
+    const path = `/bills/getBillDashBoard?fromDate=2022-12-01&toDate=2023-12-01&status=EXPIRATION`;
     return axiosClient.get(path);
   },
 
   getBillSideBySide: () => {
-    const path = `/bills/getBillDashBoard?fromDate=2019-01-01&toDate=2023-05-01&status=SUCCESS`;
+    const path = `/bills/getBillDashBoard?fromDate=2019-01-01&toDate=2023-12-01&status=SUCCESS`;
     return axiosClient.get(path);
   },
 
   getTicketSalePerDay: () => {
-    const path = `/bills/getBillDashBoard?fromDate=2019-01-01&toDate=2023-05-01&status=SUCCESS`;
+    const path = `/bills/getBillDashBoard?fromDate=2019-01-01&toDate=2023-12-01&status=SUCCESS`;
     return axiosClient.get(path);
   },
 
   getBillPieChart: () => {
-    const path = `/bills/getBillDashBoard?fromDate=2019-01-01&toDate=2023-05-01&status=SUCCESS`;
+    const path = `/bills/getBillDashBoard?fromDate=2019-01-01&toDate=2023-12-01&status=SUCCESS`;
     return axiosClient.get(path);
   },
 
