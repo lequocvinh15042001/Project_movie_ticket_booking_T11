@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { IconButton } from "@material-ui/core";
 
 import { Comment as CommentIcon, Share as ShareIcon, Favorite as FavoriteIcon } from '@material-ui/icons';
+import InforReviewHomepage from "../../pages/InforReviewHomepage";
 
 
 const useStyles = makeStyles({
@@ -100,7 +101,7 @@ export default function NewsComponent() {
               </div>
             </div> */}
             {/* <div> */}
-            <CardActions disableSpacing>
+            {/* <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites" style={{color: "white"}}>
                   <FavoriteIcon />
                   <Typography>100 {" "} lượt thích</Typography>
@@ -113,7 +114,8 @@ export default function NewsComponent() {
                   <ShareIcon />
                   <Typography>10  {" "} lượt chia sẻ</Typography>
                 </IconButton>
-              </CardActions>
+              </CardActions> */}
+              <InforReviewHomepage idReviewPost={tinTuc?.id}/>
             {/* </div> */}
           </div>
           {/* <div>
