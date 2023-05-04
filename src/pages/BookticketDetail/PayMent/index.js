@@ -282,7 +282,7 @@ export default function PayMent() {
           </div>
           <div style={{display:"flex", justifyContent:"space-between"}}>
             <p>Ngày chiếu:</p>
-            <span>{thongTin?.data?.content[0]?.startDate}</span>
+            <span>{formatDate(thongTin?.data?.content[0]?.startDate).dateFull}</span>
           </div>
           <div style={{display:"flex", justifyContent:"space-between"}}>
             <p>Giờ chiếu:</p>

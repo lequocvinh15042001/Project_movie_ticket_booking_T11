@@ -24,12 +24,17 @@ export default function AllMovieSearch() {
     moviesApi.getSearchPhim(item)
     .then((res) =>{
       console.log(res);
-      setListKetQua(res?.data?.data)
+      if(res?.data?.data)
+      {
+        setListKetQua(res?.data?.data)
+      } else {
+        setListKetQua([])
+      }
     })
     .catch((err) =>{
       console.log(err)
     })
-  },[])
+  },[item])
 
   console.log(listKetQua);
   const classes = useStyle();
@@ -47,7 +52,7 @@ export default function AllMovieSearch() {
     <div className={classes.container}>
       
       <Slider {...settings}>
-        {/* {listKetQua ?   
+        {listKetQua.length !== 0 ?   
             (listKetQua.map((movie) => {
               return (
                 <div className="px-1 align-top" key={movie.id}>
@@ -56,17 +61,19 @@ export default function AllMovieSearch() {
                   />
                 </div>
               )
-          })): <h1 style={{
+          })): <div style={{
             left:"50%",
             top:"50%",
-            color:"white",
+            color:"white !important",
             textAlign:"center",
-            fontSize:"larger",
             fontWeight:"bolder",
-            padding:"5rem"
-          }}>Không tìm thấy kết quả!</h1>
-          }  */}
-            {listKetQua.map((movie) => {
+            padding:"5rem",
+            position: "absolute",
+            transform: "translate(-50%, -50%)",
+          }}
+          >Không tìm thấy kết quả!</div>  
+          } 
+            {/* {listKetQua.map((movie) => {
               return (
                 <div className="px-1 align-top" key={movie.id}>
                   <MovieItem
@@ -74,7 +81,7 @@ export default function AllMovieSearch() {
                   />
                 </div>
               )
-          })}
+          })} */}
       </Slider>   
     </div>
   );
