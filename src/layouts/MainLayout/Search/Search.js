@@ -40,10 +40,22 @@ export default function Search() {
 
     };
 
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        onSearchBatKy(value)
+      }
+    };
+
     return(
         <div className="search-container">
         <div className="search-inner">
-          <input type="text" value={value ? value : ""} onChange={onChange} placeholder="Tìm phim..." />
+
+          <input type="text" 
+            value={value ? value : ""} 
+            onChange={onChange} 
+            placeholder="Tìm phim..." 
+            onKeyDown={handleKeyDown} />
+
           <button style={{backgroundColor:"#fb4226", color:"white", padding:"5px", borderRadius:"5px", border:"none"}} 
           onClick={() => onSearchBatKy(value)}> Tìm kiếm </button>
         </div>
@@ -68,7 +80,7 @@ export default function Search() {
               >
                 <div style={{display:"flex", backgroundColor:"black"}}>
                 <img style={{display:"flex", width:"40px", height:"50px"}} 
-                src={item?.smallImageURl} />
+                src={item?.smallImageURl} alt="anh"/>
                 <span style={{padding:"1rem"}}>{item?.name}</span>
                 </div>
               </div>
