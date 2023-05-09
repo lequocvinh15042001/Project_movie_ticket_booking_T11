@@ -10,6 +10,7 @@ import { useStyles2 } from "./styles2";
 import Fade from "@material-ui/core/Fade";
 import Slider from "@material-ui/core/Slider";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { FAKE_AVATAR } from "../../constants/config";
 
 const GridCellExpand = function GridCellExpand(props) {
   const { width, value, field } = props;
@@ -126,7 +127,7 @@ export default function renderCellExpand(params) {
   return (
     <GridCellExpand
       field={params.field}
-      value={params.value ? params.value.toString() : ""}
+      value={params.value ? params.value.toString() : FAKE_AVATAR}
       width={params.colDef.width}
     />
   );
