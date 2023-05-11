@@ -70,7 +70,7 @@ export default function SimpleTabs() {
   };
 
 
-  console.log(eventList?.data);
+  console.log(eventList);
   const handlerSeeMore =() =>{
     history.push("/event-all")
   }
@@ -123,9 +123,9 @@ export default function SimpleTabs() {
                           </h4>
                         <p className="text-secondary" 
                             style={{
-                                    whiteSpace: "nowrap",
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis"
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis"
                           }}>
                         </p>
                       </div>
