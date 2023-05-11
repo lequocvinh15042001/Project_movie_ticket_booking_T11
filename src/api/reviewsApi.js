@@ -31,7 +31,7 @@ const reviewsApi = {
     const path = `/article/update`;
     return axiosClient.put(path, event);
   },
-
+  
   putDuyetReview: (eventId) => {
     const path = `article/changeStatus?articleId=${eventId}&status=APPROVE`;
     return axiosClient.put(path);

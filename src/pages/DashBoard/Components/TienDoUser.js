@@ -88,7 +88,7 @@ export default function TienDoUser() {
             name="Temperature range"
           >
             <Aggregation
-              enabled={this.state.useAggregation}
+              enabled={useAggregation}
               calculate={calculateRangeArea}
               method="custom"
             />
@@ -101,13 +101,13 @@ export default function TienDoUser() {
           >
             <Point size={7} />
             <Aggregation
-              enabled={this.state.useAggregation}
-              method={this.state.currentFunction}
+              enabled={useAggregation}
+              method={currentFunction}
             />
           </Series>
 
           <ArgumentAxis
-            aggregationInterval={this.state.currentInterval}
+            aggregationInterval={currentInterval}
             valueMarginsEnabled={false}
             argumentType="datetime"
           />
@@ -142,8 +142,8 @@ export default function TienDoUser() {
           <div className="caption">Options</div>
           <div className="option">
             <CheckBox
-              value={this.state.useAggregation}
-              onValueChanged={this.updateAggregationUsage}
+              value={useAggregation}
+              onValueChanged={updateAggregationUsage}
               text="Aggregation enabled"
             />
           </div>
@@ -151,8 +151,8 @@ export default function TienDoUser() {
             <span>Interval:</span>&nbsp;
             <SelectBox
               dataSource={aggregationIntervals}
-              value={this.state.currentInterval}
-              onValueChanged={this.updateInterval}
+              value={currentInterval}
+              onValueChanged={updateInterval}
               displayExpr="displayName"
               valueExpr="interval"
             />
@@ -161,8 +161,8 @@ export default function TienDoUser() {
             <span>Method:</span>&nbsp;
             <SelectBox
               dataSource={aggregationFunctions}
-              value={this.state.currentFunction}
-              onValueChanged={this.updateMethod}
+              value={currentFunction}
+              onValueChanged={updateMethod}
               displayExpr="displayName"
               valueExpr="func"
             />

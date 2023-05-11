@@ -203,15 +203,16 @@ export default function Dashboard() {
         {/* <Container maxWidth="lg" className={classes.container}> */}
           <Grid container spacing={3}>
             {/* Biểu đồ theo dỗi tiến độ user */}
+            
             <Grid item xs={12} md={6} lg={12}>
                <Paper className={fixedHeightPaper}>
-                 <TicketPerDay />
+                 <TienDoUser />
                </Paper>
              </Grid>
 
-             <Grid item xs={12} md={6} lg={12}>
+            <Grid item xs={12} md={6} lg={12}>
                <Paper className={fixedHeightPaper}>
-                 {/* <TienDoUser /> */}
+                 <TicketPerDay />
                </Paper>
              </Grid>
 
