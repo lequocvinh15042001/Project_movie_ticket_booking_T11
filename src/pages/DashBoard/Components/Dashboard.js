@@ -204,11 +204,11 @@ export default function Dashboard() {
           <Grid container spacing={3}>
             {/* Biểu đồ theo dỗi tiến độ user */}
             
-            <Grid item xs={12} md={6} lg={12}>
+            {/* <Grid item xs={12} md={6} lg={12}>
                <Paper className={fixedHeightPaper}>
                  <TienDoUser />
                </Paper>
-             </Grid>
+             </Grid> */}
 
             <Grid item xs={12} md={6} lg={12}>
                <Paper className={fixedHeightPaper}>

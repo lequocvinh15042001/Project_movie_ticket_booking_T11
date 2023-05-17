@@ -35,7 +35,8 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
     title: '',
     mainImage:'',
     brief:'',
-    description:''
+    description:'',
+    keywork:''
   })
 
   const handleBtnMuaVe = () => {
