@@ -33,29 +33,29 @@ export default function TicketPerDay() {
       <>
         <h5 style={{textAlign:"center", color: "blue", textTransform:"uppercase", fontWeight:"bold", marginTop:"1rem"}}>Số lượng giao dịch theo ngày</h5>
         <Chart
-            dataSource={data?.dayTransactionReports}
-            rotated={true}
-            id="chart"
+          dataSource={data?.dayTransactionReports}
+          rotated={true}
+          id="chart"
+          >
+            <ValueAxis>
+              <Tick visible={false} />
+              <Label visible={false} />
+            </ValueAxis>
+
+            <Series
+            valueField="transactionCount"
+            argumentField="dateTran"
+            type="bar"
+            color="#ad071d"
             >
-                <ValueAxis>
-                <Tick visible={false} />
-                <Label visible={false} />
-                </ValueAxis>
+              <Label visible={true} backgroundColor="#000" />
+            </Series>
 
-                <Series
-                valueField="transactionCount"
-                argumentField="dateTran"
-                type="bar"
-                color="#ad071d"
-                >
-                <Label visible={true} backgroundColor="#000" />
-                </Series>
+            <Legend visible={false} />
 
-                <Legend visible={false} />
+            <Export enabled={true} />
 
-                <Export enabled={true} />
-
-            </Chart>
+        </Chart>
       </>
            
     )

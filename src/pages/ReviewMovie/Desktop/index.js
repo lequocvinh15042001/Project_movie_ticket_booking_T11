@@ -37,7 +37,6 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
     title: '',
     brief:'',
     description:'',
-    categoryId: 1,
     keyword: ''
   })
 

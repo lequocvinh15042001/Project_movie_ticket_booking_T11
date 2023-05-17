@@ -13,10 +13,11 @@
 //   Tooltip,
 // } from 'devextreme-react/chart';
 // import CheckBox from 'devextreme-react/check-box';
-// import SelectBox from '@material-ui'
-// // import SelectBox from 'devextreme-react/select-box';
+// import SelectBox from 'devextreme-react/select-box';
 // import { weatherData, aggregationFunctions, aggregationIntervals } from './dataTienDo.js';
 // import "./style.scss"
+// import { Select, MenuItem } from '@mui/material';
+
 
 // export default function TienDoUser() {
 //   const [useAggregation, setUseAggregation] = useState(true);
@@ -158,7 +159,7 @@
 //             text="Aggregation enabled"
 //           />
 //         </div>
-//         <div className="option">
+//         {/* <div className="option">
 //           <span>Interval:</span>&nbsp;
 //           <SelectBox
 //             dataSource={aggregationIntervals}
@@ -167,7 +168,7 @@
 //             displayExpr="displayName"
 //             valueExpr="interval"
 //           />
-//         </div>
+//         </div> */}
 //         <div className="option">
 //           <span>Method:</span>&nbsp;
 //           <SelectBox

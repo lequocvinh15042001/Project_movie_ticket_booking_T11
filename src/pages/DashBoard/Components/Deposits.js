@@ -57,11 +57,11 @@ export default function Deposits() {
         Từ 01/12/2022 - 01/12/2023
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
-        Số lượng vé được đặt: <span style={{color:"red"}}>{data?.totalTicket}{" "} vé</span>
+        Số vé được đặt: <span style={{color:"red"}}>{data?.totalTicket}{" "} vé</span>
         {/* {`${data?.totalTicket?.toLocaleString("vi-VI")} đ`} */}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
-        Số lượng GD thành công: <span style={{color:"red"}}>{data?.totalTransaction}{" "} lần</span>
+        Số GD thành công: <span style={{color:"red"}}>{data?.totalTransaction}{" "} lần</span>
       </Typography>
       {/* <div>
         <Link color="primary" href="javascript:;">
