@@ -2,6 +2,11 @@ import axiosClient from "./axiosClient";
 
 const interactionApi = {
 
+  checkUserLikeOrUnlike : (userId, articleId) => {
+    const path = `/interaction/v1/like/checkUser?userId=${userId}&articleId=${articleId}`;
+    return axiosClient.get(path);
+  },
+
   getAllLikeBaiViet: (articleId) => {
     const path = `/interaction/v1/like/getAll/${articleId}`;
     return axiosClient.get(path);
