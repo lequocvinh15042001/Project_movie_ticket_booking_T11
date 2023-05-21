@@ -76,6 +76,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getListCommentBaiViet, getListLikeBaiViet, postLikeUnlikeBaiViet } from '../reducers/actions/Interaction';
 import SeeComment from "./SeeComment"
 import interactionApi from "../api/interactionApi"
+import { getInfoUser } from '../reducers/actions/UsersManagement';
+import { getIn } from 'formik';
 
 export default function InforReviewHomepage({ idReviewPost }) {
   const { likeList } = useSelector((state) => state.interactionReducer);
@@ -90,6 +92,7 @@ export default function InforReviewHomepage({ idReviewPost }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getInfoUser)
     dispatch(getListLikeBaiViet(idReviewPost));
     dispatch(getListCommentBaiViet(idReviewPost));
   }, [idReviewPost]);
@@ -99,8 +102,8 @@ export default function InforReviewHomepage({ idReviewPost }) {
     // Call your API to check if the user has liked the post
     const checkUserLike = async () => {
       try {
-        const response = await interactionApi.checkUserLikeOrUnlike(3, idReviewPost);
-        console.log(response);
+        const response = await interactionApi.checkUserLikeOrUnlike(successInfoUser.data.id, idReviewPost);
+        // console.log(response);
         setIsLiked(response.data.success); // Assuming the API returns { isLiked: true/false }
       } catch (error) {
         console.error(error);
@@ -114,13 +117,13 @@ export default function InforReviewHomepage({ idReviewPost }) {
     if (isLiked) {
       console.log("Unlike");
       setIsLiked(false);
-      dispatch(postLikeUnlikeBaiViet({ userId: 3, articleId: idReviewPost }));
+      dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser.data.id, articleId: idReviewPost }));
       dispatch(getListLikeBaiViet(idReviewPost));
       setSoLike(likeList.length);
     } else {
       console.log("Like");
       setIsLiked(true);
-      dispatch(postLikeUnlikeBaiViet({ userId: 3, articleId: idReviewPost }));
+      dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser.data.id, articleId: idReviewPost }));
       dispatch(getListLikeBaiViet(idReviewPost));
       setSoLike(likeList.length);
     }
