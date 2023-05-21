@@ -94,12 +94,6 @@ export default function InforReviewHomepage({ idReviewPost }) {
     dispatch(getListCommentBaiViet(idReviewPost));
   }, [idReviewPost]);
 
-  useEffect(() => {
-    if (likeList && commentList) {
-      setSoLike(likeList.length);
-      setSoCmt(commentList.number);
-    }
-  }, [likeList, commentList,soLike]);
 
   useEffect(() => {
     // Call your API to check if the user has liked the post
@@ -131,6 +125,14 @@ export default function InforReviewHomepage({ idReviewPost }) {
       setSoLike(likeList.length);
     }
   };
+
+
+  useEffect(() => {
+    if (likeList && commentList) {
+      setSoLike(likeList.length);
+      setSoCmt(commentList.number);
+    }
+  }, [likeList, commentList,soLike]);
 
   return (
     <CardActions disableSpacing>

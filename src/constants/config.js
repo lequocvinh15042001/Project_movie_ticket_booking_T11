@@ -8,7 +8,7 @@ const avtIdUser = currentUser ? currentUser?.avtIdUser : nanoid(10);
 export { avtIdUser };
 // export const BASE_URL = "https://goldennew.azurewebsites.net/api";
 // export const BASE_URL = "http://localhost:8080/api";
-export const BASE_URL = "http://14.225.205.235:8080/api";
+export const BASE_URL = "http://14.225.205.235:8081/api";
 export const FAKE_AVATAR = `https://vnn-imgs-f.vgcloud.vn/2020/03/23/11/trend-avatar-11.jpg`;
 export const UNKNOW_USER = "https://cdn4.vectorstock.com/i/1000x1000/76/28/unknown-person-user-icon-for-web-vector-34757628.jpg";
 export const DISPLAY_MOBILE_BOOKTICKET = "(max-width:768px)";
