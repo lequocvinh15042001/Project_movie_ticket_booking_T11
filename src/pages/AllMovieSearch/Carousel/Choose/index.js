@@ -388,7 +388,7 @@ export default function Choose() {
     },
   };
 
-  console.log("data",data);
+  // console.log("data",data);
 
   if (errorMovieList) {
     return <p>{errorMovieList}</p>;

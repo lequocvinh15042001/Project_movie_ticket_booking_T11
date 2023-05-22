@@ -10,7 +10,10 @@ import {GET_LISTLIKE_REQUEST,
   POST_LIKEUNLIKE_FAIL,
   POST_COMMENT_REQUEST,
   POST_COMMENT_SUCCESS,
-  POST_COMMENT_FAIL
+  POST_COMMENT_FAIL,
+  GET_LIKECHECK_REQUEST,
+  GET_LIKECHECK_SUCCESS,
+  GET_LIKECHECK_FAIL
 
     } from "../../reducers/constants/Interaction"
 
@@ -111,6 +114,30 @@ export const postCommentBaiViet = (data) => {
             }
         )
     }
+}
+
+export const getLikeCheck = (userId, articleId) => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_LIKECHECK_REQUEST
+    })
+    interactionApi.checkUserLikeOrUnlike(userId, articleId)
+      .then(result => {
+       console.log("User like chưa--------: ", result.data);
+        dispatch({
+          type: GET_LIKECHECK_SUCCESS,
+          payload: { data: result.data }
+        })
+      })
+      .catch(
+        error => {
+          dispatch({
+            type: GET_LIKECHECK_FAIL,
+            payload: { error: error.response?.data ? error.response.data : error.message, }
+          })
+        }
+      )
+  }
 }
 
 

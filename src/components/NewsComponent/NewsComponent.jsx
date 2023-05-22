@@ -47,7 +47,7 @@ export default function NewsComponent() {
         console.log(err);
       });
   }, []);
-  console.log("danhSachTinTuc: ", danhSachTinTuc);
+  // console.log("danhSachTinTuc: ", danhSachTinTuc);
   const history = useHistory();
   const handlerSeeMore =() =>{
     history.push("/review")

@@ -29,7 +29,7 @@ export default function Homepage() {
   useEffect(() => {
     usersApi.getThongTinTaiKhoan()
     .then((response) =>{
-      console.log("Home user: ", response?.data);
+      // console.log("Home user: ", response?.data);
       setCUser(response?.data);
       dispatch({
         type: LOGIN_SUCCESS,
@@ -58,7 +58,7 @@ export default function Homepage() {
     })
     usersApi.getThongTinTaiKhoan()
       .then(result => {
-        console.log("getThongTinTaiKhoan: ", result);
+        // console.log("getThongTinTaiKhoan: ", result);
         dispatch({
           type: GET_INFO_USER_SUCCESS,
           payload: {

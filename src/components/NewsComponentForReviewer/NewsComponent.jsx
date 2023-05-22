@@ -32,7 +32,7 @@ export default function NewsComponent({reviewerDetailShowtimes, reviewList }) {
       setDanhSachTinTuc(reviewList);
       setLoading(false);
   }, [reviewList]);
-  console.log("danhSachTinTuc: ", danhSachTinTuc);
+  // console.log("danhSachTinTuc: ", danhSachTinTuc);
   const history = useHistory();
   const handlerSeeMore =() =>{
     history.push("/review")

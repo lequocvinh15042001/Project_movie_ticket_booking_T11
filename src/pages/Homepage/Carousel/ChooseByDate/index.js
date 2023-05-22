@@ -479,7 +479,7 @@ export default function ChooseByDate() {
     },
   };
 
-  console.log("data",data);
+  // console.log("data",data);
 
   if (errorMovieList) {
     return <p>{errorMovieList}</p>;
