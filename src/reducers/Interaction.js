@@ -9,7 +9,10 @@ import {GET_LISTLIKE_REQUEST,
   POST_LIKEUNLIKE_FAIL, 
   POST_COMMENT_REQUEST, 
   POST_COMMENT_SUCCESS, 
-  POST_COMMENT_FAIL
+  POST_COMMENT_FAIL,
+  GET_LIKECHECK_REQUEST,
+  GET_LIKECHECK_SUCCESS,
+  GET_LIKECHECK_FAIL
 
 } from "../reducers/constants/Interaction"
   
@@ -29,6 +32,11 @@ import {GET_LISTLIKE_REQUEST,
     commentPost: null,
     loadingCommentPost: false,
     errorCommentPost: null,
+
+    likeCheck:  null,
+    loadingCheck: false,
+    errorCheck: null,
+
   }
   
   const InteractionReducer = (state = initialState, action) => {
@@ -102,6 +110,24 @@ import {GET_LISTLIKE_REQUEST,
           ...state,
           errorCommentPost: action.payload.error,
           loadingCommentPost: false,
+        };
+      }
+
+      case GET_LIKECHECK_REQUEST: {
+        return { ...state, loadingCheck: true, errorCheck: null };
+      }
+      case GET_LIKECHECK_SUCCESS: {
+        return {
+          ...state,
+          likeCheck: action.payload.data,
+          loadingCheck: false
+        };
+      }
+      case GET_LIKECHECK_FAIL: {
+        return {
+          ...state,
+          errorCheck: action.payload.error,
+          loadingCheck: false,
         };
       }
   

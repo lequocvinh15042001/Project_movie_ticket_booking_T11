@@ -35,7 +35,7 @@ export default function Desktop({ arrayData, value }) {
     rows: 2,
     slidesPerRow: 4,
   };
-  console.log("Arr Datta:", arrayData);
+  // console.log("Arr Datta:", arrayData);
   return (
     <div className={classes.container}>
       <Slider {...settings}>

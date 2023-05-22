@@ -44,7 +44,7 @@ export default function PostReviewer({reviewerDetailShowtimes, reviewList, avata
       setDanhSachTinTuc(reviewList);
       setLoading(false);
   }, [reviewList]);
-  console.log("danhSachTinTuc: ", danhSachTinTuc);
+  // console.log("danhSachTinTuc: ", danhSachTinTuc);
 
 const [open, setOpen] = useState(false);
 const [scroll, setScroll] = useState('paper');

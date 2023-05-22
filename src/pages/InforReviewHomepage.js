@@ -73,7 +73,7 @@ import { Modal, Avatar, Button, Card, CardActions, CardContent, CardHeader, Icon
 import { Comment as CommentIcon, Share as ShareIcon, Favorite as FavoriteIcon } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getListCommentBaiViet, getListLikeBaiViet, postLikeUnlikeBaiViet } from '../reducers/actions/Interaction';
+import { getLikeCheck, getListCommentBaiViet, getListLikeBaiViet, postLikeUnlikeBaiViet } from '../reducers/actions/Interaction';
 import SeeComment from "./SeeComment"
 import interactionApi from "../api/interactionApi"
 import { getInfoUser } from '../reducers/actions/UsersManagement';
@@ -85,6 +85,7 @@ export default function InforReviewHomepage({ idReviewPost }) {
   const { successInfoUser, loadingInfoUser } = useSelector(
     (state) => state.usersManagementReducer
   );
+  // const {likeCheck, loadingCheck} = useSelector((state) => state.interactionReducer);
   const { currentUser } = useSelector((state) => state.authReducer);
   const [soLike, setSoLike] = useState(0);
   const [soCmt, setSoCmt] = useState(0);
@@ -95,40 +96,8 @@ export default function InforReviewHomepage({ idReviewPost }) {
     dispatch(getInfoUser)
     dispatch(getListLikeBaiViet(idReviewPost));
     dispatch(getListCommentBaiViet(idReviewPost));
+    dispatch(getLikeCheck({ userId: successInfoUser.data.id, articleId: idReviewPost }))
   }, [idReviewPost]);
-
-
-  useEffect(() => {
-    // Call your API to check if the user has liked the post
-    const checkUserLike = async () => {
-      try {
-        const response = await interactionApi.checkUserLikeOrUnlike(successInfoUser.data.id, idReviewPost);
-        // console.log(response);
-        setIsLiked(response.data.success); // Assuming the API returns { isLiked: true/false }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    checkUserLike();
-  }, [currentUser, idReviewPost, soLike]);
-
-  const handleLikeClick = () => {
-    if (isLiked) {
-      console.log("Unlike");
-      setIsLiked(false);
-      dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser.data.id, articleId: idReviewPost }));
-      dispatch(getListLikeBaiViet(idReviewPost));
-      setSoLike(likeList.length);
-    } else {
-      console.log("Like");
-      setIsLiked(true);
-      dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser.data.id, articleId: idReviewPost }));
-      dispatch(getListLikeBaiViet(idReviewPost));
-      setSoLike(likeList.length);
-    }
-  };
-
 
   useEffect(() => {
     if (likeList && commentList) {
@@ -136,6 +105,39 @@ export default function InforReviewHomepage({ idReviewPost }) {
       setSoCmt(commentList.number);
     }
   }, [likeList, commentList,soLike]);
+
+  const handleLikeClick = () => {
+    if (isLiked) {
+      console.log("Unlike");
+      dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser.data.id, articleId: idReviewPost }));
+      dispatch(getListLikeBaiViet(idReviewPost));
+      setSoLike(likeList.length);
+      setIsLiked(false);
+    } else {
+      console.log("Like");
+      dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser.data.id, articleId: idReviewPost }));
+      dispatch(getListLikeBaiViet(idReviewPost));
+      setSoLike(likeList.length);
+      setIsLiked(true);
+    }
+  };
+
+  // useEffect(() => {
+  //   // Call your API to check if the user has liked the post
+  //   const checkUserLike = async () => {
+  //     try {
+  //       const response = await interactionApi.checkUserLikeOrUnlike(successInfoUser.data.id, idReviewPost);
+  //       // console.log(response);
+  //       setIsLiked(response.data.success); // Assuming the API returns { isLiked: true/false }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+
+  //   checkUserLike();
+  // }, []);
+
+console.log(isLiked);
 
   return (
     <CardActions disableSpacing>
