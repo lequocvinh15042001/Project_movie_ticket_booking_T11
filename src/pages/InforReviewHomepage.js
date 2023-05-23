@@ -79,6 +79,36 @@ import interactionApi from "../api/interactionApi"
 import { getInfoUser } from '../reducers/actions/UsersManagement';
 import { getIn } from 'formik';
 
+import { makeStyles } from "@material-ui/core/styles";
+import { Drawer } from "@material-ui/core";
+import { SidebarComment } from "../pages/SidebarComment";
+import Comment from './Comments/Comment';
+
+const drawerWidth = 600;
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex"
+  },
+  hide: {
+    display: "none"
+  },
+  drawer: {
+    width: drawerWidth
+  },
+  drawerPaper: {
+    width: drawerWidth
+  },
+  drawerHeader: {
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-start"
+  }
+}));
+
 export default function InforReviewHomepage({ idReviewPost }) {
   const { likeList } = useSelector((state) => state.interactionReducer);
   const { commentList } = useSelector((state) => state.interactionReducer);
@@ -96,26 +126,26 @@ export default function InforReviewHomepage({ idReviewPost }) {
     dispatch(getInfoUser)
     dispatch(getListLikeBaiViet(idReviewPost));
     dispatch(getListCommentBaiViet(idReviewPost));
-    dispatch(getLikeCheck({ userId: successInfoUser.data.id, articleId: idReviewPost }))
+    dispatch(getLikeCheck({ userId: successInfoUser?.data?.id, articleId: idReviewPost }))
   }, [idReviewPost]);
 
   useEffect(() => {
     if (likeList && commentList) {
       setSoLike(likeList.length);
-      setSoCmt(commentList.number);
+      setSoCmt(commentList.totalElements);
     }
   }, [likeList, commentList,soLike]);
 
   const handleLikeClick = () => {
     if (isLiked) {
       console.log("Unlike");
-      dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser.data.id, articleId: idReviewPost }));
+      dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser?.data?.id, articleId: idReviewPost }));
       dispatch(getListLikeBaiViet(idReviewPost));
       setSoLike(likeList.length);
       setIsLiked(false);
     } else {
       console.log("Like");
-      dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser.data.id, articleId: idReviewPost }));
+      dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser?.data?.id, articleId: idReviewPost }));
       dispatch(getListLikeBaiViet(idReviewPost));
       setSoLike(likeList.length);
       setIsLiked(true);
@@ -139,16 +169,53 @@ export default function InforReviewHomepage({ idReviewPost }) {
 
 console.log(isLiked);
 
+    // const classes = useStyles();
+    // const [open, setOpen] = useState(false);
+
+    // const handleDrawerOpen = () => {
+    //   setOpen(true);
+    // };
+
+    // const handleDrawerClose = () => {
+    //   setOpen(false);
+    // };
+
+    const [isPaneOpen, setIsPaneOpen] = useState(false);
+
   return (
     <CardActions disableSpacing>
       <IconButton aria-label="add to favorites" style={{ color: isLiked ? "blue" : "white" }} onClick={handleLikeClick}>
         <FavoriteIcon />
-        <Typography>{soLike} {" "} thích</Typography>
+        <Typography>{soLike}</Typography>
       </IconButton>
-      <IconButton aria-label="comment" style={{ color: "white" }}>
-        <CommentIcon />
-        <Typography>{soCmt}  {" "} lượt bình luận</Typography>
-      </IconButton>
+      <div >
+        <IconButton aria-label="comment" style={{ color: "white" }} 
+              onClick={() => {
+                setIsPaneOpen(true);
+              }}>
+          <CommentIcon />
+          <Typography>{soCmt}</Typography>
+        </IconButton>
+      </div>
+        <Comment
+        isPaneOpen={isPaneOpen}
+        onClose={() => {
+          setIsPaneOpen(false);
+        }}
+        idReviewPost={idReviewPost}
+        />
+      {/* <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="right"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+        >
+          <SidebarComment handleDrawerClose={handleDrawerClose} />
+      </Drawer> */}
+
     </CardActions>
   );
 }
