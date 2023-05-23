@@ -1,5 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import uuid from "react-uuid";
+import { getListCommentBaiViet, postCommentBaiViet } from "../../reducers/actions/Interaction";
 
 export const ActionContext = createContext();
 export const ActionProvider = ({
@@ -9,14 +11,18 @@ export const ActionProvider = ({
   comments,
   signinUrl,
   signupUrl,
-  customInput
+  customInput,
+  articleId
 }) => {
   const [replies, setReplies] = useState([]);
   const [user, setUser] = useState();
   const [editArr, setEdit] = useState([]);
+  const dispatch = useDispatch()
 
+  // const {commentPost} = useSelector((state) => state.interactionReducer)
   console.log(
     currentUser,
+    articleId,
     comments);
 
   useEffect(() => {
@@ -25,7 +31,11 @@ export const ActionProvider = ({
     } else {
       setUser(false);
     }
-  });
+  },[]);
+
+  // useEffect(() => {
+  //   dispatch(postCommentBaiViet({}))
+  // },[])
 
   useEffect(() => {
     console.log("children :", children);
@@ -149,10 +159,17 @@ export const ActionProvider = ({
       editText(cancellor, text, parentId);
       handleCancel(cancellor, edit, setText);
       setText("");
+      console.log(cancellor, text, parentId);
+
     } else {
-      onSubmit(text, parentId, child);
+      // onSubmit(text, parentId, child);
+      // onSubmit(text, articleId, child);
+      dispatch(postCommentBaiViet({description: text, articleId: articleId, userId: currentUser?.userId}))
+      dispatch(getListCommentBaiViet(articleId))
       handleCancel(cancellor, edit, setText);
       setText("");
+      console.log(text, parentId, child);
+
     }
   };
 

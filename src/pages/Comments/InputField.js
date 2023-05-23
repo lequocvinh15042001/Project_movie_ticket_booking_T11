@@ -129,7 +129,7 @@ const InputField = ({ cancellor, parentId, child, value, edit, main }) => {
   const form = () => {
     return (
       <div className={"displayComments"}>
-        {console.log("actions :", actions)}
+        {/* {console.log("actions :", actions)} */}
         {parentId === undefined ? (
           <div className={"userImg"}>
             <img
@@ -229,7 +229,7 @@ const InputField = ({ cancellor, parentId, child, value, edit, main }) => {
     //   }
     // >
     <div>
-      {console.log("inputOpen, parentId", inputOpen, parentId)}
+      {/* {console.log("inputOpen, parentId", inputOpen, parentId)} */}
       {parentId === undefined ? (
         // <button
         //   onClick={(e) => {

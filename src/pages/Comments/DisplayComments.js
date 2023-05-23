@@ -29,12 +29,13 @@ const DisplayComments = ({ comments }) => {
     }
   };
 
+  console.log("cmt:", comments);
   return (
     <div>
       {comments.map((i, index) => (
-        <div key={i.comId}>
-          {actions.editArr.filter((id) => id === i.comId).length !== 0 ? (
-            <InputField cancellor={i.comId} value={i.text} edit />
+        <div key={i.id}>
+          {actions.editArr.filter((id) => id === i.id).length !== 0 ? (
+            <InputField cancellor={i.id} value={i.text} edit />
           ) : (
             <CommentStructure i={i} handleEdit={() => actions.handleAction} />
           )}
@@ -42,25 +43,25 @@ const DisplayComments = ({ comments }) => {
             {/* {actions.replies.filter((o) => o.id === i.comId).length !== 0 && (
               <InputField cancellor={i.comId} parentId={i.comId} />
             )} */}
-            {ActionsReplies(i.comId, i.comId)}
+            {ActionsReplies(i.id, i.id)}
             {/* </div>
           <div className={"replySection"}> */}
             {i.replies &&
               i.replies.map((a, index) => (
-                <div key={a.comId}>
-                  {actions.editArr.filter((id) => id === a.comId).length !==
+                <div key={a.id}>
+                  {actions.editArr.filter((id) => id === a.id).length !==
                   0 ? (
                     <InputField
-                      cancellor={a.comId}
+                      cancellor={a.id}
                       value={a.text}
                       edit
-                      parentId={i.comId}
+                      parentId={i.id}
                     />
                   ) : (
                     <CommentStructure
                       i={a}
                       reply
-                      parentId={i.comId}
+                      parentId={i.id}
                       handleEdit={() => actions.handleAction}
                     />
                   )}
@@ -68,7 +69,7 @@ const DisplayComments = ({ comments }) => {
                     0 && (
                     <InputField cancellor={a.comId} parentId={i.comId} child />
                   )} */}
-                  {ActionsReplies(a.comId, i.comId)}
+                  {ActionsReplies(a.id, i.id)}
                 </div>
               ))}
           </div>
