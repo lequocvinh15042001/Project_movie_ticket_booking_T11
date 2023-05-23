@@ -10,15 +10,15 @@ const CommentSection = ({
   setComment,
   signinUrl,
   signupUrl,
-  customInput
-
+  customInput,
+  articleId,
   // test
 }) => {
   const [comments, setComments] = useState(commentsArray);
 
   useEffect(() => {
     setComments(commentsArray);
-    console.log(">>> commentsArray", currentUser);
+    console.log(">>> commentsArray", commentsArray);
   }, [commentsArray]);
 
   return (
@@ -29,6 +29,7 @@ const CommentSection = ({
       signinUrl={signinUrl}
       signupUrl={signupUrl}
       customInput={customInput}
+      articleId={articleId}
     >
       {/* {console.log(">>> ActionProvider")} */}
       <div className={"section"}>

@@ -7,30 +7,30 @@ const SignField = () => {
   const actions = useContext(ActionContext);
 
   const handleDivClick = (e) => {
-    if (e.target.name === "login") {
+    if (e.target.name === "dangnhap") {
       window.location.href = actions.signinUrl;
-    } else if (e.target.name === "signup") {
+    } else if (e.target.name === "dangky") {
       window.location.href = actions.signupUrl;
     }
   };
 
   return (
     <div className={"signBox"}>
-      <div className={"signLine"}>Log in or sign up to leave a comment</div>
+      <div className={"signLine"}>Vui lòng đăng nhập để bình luận</div>
       <div>
         <button
           className={"loginBtn"}
-          name="login"
+          name="dangnhap"
           onClick={(e) => handleDivClick(e)}
         >
-          Log In
+          Đăng nhập
         </button>
         <button
           className={"signBtn"}
-          name="signup"
+          name="dangky"
           onClick={(e) => handleDivClick(e)}
         >
-          Sign Up
+          Đăng ký
         </button>
       </div>
     </div>

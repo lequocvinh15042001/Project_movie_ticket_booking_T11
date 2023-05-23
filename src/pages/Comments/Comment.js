@@ -24,7 +24,7 @@ const Comment = (props) => {
   const signinUrl = "/dangnhap";
   const signupUrl = "/dangky";
 
-  // console.log(props);
+  console.log(props);
 
   let count = 0;
   commentList?.content?.map((i) => {
@@ -79,6 +79,7 @@ const Comment = (props) => {
           setComment={setComment}
           signinUrl={signinUrl}
           signupUrl={signupUrl}
+          articleId={props?.idReviewPost}
           // customInput={customInputFunc}
         />
       </SlidingPane>

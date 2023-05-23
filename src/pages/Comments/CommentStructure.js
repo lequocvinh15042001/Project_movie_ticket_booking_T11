@@ -103,14 +103,14 @@ const CommentStructure = ({ i, reply, parentId }) => {
               actions.handleAction(i.id, edit);
             }}
           >
-            edit
+            Chỉnh sửa
           </MenuItem>
           <MenuItem
             onClick={() => {
               actions.onDelete(i.id, parentId);
             }}
           >
-            delete
+            Xóa
           </MenuItem>
         </Menu>
       </div>
