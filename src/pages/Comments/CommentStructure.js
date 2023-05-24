@@ -22,7 +22,7 @@ import { ActionContext } from "./ActionContext";
 const CommentStructure = ({ i, reply, parentId }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
-  console.log(i);
+  // console.log(i);
   const actions = useContext(ActionContext);
   const edit = true;
 

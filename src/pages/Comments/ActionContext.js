@@ -20,10 +20,10 @@ export const ActionProvider = ({
   const dispatch = useDispatch()
 
   // const {commentPost} = useSelector((state) => state.interactionReducer)
-  console.log(
-    currentUser,
-    articleId,
-    comments);
+  // console.log(
+  //   currentUser,
+  //   articleId,
+  //   comments);
 
   useEffect(() => {
     if (currentUser) {
@@ -37,20 +37,21 @@ export const ActionProvider = ({
   //   dispatch(postCommentBaiViet({}))
   // },[])
 
-  useEffect(() => {
-    console.log("children :", children);
-  }, [children]);
+  // useEffect(() => {
+  //   console.log("children :", children);
+  // }, [children]);
+
+  // useEffect(() => {
+  //   console.log("replies :", replies);
+  // }, [replies]);
+
+  // useEffect(() => {
+  //   console.log("editArr :", editArr);
+  // }, [editArr]);
 
   useEffect(() => {
-    console.log("replies :", replies);
-  }, [replies]);
-
-  useEffect(() => {
-    console.log("editArr :", editArr);
-  }, [editArr]);
-
-  useEffect(() => {
-    console.log("comments :", comments);
+    console.log("comments --------:", comments);
+    // dispatch(getListCommentBaiViet(articleId))
   }, [comments]);
 
   const handleAction = (id, edit, userInfo) => {
@@ -80,7 +81,9 @@ export const ActionProvider = ({
 
   const onSubmit = (text, parentId, child) => {
     if (text.length > 0) {
-      if (!parentId && !child) {
+      // if (!parentId && !child) {
+      dispatch(postCommentBaiViet({description: text, articleId: articleId, userId: currentUser?.userId}))
+      console.log("Thêm cmt mới:", text);
         setComment([
           ...comments,
           {
@@ -91,34 +94,34 @@ export const ActionProvider = ({
             text: text
           }
         ]);
-      } else if (parentId && child) {
-        const newList = [...comments];
-        const index = newList.findIndex((x) => x.comId === parentId);
-        newList[index].replies.push({
-          userId: currentUser.userId,
-          comId: uuid(),
-          avatarUrl: currentUser.avatarUrl,
-          fullName: currentUser.name,
-          text: text
-        });
-        setComment(newList);
-      } else if (parentId && !child) {
-        const newList = [...comments];
-        const index = newList.findIndex((x) => x.comId === parentId);
-        const newReplies =
-          newList[index].replies === undefined
-            ? []
-            : [...newList[index].replies];
-        newReplies.push({
-          userId: currentUser.userId,
-          comId: uuid(),
-          avatarUrl: currentUser.avatarUrl,
-          fullName: currentUser.name,
-          text: text
-        });
-        newList[index].replies = newReplies;
-        setComment(newList);
-      }
+      // } else if (parentId && child) {
+      //   const newList = [...comments];
+      //   const index = newList.findIndex((x) => x.comId === parentId);
+      //   newList[index].replies.push({
+      //     userId: currentUser.userId,
+      //     comId: uuid(),
+      //     avatarUrl: currentUser.avatarUrl,
+      //     fullName: currentUser.name,
+      //     text: text
+      //   });
+      //   setComment(newList);
+      // } else if (parentId && !child) {
+      //   const newList = [...comments];
+      //   const index = newList.findIndex((x) => x.comId === parentId);
+      //   const newReplies =
+      //     newList[index].replies === undefined
+      //       ? []
+      //       : [...newList[index].replies];
+      //   newReplies.push({
+      //     userId: currentUser.userId,
+      //     comId: uuid(),
+      //     avatarUrl: currentUser.avatarUrl,
+      //     fullName: currentUser.name,
+      //     text: text
+      //   });
+      //   newList[index].replies = newReplies;
+      //   setComment(newList);
+      // }
     }
   };
 
@@ -156,19 +159,31 @@ export const ActionProvider = ({
   //Hàm đăng cmt
   const submit = (cancellor, text, parentId, edit, setText, child) => {
     if (edit) {
+      console.log("Vào edit");
       editText(cancellor, text, parentId);
       handleCancel(cancellor, edit, setText);
       setText("");
       console.log(cancellor, text, parentId);
 
     } else {
+      // console.log("Vào thêm cmt");
       // onSubmit(text, parentId, child);
-      // onSubmit(text, articleId, child);
-      dispatch(postCommentBaiViet({description: text, articleId: articleId, userId: currentUser?.userId}))
-      dispatch(getListCommentBaiViet(articleId))
-      handleCancel(cancellor, edit, setText);
+      onSubmit(text, parentId, child);
+      // setComment([
+      //   ...comments,
+      //   {
+      //     userId: currentUser?.userId,
+      //     comId: uuid(),
+      //     avatarUrl: currentUser?.avatarUrl,
+      //     fullName: currentUser?.name,
+      //     text: text
+      //   }
+      // ]);
+      // console.log("list CMT mới: ", comments);
+      // dispatch(getListCommentBaiViet(articleId))
+      handleCancel(cancellor, edit, setText);// đóng cmt lại
       setText("");
-      console.log(text, parentId, child);
+      // console.log(text, parentId, child);
 
     }
   };
@@ -177,6 +192,9 @@ export const ActionProvider = ({
     console.log("A -test");
   };
 
+  console.log("list mới :", comments);
+
+  
   return (
     <ActionContext.Provider
       value={{

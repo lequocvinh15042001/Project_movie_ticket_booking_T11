@@ -116,8 +116,9 @@ export const postCommentBaiViet = (data) => {
     }
 }
 
-export const getLikeCheck = (userId, articleId) => {
+export const getLikeCheck = ({userId, articleId}) => {
   return (dispatch) => {
+    console.log({userId, articleId});
     dispatch({
       type: GET_LIKECHECK_REQUEST
     })
