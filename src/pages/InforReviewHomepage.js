@@ -374,7 +374,7 @@ export default function InforReviewHomepage({ idReviewPost,
               <div className={classes.inputRoot} onClick={handleClickComment}>
                 <span className={classes.avatarReviewer}>
                   <img
-                    src={currentUser ? successInfoUser?.data?.image : FAKE_AVATAR}
+                    src={successInfoUser?.data?.image ? successInfoUser?.data?.image : FAKE_AVATAR}
                     alt="avatar"
                     className={classes.avatarImg}
                   />
@@ -474,66 +474,6 @@ export default function InforReviewHomepage({ idReviewPost,
               </Button>
             </div>
           </div>
-        {/* </DialogActions> */}
-
-        {/* <MuiDialogTitle disableTypography className={classes.rootcloseButton}>
-          <IconButton
-            aria-label="close"
-            className={classes.closeButton}
-            onClick={handleClose}
-          >
-            <CloseIcon />
-          </IconButton>
-        </MuiDialogTitle> */}
-
-        {/* <Grid container direction="column" justify="center" alignItems="center">
-          <span className={classes.pointPopup}>{dataComment.point * 2}</span>
-          <Rating
-            name="customStar"
-            size="large"
-            precision={0.5}
-            value={dataComment.point}
-            className={classes.starPopup}
-            emptyIcon={<StarBorderIcon fontSize="inherit" />}
-            onChange={(event, newValue) => {
-              setdataComment((data) => ({ ...data, point: newValue }));
-            }}
-          />
-        </Grid> */}
-        {/* <DialogContent className={classes.dialogContent}>
-          <TextField
-            className={classes.textField}
-            onChange={(event) => handletyping(event)}
-            fullWidth
-            value={dataComment.post}
-            variant="outlined"
-            label={
-              dataComment.post
-                ? ""
-                : "Nói lên suy nghĩ của bạn..."
-            }
-          />
-        </DialogContent>
-        <DialogActions className="justify-content-center flex-column px-4">
-          {warningtext && (
-            <DialogContentText className="text-danger">
-              Vui lòng gõ hơn 60 ký tự!
-            </DialogContentText>
-          )}
-          <Button
-            onClick={handlePostComment}
-            variant="contained"
-            className={classes.btnDang}
-          >
-            Đăng
-          </Button>
-        </DialogActions>
-
-        <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            Ẩn
-          </Button>
-        </DialogActions> */}
       </Dialog>
 
       <Dialog
@@ -584,65 +524,6 @@ export default function InforReviewHomepage({ idReviewPost,
           </Button>
         </DialogActions>
       </Dialog>
-      {/* <Dialog
-        open={openComment}
-        onClose={handleClose}
-        maxWidth="sm"
-        fullWidth
-        className={classes.dialog}
-      >
-        <MuiDialogTitle disableTypography className={classes.rootcloseButton}>
-          <IconButton
-            aria-label="close"
-            className={classes.closeButton}
-            onClick={handleClose}
-          >
-            <CloseIcon />
-          </IconButton>
-        </MuiDialogTitle>
-        <Grid container direction="column" justify="center" alignItems="center">
-          <span className={classes.pointPopup}>{dataComment.point * 2}</span>
-          <Rating
-            name="customStar"
-            size="large"
-            precision={0.5}
-            value={dataComment.point}
-            className={classes.starPopup}
-            emptyIcon={<StarBorderIcon fontSize="inherit" />}
-            onChange={(event, newValue) => {
-              setdataComment((data) => ({ ...data, point: newValue }));
-            }}
-          />
-        </Grid>
-        <DialogContent className={classes.dialogContent}>
-          <TextField
-            className={classes.textField}
-            onChange={(event) => handletyping(event)}
-            fullWidth
-            value={dataComment.post}
-            variant="outlined"
-            label={
-              dataComment.post
-                ? ""
-                : "Nói lên suy nghĩ của bạn..."
-            }
-          />
-        </DialogContent>
-        <DialogActions className="justify-content-center flex-column px-4">
-          {warningtext && (
-            <DialogContentText className="text-danger">
-              Vui lòng gõ hơn 60 ký tự!
-            </DialogContentText>
-          )}
-          <Button
-            onClick={handlePostComment}
-            variant="contained"
-            className={classes.btnDang}
-          >
-            Đăng
-          </Button>
-        </DialogActions>
-      </Dialog> */}
     </div>
     
     </CardActions>
