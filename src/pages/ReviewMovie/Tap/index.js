@@ -97,8 +97,8 @@ export default function CenteredTabs({
     idScrollTo: "",
   });
   const [dataComment, setdataComment] = useState({
-    avtId: currentUser?.username,
-    username: currentUser?.name,
+    avtId: currentUser?.data?.username,
+    username: currentUser?.data?.name,
     point: 2.5,
     post: "",
     likes: 0,
@@ -463,7 +463,7 @@ export default function CenteredTabs({
                       <ThumbUpIcon
                         style={{
                           color: userLikeThisComment.includes(
-                            currentUser?.email
+                            currentUser?.data?.email
                           )
                             ? "#fb4226"
                             : "#73757673",
