@@ -82,7 +82,7 @@ export const ActionProvider = ({
   const onSubmit = (text, parentId, child) => {
     if (text.length > 0) {
       // if (!parentId && !child) {
-      dispatch(postCommentBaiViet({description: text, articleId: articleId, userId: currentUser?.userId}))
+      dispatch(postCommentBaiViet({description: text, articleId: articleId, userId: currentUser?.data?.userId}))
       console.log("Thêm cmt mới:", text);
         setComment([
           ...comments,

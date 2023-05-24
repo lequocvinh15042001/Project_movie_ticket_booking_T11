@@ -4,7 +4,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 const currentUser = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user"))
   : null;
-const avtIdUser = currentUser ? currentUser?.avtIdUser : nanoid(10);
+const avtIdUser = currentUser ? currentUser?.data?.avtIdUser : nanoid(10);
 export { avtIdUser };
 // export const BASE_URL = "https://goldennew.azurewebsites.net/api";
 // export const BASE_URL = "http://localhost:8080/api";

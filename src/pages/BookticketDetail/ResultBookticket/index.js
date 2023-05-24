@@ -75,7 +75,7 @@ export default function SuccessBooking() {
             <tbody>
               <tr>
                 <td valign='top' >Tên:</td>
-                <td>{currentUser?.name}</td>
+                <td>{currentUser?.data?.name}</td>
               </tr>
               {/* <tr>
                 <td valign='top'>Phone:</td>
