@@ -17,7 +17,7 @@ const Comment = (props) => {
   const { commentList } = useSelector((state) => state.interactionReducer);
 
   const dispatch = useDispatch();
-  const [comment, setComment] = useState(data);
+  const [comment, setComment] = useState(commentList);
   const userId = successInfoUser?.data?.id;
   const avatarUrl = successInfoUser?.data?.image;
   const name = successInfoUser?.data?.name;

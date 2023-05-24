@@ -8,11 +8,11 @@ import CommentStructure from "./CommentStructure";
 
 const DisplayComments = ({ comments }) => {
   const actions = useContext(ActionContext);
-  console.log("sjhdbcvhdgfsbdjhb",comments);
+  // console.log("sjhdbcvhdgfsbdjhb",comments);
   // <InputField cancellor={i.comId} parentId={i.comId} />
   const ActionsReplies = (cancellor, parentId) => {
     let filter = actions.replies.filter((o) => o.id === cancellor);
-    console.log("ActionsReplies : ", cancellor, parentId, filter);
+    // console.log("ActionsReplies : ", cancellor, parentId, filter);
     if (filter.length !== 0) {
       // userInfo > fullName
       let value = "";
@@ -29,13 +29,13 @@ const DisplayComments = ({ comments }) => {
     }
   };
 
-  console.log("cmt:", comments);
+  // console.log("cmt:", comments);
   return (
     <div>
       {comments.map((i, index) => (
         <div key={i.id}>
           {actions.editArr.filter((id) => id === i.id).length !== 0 ? (
-            <InputField cancellor={i.id} value={i.text} edit />
+            <InputField cancellor={i.id} value={i.description} edit />
           ) : (
             <CommentStructure i={i} handleEdit={() => actions.handleAction} />
           )}
@@ -53,7 +53,7 @@ const DisplayComments = ({ comments }) => {
                   0 ? (
                     <InputField
                       cancellor={a.id}
-                      value={a.text}
+                      value={a.description}
                       edit
                       parentId={i.id}
                     />

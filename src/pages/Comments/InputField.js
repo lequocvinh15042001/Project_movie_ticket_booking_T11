@@ -28,7 +28,7 @@ const InputField = ({ cancellor, parentId, child, value, edit, main }) => {
 
   const actions = useContext(ActionContext);
 
-  console.log("actions", actions);
+  // console.log("actions", actions);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
