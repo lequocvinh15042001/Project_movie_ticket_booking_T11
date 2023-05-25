@@ -1,28 +1,16 @@
 
-import { Modal, Avatar, Button, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@material-ui/core';
+import { Button, CardActions, IconButton, Typography } from '@material-ui/core';
 import { Comment as CommentIcon, Share as ShareIcon, Favorite as FavoriteIcon } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLikeCheck, getListCommentBaiViet, getListLikeBaiViet, postCommentBaiViet, postLikeUnlikeBaiViet } from '../reducers/actions/Interaction';
-import SeeComment from "./SeeComment"
+import { postCommentBaiViet, postLikeUnlikeBaiViet } from '../reducers/actions/Interaction';
 import interactionApi from "../api/interactionApi"
 import { getInfoUser } from '../reducers/actions/UsersManagement';
-import { getIn } from 'formik';
-
-import { makeStyles } from "@material-ui/core/styles";
-import { Drawer } from "@material-ui/core";
-import { SidebarComment } from "../pages/SidebarComment";
-import Comment from './Comments/Comment';
-
-
-// import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import useStyles from './SeeCommentPost/style';
 import Box from "@material-ui/core/Box";
@@ -31,16 +19,12 @@ import Swal from 'sweetalert2';
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
 import Grid from "@material-ui/core/Grid";
-import Rating from "@material-ui/lab/Rating";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
 import TextField from "@material-ui/core/TextField";
-import { FAKE_AVATAR, UNKNOW_USER } from '../constants/config';
+import { FAKE_AVATAR } from '../constants/config';
 import CircularProgress from "@material-ui/core/CircularProgress";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import moment from "moment";
-import DeleteOrEdit from "./DeleteOrEdit"
-
 import "moment/locale/vi";
+import DeleteOrEdit from "./DeleteOrEdit"
 moment.locale("vi");
 
 function TabPanel(props) {
@@ -59,8 +43,7 @@ export default function InforReviewPost({ idReviewPost,
   onIncreaseQuantityComment,
   uniqueKey
   }) {
-  // const { likeList } = useSelector((state) => state.interactionReducer);
-  // const { commentList } = useSelector((state) => state.interactionReducer);
+
   const [commentList, setCommentList] = useState()
   const [likeList, setListLike] = useState()
   const [likeCheck, setLikeCheck] = useState(false)
@@ -70,7 +53,7 @@ export default function InforReviewPost({ idReviewPost,
   const { currentUser } = useSelector((state) => state.authReducer);
   const [soLike, setSoLike] = useState(0);
   const [soCmt, setSoCmt] = useState(0);
-  const [isLiked, setIsLiked] = useState(false);
+  // const [isLiked, setIsLiked] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(()=>{
@@ -111,23 +94,25 @@ export default function InforReviewPost({ idReviewPost,
   }, [idReviewPost]);
 
 
-  // console.log(currentUser);
+  console.log(likeCheck);
+  console.log(likeList);
 
   const handleLikeClick = () => {
-    if (likeCheck) {
+    if (likeCheck === true) {
       console.log("Unlike");
       dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser?.data?.id, articleId: idReviewPost }));
       // dispatch(getListLikeBaiViet(idReviewPost));
       interactionApi.getAllLikeBaiViet(idReviewPost)
         .then(result => {
         console.log("data danh sách like bài viết: ", result.data.data);
+        setSoLike(result.data.data.length - 1);
         setListLike(result.data.data)
+        setLikeCheck(false);
         })
         .catch(
           console.log("lỗi")
         )
-      setSoLike(likeList.length - 1);
-      setIsLiked(true);
+
     } else {
       console.log("Like");
       dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser?.data?.id, articleId: idReviewPost }));
@@ -135,40 +120,17 @@ export default function InforReviewPost({ idReviewPost,
       interactionApi.getAllLikeBaiViet(idReviewPost)
         .then(result => {
         console.log("data danh sách like bài viết: ", result.data.data);
+        setSoLike(result.data.data.length + 1);
         setListLike(result.data.data)
+        setLikeCheck(true);
         })
         .catch(
           console.log("lỗi")
         )
-      setSoLike(likeList.length + 1);
-      setIsLiked(false);
     }
   };
-  // useEffect(() => {
-  //   // Call your API to check if the user has liked the post
-  //   const checkUserLike = async () => {
-  //     try {
-  //       const response = await interactionApi.checkUserLikeOrUnlike(successInfoUser.data.id, idReviewPost);
-  //       // console.log(response);
-  //       setIsLiked(response.data.success); // Assuming the API returns { isLiked: true/false }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   checkUserLike();
-  // }, []);
-
-    // console.log(isLiked);
 
     const [open, setOpen] = useState(false);
-    const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-
     const handleCloseDialog = () => {
       setOpen(false);
     };
@@ -176,13 +138,9 @@ export default function InforReviewPost({ idReviewPost,
       loadingCommentPost,
       commentPost,
     } = useSelector((state) => state.interactionReducer);
-    // const { commentList } = useSelector((state) =>
-    //   selectCommentByMaPhimAndCommentTest(state, param.maPhim)
-    // );
+
     let location = useLocation();
     const history = useHistory();
-    const [valueTab, setValueTab] = useState(0);
-    const [croll, setCroll] = useState(0);
     const [openComment, setOpenComment] = useState(false);
     const [warningtext, setwarningtext] = useState(false);
     const [commentListDisplay, setCommentListDisplay] = useState({
@@ -213,9 +171,6 @@ export default function InforReviewPost({ idReviewPost,
   }, [commentList]);
 
   useEffect(() => {
-    // mỗi khi mount component, postComment, likeComment thành công thì call api lấy comment mới
-    // dispatch(getComment());
-    // dispatch(getListCommentBaiViet(idReviewPost));
     interactionApi.getAllCommentBaiViet(idReviewPost)
       .then(result => {
       // console.log("data danh sách comment bài viết nè: ", result.data.data);
@@ -230,9 +185,11 @@ export default function InforReviewPost({ idReviewPost,
     }
   }, [commentPost]);
 
+  console.log(commentList);
   useEffect(() => {
     // const comment = commentList?.slice(0, commentListDisplay.page);
-    const comment = commentList?.content?.slice(0,commentListDisplay.page);
+    // const comment = commentList?.content?.slice(0,commentListDisplay?.page);
+    const comment = commentList?.content?.slice(0, commentList?.totalElements);
     setCommentListDisplay((data) => ({ ...data, comment }));
   }, [commentList]);
 
@@ -266,22 +223,8 @@ export default function InforReviewPost({ idReviewPost,
         userId: successInfoUser?.data?.id
       }
     ))
-    // interactionApi.getAllCommentBaiViet(idReviewPost)
-    //   .then(result => {
-    //   console.log("data danh sách comment bài viết nè: ", result.data.data);
-    //   setCommentList(result.data.data)
-    //   })
-    //   .catch(
-    //     console.log("lỗi")
-    //   )
-    // dispatch(
-    //   postComment({
-    //     ...dataComment,
-    //     createdAt: currentISOString,
-    //     point: dataComment.point * 2,
-    //   })
-    // );
   };
+  
   const setopenMore = () => {
     let hideBtn = false;
     let addComment = commentList?.totalElements % 5;
@@ -305,29 +248,29 @@ export default function InforReviewPost({ idReviewPost,
     }));
   };
 
-  const handleLike = (id) => {
-    // if (loadingLikeComment) {
-    //   return;
-    // }  
-    if (!currentUser) {
-      isLogin();
-      return;
-    }
-    // tăng giảm số lượng like và add/remove email đã like
-    const commentUserLiked = commentList.find((item) => item.id === id);
-    if (commentUserLiked.userLikeThisComment.includes(currentUser.email)) {
-      // xóa user khỏi danh sách liked comment, trừ số lượng like
-      commentUserLiked.userLikeThisComment =
-        commentUserLiked.userLikeThisComment.filter((item) => {
-          return item !== currentUser.email;
-        });
-      commentUserLiked.likes = commentUserLiked.likes - 1;
-    } else {
-      commentUserLiked.userLikeThisComment.push(currentUser.email);
-      commentUserLiked.likes = commentUserLiked.likes + 1;
-    }
-    // dispatch(likeComment(id, commentUserLiked));
-  };
+  // const handleLike = (id) => {
+  //   // if (loadingLikeComment) {
+  //   //   return;
+  //   // }  
+  //   if (!currentUser) {
+  //     isLogin();
+  //     return;
+  //   }
+  //   // tăng giảm số lượng like và add/remove email đã like
+  //   const commentUserLiked = commentList.find((item) => item.id === id);
+  //   if (commentUserLiked.userLikeThisComment.includes(currentUser.email)) {
+  //     // xóa user khỏi danh sách liked comment, trừ số lượng like
+  //     commentUserLiked.userLikeThisComment =
+  //       commentUserLiked.userLikeThisComment.filter((item) => {
+  //         return item !== currentUser.email;
+  //       });
+  //     commentUserLiked.likes = commentUserLiked.likes - 1;
+  //   } else {
+  //     commentUserLiked.userLikeThisComment.push(currentUser.email);
+  //     commentUserLiked.likes = commentUserLiked.likes + 1;
+  //   }
+  //   // dispatch(likeComment(id, commentUserLiked));
+  // };
 
   const handletyping = (event) => {
     if (event.target.value.length >= 11) {
@@ -336,9 +279,11 @@ export default function InforReviewPost({ idReviewPost,
     }
     setdataComment((data) => ({ ...data, description: event.target.value }));
   };
+
   const handleClose = () => {
     setOpenComment(false);
   };
+
   const isLogin = () => {
     if (!currentUser) {
       // nếu chưa đăng nhập
@@ -356,6 +301,7 @@ export default function InforReviewPost({ idReviewPost,
       });
     }
   };
+
   const handleClickComment = () => {
     if (!currentUser) {
       handleCloseDialog();
@@ -371,7 +317,7 @@ export default function InforReviewPost({ idReviewPost,
       setSoLike(likeList.length);
       setSoCmt(commentList.totalElements);
     }
-  }, [likeList, commentList,soLike]);
+  }, [likeList, commentList, soLike, soCmt]);
 
 
   return (
@@ -486,12 +432,15 @@ export default function InforReviewPost({ idReviewPost,
                         className={classes.avatarImg}
                       />
                     </span>
+
                     <span className={classes.liveUser}>
                       <p className={classes.userName}>{item.name}</p>
                       <p className={classes.timePost}>
                         {moment(item.createdAt).fromNow()}
                       </p>
+
                     </span>
+
                   </div>
                   {/* <div className={classes.right}>
                     <p className="text-success">{item.point}</p>
@@ -501,8 +450,9 @@ export default function InforReviewPost({ idReviewPost,
                       size={isMobile ? "small" : "medium"}
                       readOnly
                     />
-              </div> */}
-                  <span className={classes.nutTuyChon}>
+                  </div> */}
+
+                    <span className={classes.nutTuyChon}>
                         <DeleteOrEdit />
                     </span>
                   <div className="clearfix"></div>
@@ -510,6 +460,7 @@ export default function InforReviewPost({ idReviewPost,
                 <div className="py-3 mb-3 border-bottom">
                   <p className="text-break">{item.description}</p>
                 </div>
+
 
                 {/* <span
                   className="d-inline-block"
