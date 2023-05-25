@@ -108,7 +108,7 @@ export default function SimpleTabs() {
                 </a>
               </div> */}
               {
-                eventList?.data?.slice(0,5).map((event, index) => {
+                eventList?.data?.content?.slice(0,5).map((event, index) => {
                   if(event?.status === "CREATE" && event?.status !== "DELETE"  && event?.type === "NEWS")
                   return(
                   <div className={classes.repons} key={index} style={{cursor: "pointer"}}>

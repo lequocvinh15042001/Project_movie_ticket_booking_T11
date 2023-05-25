@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, cloneElement } from "react";
 import "./NewsComponent.scss";
 import { NavLink,useHistory } from "react-router-dom";
 import { qLyPhimService } from "../../services/QuanLyPhimServices";
@@ -47,18 +47,20 @@ export default function NewsComponent() {
         console.log(err);
       });
   }, []);
-  // console.log("danhSachTinTuc: ", danhSachTinTuc);
   const history = useHistory();
   const handlerSeeMore =() =>{
     history.push("/review")
   }
+  // console.log("danhSachTinTuc: ", danhSachTinTuc?.data);
+
   var moment = require("moment");
   const renderTinTuc = () => {
     return danhSachTinTuc?.data?.reverse().map((tinTuc, index) => {
       if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE") {
+        const uniqueKey = `${tinTuc.id}_${index}`; 
         // if(tinTuc?.status === "APPROVE") {
       return (
-        <div className="news__items" key={index}>
+        <div className="news__items"  key={uniqueKey}>
           <div className="items__img">
             <img src={tinTuc?.mainImage} alt={tinTuc?.mainImage} />
           </div>
@@ -90,97 +92,70 @@ export default function NewsComponent() {
                 Ngày cập nhật{" "}{moment(tinTuc?.dayupload).format("hh:mm DD/MM/yyyy")}
               </span>
             </div>
-
-            {/* Hiển thị số lượng */}
-            {/* <div style={{display: "flex"}}>
-              <div className="items__text-likes">
-                <i className="fas fa-heart"></i> {tinTuc?.likes?.length}
-              </div>
-              <div className="items__text-comments">
-                <i className="fas fa-comment"></i> {tinTuc?.comments?.length}
-              </div>
-            </div> */}
-            {/* <div> */}
-            {/* <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites" style={{color: "white"}}>
-                  <FavoriteIcon />
-                  <Typography>100 {" "} lượt thích</Typography>
-                  </IconButton>
-                <IconButton aria-label="comment" style={{color: "white"}}>
-                  <CommentIcon />
-                  <Typography>20  {" "} lượt bình luận</Typography>
-                </IconButton>
-                <IconButton aria-label="share" style={{color: "white"}}>
-                  <ShareIcon />
-                  <Typography>10  {" "} lượt chia sẻ</Typography>
-                </IconButton>
-              </CardActions> */}
-              <InforReviewHomepage idReviewPost={tinTuc?.id}/>
-            {/* </div> */}
+            <div>
+              {/* {cloneElement(<InforReviewHomepage />, { idReviewPost: tinTuc.id })} */}
+              <InforReviewHomepage idReviewPost={tinTuc.id} uniqueKey={uniqueKey}/>
+            </div>
           </div>
-          {/* <div>
-            <LikeButton userId={successInfoUser?.data?.id} articleId={tinTuc?.id}/>
-          </div> */}
-
         </div>
       );
     }
     });
   };
   const classes = useStyles();
-  const renderTinTucHot = () => {
-    return danhSachTinTuc?.data?.reverse().map((tinTuc, index) => {
-      if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE") {
-        // if(tinTuc?.status === "APPROVE") {
-      return (
-        // <div className="news__items" key={index}>
-        //   <div className="items__img">
-        //     <img src={tinTuc.mainImage} alt={tinTuc.mainImage} />
-        //   </div>
-        //   <div className="items__text">
-        //     <h5 className="items__text-title">
-        //       <NavLink
-        //         className="items__text-link"
-        //         to={`/review/${tinTuc.id}`}
-        //       >
-        //         {tinTuc.title}
-        //       </NavLink>
-        //     </h5>
-        //   </div>
-        // </div>
-        <Card className={classes.root} key={index}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image={tinTuc.mainImage}
-              title={tinTuc.title}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
+  // const renderTinTucHot = () => {
+  //   return danhSachTinTuc?.data?.reverse().map((tinTuc, index) => {
+  //     if(tinTuc?.type === "REVIEWS" && tinTuc?.status === "APPROVE") {
+  //       // if(tinTuc?.status === "APPROVE") {
+  //     return (
+  //       // <div className="news__items" key={index}>
+  //       //   <div className="items__img">
+  //       //     <img src={tinTuc.mainImage} alt={tinTuc.mainImage} />
+  //       //   </div>
+  //       //   <div className="items__text">
+  //       //     <h5 className="items__text-title">
+  //       //       <NavLink
+  //       //         className="items__text-link"
+  //       //         to={`/review/${tinTuc.id}`}
+  //       //       >
+  //       //         {tinTuc.title}
+  //       //       </NavLink>
+  //       //     </h5>
+  //       //   </div>
+  //       // </div>
+  //       <Card className={classes.root} key={index}>
+  //         <CardActionArea>
+  //           <CardMedia
+  //             className={classes.media}
+  //             image={tinTuc.mainImage}
+  //             title={tinTuc.title}
+  //           />
+  //           <CardContent>
+  //             <Typography gutterBottom variant="h5" component="h2">
 
-                  <NavLink
-                className="items__text-link"  
-                  to={`/review/${tinTuc.id}`}
-                >
-                 {tinTuc.title}
-               </NavLink>
-                {/* {tinTuc.title} */}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          {/* <CardActions>
-            <Button size="small" color="primary">
-              Đọc thêm
-            </Button>
-            <Button size="small" color="primary">
-              Viết Review
-            </Button>
-          </CardActions> */}
-        </Card>
-      );
-      }
-    });
-  };
+  //                 <NavLink
+  //               className="items__text-link"  
+  //                 to={`/review/${tinTuc.id}`}
+  //               >
+  //                {tinTuc.title}
+  //              </NavLink>
+  //               {/* {tinTuc.title} */}
+  //             </Typography>
+  //           </CardContent>
+  //         </CardActionArea>
+  //         {/* <CardActions>
+  //           <Button size="small" color="primary">
+  //             Đọc thêm
+  //           </Button>
+  //           <Button size="small" color="primary">
+  //             Viết Review
+  //           </Button>
+  //         </CardActions> */}
+  //       </Card>
+  //     );
+  //     }
+  //   });
+  // };
   if (loading) {
     return <SpinnerLoading />;
   } else {

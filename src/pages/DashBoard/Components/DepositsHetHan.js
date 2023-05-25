@@ -77,11 +77,11 @@ export default function Deposits() {
         Từ 01/12/2022 - 01/12/2023
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
-        Số GD không thành công: <span style={{color:"red"}}>{data2?.totalTransaction}{" "}lần</span>
+        GD không thành công: <span style={{color:"red"}}>{data2?.totalTransaction}{" "}lần</span>
       </Typography>
 
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
-        Trong số ngày giao dịch: <span style={{color:"red"}}>{data2?.dayTransactionReports?.length}{" "}ngày</span>
+        Số ngày giao dịch: <span style={{color:"red"}}>{data2?.dayTransactionReports?.length}{" "}ngày</span>
       </Typography>
 
       <Chart

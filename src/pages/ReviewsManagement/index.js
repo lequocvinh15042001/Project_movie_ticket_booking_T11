@@ -107,7 +107,7 @@ export default function MoviesManagement() {
   }, []);
   useEffect(() => {
     if (reviewList) {
-      let newReviewListDisplay = reviewList?.data?.map((review) => ({
+      let newReviewListDisplay = reviewList?.data?.content?.map((review) => ({
         ...review,
         hanhDong: "",
         id: review.id,
@@ -123,7 +123,7 @@ export default function MoviesManagement() {
     }
  
   }, [reviewList]);
-
+console.log(reviewList);
   const handleReload = () => {
     dispatch(getReviewsList());
   }

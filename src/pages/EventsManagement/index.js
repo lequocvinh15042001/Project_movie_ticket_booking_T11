@@ -95,7 +95,7 @@ export default function MoviesManagement() {
   }, []);
   useEffect(() => {
     if (eventList) {
-      let newEventListDisplay = eventList?.data?.map((event) => ({
+      let newEventListDisplay = eventList?.data?.content?.map((event) => ({
         ...event,
         hanhDong: "",
         id: event.id,
