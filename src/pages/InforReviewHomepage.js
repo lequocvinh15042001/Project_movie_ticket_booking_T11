@@ -94,10 +94,15 @@ export default function InforReviewHomepage({ idReviewPost,
   }, [idReviewPost]);
 
 
-  console.log(likeCheck);
-  console.log(likeList);
+  // console.log(likeCheck);
+  // console.log(likeList);
+  // console.log(currentUser);
 
   const handleLikeClick = () => {
+    if (currentUser === null) {
+      isLogin();
+      return;
+    }
     if (likeCheck === true) {
       console.log("Unlike");
       dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser?.data?.id, articleId: idReviewPost }));
