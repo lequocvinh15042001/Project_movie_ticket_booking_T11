@@ -111,6 +111,10 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 10,
     display: "inline-block",
   },
+  nutTuyChon: {
+    position: "absolute",
+    right: 0,
+  },
   userName: {
     color: "#000",
     fontWeight: 500,

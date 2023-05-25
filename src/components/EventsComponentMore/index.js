@@ -113,7 +113,7 @@ export default function SimpleTabs() {
                 </a>
               </div> */}
               {
-                eventList?.data?.map((event, index) => {
+                eventList?.data?.content?.map((event, index) => {
                   return(
                   <div className={classes.repons} key={index}>
                     <a href="https://tix.vn/review/7946-review-dinh-thu-oan-khuat-ghost-of-war" className={classes.news}>

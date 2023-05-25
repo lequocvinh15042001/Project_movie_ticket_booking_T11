@@ -2,10 +2,20 @@ import axiosClient from "./axiosClient";
 
 const reviewsApi = {
 
-  getListReview: () => {
-    const path = "/article/getAll";
+  // getListReview: () => {
+  //   const path = "/article/getAll";
+  //   return axiosClient.get(path);
+  // },
+
+  getListReview:() =>{
+    const path= `/article/getAllPaging?page=0&size=20&articleType=REVIEWS`;
     return axiosClient.get(path);
   },
+
+  // getListReviewByAdminStaff:() =>{
+  //   const path= `/article/getAllPaging?page=0&size=20&articleType=REVIEWS`;
+  //   return axiosClient.get(path);
+  // },
 
   getListReviewByUser: (username) => {
     const path = `/article/getAll?username=${username}`;

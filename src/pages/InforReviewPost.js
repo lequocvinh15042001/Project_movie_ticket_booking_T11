@@ -1,84 +1,3 @@
-// import { Modal, Avatar, Button, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@material-ui/core';
-// import { Comment as CommentIcon, Share as ShareIcon, Favorite as FavoriteIcon } from '@material-ui/icons';
-// import { useEffect, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getListCommentBaiViet, getListLikeBaiViet } from '../reducers/actions/Interaction';
-// import SeeComment from "./SeeComment"
-
-// export default function InforReviewPost({idReviewPost}) {
-
-//     const {likeList} = useSelector( (state) => state.interactionReducer)
-//     const {commentList} = useSelector( (state) => state.interactionReducer)
-//     const [selectedPost, setSelectedPost] = useState(null);
-
-//     const [soLike, setSoLike] = useState(likeList?.length);
-//     const [soCmt, setSoCmt] = useState(commentList?.number);
-
-//     const dispatch = useDispatch();
-//     console.log(commentList);
-
-//     // useEffect(() => {
-//     //     dispatch(getListLikeBaiViet(idReviewPost))
-//     //     dispatch(getListCommentBaiViet(idReviewPost))
-//     //     if(likeList && commentList){
-//     //         setSoLike(likeList.length)
-//     //         setSoCmt(commentList.number)
-//     //     }
-//     // },[])
-
-//     useEffect(() => {
-//         dispatch(getListLikeBaiViet(idReviewPost))
-//         dispatch(getListCommentBaiViet(idReviewPost))
-//       }, [idReviewPost]);
-      
-//     useEffect(() => {
-//         if (likeList && commentList) {
-//             setSoLike(likeList.length)
-//             setSoCmt(commentList.number)
-//         }
-//     }, [likeList, commentList]);
-
-//     const [open, setOpen] = useState(false);
-//     const [scroll, setScroll] = useState('paper');
-
-//     const handleClickOpen = (tinTuc) => {
-//     setSelectedPost(tinTuc);
-//     setOpen(true);
-//     };
-
-
-//     const handleClose = () => {
-//         setOpen(false);
-//     };
-
-//     console.log(soLike);
-//     console.log(soCmt);
-
-//     return(
-//     <CardActions disableSpacing>
-//         <IconButton aria-label="add to favorites">
-//         <FavoriteIcon />
-//         <Typography>{soLike}</Typography>
-//         </IconButton>
-//         <IconButton aria-label="comment">
-//         <CommentIcon onClick={() => handleClickOpen()}  />
-//         <Typography>{soCmt}</Typography>
-//         </IconButton>
-//         {/* <IconButton aria-label="share">
-//         <ShareIcon />
-//         <Typography>10</Typography>
-//         </IconButton> */}
-//         <SeeComment
-//             open={open}
-//             handleClose={handleClose}
-//             scroll={scroll}
-//             title={selectedPost?.title}
-//             description={selectedPost?.description}
-//         />
-//     </CardActions>
-//     );
-// }
-
 
 import { Modal, Avatar, Button, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@material-ui/core';
 import { Comment as CommentIcon, Share as ShareIcon, Favorite as FavoriteIcon } from '@material-ui/icons';
@@ -119,6 +38,8 @@ import { FAKE_AVATAR, UNKNOW_USER } from '../constants/config';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import moment from "moment";
+import DeleteOrEdit from "./DeleteOrEdit"
+
 import "moment/locale/vi";
 moment.locale("vi");
 
@@ -135,48 +56,92 @@ export default function InforReviewPost({ idReviewPost,
   data,
   onClickBtnMuave,
   isMobile,
-  onIncreaseQuantityComment, }) {
-  const { likeList } = useSelector((state) => state.interactionReducer);
-  const { commentList } = useSelector((state) => state.interactionReducer);
+  onIncreaseQuantityComment,
+  uniqueKey
+  }) {
+  // const { likeList } = useSelector((state) => state.interactionReducer);
+  // const { commentList } = useSelector((state) => state.interactionReducer);
+  const [commentList, setCommentList] = useState()
+  const [likeList, setListLike] = useState()
+  const [likeCheck, setLikeCheck] = useState(false)
   const { successInfoUser, loadingInfoUser } = useSelector(
     (state) => state.usersManagementReducer
   );
-  const {likeCheck, loadingCheck} = useSelector((state) => state.interactionReducer);
   const { currentUser } = useSelector((state) => state.authReducer);
   const [soLike, setSoLike] = useState(0);
   const [soCmt, setSoCmt] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useEffect(()=>{
     dispatch(getInfoUser)
-    dispatch(getListLikeBaiViet(idReviewPost));
-    dispatch(getListCommentBaiViet(idReviewPost));
-    dispatch(getLikeCheck({ userId: successInfoUser?.data?.id, articleId: idReviewPost }))
+  },[currentUser])
+  
+  useEffect(()=>{
+    interactionApi.getAllLikeBaiViet(idReviewPost)
+    .then(result => {
+     console.log("data danh sách like bài viết: ", result.data.data);
+     setListLike(result.data.data)
+    })
+    .catch(
+      console.log("lỗi")
+    )
+  },[soLike])
+
+  useEffect(()=>{
+    interactionApi.getAllCommentBaiViet(idReviewPost)
+        .then(result => {
+        //  console.log("data danh sách comment bài viết nè: ", result.data.data);
+         setCommentList(result.data.data)
+        })
+        .catch(
+          console.log("lỗi")
+    )
+  },[soCmt])
+
+  useEffect(() => {
+    interactionApi.checkUserLikeOrUnlike(currentUser?.data?.id, idReviewPost)
+      .then(result => {
+       console.log("Like check: ", result.data);
+       setLikeCheck(result.data.success)
+      })
+      .catch(
+        console.log("lỗi")
+      )
   }, [idReviewPost]);
 
-  useEffect(() => {
-    if (likeList && commentList) {
-      setSoLike(likeList.length);
-      setSoCmt(commentList.totalElements);
-    }
-  }, [likeList, commentList,soLike]);
-  console.log(currentUser);
+
+  // console.log(currentUser);
 
   const handleLikeClick = () => {
-    console.log(likeCheck?.success);
-    if (likeCheck?.success) {
+    if (likeCheck) {
       console.log("Unlike");
       dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser?.data?.id, articleId: idReviewPost }));
-      dispatch(getListLikeBaiViet(idReviewPost));
-      setSoLike(likeList.length);
-      setIsLiked(likeCheck.success);
+      // dispatch(getListLikeBaiViet(idReviewPost));
+      interactionApi.getAllLikeBaiViet(idReviewPost)
+        .then(result => {
+        console.log("data danh sách like bài viết: ", result.data.data);
+        setListLike(result.data.data)
+        })
+        .catch(
+          console.log("lỗi")
+        )
+      setSoLike(likeList.length - 1);
+      setIsLiked(true);
     } else {
       console.log("Like");
       dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser?.data?.id, articleId: idReviewPost }));
-      dispatch(getListLikeBaiViet(idReviewPost));
-      setSoLike(likeList.length);
-      setIsLiked(likeCheck.success);
+      // dispatch(getListLikeBaiViet(idReviewPost));
+      interactionApi.getAllLikeBaiViet(idReviewPost)
+        .then(result => {
+        console.log("data danh sách like bài viết: ", result.data.data);
+        setListLike(result.data.data)
+        })
+        .catch(
+          console.log("lỗi")
+        )
+      setSoLike(likeList.length + 1);
+      setIsLiked(false);
     }
   };
   // useEffect(() => {
@@ -208,11 +173,9 @@ export default function InforReviewPost({ idReviewPost,
       setOpen(false);
     };
     const {
-      loadingPostComment,
-      postCommentObj,
-      loadingLikeComment,
-      likeCommentObj,
-    } = useSelector((state) => state.movieDetailReducer);
+      loadingCommentPost,
+      commentPost,
+    } = useSelector((state) => state.interactionReducer);
     // const { commentList } = useSelector((state) =>
     //   selectCommentByMaPhimAndCommentTest(state, param.maPhim)
     // );
@@ -229,8 +192,8 @@ export default function InforReviewPost({ idReviewPost,
       idScrollTo: "",
     });
     const [dataComment, setdataComment] = useState({
-      avtId: currentUser?.data?.username,
-      username: currentUser?.data?.name,
+      avtId: currentUser?.username,
+      username: currentUser?.name,
       // point: 2.5,
       description: "",
       // likes: 0,
@@ -252,16 +215,24 @@ export default function InforReviewPost({ idReviewPost,
   useEffect(() => {
     // mỗi khi mount component, postComment, likeComment thành công thì call api lấy comment mới
     // dispatch(getComment());
-    dispatch(getListCommentBaiViet(idReviewPost));
-    if (postCommentObj) {
+    // dispatch(getListCommentBaiViet(idReviewPost));
+    interactionApi.getAllCommentBaiViet(idReviewPost)
+      .then(result => {
+      // console.log("data danh sách comment bài viết nè: ", result.data.data);
+      setCommentList(result.data.data)
+      })
+      .catch(
+        console.log("lỗi")
+      )
+    if (commentPost) {
       // reset text comment
       setdataComment((data) => ({ ...data, description: "" }));
     }
-  }, [postCommentObj, likeCommentObj]);
+  }, [commentPost]);
 
   useEffect(() => {
     // const comment = commentList?.slice(0, commentListDisplay.page);
-    const comment = commentList?.content?.slice(0,5);
+    const comment = commentList?.content?.slice(0,commentListDisplay.page);
     setCommentListDisplay((data) => ({ ...data, comment }));
   }, [commentList]);
 
@@ -276,7 +247,7 @@ export default function InforReviewPost({ idReviewPost,
   }, [commentListDisplay.idScrollTo]);
 
   const handlePostComment = () => {
-    if (loadingPostComment) {
+    if (loadingCommentPost) {
       return;
     }
     if (dataComment.description.length < 11) {
@@ -295,6 +266,14 @@ export default function InforReviewPost({ idReviewPost,
         userId: successInfoUser?.data?.id
       }
     ))
+    // interactionApi.getAllCommentBaiViet(idReviewPost)
+    //   .then(result => {
+    //   console.log("data danh sách comment bài viết nè: ", result.data.data);
+    //   setCommentList(result.data.data)
+    //   })
+    //   .catch(
+    //     console.log("lỗi")
+    //   )
     // dispatch(
     //   postComment({
     //     ...dataComment,
@@ -303,20 +282,19 @@ export default function InforReviewPost({ idReviewPost,
     //   })
     // );
   };
-
   const setopenMore = () => {
     let hideBtn = false;
-    let addComment = commentList?.content?.length % 5;
-    if (commentList?.content?.length % 5 === 0) {
+    let addComment = commentList?.totalElements % 5;
+    if (commentList?.totalElements % 5 === 0) {
       addComment = 5;
     }
-    if (commentListDisplay.page + addComment === commentList?.content?.length) {
+    if (commentListDisplay.page + addComment === commentList?.totalElements) {
       hideBtn = true;
     }
     const idScrollTo = `idComment${
-      commentList?.content[commentListDisplay.page].createdAt
+      commentList?.content[commentListDisplay?.page]?.createdAt
     }`;
-    const page = commentListDisplay.page + 5;
+    const page = commentListDisplay?.page + 5;
     const comment = commentList?.content?.slice(0, page);
     setCommentListDisplay((data) => ({
       ...data,
@@ -328,9 +306,9 @@ export default function InforReviewPost({ idReviewPost,
   };
 
   const handleLike = (id) => {
-    if (loadingLikeComment) {
-      return;
-    }
+    // if (loadingLikeComment) {
+    //   return;
+    // }  
     if (!currentUser) {
       isLogin();
       return;
@@ -365,7 +343,7 @@ export default function InforReviewPost({ idReviewPost,
     if (!currentUser) {
       // nếu chưa đăng nhập
       Swal.fire({
-        title: "You need to login!",
+        title: "Bạn cần phải đăng nhập!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -380,16 +358,25 @@ export default function InforReviewPost({ idReviewPost,
   };
   const handleClickComment = () => {
     if (!currentUser) {
+      handleCloseDialog();
       isLogin();
       return;
     }
     setOpenComment(true);
     setwarningtext(false);
   };
-  console.log(commentListDisplay);
+
+  useEffect(() => {
+    if (likeList && commentList) {
+      setSoLike(likeList.length);
+      setSoCmt(commentList.totalElements);
+    }
+  }, [likeList, commentList,soLike]);
+
+
   return (
-    <CardActions disableSpacing>
-      <IconButton aria-label="add to favorites" style={{ color: likeCheck?.success === true ? "red" : "grey" }} onClick={handleLikeClick}>
+    <CardActions disableSpacing >
+      <IconButton aria-label="add to favorites" style={{ color: likeCheck === true ? "red" : "grey" }} onClick={handleLikeClick}>
         <FavoriteIcon />
         <Typography>{soLike}</Typography>
       </IconButton>
@@ -432,6 +419,7 @@ export default function InforReviewPost({ idReviewPost,
       </Button> */}
       <Dialog
         // fullScreen={fullScreen}
+
         fullWidth
         open={open}
         onClose={handleCloseDialog}
@@ -477,15 +465,16 @@ export default function InforReviewPost({ idReviewPost,
             </div>
             <div
               className="text-center mb-2 text-white"
-              hidden={!loadingPostComment && !loadingLikeComment}
+              hidden={!loadingCommentPost}
             >
               <CircularProgress size={20} color="inherit" />
             </div>
-            {commentListDisplay?.comment?.map((item) => (
+            {commentListDisplay?.comment?.map((item, index) => (
               <div
-                key={`${item.createdAt}`}
+                // key={`${item.id}`}
+                key={index}
                 className={classes.itemDis}
-                id={`idComment${item.createdAt}`}
+                id={`idComment${item.id}`}
               >
                 <div className={classes.infoUser}>
                   <div className={classes.left}>
@@ -512,7 +501,10 @@ export default function InforReviewPost({ idReviewPost,
                       size={isMobile ? "small" : "medium"}
                       readOnly
                     />
-                  </div> */}
+              </div> */}
+                  <span className={classes.nutTuyChon}>
+                        <DeleteOrEdit />
+                    </span>
                   <div className="clearfix"></div>
                 </div>
                 <div className="py-3 mb-3 border-bottom">
@@ -608,5 +600,6 @@ export default function InforReviewPost({ idReviewPost,
     </div>
     
     </CardActions>
+
   );
 }
