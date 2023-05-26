@@ -27,6 +27,11 @@ const interactionApi = {
     return axiosClient.delete(path);
   },
 
+  putEditComment: (data) => {
+    const path = `/interaction/v1/comment/update`;
+    return axiosClient.put(path, data);
+  },
+
   postThemComment: (data) => {
     const path = `/interaction/v1/comment/add`;
     return axiosClient.post(path, data);
