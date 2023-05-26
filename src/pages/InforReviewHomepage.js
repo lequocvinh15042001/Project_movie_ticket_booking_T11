@@ -212,7 +212,7 @@ export default function InforReviewHomepage({ idReviewPost,
     if (loadingCommentPost) {
       return;
     }
-    if (dataComment.description.length < 11) {
+    if (dataComment.description.length < 1) {
       // nếu comment quá ngắn
       setwarningtext(true);
       return;
@@ -459,7 +459,9 @@ export default function InforReviewHomepage({ idReviewPost,
                   {(
                     currentUser && successInfoUser?.data?.id == item?.userId ?                   
                       <span className={classes.nutTuyChon}>
-                        <DeleteOrEdit id={item.id} setCommentList={setCommentList} idReviewPost={idReviewPost}/>
+                        <DeleteOrEdit id={item.id} setCommentList={setCommentList} idReviewPost={idReviewPost} description={item?.description}
+                        onIncreaseQuantityComment={onIncreaseQuantityComment} setdataComment={setdataComment} dataComment={item?.description}
+                        />
                       </span> : null
                       
                   )}
@@ -545,7 +547,7 @@ export default function InforReviewHomepage({ idReviewPost,
         <DialogActions className="justify-content-center flex-column px-4">
           {warningtext && (
             <DialogContentText className="text-danger">
-              Vui lòng gõ hơn 10 ký tự!
+              Vui lòng gõ ký tự!
             </DialogContentText>
           )}
           <Button
