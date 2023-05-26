@@ -14,6 +14,8 @@ import slugify from "slugify";
 // import DialogActions from '@mui/material/DialogActions';
 // import Fab from "@material-ui/core/Fab";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import RefreshButton from "../../utilities/RefreshButton"
+
 
 import { useStyles, DialogContent, DialogTitle } from "./styles";
 // import {
@@ -433,6 +435,11 @@ export default function BillsManagement() {
     setOpen(false);
   };
 
+
+  const handleReload = () => {
+    dispatch(getBillsTTTaiQuay());
+  }
+
   // const handleAddMovie = () => {
   //   const emtySelectedBill = {
   //     createdTime:"",
@@ -655,6 +662,9 @@ export default function BillsManagement() {
                 onChange={(evt) => handleInputSearchChange(evt.target.value)}
               />
             </div>
+          </div>
+          <div className={`col-12 col-md-2 ${classes.itemCtro}`} onClick={handleReload}>
+            <RefreshButton />
           </div>
         </div>
       </div>
