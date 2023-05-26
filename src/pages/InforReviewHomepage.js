@@ -190,7 +190,7 @@ export default function InforReviewHomepage({ idReviewPost,
     }
   }, [commentPost]);
 
-  console.log(commentList);
+  console.log(commentListDisplay);
   useEffect(() => {
     // const comment = commentList?.slice(0, commentListDisplay.page);
     // const comment = commentList?.content?.slice(0,commentListDisplay?.page);
@@ -456,10 +456,14 @@ export default function InforReviewHomepage({ idReviewPost,
                       readOnly
                     />
                   </div> */}
+                  {(
+                    currentUser && successInfoUser?.data?.id == item?.userId ?                   
+                      <span className={classes.nutTuyChon}>
+                        <DeleteOrEdit id={item.id} setCommentList={setCommentList} idReviewPost={idReviewPost}/>
+                      </span> : null
+                      
+                  )}
 
-                    <span className={classes.nutTuyChon}>
-                        <DeleteOrEdit />
-                    </span>
                   <div className="clearfix"></div>
                 </div>
                 <div className="py-3 mb-3 border-bottom">

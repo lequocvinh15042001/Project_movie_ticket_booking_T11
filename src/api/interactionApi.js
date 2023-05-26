@@ -22,6 +22,11 @@ const interactionApi = {
     return axiosClient.post(path, data);
   },
 
+  putDeleteComment: (id) => {
+    const path = `/interaction/v1/comment/${id}`;
+    return axiosClient.delete(path);
+  },
+
   postThemComment: (data) => {
     const path = `/interaction/v1/comment/add`;
     return axiosClient.post(path, data);
