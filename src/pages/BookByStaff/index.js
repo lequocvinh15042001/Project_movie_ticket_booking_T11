@@ -313,7 +313,7 @@ export default function BookByStaff() {
     },
     {
       field: "movieName",
-      headerName: "Movie Name",
+      headerName: "Phim",
       width: 250,
       headerAlign: "center",
       align: "center",
@@ -321,7 +321,7 @@ export default function BookByStaff() {
     },
     {
       field: "smallImageURl",
-      headerName: "Image",
+      headerName: "Hình ảnh",
       width: 200,
       headerAlign: "center",
       align: "center",
@@ -339,7 +339,7 @@ export default function BookByStaff() {
     // },
     {
       field: "startDate",
-      headerName: "Start Date",
+      headerName: "Ngày Chiếu",
       width: 160,
       type: "date",
       headerAlign: "center",
@@ -349,7 +349,7 @@ export default function BookByStaff() {
     },
     {
       field: "startTime",
-      headerName: "Start Time",
+      headerName: "Giờ chiếu",
       width: 120,
       headerAlign: "center",
       align: "left",
@@ -358,7 +358,7 @@ export default function BookByStaff() {
     },
     {
       field: "price",
-      headerName: "Price",
+      headerName: "Giá vé",
       width: 110,
       headerAlign: "center",
       align: "left",
@@ -368,7 +368,7 @@ export default function BookByStaff() {
 
     {
       field: "time",
-      headerName: "Duration(mins)",
+      headerName: "(m)",
       width: 110,
       headerAlign: "center",
       align: "left",
@@ -378,7 +378,7 @@ export default function BookByStaff() {
 
     {
       field: "nameRoom",
-      headerName: "Room",
+      headerName: "Phòng",
       width: 110,
       headerAlign: "center",
       align: "left",
@@ -388,7 +388,7 @@ export default function BookByStaff() {
 
     {
       field: "totalArea",
-      headerName: "totalArea",
+      headerName: "Số ghế",
       width: 110,
       headerAlign: "center",
       align: "left",

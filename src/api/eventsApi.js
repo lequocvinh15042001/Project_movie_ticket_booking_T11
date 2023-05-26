@@ -7,6 +7,11 @@ const eventsApi = {
     return axiosClient.get(path);
   },
 
+  getListEventManagment: () => {
+    const path = "/article/getAllPaging?page=0&size=40&articleType=NEWS";
+    return axiosClient.get(path);
+  },
+
   getDetailEvent: (id) => {
     const path = `/article/getDetail?id=${id}`;
     return axiosClient.get(path);

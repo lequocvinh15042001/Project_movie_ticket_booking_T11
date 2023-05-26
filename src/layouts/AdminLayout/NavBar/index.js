@@ -50,11 +50,6 @@ const items = [
     title: 'Quản lý Review'
   },
   {
-    href: '/admin/category',
-    icon: PostAddIcon,
-    title: 'Quản lý Category'
-  }, 
-  {
     href: '/admin/events',
     icon: PostAddIcon,
     title: 'Quản lý sự kiện'
@@ -102,7 +97,7 @@ export default function NavBar({ onMobileClose, openMobile }) {
   const [userAdmin, setUserAdmin]= useState();
   const { currentUser } = useSelector((state) => state.authReducer);
 
-  console.log(userAdmin);
+  // console.log(userAdmin);
 
   useEffect(() => {
     dispatch({

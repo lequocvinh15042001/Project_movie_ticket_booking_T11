@@ -83,7 +83,7 @@ export default function SimpleTabs() {
           <TabPanel value={value} index={0}>
             <div className="row">
               {
-                eventList?.data?.map((event, index) => {
+                eventList?.data?.content?.map((event, index) => {
                   if(event?.status === "CREATE" && event?.status !== "DELETE"  && event?.type === "NEWS")
                   return(
                   // if(event) return(

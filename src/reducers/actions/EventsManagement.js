@@ -6,7 +6,7 @@ export const getEventsList = () => {
     dispatch({
       type: GET_EVENT_LIST_REQUEST
     })
-    eventsApi.getListEvent()
+    eventsApi.getListEventManagment()
       .then(result => {
         console.log(result.data);
         dispatch({

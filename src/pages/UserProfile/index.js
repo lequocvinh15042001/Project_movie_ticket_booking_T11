@@ -577,7 +577,7 @@ export default function Index({placeholder}) {
                   root: classes.tabButton,
                   selected: classes.tabSelected,
                 }}
-                label="Lịch sử đặc vé"
+                label="Lịch sử đặt vé"
               />
               <Tab
                 disableRipple
