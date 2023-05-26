@@ -13,7 +13,10 @@ import {GET_LISTLIKE_REQUEST,
   POST_COMMENT_FAIL,
   GET_LIKECHECK_REQUEST,
   GET_LIKECHECK_SUCCESS,
-  GET_LIKECHECK_FAIL
+  GET_LIKECHECK_FAIL,
+  POST_DELETE_REQUEST,
+  POST_DELETE_SUCCESS,
+  POST_DELETE_FAIL
 
     } from "../../reducers/constants/Interaction"
 
@@ -89,6 +92,31 @@ export const postLikeUnlikeBaiViet = (data) => {
             }
         )
     }
+}
+
+export const putDeleteComment = (id) => {
+  return (dispatch) => {
+    console.log(id);
+      dispatch({
+      type: POST_DELETE_REQUEST
+      })
+      interactionApi.putDeleteComment(id)
+      .then(result => {
+          console.log("Delete comment: ", result.data);
+          dispatch({
+          type: POST_DELETE_SUCCESS,
+          payload: { data: result.data }
+          })
+      })
+      .catch(
+          error => {
+          dispatch({
+              type: POST_DELETE_FAIL,
+              payload: { error: error.response?.data ? error.response.data : error.message, }
+          })
+          }
+      )
+  }
 }
 
 

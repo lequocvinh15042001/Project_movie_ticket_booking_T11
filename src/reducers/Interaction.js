@@ -12,7 +12,10 @@ import {GET_LISTLIKE_REQUEST,
   POST_COMMENT_FAIL,
   GET_LIKECHECK_REQUEST,
   GET_LIKECHECK_SUCCESS,
-  GET_LIKECHECK_FAIL
+  GET_LIKECHECK_FAIL,
+  POST_DELETE_REQUEST,
+  POST_DELETE_SUCCESS,
+  POST_DELETE_FAIL
 
 } from "../reducers/constants/Interaction"
   
@@ -36,6 +39,10 @@ import {GET_LISTLIKE_REQUEST,
     likeCheck:  null,
     loadingCheck: false,
     errorCheck: null,
+
+    postDelete:  null,
+    loadingDelete: false,
+    errorDelete: null,
 
   }
   
@@ -128,6 +135,24 @@ import {GET_LISTLIKE_REQUEST,
           ...state,
           errorCheck: action.payload.error,
           loadingCheck: false,
+        };
+      }
+
+      case POST_DELETE_REQUEST: {
+        return { ...state, loadingDelete: true, errorDelete: null };
+      }
+      case POST_DELETE_SUCCESS: {
+        return {
+          ...state,
+          postDelete: action.payload.data,
+          loadingDelete: false
+        };
+      }
+      case POST_DELETE_FAIL: {
+        return {
+          ...state,
+          errorDelete: action.payload.error,
+          loadingDelete: false,
         };
       }
   
