@@ -190,7 +190,7 @@ export default function InforReviewDetail({ idReviewPost,
     }
   }, [commentPost]);
 
-  console.log(commentListDisplay);
+  // console.log(commentListDisplay);
   useEffect(() => {
     // const comment = commentList?.slice(0, commentListDisplay.page);
     // const comment = commentList?.content?.slice(0,commentListDisplay?.page);
