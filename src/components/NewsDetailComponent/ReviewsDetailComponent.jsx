@@ -7,6 +7,7 @@ import "./ReviewsDetailComponent.scss";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import eventsApi from "../../api/eventsApi";
 import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
+import InforReviewDetail from "../../pages/InforReviewDetail.js";
 
 export default function ReviewsDetailComponent(props) {
   console.log(props.tinTuc);
@@ -116,13 +117,14 @@ export default function ReviewsDetailComponent(props) {
           </div>
           <div className="title--social">
             <div className="social--item mr-2">
-              <ThumbUpAltIcon style={{ marginRight: "5px" }} />
-              <span>{tinTuc?.likes}</span>
+              {/* <ThumbUpAltIcon style={{ marginRight: "5px" }} />
+              <span>{tinTuc?.likes}</span> */}
+                <InforReviewDetail idReviewPost={tinTuc?.data?.id}/>
             </div>
-            <div className="social--item">
+            {/* <div className="social--item">
               <ShareIcon style={{ marginRight: "5px" }} />
               <span>{tinTuc?.shares}</span>
-            </div>
+            </div> */}
           </div>
         </div>
         <div dangerouslySetInnerHTML={{__html:tinTuc?.data?.description}} />
@@ -140,12 +142,9 @@ export default function ReviewsDetailComponent(props) {
         <div className="news__form--source">Nguồn: Reviewer</div>
         <div className="news__form--footer">
           <div className="news__form--button row">
-            <div className="button--content col-4">
-              <button className="button--item fb">
-                <i className="fab fa-facebook-f mr-2"></i>Chia sẻ
-              </button>
-            </div>
-            <div className="button--content col-4">
+            {/* <div className="button--content col-4">
+            </div> */}
+            {/* <div className="button--content col-4">
               <button className="button--item tw">
                 <i className="fab fa-twitter mr-2"></i>TWEET
               </button>
@@ -154,7 +153,7 @@ export default function ReviewsDetailComponent(props) {
               <button className="button--item email">
                 <i className="fa fa-envelope mr-2"></i>EMAIL
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
 
