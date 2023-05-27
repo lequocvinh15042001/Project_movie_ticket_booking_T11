@@ -8,7 +8,7 @@ import "./styles.css";
 export default function Search() {
 
     const movieList = useSelector((state) => state.movieReducer.movieList);
-    console.log("Search movie: ", movieList);
+    // console.log("Search movie: ", movieList);
     const [value, setValue] = useState("");
     const history = useHistory()
     const onChange = (event) => {

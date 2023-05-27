@@ -27,7 +27,7 @@ export default function Choose() {
     thongTinPhongVe,
   } = useSelector((state) => state.bookTicketReducer);
 
-  console.log(movieRender);
+  // console.log(movieRender);
   const [idPhim, setIdPhim]=useState('');
   const [idRap, setIdRap]=useState('');
   const history = useHistory();
