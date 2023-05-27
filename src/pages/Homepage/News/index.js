@@ -70,7 +70,7 @@ export default function SimpleTabs() {
   };
 
 
-  console.log(eventList);
+  // console.log(eventList);
   const handlerSeeMore =() =>{
     history.push("/event-all")
   }

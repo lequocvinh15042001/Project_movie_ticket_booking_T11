@@ -290,11 +290,11 @@ export default function CenteredTabs({
             label="Thông tin"
             classes={{ selected: classes.selectedTap, root: classes.tapRoot }}
           />
-          <Tab
+          {/* <Tab
             disableRipple
             label="Đánh giá"
             classes={{ selected: classes.selectedTap, root: classes.tapRoot }}
-          />
+          /> */}
         </Tabs>
       </AppBar>
       <Fade

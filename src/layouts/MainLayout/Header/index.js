@@ -44,7 +44,7 @@ const headMenu = [
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.authReducer);
-  console.log("header: ",currentUser);
+  // console.log("header: ",currentUser);
   const { successInfoUser, loadingInfoUser } = useSelector(
     (state) => state.usersManagementReducer
   );

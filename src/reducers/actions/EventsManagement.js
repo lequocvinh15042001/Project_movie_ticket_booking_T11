@@ -8,7 +8,7 @@ export const getEventsList = () => {
     })
     eventsApi.getListEventManagment()
       .then(result => {
-        console.log(result.data);
+        // console.log(result.data);
         dispatch({
           type: GET_EVENT_LIST_SUCCESS,
           payload: { data: result.data }

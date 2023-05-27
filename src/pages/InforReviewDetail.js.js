@@ -63,11 +63,11 @@ export default function InforReviewDetail({ idReviewPost,
   useEffect(()=>{
     interactionApi.getAllLikeBaiViet(idReviewPost)
     .then(result => {
-     console.log("data danh sách like bài viết: ", result.data.data);
+    //  console.log("data danh sách like bài viết: ", result.data.data);
      setListLike(result.data.data)
     })
     .catch(
-      console.log("lỗi")
+      // console.log("lỗi")
     )
   },[soLike])
 
@@ -78,18 +78,18 @@ export default function InforReviewDetail({ idReviewPost,
          setCommentList(result.data.data)
         })
         .catch(
-          console.log("lỗi")
+          // console.log("lỗi")
     )
   },[soCmt])
 
   useEffect(() => {
     interactionApi.checkUserLikeOrUnlike(currentUser?.data?.id, idReviewPost)
       .then(result => {
-       console.log("Like check: ", result.data);
+      //  console.log("Like check: ", result.data);
        setLikeCheck(result.data.success)
       })
       .catch(
-        console.log("lỗi")
+        // console.log("lỗi")
       )
   }, [idReviewPost]);
 
@@ -182,7 +182,7 @@ export default function InforReviewDetail({ idReviewPost,
       setCommentList(result.data.data)
       })
       .catch(
-        console.log("lỗi")
+        // console.log("lỗi")
       )
     if (commentPost) {
       // reset text comment
