@@ -532,6 +532,18 @@ export default function Index({placeholder}) {
               </Fab>
             </div>
           )}
+          {successInfoUser?.data?.role === "[ROLE_USER]" && (
+            <div className="text-center mb-2">
+              <Fab
+                variant="extended"
+                color="primary"
+                onClick={() => history.push(`/reviewer/${successInfoUser?.data?.username}`)}
+              >
+                <NavigationIcon className={classes.extendedIcon} />
+                Trang cá nhân
+              </Fab>
+            </div>
+          )}
           {/* <ul className="list-group">
             <li className="list-group-item text-muted">Activity</li>
             <li className="list-group-item text-right">
