@@ -9,7 +9,6 @@ import { DISPLAY_MOBILE_HOMEPAGE } from '../../constants/config'
 import { RESET_MOVIEDETAIL_REDUCER, RESET_MOVIE_DETAIL_REDUCER } from '../../reducers/constants/MovieDetail';
 import Mobile from './Mobile';
 import Desktop from './Desktop';
-import { logger } from 'workbox-core/_private';
 
 export default function Index() {
   const isMobile = useMediaQuery(DISPLAY_MOBILE_HOMEPAGE)

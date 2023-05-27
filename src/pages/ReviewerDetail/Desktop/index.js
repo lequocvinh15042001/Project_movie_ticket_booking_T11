@@ -17,6 +17,9 @@ import { FAKE_AVATAR } from '../../../constants/config';
 import NewsComponent from '../../../components/NewsComponentForReviewer/NewsComponent';
 import PostReviewer from '../../PostReviewer';
 
+import { Modal, Avatar, Button, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@material-ui/core';
+
+
 export default function Desktop({ reviewerDetailShowtimes: data, reviewList: reviewList1, isMobile }, ) {
   console.log("----------MT---------",reviewList1);
   const [onClickBtnMuave, setOnClickBtnMuave] = useState(0)
@@ -86,7 +89,6 @@ export default function Desktop({ reviewerDetailShowtimes: data, reviewList: rev
       {/* <ShowtimeDetail /> */}
       {/* <Showtime /> */}
       {/* <NewsComponent reviewerDetailShowtimes={data} reviewList={reviewList1}/> */}
-
       <PostReviewer reviewerDetailShowtimes={data} reviewList={reviewList1} avatar ={data?.image}/>
     </div>
   )

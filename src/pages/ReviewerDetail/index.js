@@ -34,11 +34,7 @@ export default function Index() {
   }
     return (
     <>
-      {  isMobile ? <Mobile reviewerDetailShowtimes={successInfoReviewer} reviewList={reviewListByUser} isMobile={isMobile} /> 
-          : 
-            <Desktop reviewerDetailShowtimes={successInfoReviewer} reviewList={reviewListByUser} isMobile={isMobile} />
-            
-            }
+      <Desktop reviewerDetailShowtimes={successInfoReviewer} reviewList={reviewListByUser} isMobile={isMobile} />
     </>
   )
 }
