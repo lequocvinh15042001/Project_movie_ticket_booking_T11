@@ -19,11 +19,11 @@ export default function HeThongRap() {
   const { theaterList, errorTheaterList } = useSelector(
     (state) => state.theaterReducer
   );
-  console.log("Xuất hệ thống rạp: ", theaterList);
+  // console.log("Xuất hệ thống rạp: ", theaterList);
   const [valueHeThongRap, setValueHeThongRap] = React.useState(0);
   const classes = useStyles({ isMobileTheater, underLine });
 
-  console.log(valueHeThongRap);
+  // console.log(valueHeThongRap);
 
   if (errorTheaterList) {
     return <div>{errorTheaterList}</div>;

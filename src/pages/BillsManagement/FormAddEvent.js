@@ -47,7 +47,7 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
   })
 
   const handleSubmit = (movieObj) => {
-    console.log("Bay vô add: ", movieObj);
+    // console.log("Bay vô add: ", movieObj);
     // let smallImageURl = movieObj.smallImageURl
     // let fakeImage = { srcImage, id: movieObj.id }
    
@@ -84,10 +84,10 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     .then((data) =>{
       // console.log(data.secure_url);
       setImage(data.secure_url)
-      console.log("SrcImage 1 : ", image);
+      // console.log("SrcImage 1 : ", image);
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     })
   }
   const submitImage2 =() =>{
@@ -104,9 +104,9 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     .then((data) =>{
       // console.log(data.secure_url);
       setImage2(data.secure_url)
-      console.log("SrcImage 2: ", image2);
+      // console.log("SrcImage 2: ", image2);
     }).catch((err) => {
-      console.log(err);
+      // console.log(err);
     })
   }
 

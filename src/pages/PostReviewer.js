@@ -61,8 +61,8 @@ export default function PostReviewer({reviewerDetailShowtimes, reviewList, avata
   const [imageHien, setImageHien] = useState('')
   const [selectedPost, setSelectedPost] = useState(null);
 
-  console.log("successInfoUser: ", successInfoUser);
-  console.log("reviewerDetailShowtimes: ", reviewerDetailShowtimes);
+  // console.log("successInfoUser: ", successInfoUser);
+  // console.log("reviewerDetailShowtimes: ", reviewerDetailShowtimes);
 
   useEffect(()=>{
     dispatch(getInfoUser)
@@ -87,7 +87,7 @@ export default function PostReviewer({reviewerDetailShowtimes, reviewList, avata
     keyword: ''
   })
 
-  console.log(avatar);
+  // console.log(avatar);
   const handleClickOpen = (tinTuc) => {
     setSelectedPost(tinTuc);
     setOpen(true);
@@ -133,16 +133,16 @@ export default function PostReviewer({reviewerDetailShowtimes, reviewList, avata
       setPost({ ...post, 'mainImage': data.secure_url })
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     })
   }
 
   const createPost = (e) =>{
-    console.log(post);
+    // console.log(post);
     handleCloseViet();
     reviewsApi.postAddReview(post)
     .then((res) =>{
-      console.log("Thành công!", res);
+      // console.log("Thành công!", res);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -152,7 +152,7 @@ export default function PostReviewer({reviewerDetailShowtimes, reviewList, avata
       });
     })
     .catch((err) =>{
-      console.log(err);
+      // console.log(err);
       Swal.fire({
         position: "center",
         icon: "error",
@@ -347,7 +347,7 @@ export default function PostReviewer({reviewerDetailShowtimes, reviewList, avata
                             <Input id="image" type="file" 
                               onChange={(e) => {
                                 setImageHien(e.target.files[0])
-                                console.log(e.target.files[0]);
+                                // console.log(e.target.files[0]);
                               }} />
                             {/* <button
                               type="button"

@@ -21,8 +21,8 @@ export default function ListSeat() {
     danhSachPhongVe: { thongTinPhim },
     thongTinPhongVe,
   } = useSelector((state) => state.bookTicketReducer);
-  console.log("-------", listSeat);
-  console.log("------sdas-", thongTinPhongVe);
+  // console.log("-------", listSeat);
+  // console.log("------sdas-", thongTinPhongVe);
   const domToSeatElement = useRef(null);
   const [widthSeat, setWidthSeat] = useState(0);
   const classes = useStyles({

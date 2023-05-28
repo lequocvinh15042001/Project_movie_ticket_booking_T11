@@ -22,7 +22,7 @@ function LstCumRap(props) {
       setDanhSachPhim(res.data.data);
     })
     .catch((err) =>{
-      console.log(err);
+      // console.log(err);
     })
   },[])
 

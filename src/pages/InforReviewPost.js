@@ -104,33 +104,33 @@ export default function InforReviewHomepage({ idReviewPost,
       return;
     }
     if (likeCheck === true) {
-      console.log("Unlike");
+      // console.log("Unlike");
       dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser?.data?.id, articleId: idReviewPost }));
       // dispatch(getListLikeBaiViet(idReviewPost));
       interactionApi.getAllLikeBaiViet(idReviewPost)
         .then(result => {
-        console.log("data danh sách like bài viết: ", result.data.data);
+        // console.log("data danh sách like bài viết: ", result.data.data);
         setSoLike(result.data.data.length - 1);
         setListLike(result.data.data)
         setLikeCheck(false);
         })
         .catch(
-          console.log("lỗi")
+          // console.log("lỗi")
         )
 
     } else {
-      console.log("Like");
+      // console.log("Like");
       dispatch(postLikeUnlikeBaiViet({ userId: successInfoUser?.data?.id, articleId: idReviewPost }));
       // dispatch(getListLikeBaiViet(idReviewPost));
       interactionApi.getAllLikeBaiViet(idReviewPost)
         .then(result => {
-        console.log("data danh sách like bài viết: ", result.data.data);
+        // console.log("data danh sách like bài viết: ", result.data.data);
         setSoLike(result.data.data.length + 1);
         setListLike(result.data.data)
         setLikeCheck(true);
         })
         .catch(
-          console.log("lỗi")
+          // console.log("lỗi")
         )
     }
   };

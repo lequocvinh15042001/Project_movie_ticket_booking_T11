@@ -70,10 +70,10 @@ export default function DeleteOrEdit(data) {
 
 // console.log(data.setCommentListDisplay);
   const handleDelete = () => {
-    console.log(data.id);
+    // console.log(data.id);
     interactionApi.putDeleteComment(data.id)
       .then(result => {
-          console.log("Delete comment: ", result.data);
+          // console.log("Delete comment: ", result.data);
 
           interactionApi.getAllCommentBaiViet(data.idReviewPost)
           .then(result => {
@@ -81,11 +81,11 @@ export default function DeleteOrEdit(data) {
             // console.log(result.data);
           })
           .catch(
-            console.log("lỗi")
+            // console.log("lỗi")
           )
       })
       .catch(
-            console.log("lỗi xóa")
+            // console.log("lỗi xóa")
       )
     // dispatch(putDeleteComment(id));
     // dispatch(getListCommentBaiViet(data.idReviewPost))
@@ -114,14 +114,14 @@ export default function DeleteOrEdit(data) {
       setwarningtext(true);
       return;
     }
-    console.log(dataEdit);
+    // console.log(dataEdit);
     const dulieu = {
       id: data.id,
       description: dataEdit.description
     }
     interactionApi.putEditComment(dulieu)
       .then(result => {
-          console.log("Delete comment: ", result.data);
+          // console.log("Delete comment: ", result.data);
 
           interactionApi.getAllCommentBaiViet(data.idReviewPost)
           .then(result => {
@@ -129,11 +129,11 @@ export default function DeleteOrEdit(data) {
             // console.log(result.data);
           })
           .catch(
-            console.log("lỗi")
+            // console.log("lỗi")
           )
       })
       .catch(
-            console.log("lỗi sửa")
+            // console.log("lỗi sửa")
       )
     // dispatch(putDeleteComment(id));
     // dispatch(getListCommentBaiViet(data.idReviewPost))
@@ -142,7 +142,7 @@ export default function DeleteOrEdit(data) {
     setAnchorEl(null);
   };
 
-  console.log(data.dataComment);
+  // console.log(data.dataComment);
 
   return (
     <div>

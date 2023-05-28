@@ -83,20 +83,20 @@ export default function Booking() {
     
     moviesApi.getDanhSachPhim()
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setData(response?.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
 
     theatersApi.getThongTinLichChieuHeThongRap()
     .then((response) => {
-      console.log("all branch: ",response);
+      // console.log("all branch: ",response);
       setBranch(response?.data?.content);
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     });
 
   }, []);
@@ -104,9 +104,9 @@ export default function Booking() {
   const country = [...new Set(data.map((item) => item))];
 
   const handlerChooseMovie = (event, value) =>{
-    console.log("------");
-    console.log(event.target.value);
-    console.log(value);
+    // console.log("------");
+    // console.log(event.target.value);
+    // console.log(value);
     setMovie()
   };
 

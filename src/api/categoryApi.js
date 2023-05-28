@@ -8,7 +8,7 @@ const categoryApi = {
   },
 
   addCategoryByAdminStaff: (name) => {
-    console.log(name);
+    // console.log(name);
     const path = `/article/category/add`;
     return axiosClient.post(path, name);
   },

@@ -18,7 +18,7 @@ const classes = useStyles({ customScrollbar, underLine });
       setDanhSachPhim(response.data.data)
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     });
   },[])
 

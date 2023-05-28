@@ -10,7 +10,7 @@ import theatersApi from '../../../../api/theatersApi'
 function Index(props) {
 const [danhSachPhim, setDanhSachPhim] = useState();
 const classes = useStyles({ customScrollbar, underLine });
-console.log(props.listSachPhim);
+// console.log(props.listSachPhim);
   useEffect(() => {
     theatersApi.getThongTinLichChieuHeThongRapTheoRap(props.idRap)
     .then((response) => {
@@ -18,7 +18,7 @@ console.log(props.listSachPhim);
       setDanhSachPhim(response.data.data)
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     });
   },[])
 
@@ -26,7 +26,7 @@ console.log(props.listSachPhim);
     fontSize: 12,
     color: "#9b9b9b",
   }
-  console.log("danhSachPhim", danhSachPhim);
+  // console.log("danhSachPhim", danhSachPhim);
 
   // const danhSachPhimKhongTrung =  danhSachPhim?.content?.map((item) => {
   //   return item.movie.name

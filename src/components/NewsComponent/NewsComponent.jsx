@@ -44,7 +44,7 @@ export default function NewsComponent() {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
   const history = useHistory();

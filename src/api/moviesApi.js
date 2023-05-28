@@ -7,7 +7,7 @@ const moviesApi = {
   },
 
   getSearchPhim: (value) => {
-    console.log(value);
+    // console.log(value);
     const path = `/movies/showing/search?name=${value}`;
     return axiosClient.get(path);
   },
@@ -34,7 +34,7 @@ const moviesApi = {
 
   postThemPhimUpload: (movie) => {
     const path = `/movies/addNew`;
-    console.log(movie);
+    // console.log(movie);
     //trong obj movie có key hinhAnh là file nên phải chuyển sang formData
     // const formData = new FormData();
     // for (const key in movie) {
@@ -46,7 +46,7 @@ const moviesApi = {
   },
 
   postCapNhatPhimUpload: (movie) => {
-    console.log("update phim upload: ", movie);
+    // console.log("update phim upload: ", movie);
     const path = `/movies/update`;
     // const formData = new FormData();
     // for (const key in movie) {
@@ -57,7 +57,7 @@ const moviesApi = {
   },
 
   postCapNhatPhim: (movie) => {
-    console.log("update phim: ", movie);
+    // console.log("update phim: ", movie);
     const path = `/movies/update`;
     return axiosClient.put(path, movie);
   },

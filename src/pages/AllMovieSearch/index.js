@@ -18,12 +18,12 @@ export default function AllMovieSearch() {
   // console.log("search tất cả phim hiển thị", movieList);
   const params = useParams()
   var item = params.searchItem.toString()
-  console.log((params.searchItem).toString());
+  // console.log((params.searchItem).toString());
 
   useEffect(() =>{
     moviesApi.getSearchPhim(item)
     .then((res) =>{
-      console.log(res);
+      // console.log(res);
       if(res?.data?.data)
       {
         setListKetQua(res?.data?.data)
@@ -32,11 +32,11 @@ export default function AllMovieSearch() {
       }
     })
     .catch((err) =>{
-      console.log(err)
+      // console.log(err)
     })
   },[item])
 
-  console.log(listKetQua);
+  // console.log(listKetQua);
   const classes = useStyle();
   const settings = {
     className: "center",

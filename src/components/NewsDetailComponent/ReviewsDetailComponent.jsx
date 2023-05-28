@@ -10,7 +10,7 @@ import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
 import InforReviewDetail from "../../pages/InforReviewDetail.js";
 
 export default function ReviewsDetailComponent(props) {
-  console.log(props.tinTuc);
+  // console.log(props.tinTuc);
   let { tinTuc, danhSachTinTuc } = props;
   let [danhSachTinTucHot, setDanhSachTinTucHot] = useState([]);
   let [loading, setLoading] = useState(true);
@@ -22,13 +22,13 @@ export default function ReviewsDetailComponent(props) {
       .then((res) => {
         setDanhSachTinTucHot(res?.data);
         setLoading(false);
-        console.log("Lấy tin tức",res);
+        // console.log("Lấy tin tức",res);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-  console.log(danhSachTinTucHot);
+  // console.log(danhSachTinTucHot);
   // const renderTinTucHot = () => {
   //   return danhSachTinTuc.slice(0, 5).map((tinTuc, index) => {
   //     return (

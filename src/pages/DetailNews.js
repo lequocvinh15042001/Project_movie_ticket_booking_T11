@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 export default function DetailNews() {
   const { maTin } = useParams();
-  console.log("slug:  ",maTin);
+  // console.log("slug:  ",maTin);
   let [tinTuc, setTinTuc] = useState([]);
   const [loading, $loading] = useState(true);
   const maTinTuc = maTin;
@@ -31,7 +31,7 @@ export default function DetailNews() {
         }, 1500);
       })
       .catch((err) => {
-        console.log(err.response.data);
+        // console.log(err.response.data);
       });
   }, []);
 
