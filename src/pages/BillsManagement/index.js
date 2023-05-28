@@ -54,7 +54,7 @@ function CustomLoadingOverlay() {
 export default function BillsManagement() {
   const [billListDisplay, setBillListDisplay] = useState([]);
   const [billListLoc, setBillListLoc] = useState([]);
-  console.log("billListDisplay: ", billListDisplay);
+  // console.log("billListDisplay: ", billListDisplay);
   const classes = useStyles();
   const  {enqueueSnackbar}  = useSnackbar();
   let {
@@ -77,7 +77,7 @@ export default function BillsManagement() {
     errorBillListTTTaiQuay,
   } = useSelector((state) => state.billsManagementReducer);
   
-  console.log(billListTTTaiQuay);
+  // console.log(billListTTTaiQuay);
   const dispatch = useDispatch();
   const newImageUpdate = useRef("");
   const callApiChangeImageSuccess = useRef(false);

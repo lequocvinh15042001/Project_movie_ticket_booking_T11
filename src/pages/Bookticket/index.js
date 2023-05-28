@@ -207,25 +207,25 @@ export default function Index() {
   useEffect(() =>{
     usersApi.getThongTinTaiKhoan()
     .then((response) =>{
-      console.log(response.data.data);
+      // console.log(response.data.data);
       setCUser(response.data.data);
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     })
   },[])
   
-  console.log(thongTin);
+  // console.log(thongTin);
 
   useEffect(() => {
-    console.log("Mã phim: ", param.maPhim);
+    // console.log("Mã phim: ", param.maPhim);
     moviesApi.getThongTinPhim(param.maPhim)
     .then((response) =>{
-      console.log(response.data.data);
+      // console.log(response.data.data);
       setCPhim(response.data.data);
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     })
   },[])
 
@@ -234,7 +234,7 @@ export default function Index() {
     // dispatch(getListSeat(param.maLichChieu));
     bookingApi.getDanhSachPhongVe(param.maLichChieu)
     .then((response) =>{
-      console.log(response.data.data);
+      // console.log(response.data.data);
       setSeat(response.data.data);
       dispatch({
         type: GET_LISTSEAT_SUCCESS,
@@ -242,7 +242,7 @@ export default function Index() {
       })
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     })
     return () => {
       // xóa dữ liệu khi đóng hủy component

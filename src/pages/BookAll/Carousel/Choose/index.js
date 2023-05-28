@@ -195,12 +195,12 @@ export default function Choose() {
       // lấy rạp
       theatersApi.getThongTinLichChieuHeThongRap()  //5
       .then((response) => { //6
-        console.log("all branch: ",response); //7
+        // console.log("all branch: ",response); //7
         setData((data) => ({ ...data, startRequest: false })); //8
         setBranch(response?.data?.data?.content);//9
         const cumRapChieuData= response?.data?.data?.content?.reduce( //10
           (colect, item) => {
-            console.log(item);
+            // console.log(item);
             return [...colect, item];
           },
           []
@@ -214,7 +214,7 @@ export default function Choose() {
         }));
       })
       .catch((err) => { //13
-        console.log(err); //14
+        // console.log(err); //14
       });
   };
 

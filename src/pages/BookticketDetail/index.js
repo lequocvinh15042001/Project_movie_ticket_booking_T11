@@ -197,7 +197,7 @@ export default function Index() {
   const { currentUser } = useSelector((state) => state.authReducer);
 
   const param = useParams();
-  console.log(param.maPhim, param.maLichChieu, param.ngayChieu, param.ngayChieu, param.gioChieu, param.maRap);
+  // console.log(param.maPhim, param.maLichChieu, param.ngayChieu, param.ngayChieu, param.gioChieu, param.maRap);
 
   const dispatch = useDispatch();
   const mediaQuery = useMediaQuery(DISPLAY_MOBILE_BOOKTICKET);
@@ -214,7 +214,7 @@ export default function Index() {
   useEffect(() =>{
     usersApi.getThongTinTaiKhoan()
     .then((response) =>{
-      console.log(response);
+      // console.log(response);
       setCUser(response);
       dispatch({
         type: LOGIN_SUCCESS,
@@ -222,11 +222,11 @@ export default function Index() {
       })
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     })
   },[])
   
-  console.log(cUser);
+  // console.log(cUser);
 
   // useEffect(() => {
   //   // lấy thongTinPhim và danhSachGhe
@@ -253,7 +253,7 @@ export default function Index() {
   useEffect(() =>{
     bookingApi.getDanhSachPhongVe(param.maLichChieu)
     .then((response) =>{
-      console.log("Lấy ghế nè", response.data.data);
+      // console.log("Lấy ghế nè", response.data.data);
       setSeat(response.data.data);
       // console.log(thongTin);
       dispatch({
@@ -262,7 +262,7 @@ export default function Index() {
       })
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     })
     return () => {
       // xóa dữ liệu khi đóng hủy component

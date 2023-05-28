@@ -17,7 +17,7 @@ export default function LstGioChieu(props) {
       setLstLichChieuTheoPhim(res.data.data)
     })
     .catch((err)=>{
-      console.log(err);
+      // console.log(err);
     })
   },[])
   // console.log(lstLichChieuTheoPhim);

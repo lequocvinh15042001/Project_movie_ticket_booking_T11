@@ -23,8 +23,8 @@ export default function ListSeat() {
     danhSachPhongVe: { thongTinPhim },
     thongTinPhongVe,
   } = useSelector((state) => state.bookTicketReducer);
-  console.log("-------", listSeat);
-  console.log("------sdas-", thongTinPhongVe);
+  // console.log("-------", listSeat);
+  // console.log("------sdas-", thongTinPhongVe);
   const domToSeatElement = useRef(null);
   const [widthSeat, setWidthSeat] = useState(0);
   const [soGhe, setSoGhe] = useState(1);
@@ -32,13 +32,13 @@ export default function ListSeat() {
   const [thongTin, setThongTin] = useState()
   const param = useParams();
 
-  console.log(param.maPhim, param.maRap, param.ngayChieu, param.gioChieu, param.maPhong);
+  // console.log(param.maPhim, param.maRap, param.ngayChieu, param.gioChieu, param.maPhong);
   useEffect(() => {
     // lấy thongTinPhim và danhSachGhe
     // dispatch(getListSeat(param.maLichChieu));
     bookingApi.getLichChieuChiTietHeThong(param.maPhim, param.maRap, param.ngayChieu, param.gioChieu, param.maPhong)
     .then((response) =>{
-      console.log(response.data.data);
+      // console.log(response.data.data);
       setThongTin(response.data);
       // dispatch({
       //   type: GET_LISTSEAT_SUCCESS,
@@ -46,7 +46,7 @@ export default function ListSeat() {
       // })
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     })
     // return () => {
     //   // xóa dữ liệu khi đóng hủy component

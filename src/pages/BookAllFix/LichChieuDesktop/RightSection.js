@@ -23,7 +23,7 @@ export default function RightSection({ branch, idRap, idPhim }) {
     useEffect(() => {
     theatersApi.getThongTinLichChieuPhim(idPhim, idRap)
     .then((response) => {
-      console.log("all lịch chiếu: ",response.data.data.content);
+      // console.log("all lịch chiếu: ",response.data.data.content);
       const lichChieuPhimData = response.data.data.content
       const ngayChieuRender = lichChieuPhimData.map((item) => {
         if(new Date(item.startDate).getTime() >= new Date().getTime())
@@ -42,7 +42,7 @@ export default function RightSection({ branch, idRap, idPhim }) {
       }));
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     });
   },[idPhim, idRap])
 
@@ -78,7 +78,7 @@ export default function RightSection({ branch, idRap, idPhim }) {
     // console.log(phongChieuRender);
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     });
   };
   

@@ -61,9 +61,9 @@ export default function PayMent() {
     errorBookTicketMessage,
     thongTinPhongVe,
   } = useSelector((state) => state.bookTicketReducer);
-  console.log(successBookingTicketMessage);
-  console.log(maLichChieu, danhSachVe, taiKhoanNguoiDung);
-  console.log("danhSachVe: ",danhSachVe);
+  // console.log(successBookingTicketMessage);
+  // console.log(maLichChieu, danhSachVe, taiKhoanNguoiDung);
+  // console.log("danhSachVe: ",danhSachVe);
   const dispatch = useDispatch();
   const emailRef = useRef();
   const phoneRef = useRef(); // dùng useRef để dom tớ element
@@ -183,7 +183,7 @@ export default function PayMent() {
           for(var i = 0;i < danhSachVe.length; i++){
             listSeatIds.push(danhSachVe[i].id)
           }
-          console.log("Gửi đi: ",userId, scheduleId, listSeatIds);
+          // console.log("Gửi đi: ",userId, scheduleId, listSeatIds);
           dispatch(bookTicket({userId, scheduleId, listSeatIds} ));
         }
         Swal.fire('Booked!', '', 'success')

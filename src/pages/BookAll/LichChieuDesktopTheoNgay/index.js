@@ -30,17 +30,17 @@ export default function LichChieuDesktop({ data }) {
 
   const handleChange1 = (event, newValue) => {
     setValue1(newValue);
-    console.log("dkshbdjhs",value1);
+    // console.log("dkshbdjhs",value1);
   };
 
   const handlerOn = (event) => {
-    console.log("Chọn phim: ",event);
+    // console.log("Chọn phim: ",event);
     setIdPhim(event)
     // setValue1(event);
   };
 
   const handlerOn2 = (event) => {
-    console.log("Chọn rạp ",event);
+    // console.log("Chọn rạp ",event);
     setIdRap(event)
     // setValue1(event);
   };
@@ -66,20 +66,20 @@ export default function LichChieuDesktop({ data }) {
         // }));
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   },[])
 
-  console.log(value1, value);
+  // console.log(value1, value);
   
   useEffect(() => {
     theatersApi.getThongTinLichChieuHeThongRap()
       .then((response) => {
-        console.log("all branch: ",response);
+        // console.log("all branch: ",response);
         setRap(response?.data?.data?.content);
         const cumRapChieuData= response?.data?.data?.content?.reduce(
           (colect, item) => {
-            console.log(item);
+            // console.log(item);
             return [...colect, item];
           },
           []
@@ -93,7 +93,7 @@ export default function LichChieuDesktop({ data }) {
         }));
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   },[])
 

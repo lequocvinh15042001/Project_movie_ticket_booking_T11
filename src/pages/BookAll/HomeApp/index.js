@@ -43,9 +43,9 @@ export default function HomeApp() {
     // Wait for the user to respond to the prompt
     eventPrompt.userChoice.then((choiceResult) => {
       if (choiceResult.outcome === "accepted") {
-        console.log("User accepted the A2HS prompt");
+        // console.log("User accepted the A2HS prompt");
       } else {
-        console.log("User dismissed the A2HS prompt");
+        // console.log("User dismissed the A2HS prompt");
       }
       deferredPrompt.current = null;
     });

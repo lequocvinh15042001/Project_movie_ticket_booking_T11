@@ -22,7 +22,7 @@ export default function LikeButton({userId, articleId}){
 
   const [soLike, setSoLike]=useState(likeList?.length);
 
-  console.log("danh sách nè chời ơi ", likeList);
+  // console.log("danh sách nè chời ơi ", likeList);
 
   const handleLikeButtonClick = async () => {
     setLiked(!liked);

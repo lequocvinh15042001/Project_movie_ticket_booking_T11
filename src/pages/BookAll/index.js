@@ -39,7 +39,7 @@ export default function Homepage() {
       });
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
       dispatch({
         type: LOGIN_FAIL,
         payload: {

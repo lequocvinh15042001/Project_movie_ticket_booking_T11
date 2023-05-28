@@ -25,13 +25,13 @@ export default function NewsComponent() {
       .then((res) => {
         setDanhSachTinTuc(res?.data);
         setLoading(false);
-        console.log("Lấy tin tức",res);
+        // console.log("Lấy tin tức",res);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-  console.log(danhSachTinTuc);
+  // console.log(danhSachTinTuc);
   var moment = require("moment");
   const renderTinTuc = () => {
     return danhSachTinTuc?.data?.map((tinTuc, index) => {

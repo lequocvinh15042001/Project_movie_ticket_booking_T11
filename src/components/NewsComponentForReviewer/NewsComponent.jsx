@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 export default function NewsComponent({reviewerDetailShowtimes, reviewList }) {
   let [danhSachTinTuc, setDanhSachTinTuc] = useState();
   let [loading, setLoading] = useState(true);
-  console.log("Danh sách nè: ", reviewList);
+  // console.log("Danh sách nè: ", reviewList);
 
   useEffect(() => {
       setDanhSachTinTuc(reviewList);

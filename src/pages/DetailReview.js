@@ -6,7 +6,7 @@ import ReviewsDetailComponent from "../components/NewsDetailComponent/ReviewsDet
 
 export default function DetailReview() {
   const { maTin } = useParams();
-  console.log("slug:  ",maTin);
+  // console.log("slug:  ",maTin);
   let [tinTuc, setTinTuc] = useState([]);
   const [loading, $loading] = useState(true);
   const maTinTuc = maTin;
@@ -31,7 +31,7 @@ export default function DetailReview() {
         }, 1500);
       })
       .catch((err) => {
-        console.log(err.response.data);
+        // console.log(err.response.data);
       });
   }, []);
 

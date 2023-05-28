@@ -91,9 +91,9 @@ export default function BookByStaff() {
     ) {
       // dispatch(getMovieListManagement());
       // console.log("branch: ",branch);
-      dispatch(getScheduleListManagement(branch.toString()))
+      dispatch(getScheduleListManagement(branch?.toString()))
     }
-    else dispatch(getScheduleListManagement(branch.toString()))
+    else dispatch(getScheduleListManagement(branch?.toString()))
 
   }, [branch]); // khi vừa thêm phim mới xong mà xóa liên backend sẽ báo lỗi xóa không được nhưng thực chất đã xóa thành công > errorDeleteMovie nhưng vẫn tiến hành làm mới lại danh sách
   
@@ -116,7 +116,7 @@ export default function BookByStaff() {
 
   //này mới chọn để hiển thị trên màn hình khi chọn branch nè
   useEffect(() => {
-    if (scheduleList2 || scheduleList2?.length) {
+    if (scheduleList2?.length) {
       let newScheduleListDisplay = scheduleList2?.map((schedule) => ({
         ...schedule,
         hanhDong: "",
@@ -195,7 +195,7 @@ export default function BookByStaff() {
   };
 
   const handleBook = (phimItem) => {
-    console.log("Book lịch chiếu thứ: ", phimItem);
+    // console.log("Book lịch chiếu thứ: ", phimItem);
     
     // selectedSchedule.current = phimItem;
     // setOpenModal(true);
@@ -455,7 +455,7 @@ export default function BookByStaff() {
 
   const modifySlugify = { lower: true, locale: "vi" };
   const handlerError = () =>{
-    console.log("Vô handler error");
+    // console.log("Vô handler error");
   }
   return (
     <div style={{ height: "80vh", width: "100%", backgroundColor:"white"}}>

@@ -8,7 +8,7 @@ const theatersApi = {
 
   getThongTinPhim: (maPhim) => {
     const path = `/movies/details/${maPhim}`;
-    console.log("vô api");
+    // console.log("vô api");
     return axiosClient.get(path);
   },
 
@@ -75,7 +75,7 @@ const theatersApi = {
   },
 
   getThongTinLichCoNgay: (maPhim, branchId, startDate) => {
-    console.log("truyền vô : ", maPhim, branchId, startDate);
+    // console.log("truyền vô : ", maPhim, branchId, startDate);
       const path = `schedule/getAll?page=0&size=20&movieId=${maPhim}&branchId=${branchId}&startDate=${startDate}`;
       return axiosClient.get(path);
   },

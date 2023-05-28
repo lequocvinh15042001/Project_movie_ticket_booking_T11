@@ -9,7 +9,7 @@ import eventsApi from "../../api/eventsApi";
 import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
 
 export default function TinTucDetailComponent(props) {
-  console.log(props.tinTuc);
+  // console.log(props.tinTuc);
   let { tinTuc } = props;
 
   var moment = require("moment");

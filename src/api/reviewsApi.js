@@ -23,7 +23,7 @@ const reviewsApi = {
   },
 
   postAddReview: (event) => {
-    console.log(event);
+    // console.log(event);
     const path = "/article/addNewReview";
     return axiosClient.post(path, event);
   },

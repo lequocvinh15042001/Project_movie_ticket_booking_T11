@@ -35,7 +35,7 @@ export default function FormInput({ selectedPhim, onUpdate, onAddMovie }) {
   })
 
   const handleSubmit = (movieObj) => {
-    console.log("Bay vô add: ");
+    // console.log("Bay vô add: ");
     let smallImageURl = movieObj.smallImageURl
     let fakeImage = { srcImage, id: movieObj.id }
     movieObj = { ...movieObj, releaseDate: movieObj.releaseDate.toLocaleDateString('en-GB') }

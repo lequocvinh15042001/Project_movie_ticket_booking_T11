@@ -23,7 +23,7 @@ export default function HeThongRap() {
   const [valueHeThongRap, setValueHeThongRap] = React.useState(0);
   const classes = useStyles({ isMobileTheater, underLine });
 
-  console.log(valueHeThongRap);
+  // console.log(valueHeThongRap);
 
   if (errorTheaterList) {
     return <div>{errorTheaterList}</div>;
