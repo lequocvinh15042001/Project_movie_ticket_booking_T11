@@ -234,7 +234,7 @@ export default function BillsManagement() {
   // };
   const handleEdit = (billItem) => {
     selectedPhim.current = billItem;
-    console.log(selectedPhim.current);
+    // console.log(selectedPhim.current);
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
@@ -259,7 +259,7 @@ export default function BillsManagement() {
           // window.location.reload();
           billsApi.postThanhToan(billItem.id)
           .then((res) =>{
-            console.log(res);
+            // console.log(res);
             swalWithBootstrapButtons.fire(
               'Đã thanh toán!',
               'DONE.',
@@ -267,7 +267,7 @@ export default function BillsManagement() {
             )
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
             swalWithBootstrapButtons.fire(
               'Bill đã quá hạn',
               'Không thể thanh toán!',
