@@ -412,7 +412,7 @@ export default function ChooseByDate() {
 
 
   };
-  console.log(idPhim);
+  console.log(data);
   // input: suatChieu
   // output: setSuatChieu(suatChieu), maLichChieu(suatChieu)[maLichChieu]
 
@@ -428,26 +428,29 @@ export default function ChooseByDate() {
       maPhim:""
     }));
     const indexMaLichChieuSelect = data.lichChieuPhimData.findIndex(
-      (item) => item.startTime.slice(0, 8) === e.target.value
+      (item) => item.startTime.slice(0,8) === e.target.value
     );
+    // console.log('====================================');
+    // console.log(data?.lichChieuPhimDataSelected[indexMaLichChieuSelect]?.movie?.id);
+    // console.log('====================================');
     // Lấy được cái mã lịch chiếu rồi
     // Lấy được cái mã lịch chiếu rồi
     // Lấy được cái mã lịch chiếu rồi
-    const maLichChieu =data.lichChieuPhimDataSelected[indexMaLichChieuSelect].id;
-    const maRap = data.lichChieuPhimDataSelected[indexMaLichChieuSelect].branch.id;
-    const maPhong = data.lichChieuPhimDataSelected[indexMaLichChieuSelect].room.id;
-    const maPhim = data.lichChieuPhimDataSelected[indexMaLichChieuSelect].movie.id;
-    console.log("maPhim: ", maPhim);
+    const maLichChieu =data?.lichChieuPhimData[indexMaLichChieuSelect]?.id;
+    const maRap = data?.lichChieuPhimData[indexMaLichChieuSelect]?.branch?.id;
+    const maPhong = data?.lichChieuPhimData[indexMaLichChieuSelect]?.room?.id;
+    const maPhim = data?.lichChieuPhimData[indexMaLichChieuSelect]?.movie?.id;
+    // console.log("maPhim: ", maPhim);
     setData((data) => ({ ...data, maLichChieu, maRap, maPhong, maPhim }));
     
-    // dispatch({
-    //   type: INIT_DATA,
-    //   payload: {
-    //     ...data,
-    //     thongTinPhongVe: data,
-    //   },
-    //   });
-    // console.log(thongTinPhongVe);
+    dispatch({
+      type: INIT_DATA,
+      payload: {
+        ...data,
+        thongTinPhongVe: data,
+      },
+      });
+    console.log(thongTinPhongVe);
   };
 
   useEffect(() =>{

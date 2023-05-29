@@ -241,14 +241,14 @@ export default function Choose() {
       (item) => item.name === e.target.value
       
     ); // lấy ra lichChieuPhimData của một cụm rạp đã chọn, item lichChieuPhimData có thể giống ngày nhưng khác giờ chiếu
-    console.log("indexSelect: ", data.cumRapChieuData[indexSelect].id);
+    // console.log("indexSelect: ", data.cumRapChieuData[indexSelect].id);
     setIdRap(data.cumRapChieuData[indexSelect].id)
-    console.log("set phim: ", data.setPhim.id);
+    // console.log("set phim: ", data.setPhim.id);
     setIdPhim(data.setPhim.id)
 
     theatersApi.getThongTinLichChieuPhim(data.setPhim.id, data.cumRapChieuData[indexSelect].id)
     .then((response) => {
-      console.log("all lịch chiếu: ",response.data.data.content);
+      // console.log("all lịch chiếu: ",response.data.data.content);
       const lichChieuPhimData = response.data.data.content
       const ngayChieuRender = lichChieuPhimData.map((item) => {
         return item.startDate.slice(0, 10); // tạo mảng mới với item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
@@ -261,7 +261,7 @@ export default function Choose() {
       }));
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     });
   };
 
@@ -312,12 +312,12 @@ export default function Choose() {
       (item) => item.startDate === e.target.value
       
     ); // lấy ra lichChieuPhimData của một cụm rạp đã chọn, item lichChieuPhimData có thể giống ngày nhưng khác giờ chiếu
-    console.log("indexSelect: ", data.cumRapChieuData[indexSelect].id);
-    console.log("set phim: ", data.setPhim.id);
+    // console.log("indexSelect: ", data.cumRapChieuData[indexSelect].id);
+    // console.log("set phim: ", data.setPhim.id);
 
     theatersApi.getThongTinLichChieuPhim(idPhim, idRap)
     .then((response) => {
-      console.log("all lịch chiếu: ",response.data.data.content);
+      // console.log("all lịch chiếu: ",response.data.data.content);
       const lichChieuPhimDataSelected = response.data.data.content
       const suatChieuRender = lichChieuPhimDataSelected.map((item) => {
         return item;
@@ -329,7 +329,7 @@ export default function Choose() {
       }));
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     });
 
 
@@ -357,7 +357,7 @@ export default function Choose() {
 
     const maRap = data.lichChieuPhimDataSelected[indexMaLichChieuSelect].branch.id;
     const maPhong = data.lichChieuPhimDataSelected[indexMaLichChieuSelect].room.id;
-    console.log("maPhong: ", maPhong);
+    // console.log("maPhong: ", maPhong);
     setData((data) => ({ ...data, maLichChieu, maRap, maPhong }));
     
     dispatch({
@@ -367,7 +367,7 @@ export default function Choose() {
         thongTinPhongVe: data,
       },
       });
-      console.log(thongTinPhongVe);
+      // console.log(thongTinPhongVe);
   };
 
   const setNewPhim = (maPhim) => {

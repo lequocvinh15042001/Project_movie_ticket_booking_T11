@@ -22,7 +22,7 @@ export default function SearchStickets() {
   const { movieList: movieRender, errorMovieList } = useSelector(
     (state) => state.movieReducer
   );
-  console.log(movieRender);
+  // console.log(movieRender);
   const history = useHistory();
   const down992px = useMediaQuery(HIDDEN_SEARCHTICKET);
   const [data, setData] = useState({
@@ -156,17 +156,17 @@ export default function SearchStickets() {
     theatersApi
       .getThongTinLichChieuPhim(phim.id)
       .then((result) => {
-        console.log(result?.data);
+        // console.log(result?.data);
         setData((data) => ({ ...data, startRequest: false }));
         const cumRapChieuData= result?.data?.content?.reduce(
           (colect, item) => {
-            console.log(item);
+            // console.log(item);
             return [...colect, item];
           },
           []
         );
         // const cumRapChieuData} = result.data.content;
-        console.log("cumRapChieuData", cumRapChieuData);
+        // console.log("cumRapChieuData", cumRapChieuData);
         // const rapRender = cumRapChieuData
         const rapRender = cumRapChieuData.map((item) => item)
         setData((data) => ({
@@ -185,7 +185,7 @@ export default function SearchStickets() {
       });
   };
 
-  console.log("data",data);
+  // console.log("data",data);
 
   // sau khi click chọn Rạp, cần lấy ra prop lichChieuPhim của Rạp đã chọn > lọc ra ngày chiếu để hiển thị
   // input: tenCumRap, cumRapChieuData
