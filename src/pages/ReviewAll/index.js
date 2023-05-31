@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import { getMovieList } from "../../reducers/actions/Movie";
 import { getTheaters } from "../../reducers/actions/Theater";
 import NewsComponentMore from "../../components/NewsComponentMore/NewsComponent";
@@ -14,11 +12,7 @@ import { LOGIN_FAIL, LOGIN_SUCCESS } from "../../reducers/constants/Auth";
 export default function Homepage() {
   const dispatch = useDispatch();
   const movieList = useSelector((state) => state.movieReducer.movieList);
-  // console.log("Lấy được DS Phim: ",movieList);
   const theaterList = useSelector((state) => state.theaterReducer.theaterList);
-  // console.log("Lấy được DS Rạp chiếu của mình: ",theaterList);
-
-  // const { currentUser } = useSelector((state) => state.authReducer); 
 
   const [cUser , setCUser] = useState();
   useEffect(() => {
@@ -53,7 +47,6 @@ export default function Homepage() {
     })
     usersApi.getThongTinTaiKhoan()
       .then(result => {
-        // console.log("getThongTinTaiKhoan: ", result);
         dispatch({
           type: GET_INFO_USER_SUCCESS,
           payload: {
@@ -84,13 +77,7 @@ export default function Homepage() {
   }, []);
 
   return (
-    <div>
-      {/* <Carousel /> */}
-      {/* <Showtime />
-      <Theaters /> */}
-      {/* <News /> */}
+      // Khi nhấn vào nút Seemore
       <NewsComponentMore />
-       {/* <HomeApp /> */}
-    </div>
   );
 }

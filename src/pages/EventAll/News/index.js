@@ -30,40 +30,23 @@ export default function SimpleTabs() {
   const dispatch = useDispatch();
   let {
     eventList,
-    // loadingEventList,
-    // loadingDelete,
     errorDelete,
     successDelete,
     successUpdateEvent,
-    // errorUpdateEvent,
-    // loadingUpdateEvent,
-    // loadingAddEvent,
     successAddEvent,
-    // errorAddEvent,
-    // loadingUpdateNoneImageMovie,
-    // successUpdateNoneImageMovie,
-    // errorUpdateNoneImageMovie,
   } = useSelector((state) => state.eventsManagementReducer);
-
 
   useEffect(() => {
     if (
       !eventList ||
       successUpdateEvent ||
-      // successUpdateNoneImageMovie ||
       successDelete ||
       errorDelete ||
       successAddEvent
     ) {
       dispatch(getEventsList());
     }
-  }, [
-    // successUpdateEvent,
-    // successUpdateNoneImageMovie,
-    // successDelete,
-    // errorDelete,
-    // successAddEvent,
-  ]);
+  }, []);
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -76,7 +59,7 @@ export default function SimpleTabs() {
       <div className={classes.content}>
       <AppBar className={classes.appBar} position="static" >
           <Tabs centered value={value} onChange={handleChange}>
-            <Tab disableRipple style={{backgroundColor:"white"}} classes={{ root: classes.tabButton, selected: classes.tabSelected }} label="Tin tức khuyến mãi" />
+            <Tab disableRipple style={{backgroundColor:"white"}} classes={{ root: classes.tabButton, selected: classes.tabSelected }} label="Tin tức, khuyến mãi" />
           </Tabs>
         </AppBar>
         <Fade timeout={400} in={value === 0}>
@@ -86,7 +69,6 @@ export default function SimpleTabs() {
                 eventList?.data?.content?.map((event, index) => {
                   if(event?.status === "CREATE" && event?.status !== "DELETE"  && event?.type === "NEWS")
                   return(
-                  // if(event) return(
                   <div className={classes.repons} key={index}>
                     <NavLink to={`/detail-news/${event?.id}`} className={classes.news}>
                       <img className={classes.fullImg} 

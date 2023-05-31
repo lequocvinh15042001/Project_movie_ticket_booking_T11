@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
-import Showtime from "./Showtime";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MovieItem from "./Showtime/Desktop/MovieItem";
@@ -14,16 +12,12 @@ import useStyle from "./Showtime/Desktop/style";
 export default function AllMovieSearch() {
   const dispatch = useDispatch();
   const [listKetQua, setListKetQua]= useState([])
-  // const movieList = useSelector((state) => state.movieReducer.movieList);
-  // console.log("search tất cả phim hiển thị", movieList);
   const params = useParams()
   var item = params.searchItem.toString()
-  // console.log((params.searchItem).toString());
 
   useEffect(() =>{
     moviesApi.getSearchPhim(item)
     .then((res) =>{
-      // console.log(res);
       if(res?.data?.data)
       {
         setListKetQua(res?.data?.data)
@@ -32,11 +26,10 @@ export default function AllMovieSearch() {
       }
     })
     .catch((err) =>{
-      // console.log(err)
+      console.log(err)
     })
   },[item])
 
-  // console.log(listKetQua);
   const classes = useStyle();
   const settings = {
     className: "center",
@@ -73,15 +66,6 @@ export default function AllMovieSearch() {
           }}
           >Không tìm thấy kết quả!</div>  
           } 
-            {/* {listKetQua.map((movie) => {
-              return (
-                <div className="px-1 align-top" key={movie.id}>
-                  <MovieItem
-                    movie={movie}
-                  />
-                </div>
-              )
-          })} */}
       </Slider>   
     </div>
   );
