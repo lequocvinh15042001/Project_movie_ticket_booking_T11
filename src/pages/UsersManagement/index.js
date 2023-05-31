@@ -571,6 +571,28 @@ export default function UsersManagement() {
     }, 500);
   };
 
+  const handleToggleAddNhanVien = () => {
+    if (!addUser.isFilledIn) {
+      // nếu chưa điền thì toggle
+      setaddUser((data) => ({ ...data, toggle: !addUser.toggle }));
+      return;
+    }
+    if (addUser.readyAdd && !loadingAddUser) {
+      // nếu đã điền và đã sãn sàng
+      const userAdd = { ...addUser.data[0] };
+      console.log(addUser);
+      delete userAdd.id;
+      const dataAdd = {
+        name: userAdd.name,
+        email: userAdd.email,
+        username:userAdd.username,
+        password:"123456"
+      }
+      dispatch(postAddStaff(dataAdd)); 
+    }
+  };
+
+
   const handleToggleAddUser = () => {
     if (!addUser.isFilledIn) {
       // nếu chưa điền thì toggle
@@ -586,22 +608,10 @@ export default function UsersManagement() {
         name: userAdd.name,
         email: userAdd.email,
         username:userAdd.username,
-        password:"123456789"
+        password:"123456"
       }
-      // console.log("dataAdd:  ", dataAdd);
-      if(addUser?.data[0]?.role === true)
-      {
-        // console.log("gọi api add staff");
-        // console.log("staff mới: ", dataAdd);
-        dispatch(postAddStaff(dataAdd));
-      } else {
-        // console.log("gọi api add user");
-        // console.log("user mới: ", dataAdd);
-        dispatch(postAddUser(dataAdd));
-      }
-      
+      dispatch(postAddUser(dataAdd));
     }
- 
   };
 
   const onFilter = () => {
@@ -705,7 +715,7 @@ export default function UsersManagement() {
         {
           field: "name",
           headerName: "Họ và tên",
-          width: 250,
+          width: 200,
           editable: true,
           headerAlign: "center",
           align: "left",
@@ -728,6 +738,8 @@ export default function UsersManagement() {
           headerAlign: "center",
           align: "left",
           headerClassName: "custom-header",
+          hide: true,
+
         },
         // {
         //   field: "soDt",
@@ -825,7 +837,7 @@ export default function UsersManagement() {
               variant="contained"
               color="primary"
               className={`${classes.addUser} ${classes.button}`}
-              onClick={handleToggleAddUser}
+              onClick={handleToggleAddNhanVien}
               disabled={
                 addUser.toggle
                   ? addUser.isFilledIn

@@ -180,7 +180,7 @@ export default function NewsComponent() {
             </div> */}
           </div>
           <div className="readMore">
-            <button className="btn__readmore" type="button" onClick={handlerSeeMore}>See More</button>
+            <button className="btn__readmore" type="button" onClick={handlerSeeMore}>Xem thêm</button>
           </div>
         </div>
         </div>

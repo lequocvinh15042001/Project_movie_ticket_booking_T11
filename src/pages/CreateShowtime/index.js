@@ -29,7 +29,7 @@ import {
   resetCreateShowtime,
 } from "../../reducers/actions/BookTicket";
 import theatersApi from "../../api/theatersApi";
-import { getTheaters, getTheaters2, getTheaters3, getTheaters4 } from "../../reducers/actions/Theater";
+import { getTheaters } from "../../reducers/actions/Theater";
 
 import formatDate from "../../utilities/formatDate";
 import Swal from "sweetalert2";
@@ -89,7 +89,7 @@ export default function CreateShowTime() {
     ngayChieuGioChieu: "",
 
     setGiaVe: "",
-    giaVeRender: [70000, 80000],
+    giaVeRender: [70000],
 
     setPhong:"",
     phongRender:[101, 202, 303, 404],
@@ -229,7 +229,7 @@ export default function CreateShowTime() {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Create Successfully",
+        title: "Tạo mới thành công",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -240,7 +240,7 @@ export default function CreateShowTime() {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Create Error",
+        title: "Tạo mới thất bại",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -644,10 +644,10 @@ export default function CreateShowTime() {
 
   console.log("data: ", data);
   return (
-    <div style={{ height: "65vh", width: "100%"}}>
+    <div style={{ height: "70vh", width: "100%"}}>
       <div className={classes.backgroundImg}>
         <div className="row">
-          <div className="col-3 px-0 px-md-3">
+          <div className="col-3 px-0 px-md-1">
             <FormControl
               className={classes.search__item}
               focused={false}
@@ -688,7 +688,7 @@ export default function CreateShowTime() {
               </Select>
             </FormControl>
           </div>
-          <div className="col-3 px-0 px-md-3">
+          <div className="col-3 px-0 px-md-1">
             <FormControl
               className={classes.search__item}
               focused={false}
@@ -835,14 +835,14 @@ export default function CreateShowTime() {
               </Select>
             </FormControl>
           </div> */}
-          <div className="col-2 px-0 px-md-3">
+          <div className="col-2 px-0 px-md-1">
             <FormControl
               className={classes.search__item}
               focused={false}
               fullWidth
             >
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <ThemeProvider theme={materialTheme}>
+                <ThemeProvider>
                   <KeyboardDateTimePicker
                     open={data?.openCtr?.ngayChieuGioChieu}
                     onClose={handleCloseNgayChieuGioChieu}
@@ -850,10 +850,11 @@ export default function CreateShowTime() {
                     inputValue={selectedDate ? null : "Suất"} // khi chưa chọn thì "Chọn ngày, giờ chiếu" ghi đè lên value, khi đã chọn ngày thì return null để value={selectedDate} hiển thị ngày đã chọn
                     invalidDateMessage={
                       selectedDate ? "Invalid Date Format" : ""
-                    } // bỏ qua lỗi nếu selectedDate = null
+                    } 
+                    // bỏ qua lỗi nếu selectedDate = null
                     value={selectedDate} // giá trị truyền vào là obj date hoặc string chỉ ngày giờ đúng chuẩn có thể convert > tùy thuộc vào thư viện ngày tháng đang dùng(đang dùng date-fns)
                     onChange={handleDateChange}
-                    format="yyyy-MM-dd, HH:mm" // HH:mm ~ 23:10, hh:mm là ~ 11:10 PM
+                    format="HH:mm, dd-MM-yyyy" // HH:mm ~ 23:10, hh:mm là ~ 11:10 PM
                     onAccept={handleDateAccept}
                     ampm={false}
                   />
@@ -861,7 +862,7 @@ export default function CreateShowTime() {
               </MuiPickersUtilsProvider>
             </FormControl>
           </div>
-          <div className="col-2 px-0 px-md-3">
+          <div className="col-2 px-0 px-md-1">
             <FormControl
               className={classes.search__item}
               focused={false}
@@ -895,7 +896,7 @@ export default function CreateShowTime() {
               </Select>
             </FormControl>
           </div>
-          <div className="col-2 px-0 px-md-3">
+          <div className="col-2 px-0 px-md-1">
             <FormControl
               className={classes.search__item}
               focused={false}
@@ -934,7 +935,7 @@ export default function CreateShowTime() {
 
       <div className={classes.control}>
         <div className="row">
-          <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
+          <div className={`col-12 col-md-4 ${classes.itemCtro}`}>
             <Button
               disabled={!isReadyTaoLichChieu}
               classes={{
@@ -946,13 +947,13 @@ export default function CreateShowTime() {
               Tạo lịch
             </Button>
           </div>
-          <div className={`col-12 col-md-4 ${classes.itemCtro}`}>
+          <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder="Tìm lịch chiếu..."
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,

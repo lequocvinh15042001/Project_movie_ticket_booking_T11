@@ -267,7 +267,7 @@ export default function TicketManagement() {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder="Tìm vé..."
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
@@ -275,22 +275,10 @@ export default function TicketManagement() {
                 style={{color:"black"}}
                 onChange={(evt) => handleInputSearchChange(evt.target.value)}
               />
-            </div>
-            <div  style={{marginTop: "1rem"}}>
-            <div onClick={handleReload}>
-              <RefreshButton />
-            </div>
-            {/* <Button
-              variant="contained"
-              color="primary"
-              // className={classes.addMovie}
-              onClick={handleReload}
-              // disabled={loadingAddUploadMovie}
-              // startIcon={<AddBoxIcon />}
-            >
-              Refresh
-            </Button> */}
           </div>
+          </div>
+          <div className={`col-12 col-md-6 ${classes.itemCtro}`} onClick={handleReload}>
+            <RefreshButton />
           </div>
         </div>
       </div>

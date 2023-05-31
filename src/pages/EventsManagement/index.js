@@ -81,11 +81,11 @@ export default function MoviesManagement() {
       dispatch(getEventsList());
     }
   }, [
-    successUpdateEvent,
-    // successUpdateNoneImageMovie,
-    successDelete,
-    errorDelete,
-    successAddEvent,
+    // successUpdateEvent,
+    // // successUpdateNoneImageMovie,
+    // successDelete,
+    // errorDelete,
+    // successAddEvent,
   ]); // khi vừa thêm phim mới xong mà xóa liên backend sẽ báo lỗi xóa không được nhưng thực chất đã xóa thành công > errorDeleteMovie nhưng vẫn tiến hành làm mới lại danh sách
 
   useEffect(() => {
@@ -317,7 +317,16 @@ export default function MoviesManagement() {
     {
       field: "title",
       headerName: "Tiêu đề",
-      width: 500,
+      width: 380,
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
+    },
+    {
+      field: "createdBy",
+      headerName: "Người viết",
+      width: 150,
       headerAlign: "center",
       align: "left",
       headerClassName: "custom-header",

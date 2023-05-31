@@ -161,6 +161,17 @@ export const postAddUser = (user) => {
           // payload: { error: error.response?.data ? error.response.data : error.message, }
           payload: "Thêm lỗi!"
         })
+        Swal.fire({
+          allowOutsideClick: false,
+          icon: 'error',
+          title: 'Không thành công',
+          text: 'Tên tài khoản hoặc email bị trùng!!',
+          confirmButtonText: `Okay`,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // history.replace('/')
+          }
+        })
       })
   }
 }
@@ -181,8 +192,19 @@ export const postAddStaff = (user) => {
       .catch(error => {
         dispatch({
           type: ADD_USER_FAIL,
-          payload: { error: error.response?.data ? error.response.data : error.message, }
-          // payload: "Thêm lỗi!"
+          // payload: { error: error.response?.data ? error.response.data : error.message, }
+          payload: "Thêm lỗi!"
+        })
+        Swal.fire({
+          allowOutsideClick: false,
+          icon: 'error',
+          title: 'Không thành công',
+          text: 'Tên tài khoản hoặc email nhân viên bị trùng!!',
+          confirmButtonText: `Okay`,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // history.replace('/')
+          }
         })
       })
   }

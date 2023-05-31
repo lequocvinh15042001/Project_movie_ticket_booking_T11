@@ -2,18 +2,15 @@ import React, { useEffect, useState, useRef } from "react";
 
 import { DataGrid, GridToolbar, GridOverlay } from "@material-ui/data-grid";
 import { useSelector, useDispatch } from "react-redux";
-import Button from "@material-ui/core/Button";
 import { useSnackbar } from "notistack";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
-import Dialog from "@material-ui/core/Dialog";
-import AddBoxIcon from "@material-ui/icons/AddBox";
 import RenderCellExpand from "./RenderCellExpand";
 import slugify from "slugify";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-import { useStyles, DialogContent, DialogTitle } from "./styles";
+import { useStyles } from "./styles";
 import {
   deleteMovie,
   updateMovieUpload,
@@ -473,7 +470,7 @@ export default function BookByStaff() {
               Book for user
             </Button> */}
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Branch</InputLabel>
+                <InputLabel id="demo-simple-select-label">Rạp</InputLabel>
                 <Select 
                   className={classes.addMovie}
                   labelId="demo-simple-select-label"
@@ -495,7 +492,7 @@ export default function BookByStaff() {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder="Tìm lịch chiếu..."
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,

@@ -387,7 +387,7 @@ export default function MoviesManagement() {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Tìm kiếm..."
+                placeholder="Tìm kiếm phim..."
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,

@@ -334,7 +334,7 @@ export default function BranchManagement() {
     <div style={{ height: "80vh", width: "100%", backgroundColor:"white"}}>
       <div className={classes.control}>
         <div className="row">
-          <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
+          {/* <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
             <Button
               variant="contained"
               color="primary"
@@ -345,14 +345,14 @@ export default function BranchManagement() {
             >
               Thêm chi nhánh
             </Button>
-          </div>
-          <div className={`col-12 col-md-4 ${classes.itemCtro}`}>
+          </div> */}
+          <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Tìm kiếm danh mục..."
+                placeholder="Tìm kiếm rạp..."
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
