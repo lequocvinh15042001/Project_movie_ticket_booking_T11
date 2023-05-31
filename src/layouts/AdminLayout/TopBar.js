@@ -80,7 +80,7 @@ const TopBar = ({
       <Toolbar>
         <div onClick={handleClickLogo} style={{ cursor: "pointer" }}>
           {/* <img src="/img/headTixLogo.png" alt="logo" style={{ height: 50 }} /> */}
-          <h5>GOLDEN TICKET NEW WEBSITE</h5>
+          <h5>QUẢN TRỊ HỆ THỐNG GOLDENNEW TICKET</h5>
         </div>
 
         {/* 1 thẻ div chiếm hết khoảng trống còn lại dể dồn các icon về 2 bên */}
@@ -88,7 +88,7 @@ const TopBar = ({
 
         {/* cái icon chuông và đăng xuất */}
         <Hidden mdDown>
-          <IconButton color="inherit">
+          {/* <IconButton color="inherit">
             <Badge
               badgeContent={notifications.length}
               color="secondary"
@@ -96,7 +96,7 @@ const TopBar = ({
             >
               <NotificationsIcon />
             </Badge>
-          </IconButton>
+          </IconButton> */}
           <Tooltip title="Log out">
             <IconButton color="inherit" onClick={handleLogout}>
               <InputIcon />
