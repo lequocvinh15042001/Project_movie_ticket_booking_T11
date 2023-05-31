@@ -45,7 +45,7 @@ const usersApi = {
   },
 
   getTicketByAdminStaff: () =>{
-    const path = `/tickets/getList`;
+    const path = `/tickets/getList?size=300`;
     return axiosClient.get(path);
   },
 

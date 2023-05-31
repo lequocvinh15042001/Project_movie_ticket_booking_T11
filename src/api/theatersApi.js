@@ -45,17 +45,17 @@ const theatersApi = {
 
 
   getThongTinLichChieuHeThongRapTheoRap: (branchId) => {
-    const path = `/schedule/getAll?page=0&size=20&branchId=${branchId}`;
+    const path = `/schedule/getAll?page=0&size=200&branchId=${branchId}`;
     return axiosClient.get(path);
   },
 
   getThongTinLichChieuHeThongRapTheoNgayVaRap: (branchId, startDate) => {
-    const path = `/schedule/getAll?page=0&size=20&branchId=${branchId}&startDate=${startDate}`;
+    const path = `/schedule/getAll?page=0&size=200&branchId=${branchId}&startDate=${startDate}`;
     return axiosClient.get(path);
   },
 
   getThongTinLichChieuPhimCoRap: (maPhim, branchId) => {
-    const path = `schedule/getAll?page=0&size=20&movieId=${maPhim}&branchId=${branchId}`;
+    const path = `schedule/getAll?page=0&size=200&movieId=${maPhim}&branchId=${branchId}`;
     return axiosClient.get(path);
   },
 
@@ -65,11 +65,11 @@ const theatersApi = {
     // console.log("mã phim đang xem lịch chiếu: ", maPhim);
     // console.log("mã rạp đang xem lịch chiếu: ", branchId);
     if(branchId === undefined){
-      const path = `schedule/getAll?page=0&size=20&movieId=${maPhim}`;
+      const path = `schedule/getAll?page=0&size=200&movieId=${maPhim}`;
       return axiosClient.get(path);
     }
     else{
-      const path = `schedule/getAll?page=0&size=20&movieId=${maPhim}&branchId=${branchId}`;
+      const path = `schedule/getAll?page=0&size=200&movieId=${maPhim}&branchId=${branchId}`;
       return axiosClient.get(path);
     }
   },
@@ -81,7 +81,7 @@ const theatersApi = {
   },
 
   getLichCoPhong: (maPhim, branchId, startDate, maPhong) => {
-    const path = `schedule/getAll?page=0&size=20&movieId=${maPhim}&branchId=${branchId}&startDate=${startDate}&roomId=${maPhong}`;
+    const path = `schedule/getAll?page=0&size=200&movieId=${maPhim}&branchId=${branchId}&startDate=${startDate}&roomId=${maPhong}`;
     return axiosClient.get(path);
 },
 

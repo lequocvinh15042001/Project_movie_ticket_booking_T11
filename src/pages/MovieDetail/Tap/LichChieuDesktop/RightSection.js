@@ -48,6 +48,7 @@ export default function RightSection({ branch, idRap }) {
     });
   },[])
 
+  console.log("Data lịch chiếu: ", data);
   const [indexSelected, setindexSelected] = useState(0);
 
   // const desktopData = useMemo(

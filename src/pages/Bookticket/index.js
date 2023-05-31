@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-import { getListSeat } from "../../reducers/actions/BookTicket";
 import {
   SET_ISMOBILE,
   INIT_DATA,

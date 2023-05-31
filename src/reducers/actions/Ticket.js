@@ -60,7 +60,7 @@ export const getAllTicketByAdminStaff = () => {
     })
     usersApi.getTicketByAdminStaff()
       .then(result => {
-       console.log("all ticket API: ", result);
+      //  console.log("all ticket API: ", result);
         dispatch({
           type: GET_ALLTICKET_SUCCESS,
           payload: { data: result?.data?.data?.content}

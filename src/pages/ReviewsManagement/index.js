@@ -8,11 +8,11 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import Dialog from "@material-ui/core/Dialog";
-import AddBoxIcon from "@material-ui/icons/AddBox";
+// import AddBoxIcon from "@material-ui/icons/AddBox";
 import RenderCellExpand from "./RenderCellExpand";
 import slugify from "slugify";
 import DialogActions from '@mui/material/DialogActions';
-import Fab from "@material-ui/core/Fab";
+// import Fab from "@material-ui/core/Fab";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import RefreshButton from "../../utilities/RefreshButton"
 
@@ -26,8 +26,8 @@ import {
   addMovieUpload,
 } from "../../reducers/actions/Movie";
 import Action from "./Action";
-import ThumbnailYoutube from "./ThumbnailYoutube";
-import Form from "./Form";
+// import ThumbnailYoutube from "./ThumbnailYoutube";
+// import Form from "./Form";
 // import FormAddEvent from "./FormAddEvent";
 import Swal from "sweetalert2";
 import { getReviewsList, postAddReview, putReviewUpdate, resetReviewList } from "../../reducers/actions/ReviewsManagement";
@@ -512,7 +512,16 @@ console.log(reviewList);
     {
       field: "title",
       headerName: "Tiêu đề",
-      width: 350,
+      width: 200,
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+      renderCell: RenderCellExpand,
+    },
+    {
+      field: "createdBy",
+      headerName: "Người viết",
+      width: 150,
       headerAlign: "center",
       align: "left",
       headerClassName: "custom-header",

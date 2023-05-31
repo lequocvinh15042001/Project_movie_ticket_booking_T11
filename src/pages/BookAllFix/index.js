@@ -19,11 +19,7 @@ import { LOGIN_FAIL, LOGIN_SUCCESS } from "../../reducers/constants/Auth";
 export default function Homepage() {
   const dispatch = useDispatch();
   const movieList = useSelector((state) => state.movieReducer.movieList);
-  // console.log("Lấy được DS Phim: ",movieList);
   const theaterList = useSelector((state) => state.theaterReducer.theaterList);
-  // console.log("Lấy được DS Rạp chiếu của mình: ",theaterList);
-
-  // const { currentUser } = useSelector((state) => state.authReducer); 
 
   const [cUser , setCUser] = useState();
   useEffect(() => {
@@ -89,8 +85,6 @@ export default function Homepage() {
   }, []);
 
   return (
-    // <div>
       <Showtime />
-    // </div>
   );
 }

@@ -15,11 +15,11 @@ import ShowtimeDetail  from "../../UserProfile/ShowtimeDetail/index"
 import Showtime from "./../../../pages/Homepage/Showtime";
 
 export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
-  console.log("----------MT---------",data);
+  // console.log("----------MT---------",data);
   const [onClickBtnMuave, setOnClickBtnMuave] = useState(0)
   const param = useParams()
   const [quantityComment, setQuantityComment] = useState(0)
-  const { thoiLuong, danhGia } = useApiThoiLuongDanhGia(param.maPhim)
+  const { danhGia } = useApiThoiLuongDanhGia(param.maPhim)
   const classes = useStyles({ bannerImg: data?.smallImageURl })
   const [imageNotFound, setImageNotFound] = useState(false)
   let location = useLocation();

@@ -7,7 +7,6 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import Swal from "sweetalert2";
 import { makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
 import { register, resetErrorLoginRegister } from "../../reducers/actions/Auth";
-import logoTix from "./logo/logoTix.png";
 
 export default function Register() {
   const useStyles = makeStyles((theme) => ({
@@ -143,7 +142,7 @@ export default function Register() {
         onSubmit={handleSubmit}
       >
         {(formikProps) => (
-          <Form className="col-sm-12">
+          <Form className="col-sm-10 mx-auto">
             <div className="form-group">
               <label>Tên tài khoản&nbsp;</label>
               <ErrorMessage

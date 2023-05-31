@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core";
 import * as yup from "yup";
@@ -16,9 +15,7 @@ import { useTheme } from "@material-ui/core/styles";
 import NavigationIcon from "@material-ui/icons/Navigation";
 import Fab from "@material-ui/core/Fab";
 import { useHistory } from "react-router-dom";
-// import ShowtimeUser from "./../UserProfile/ShowtimeUser/index"
 import CircularIntegration from "./../../utilities/CircularIntegration"
-
 import { FAKE_AVATAR } from "../../constants/config";
 import {
   getInfoUser,
@@ -28,8 +25,7 @@ import {
 } from "../../reducers/actions/UsersManagement";
 import { getComment } from "../../reducers/actions/MovieDetail";
 import usersApi from "../../api/usersApi";
-import { getAllTicket, getAllTicketByUserId } from "../../reducers/actions/Ticket";
-
+import { getAllTicket } from "../../reducers/actions/Ticket";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -39,8 +35,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { getBillsChuaThanhToan, getBillsUserId } from "../../reducers/actions/Bill";
 import formatDate from "../../utilities/formatDate";
-// import { useSnackbar } from "notistack";
-// import { getBillsChuaThanhToan, getBillsList } from "../../reducers/actions/Bill";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -119,22 +113,15 @@ export default function Index({placeholder}) {
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const classes = useStyles();
   const dispatch = useDispatch();
-  // const  enqueueSnackbar  = useSnackbar();
   const { successInfoUser, loadingInfoUser } = useSelector(
     (state) => state.usersManagementReducer
   );
   console.log("successInfoUser: ", successInfoUser);
-  // const { currentUser } = useSelector((state) => state.authReducer);
-  // console.log(currentUser);
-
-  // const { commentList } = useSelector((state) => state.movieDetailReducer);
   const { ticketList } = useSelector((state) => state.ticketReducer);
-  // const { billList } = useSelector((state) => state.billsManagementReducer);
-  const { billListUserId } = useSelector((state) => state.billsManagementReducer);
-  // const movieList = useSelector((state) => state.movieReducer.movieList);
+  // const { billListUserId } = useSelector((state) => state.billsManagementReducer);
 
 
-  console.log("Vé đã đặt",ticketList);
+  // console.log("Vé đã đặt",ticketList);
   // console.log("Bill đã đặt",billList);
 
   
@@ -149,16 +136,8 @@ export default function Index({placeholder}) {
     (state) => state.usersManagementReducer
   );
 
-  // console.log(loadingUpdateUser);
-
   const {
     billListChuaTT,
-    // loadingBillListChuaTT,
-    // billListDaTT,
-    // loadingBillListDaTT,
-    // loadingUpdateNoneImageMovie,
-    // successUpdateNoneImageMovie,
-    // errorUpdateNoneImageMovie,
   } = useSelector((state) => state.billsManagementReducer);
 
   console.log(billListChuaTT);
@@ -172,75 +151,20 @@ export default function Index({placeholder}) {
   const [oldPass, setOldPass] = useState()
   const [newPass, setNewPass] = useState()
 
-  // useEffect(() => {
-  //   if (
-  //     !billListChuaTT
-  //   ) {
-  //     dispatch(getBillsChuaThanhToan(successInfoUser?.data?.id));
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (
-  //     !billListDaTT
-  //   ) {
-  //     dispatch(getBillsChuaThanhToan());
-  //   }
-  // }, [
-  // ]);
-  // console.log(billListChuaTT);
-  // console.log(billListDaTT);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   useEffect(() => {
-    // dispatch(getInfoUser({ username: currentUser?.username }));
     dispatch(getInfoUser());
     dispatch(getBillsChuaThanhToan(successInfoUser?.data?.id));
-    // usersApi.getTicket(successInfoUser.data.id)
-    // .then((res) => {
-    //   setTicket(res)
-    //   console.log(ticket);
-    // })
-    // .catch((err) =>{
-    //   console.log(err);
-    // })
-    // if(!ticketList){
-      // dispatch(getAllTicketByUserId(successInfoUser?.data?.id ? successInfoUser?.data?.id : currentUser?.data?.id))
-      dispatch(getAllTicket(successInfoUser?.data?.id))
-      dispatch(getBillsUserId(successInfoUser?.data?.id))
-
-    // }
+    dispatch(getAllTicket(successInfoUser?.data?.id))
+    dispatch(getBillsUserId(successInfoUser?.data?.id))
     dispatch(getComment());
 
     return () => dispatch(resetUserList());
   }, [successInfoUser?.data?.id]);
 
-  // useEffect(() => {
-  //   if (commentList) {
-  //     const { posts, likePosts } = commentList.reduce(
-  //       (obj, post) => {
-  //         let posts = obj.posts;
-  //         let likePosts = obj.likePosts;
-  //         if (post.avtId === successInfoUser?.data?.username) {
-  //           posts++;
-  //           likePosts += post.userLikeThisComment.length;
-  //         }
-  //         return { ...obj, posts, likePosts };
-  //       },
-  //       { posts: 0, likePosts: 0 }
-  //     );
-  //     setdataShort((data) => ({ ...data, posts, likePosts }));
-  //   }
-  //   if (successInfoUser) {
-  //     const ticket = successInfoUser?.thongTinDatVe?.length;
-  //     const total = successInfoUser?.thongTinDatVe?.reduce((total, ticket) => {
-  //       return total + ticket.danhSachGhe.length * ticket.giaVe;
-  //     }, 0);
-  //     setdataShort((data) => ({ ...data, ticket, total }));
-  //   }
-  // }, [commentList, successInfoUser]);
   useEffect(() => {
     if (successUpdateUser) {
       Swal.fire({
@@ -361,20 +285,10 @@ export default function Index({placeholder}) {
     })
     .then((res) => res.json())
     .then((data) =>{
-      // console.log(data.secure_url);
       setImage(data.secure_url)
-      // enqueueSnackbar("Thành công", { variant: "success" });
-      // Swal.fire({
-      //   position: "center",
-      //   icon: "success",
-      //   title: "Úp ảnh thành công!",
-      //   showConfirmButton: false,
-      //   timer: 1500,
-      // });
     })
     .catch((err) => {
       console.log(err);
-      // enqueueSnackbar("Thất bại", { variant: "error" });
     })
   }
 

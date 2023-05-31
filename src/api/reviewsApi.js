@@ -8,7 +8,7 @@ const reviewsApi = {
   // },
 
   getListReview:() =>{
-    const path= `/article/getAllPaging?page=0&size=20&articleType=REVIEWS`;
+    const path= `/article/getAllPaging?page=0&size=40&articleType=REVIEWS`;
     return axiosClient.get(path);
   },
 
