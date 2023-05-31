@@ -1,12 +1,9 @@
 import React from 'react'
-
 import { Link, useHistory } from 'react-router-dom'
-
 import BtnPlay from '../../../../../components/BtnPlay';
 import BlockRating from '../../../../../components/BlockRating';
 import useStyles from './styles';
 import useApiThoiLuongDanhGia from '../../../../../utilities/useApiThoiLuongDanhGia';
-
 import './movie.scss'
 
 function MovieItem({ movie, comingMovie }) {
@@ -23,7 +20,6 @@ function MovieItem({ movie, comingMovie }) {
           <div className={`film__poster ${classes.addbg}`}>
             <div className="film__overlay" onClick={() => history.push(`/phim/${movie.id}`, { comingMovie })} />
             <div className="play__trailer">
-              {/* class play lấy từ Carousel component*/}
               <BtnPlay cssRoot={"play"} width={48} height={48} urlYoutube={movie?.trailerURL} />
             </div>
           </div>
@@ -39,7 +35,6 @@ function MovieItem({ movie, comingMovie }) {
             </p>
           </div>
           <div className={`film__button`}>
-            {/* nếu thoiLuong = undefined => phim hiện không có lịch chiếu */}
             {(thoiLuong || comingMovie) && <Link style={{ background: comingMovie ? "#60c5ef" : "#fb4226", }} to={{ pathname: `/phim/${movie.id}`, state: { comingMovie } }}>{comingMovie ? "INFOMATION" : "BOOK NOW!"}</Link>}
           </div>
         </div>

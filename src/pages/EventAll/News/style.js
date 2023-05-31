@@ -8,12 +8,11 @@ const useStyle = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     backgroundColor: "#000",
-    // backgroundColor: theme.palette.background.paper,
   },
 
   fullImg: {
-    width: '40rem',
-    height: '20rem',
+    width: '35rem',
+    height: '15rem',
     borderRadius: 5,
   },
 
