@@ -162,37 +162,7 @@ export default function Choose() {
       setSuatChieu: "",
       maLichChieu: "",
     }));
-    // theatersApi
-    //   .getThongTinLichChieuPhim(phim.id)
-    //   .then((result) => {
-    //     console.log(result?.data);
-    //     setData((data) => ({ ...data, startRequest: false }));
-    //     const cumRapChieuData= result?.data?.content?.reduce(
-    //       (colect, item) => {
-    //         console.log(item);
-    //         return [...colect, item];
-    //       },
-    //       []
-    //     );
-    //     // const cumRapChieuData} = result.data.content;
-    //     console.log("cumRapChieuData", cumRapChieuData);
-    //     // const rapRender = cumRapChieuData
-    //     const rapRender = cumRapChieuData.map((item) => item)
-    //     setData((data) => ({
-    //       ...data,
-    //       rapRender,
-    //       cumRapChieuData,
-    //     }));
-        
-    //   })
-    //   .catch(function (error) {
-    //     if (error.response) {
-    //       setData((data) => ({ ...data, errorCallApi: error.response.data }));
-    //     } else if (error.request) {
-    //       setData((data) => ({ ...data, errorCallApi: error.message }));
-    //     }
-    //   });
-      // lấy rạp
+    
       theatersApi.getThongTinLichChieuHeThongRap()  //5
       .then((response) => { //6
         console.log("all branch: ",response); //7

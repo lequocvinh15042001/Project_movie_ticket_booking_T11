@@ -7,7 +7,7 @@ const bookingApi = {
   },
 
   getLichChieuChiTietHeThong: (movieId, branchId, startDate, startTime, roomId) =>{
-    const path = `/schedule/getAll?page=0&size=20&movieId=${movieId}&branchId=${branchId}&startDate=${startDate}&startTime=${startTime}&roomId=${roomId}`;
+    const path = `/schedule/getAll?page=0&size=300&movieId=${movieId}&branchId=${branchId}&startDate=${startDate}&startTime=${startTime}&roomId=${roomId}`;
     // console.log("Lấy chi tiết lịch thành công!");
     return axiosClient.get(path);
   },

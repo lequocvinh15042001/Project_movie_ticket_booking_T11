@@ -111,83 +111,11 @@ export default function CreateShowTime() {
   const [isReadyTaoLichChieu, setIsReadyTaoLichChieu] = useState(false);
   const classes = useStyles({ srcImg: data?.hinhAnhPhimSelected });
 
-
-  // useEffect(() => {
-  //   if (
-  //     !scheduleList2 ||
-  //     successUpdateSchedule ||
-  //     successUpdateNoneImageSchedule ||
-  //     successDeleteSchedule ||
-  //     errorDeleteSchedule ||
-  //     successAddUploadSchedule
-  //   ) {
-  //     dispatch(getMovieListManagement());
-  //     // console.log("branch: ",branch);
-  //     dispatch(getAllScheduleListManagement())
-  //   }
-  // }, [
-  //   successUpdateSchedule,
-  //   successUpdateNoneImageSchedule,
-  //   successDeleteSchedule,
-  //   errorDeleteSchedule,
-  //   successAddUploadSchedule,
-  // ]); // khi vừa thêm phim mới xong m
-  
-  // useEffect(() => {
-  //   if (movieList2 === null) {
-  //     dispatch(getMovieListManagement());
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (scheduleList2 === null) {
-  //     dispatch(getAllScheduleListManagement());
-  //   }
-  // }, []);
-
   useEffect(() => {
     dispatch(getMovieListManagement());
     dispatch(getAllScheduleListManagement());
 
   },[])
-
-  // useEffect(() => {
-  //   const showTimeList = theaterList2?.reduce((collect1, heThongRap) => {
-  //     return [
-  //       ...collect1,
-  //       ...heThongRap.lstCumRap?.reduce((collect2, cumRap) => {
-  //         return [
-  //           ...collect2,
-  //           ...cumRap.danhSachPhim?.reduce((collect3, phim) => {
-  //             return [
-  //               ...collect3,
-  //               ...phim.lstLichChieuTheoPhim?.reduce((collect4, lichChieu) => {
-  //                 return [
-  //                   ...collect4,
-  //                   {
-  //                     ...lichChieu,
-  //                     tenHeThongRap: heThongRap.tenHeThongRap,
-  //                     tenCumRap: cumRap.tenCumRap,
-  //                     logo: heThongRap.logo,
-  //                     diaChi: cumRap.diaChi,
-  //                     maPhim: phim.maPhim,
-  //                     tenPhim: phim.tenPhim,
-  //                     id: lichChieu.maLichChieu,
-  //                     ngayChieuGioChieu: `${lichChieu.ngayChieuGioChieu.slice(
-  //                       0,
-  //                       10
-  //                     )}, ${lichChieu.ngayChieuGioChieu.slice(11, 16)}`,
-  //                   },
-  //                 ];
-  //               }, []),
-  //             ];
-  //           }, []),
-  //         ];
-  //       }, []),
-  //     ];
-  //   }, []);
-  //   setLichChieuDisplay(showTimeList);
-  // }, [theaterList2]);
 
   useEffect(() => {
     const showTimeList = scheduleList2?.data?.reduce((collect1, lichChieu) => {
@@ -215,13 +143,13 @@ export default function CreateShowTime() {
     setLichChieuDisplay(showTimeList);
   }, [scheduleList2]);
 
-  // console.log(lichChieuDisplay);
+  // console.log(data);
 
   useEffect(() => {
-    if (data.setPhim && data.ngayChieuGioChieu && data.maRap && data.setGiaVe)
+    if (data.setPhim && data.ngayChieuGioChieu && data.maRap && data.setGiaVe && data.setPhong)
       setIsReadyTaoLichChieu(true);
     else setIsReadyTaoLichChieu(false);
-  }, [data?.setPhim, data?.ngayChieuGioChieu, data?.maRap, data?.setGiaVe]);
+  }, [data?.setPhim, data?.ngayChieuGioChieu, data?.maRap, data?.setGiaVe, data?.setPhong]);
 
   useEffect(() => {
     if (successCreateShowtime) {
@@ -718,13 +646,21 @@ export default function CreateShowTime() {
                     selected: classes["menu__item--selected"],
                   }}
                 >
-                  {data.setPhim
+                  {/* {
+                    data.setPhim? 
+                      `${
+                      data.startRequest
+                        ? ""
+                        : "Đang tìm"
+                      }` : "Vui lòng chọn rạp!"
+                  } */}
+                  {/* {data.setPhim
                     ? `${
                         data.startRequest
                           ? "Đang tìm"
-                          : "Không tìm thấy, chọn lại phim!"
+                          : ""
                       }`
-                    : "Không tìm thấy"}
+                    : "Không tìm thấy"} */}
                 </MenuItem>
                 {data?.heThongRapRender?.data?.content?.map((item) => (
                   <MenuItem
