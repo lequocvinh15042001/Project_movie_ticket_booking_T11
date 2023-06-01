@@ -183,7 +183,7 @@ export default function Login() {
               {/* error from api */}
               {errorLogin && (
                 <div className="alert alert-danger">
-                  <span> {errorLogin}</span>
+                  <span>Tài khoản hoặc mật khẩu không đúng!</span>
                 </div>
               )}
             </Form>
