@@ -76,7 +76,7 @@ export default function Register() {
     //   .string()
     //   .required("*Số điện thoại không được bỏ trống !")
     //   .matches(phoneRegExp, "Số điện thoại không hợp lệ!"),
-      name: yup.string().required("*Không được bỏ trống !"),
+    name: yup.string().required("*Không được bỏ trống !"),
   });
 
   const handleSubmit = (user) => {
@@ -94,6 +94,15 @@ export default function Register() {
       if(user.password === user.repassword)
       {
         dispatch(register(info));
+      }
+      else {
+        Swal.fire({
+          allowOutsideClick: false,
+          icon: 'error',
+          title: 'Lỗi...',
+          text: 'Mật khẩu không khớp!',
+          confirmButtonText: `Nhập lại`,
+        })
       }
     }
   };
