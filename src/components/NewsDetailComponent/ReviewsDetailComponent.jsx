@@ -119,7 +119,7 @@ export default function ReviewsDetailComponent(props) {
             <div className="social--item mr-2">
               {/* <ThumbUpAltIcon style={{ marginRight: "5px" }} />
               <span>{tinTuc?.likes}</span> */}
-                <InforReviewDetail idReviewPost={tinTuc?.data?.id}/>
+                <InforReviewDetail idReviewPost={tinTuc?.data?.id} soView={tinTuc?.data?.view}/>
             </div>
             {/* <div className="social--item">
               <ShareIcon style={{ marginRight: "5px" }} />

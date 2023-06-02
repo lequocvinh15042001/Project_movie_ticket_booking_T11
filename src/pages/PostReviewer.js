@@ -200,7 +200,7 @@ export default function PostReviewer({reviewerDetailShowtimes, reviewList, avata
             description={selectedPost?.description}
           />
 
-          <InforReviewPost idReviewPost={tinTuc?.id}/>
+          <InforReviewPost idReviewPost={tinTuc?.id} soView={tinTuc?.view}/>
           
       </Card>
       </div>

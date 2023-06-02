@@ -94,7 +94,7 @@ export default function NewsComponent() {
             </div>
             <div>
               {/* {cloneElement(<InforReviewHomepage />, { idReviewPost: tinTuc.id })} */}
-              <InforReviewHomepage idReviewPost={tinTuc.id} uniqueKey={uniqueKey}/>
+              <InforReviewHomepage idReviewPost={tinTuc.id} uniqueKey={uniqueKey} soView={tinTuc?.view}/>
             </div>
           </div>
         </div>
