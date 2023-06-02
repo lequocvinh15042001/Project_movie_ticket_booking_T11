@@ -307,7 +307,8 @@ export default function CenteredTabs({
           index={location.state?.comingMovie ? "hide" : 0}
           isMobile={isMobile}
         >
-          {isMobile ? <LichChieuMobile /> : <LichChieuDesktop data={movieDetailShowtimes} />}
+          {/* {isMobile ? <LichChieuMobile /> : <LichChieuDesktop data={movieDetailShowtimes} />} */}
+          <LichChieuDesktop data={movieDetailShowtimes} />
         </TabPanel>
       </Fade>
       <Fade

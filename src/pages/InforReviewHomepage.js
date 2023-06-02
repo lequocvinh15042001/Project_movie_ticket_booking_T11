@@ -1,10 +1,12 @@
 
 import { Button, CardActions, IconButton, Typography } from '@material-ui/core';
-import { Comment as CommentIcon, Share as ShareIcon, Favorite as FavoriteIcon } from '@material-ui/icons';
+import { Comment as CommentIcon, Share as ShareIcon, Favorite as FavoriteIcon, Visibility as VisibilityIcon } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
+import BookIcon from '@mui/icons-material/Book';
 import { useDispatch, useSelector } from 'react-redux';
 import { postCommentBaiViet, postLikeUnlikeBaiViet } from '../reducers/actions/Interaction';
 import interactionApi from "../api/interactionApi"
+import eventsApi from "../api/eventsApi"
 import { getInfoUser } from '../reducers/actions/UsersManagement';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -36,13 +38,14 @@ function TabPanel(props) {
   );
 }
 
-export default function InforReviewHomepage({ idReviewPost,   
+export default function InforReviewHomepage({ idReviewPost,
   data,
   onClickBtnMuave,
   isMobile,
   onIncreaseQuantityComment,
-  uniqueKey
-  }) {
+  uniqueKey,
+  soView
+}) {
 
   const [commentList, setCommentList] = useState()
   const [likeList, setListLike] = useState()
@@ -53,50 +56,61 @@ export default function InforReviewHomepage({ idReviewPost,
   const { currentUser } = useSelector((state) => state.authReducer);
   const [soLike, setSoLike] = useState(0);
   const [soCmt, setSoCmt] = useState(0);
+  // const [soView, setSoView] = useState(0);
   // const [isLiked, setIsLiked] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getInfoUser)
-  },[currentUser])
-  
-  useEffect(()=>{
+  }, [currentUser])
+
+  useEffect(() => {
     interactionApi.getAllLikeBaiViet(idReviewPost)
-    .then(result => {
-    //  console.log("data danh sách like bài viết: ", result.data.data);
-     setListLike(result.data.data)
-    })
-    .catch(
+      .then(result => {
+        //  console.log("data danh sách like bài viết: ", result.data.data);
+        setListLike(result.data.data)
+      })
+      .catch(
       // console.log("lỗi")
     )
-  },[soLike])
+  }, [soLike])
 
-  useEffect(()=>{
+  useEffect(() => {
     interactionApi.getAllCommentBaiViet(idReviewPost)
-        .then(result => {
+      .then(result => {
         //  console.log("data danh sách comment bài viết nè: ", result.data.data);
-         setCommentList(result.data.data)
-        })
-        .catch(
-          // console.log("lỗi")
+        setCommentList(result.data.data)
+      })
+      .catch(
+      // console.log("lỗi")
     )
-  },[soCmt])
+  }, [soCmt])
 
+  // console.log(soView);
   useEffect(() => {
     interactionApi.checkUserLikeOrUnlike(currentUser?.data?.id, idReviewPost)
       .then(result => {
-      //  console.log("Like check: ", result.data);
-       setLikeCheck(result.data.success)
+        //  console.log("Like check: ", result.data);
+        setLikeCheck(result.data.success)
       })
       .catch(
-        // console.log("lỗi")
-      )
+      // console.log("lỗi")
+    )
   }, [idReviewPost]);
 
 
   // console.log(likeCheck);
   // console.log(likeList);
   // console.log(currentUser);
+
+  const handleLikeClick2 = () => {
+    if (currentUser === null) {
+      isLogin();
+      return;
+    }
+
+    eventsApi.addSaveArticle({ userId: successInfoUser?.data?.id, articleId: idReviewPost })
+  };
 
   const handleLikeClick = () => {
     if (currentUser === null) {
@@ -109,14 +123,14 @@ export default function InforReviewHomepage({ idReviewPost,
       // dispatch(getListLikeBaiViet(idReviewPost));
       interactionApi.getAllLikeBaiViet(idReviewPost)
         .then(result => {
-        // console.log("data danh sách like bài viết: ", result.data.data);
-        setSoLike(result.data.data.length - 1);
-        setListLike(result.data.data)
-        setLikeCheck(false);
+          // console.log("data danh sách like bài viết: ", result.data.data);
+          setSoLike(result.data.data.length - 1);
+          setListLike(result.data.data)
+          setLikeCheck(false);
         })
         .catch(
-          // console.log("lỗi")
-        )
+        // console.log("lỗi")
+      )
 
     } else {
       // console.log("Like");
@@ -124,49 +138,63 @@ export default function InforReviewHomepage({ idReviewPost,
       // dispatch(getListLikeBaiViet(idReviewPost));
       interactionApi.getAllLikeBaiViet(idReviewPost)
         .then(result => {
-        // console.log("data danh sách like bài viết: ", result.data.data);
-        setSoLike(result.data.data.length + 1);
-        setListLike(result.data.data)
-        setLikeCheck(true);
+          // console.log("data danh sách like bài viết: ", result.data.data);
+          setSoLike(result.data.data.length + 1);
+          setListLike(result.data.data)
+          setLikeCheck(true);
         })
         .catch(
-          // console.log("lỗi")
-        )
+        // console.log("lỗi")
+      )
     }
   };
 
-    const [open, setOpen] = useState(false);
-    const handleCloseDialog = () => {
-      setOpen(false);
-    };
-    const {
-      loadingCommentPost,
-      commentPost,
-    } = useSelector((state) => state.interactionReducer);
+  const [open, setOpen] = useState(false);
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
+  const {
+    loadingCommentPost,
+    commentPost,
+  } = useSelector((state) => state.interactionReducer);
 
-    let location = useLocation();
-    const history = useHistory();
-    const [openComment, setOpenComment] = useState(false);
-    const [warningtext, setwarningtext] = useState(false);
-    const [commentListDisplay, setCommentListDisplay] = useState({
-      comment: [],
-      page: 5,
-      hideBtn: false,
-      idScrollTo: "",
-    });
-    const [dataComment, setdataComment] = useState({
-      avtId: currentUser?.username,
-      username: currentUser?.name,
-      // point: 2.5,
-      description: "",
-      // likes: 0,
-      // maPhim: param.maPhim,
-      dataTest: false,
-      createdAt: "",
-      // userLikeThisComment: [],
-    });
-    const classes = useStyles({ hideBtn: commentListDisplay.hideBtn, isMobile });
+  let location = useLocation();
+  const history = useHistory();
+  const [openComment, setOpenComment] = useState(false);
+  const [warningtext, setwarningtext] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [commentListDisplay, setCommentListDisplay] = useState({
+    comment: [],
+    page: 5,
+    hideBtn: false,
+    idScrollTo: "",
+  });
+  const [dataComment, setdataComment] = useState({
+    avtId: currentUser?.username,
+    username: currentUser?.name,
+    // point: 2.5,
+    description: "",
+    // likes: 0,
+    // maPhim: param.maPhim,
+    dataTest: false,
+    createdAt: "",
+    // userLikeThisComment: [],
+  });
+  const classes = useStyles({ hideBtn: commentListDisplay.hideBtn, isMobile });
 
+  useEffect(() => {
+    if (currentUser !== null) {
+      eventsApi.checkSaveArticle({ userId: successInfoUser?.data?.id, articleId: idReviewPost }).then(
+        res => {
+          liked !== res?.data?.data?.success && setLiked(res?.data?.data?.success)
+        }
+      )
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log(liked, "liked")
+  }, [liked])
 
   useEffect(() => {
     // khi commentList lấy về thành công thì cập nhật số người bình luận
@@ -178,12 +206,12 @@ export default function InforReviewHomepage({ idReviewPost,
   useEffect(() => {
     interactionApi.getAllCommentBaiViet(idReviewPost)
       .then(result => {
-      // console.log("data danh sách comment bài viết nè: ", result.data.data);
-      setCommentList(result.data.data)
+        // console.log("data danh sách comment bài viết nè: ", result.data.data);
+        setCommentList(result.data.data)
       })
       .catch(
-        // console.log("lỗi")
-      )
+      // console.log("lỗi")
+    )
     if (commentPost) {
       // reset text comment
       setdataComment((data) => ({ ...data, description: "" }));
@@ -223,13 +251,13 @@ export default function InforReviewHomepage({ idReviewPost,
     // console.log("đăng cmt:", dataComment);
     dispatch(postCommentBaiViet(
       {
-        description: dataComment?.description, 
-        articleId: idReviewPost, 
+        description: dataComment?.description,
+        articleId: idReviewPost,
         userId: successInfoUser?.data?.id
       }
     ))
   };
-  
+
   const setopenMore = () => {
     let hideBtn = false;
     let addComment = commentList?.totalElements % 5;
@@ -239,9 +267,8 @@ export default function InforReviewHomepage({ idReviewPost,
     if (commentListDisplay.page + addComment === commentList?.totalElements) {
       hideBtn = true;
     }
-    const idScrollTo = `idComment${
-      commentList?.content[commentListDisplay?.page]?.createdAt
-    }`;
+    const idScrollTo = `idComment${commentList?.content[commentListDisplay?.page]?.createdAt
+      }`;
     const page = commentListDisplay?.page + 5;
     const comment = commentList?.content?.slice(0, page);
     setCommentListDisplay((data) => ({
@@ -327,25 +354,41 @@ export default function InforReviewHomepage({ idReviewPost,
 
   return (
     <CardActions disableSpacing >
+      <IconButton aria-label="Xem (icon hình con mắt)" style={{ color: "white" }}>
+        <VisibilityIcon />
+        <Typography>{soView}</Typography>
+      </IconButton>
+
       <IconButton aria-label="add to favorites" style={{ color: likeCheck === true ? "blue" : "white" }} onClick={handleLikeClick}>
         <FavoriteIcon />
         <Typography>{soLike}</Typography>
       </IconButton>
+
       <div >
-        <IconButton aria-label="comment" style={{ color: "white" }} 
-              // onClick={() => {
-              //   setIsPaneOpen(true);
-              // }}>
-              onClick={() => {
-                setOpen(true);
-              }}
-              // onClick={handleClickOpen}
-              >
+        <IconButton aria-label="comment" style={{ color: "white" }}
+          // onClick={() => {
+          //   setIsPaneOpen(true);
+          // }}>
+          onClick={() => {
+            setOpen(true);
+          }}
+        // onClick={handleClickOpen}
+        >
           <CommentIcon />
           <Typography>{soCmt}</Typography>
         </IconButton>
       </div>
-        {/* <Comment
+      <div >
+        <IconButton aria-label="comment" style={{ color: liked ? "blue" : "white" }}
+          onClick={() => {
+            handleLikeClick2();
+            setLiked(!liked);
+          }}
+        >
+          <BookIcon />
+        </IconButton>
+      </div>
+      {/* <Comment
         isPaneOpen={isPaneOpen}
         onClose={() => {
           setIsPaneOpen(false);
@@ -364,33 +407,32 @@ export default function InforReviewHomepage({ idReviewPost,
           <SidebarComment handleDrawerClose={handleDrawerClose} />
       </Drawer> */}
 
-    <div>
-      {/* <Button variant="outlined">
+      <div>
+        {/* <Button variant="outlined">
         Open responsive dialog
       </Button> */}
-      <Dialog
-        // fullScreen={fullScreen}
-
-        fullWidth
-        open={open}
-        onClose={handleCloseDialog}
-        aria-labelledby="responsive-dialog-title"
-      >
-         <MuiDialogTitle disableTypography className={classes.rootcloseButton}>
-          <DialogTitle id="responsive-dialog-title">
-            {"Để lại bình luận của bạn"}
-          </DialogTitle>
-          <IconButton
-            aria-label="close"
-            className={classes.closeButton}
-            onClick={handleCloseDialog}
-          >
-            <CloseIcon />
-          </IconButton>
-        </MuiDialogTitle>
-        {/* <DialogActions> */}
-        <div className={classes.theLon}>
-          <div className={classes.danhGia}>
+        <Dialog
+          // fullScreen={fullScreen}
+          fullWidth
+          open={open}
+          onClose={handleCloseDialog}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <MuiDialogTitle disableTypography className={classes.rootcloseButton}>
+            <DialogTitle id="responsive-dialog-title">
+              {"Để lại bình luận của bạn"}
+            </DialogTitle>
+            <IconButton
+              aria-label="close"
+              className={classes.closeButton}
+              onClick={handleCloseDialog}
+            >
+              <CloseIcon />
+            </IconButton>
+          </MuiDialogTitle>
+          {/* <DialogActions> */}
+          <div className={classes.theLon}>
+            <div className={classes.danhGia}>
               <div className={classes.inputRoot} onClick={handleClickComment}>
                 <span className={classes.avatarReviewer}>
                   <img
@@ -432,7 +474,7 @@ export default function InforReviewHomepage({ idReviewPost,
                     <span className={classes.avatar}>
                       <img
                         // src={item?.image}
-                        src={item?.image ?item?.image: FAKE_AVATAR}
+                        src={item?.image ? item?.image : FAKE_AVATAR}
                         alt="avatar"
                         className={classes.avatarImg}
                       />
@@ -457,13 +499,13 @@ export default function InforReviewHomepage({ idReviewPost,
                     />
                   </div> */}
                   {(
-                    currentUser && successInfoUser?.data?.id == item?.userId ?                   
+                    currentUser && successInfoUser?.data?.id == item?.userId ?
                       <span className={classes.nutTuyChon}>
                         <DeleteOrEdit id={item.id} setCommentList={setCommentList} idReviewPost={idReviewPost} description={item?.description}
-                        onIncreaseQuantityComment={onIncreaseQuantityComment} setdataComment={setdataComment} dataComment={item?.description}
+                          onIncreaseQuantityComment={onIncreaseQuantityComment} setdataComment={setdataComment} dataComment={item?.description}
                         />
                       </span> : null
-                      
+
                   )}
 
                   <div className="clearfix"></div>
@@ -509,58 +551,57 @@ export default function InforReviewHomepage({ idReviewPost,
               </Button>
             </div>
           </div>
-      </Dialog>
+        </Dialog>
+        <Dialog
+          open={openComment}
+          onClose={handleClose}
+          maxWidth="sm"
+          fullWidth
+          className={classes.dialog}
+        >
+          <MuiDialogTitle disableTypography className={classes.rootcloseButton}>
+            <IconButton
+              aria-label="close"
+              className={classes.closeButton}
+              onClick={handleClose}
+            >
+              <CloseIcon />
+            </IconButton>
+          </MuiDialogTitle>
+          <Grid container direction="column" justify="center" alignItems="center">
+            <span style={{ fontSize: "20px", marginTop: "1rem" }}>Để lại bình luận</span>
+          </Grid>
+          <DialogContent className={classes.dialogContent}>
+            <TextField
+              className={classes.textField}
+              onChange={(event) => handletyping(event)}
+              fullWidth
+              value={dataComment.description}
+              variant="outlined"
+              label={
+                dataComment.description
+                  ? ""
+                  : "Nói lên suy nghĩ của bạn..."
+              }
+            />
+          </DialogContent>
+          <DialogActions className="justify-content-center flex-column px-4">
+            {warningtext && (
+              <DialogContentText className="text-danger">
+                Vui lòng gõ ký tự!
+              </DialogContentText>
+            )}
+            <Button
+              onClick={handlePostComment}
+              variant="contained"
+              className={classes.btnDang}
+            >
+              Đăng
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
 
-      <Dialog
-        open={openComment}
-        onClose={handleClose}
-        maxWidth="sm"
-        fullWidth
-        className={classes.dialog}
-      >
-        <MuiDialogTitle disableTypography className={classes.rootcloseButton}>
-          <IconButton
-            aria-label="close"
-            className={classes.closeButton}
-            onClick={handleClose}
-          >
-            <CloseIcon />
-          </IconButton>
-        </MuiDialogTitle>
-        <Grid container direction="column" justify="center" alignItems="center">
-          <span style={{fontSize: "20px", marginTop:"1rem"}}>Để lại bình luận</span>
-        </Grid>
-        <DialogContent className={classes.dialogContent}>
-          <TextField
-            className={classes.textField}
-            onChange={(event) => handletyping(event)}
-            fullWidth
-            value={dataComment.description}
-            variant="outlined"
-            label={
-              dataComment.description
-                ? ""
-                : "Nói lên suy nghĩ của bạn..."
-            }
-          />
-        </DialogContent>
-        <DialogActions className="justify-content-center flex-column px-4">
-          {warningtext && (
-            <DialogContentText className="text-danger">
-              Vui lòng gõ ký tự!
-            </DialogContentText>
-          )}
-          <Button
-            onClick={handlePostComment}
-            variant="contained"
-            className={classes.btnDang}
-          >
-            Đăng
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-    
     </CardActions>
 
   );

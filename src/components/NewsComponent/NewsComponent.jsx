@@ -51,7 +51,7 @@ export default function NewsComponent() {
   const handlerSeeMore =() =>{
     history.push("/review")
   }
-  // console.log("danhSachTinTuc: ", danhSachTinTuc?.data);
+  console.log("danhSachTinTuc: ", danhSachTinTuc?.data);
 
   var moment = require("moment");
   const renderTinTuc = () => {
@@ -68,7 +68,7 @@ export default function NewsComponent() {
             <h4 className="items__text-title">
               <NavLink
                 className="items__text-link"
-                to={`/review/${tinTuc?.id}`}
+                to={`/review/${tinTuc?.slug}`}
               >
                 {tinTuc?.title || (
                   <SkeletonTheme color="#202020" highlightColor="#111111">
@@ -94,7 +94,7 @@ export default function NewsComponent() {
             </div>
             <div>
               {/* {cloneElement(<InforReviewHomepage />, { idReviewPost: tinTuc.id })} */}
-              <InforReviewHomepage idReviewPost={tinTuc.id} uniqueKey={uniqueKey}/>
+              <InforReviewHomepage idReviewPost={tinTuc.id} uniqueKey={uniqueKey} soView={tinTuc?.view}/>
             </div>
           </div>
         </div>

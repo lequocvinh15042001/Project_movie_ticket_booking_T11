@@ -11,7 +11,7 @@ export default function DetailReview() {
   const [loading, $loading] = useState(true);
   const maTinTuc = maTin;
   useMemo(() => {
-    qLyPhimService.layChiTietTinTuc(maTinTuc).then((result) => {
+    qLyPhimService.layChiTietTinTucSlug(maTinTuc).then((result) => {
       setTimeout(() => {
         setTinTuc(result.data);
         $loading(false);

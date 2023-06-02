@@ -49,6 +49,7 @@ export default function PayMent() {
     amount,
     email,
     phone,
+    name,
     paymentMethod,
     isReadyPayment,
     isMobile,
@@ -70,17 +71,19 @@ export default function PayMent() {
   const emailRef = useRef();
   const phoneRef = useRef(); // dùng useRef để dom tớ element
   let variClear = useRef(""); // dùng useRef để lưu lại giá trị setTimeout
-  const [dataFocus, setDataFocus] = useState({ phone: false, email: false });
+  const [dataFocus, setDataFocus] = useState({ phone: false, email: false, name: false });
   const [dataSubmit, setdataSubmit] = useState({
     values: {
       email: email,
       phone: phone,
+      name: name,
       // paymentMethod: paymentMethod,
       thongTinPhongVe: thongTinPhongVe,
     },
     errors: {
       email: "",
       phone: "",
+      name:""
     },
   });
   const classes = useStyles({
@@ -139,6 +142,7 @@ export default function PayMent() {
         payload: {
           email: dataSubmit.values.email,
           phone: dataSubmit.values.phone,
+          name: dataSubmit.values.name
           // paymentMethod: dataSubmit.values.paymentMethod,
         },
       });
@@ -174,41 +178,42 @@ export default function PayMent() {
       values: {
         email: email,
         phone: phone,
+        name: name,
         // paymentMethod: paymentMethod,
       },
       // errors: { email: emailErrors.email, phone: phoneErrors.phone },
     }));
   }, [listSeat]); // khi reload listSeat sẽ được cập nhật kèm theo, email, phone mặc định của tài khoản
 
-  const SwalConfirm = () => {
-    Swal.fire({
-      title: 'Bạn có chắc chắn muốn đặt nó?',
-      showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: 'Có',
-      denyButtonText: 'Không, chưa chắc',
-      customClass: {
-        actions: 'my-actions',
-        cancelButton: 'order-1 right-gap',
-        confirmButton: 'order-2',
-        denyButton: 'order-3',
-      }
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire('Đã đặt!', '', 'success')
-      } else if (result.isDenied) {
-        Swal.fire('Okay, do not book!', '', 'info')
-      }
-    })
+  // const SwalConfirm = () => {
+  //   Swal.fire({
+  //     title: 'Bạn có chắc chắn muốn đặt nó?',
+  //     showDenyButton: true,
+  //     showCancelButton: true,
+  //     confirmButtonText: 'Có',
+  //     denyButtonText: 'Không, chưa chắc',
+  //     customClass: {
+  //       actions: 'my-actions',
+  //       cancelButton: 'order-1 right-gap',
+  //       confirmButton: 'order-2',
+  //       denyButton: 'order-3',
+  //     }
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       Swal.fire('Đã đặt!', '', 'success')
+  //     } else if (result.isDenied) {
+  //       Swal.fire('Okay, do not book!', '', 'info')
+  //     }
+  //   })
     
-  }
+  // }
   const handleBookTicket = () => {
     Swal.fire({
       title: 'Bạn có chắc muốn đặt?',
       showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: 'Có chứ',
-      denyButtonText: 'Không, chưa chắc lắm',
+      // showCancelButton: true,
+      confirmButtonText: 'Đặt ngay',
+      denyButtonText: 'Không!',
       customClass: {
         actions: 'my-actions',
         cancelButton: 'order-1 right-gap',

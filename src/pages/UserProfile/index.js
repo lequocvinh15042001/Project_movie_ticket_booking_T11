@@ -1,9 +1,11 @@
+import { NavLink, useHistory } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { makeStyles } from "@material-ui/core";
+import { IconButton, makeStyles } from "@material-ui/core";
 import * as yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import AppBar from "@material-ui/core/AppBar";
+import BookIcon from '@mui/icons-material/Book';
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
@@ -14,7 +16,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import NavigationIcon from "@material-ui/icons/Navigation";
 import Fab from "@material-ui/core/Fab";
-import { useHistory } from "react-router-dom";
 import CircularIntegration from "./../../utilities/CircularIntegration"
 import { FAKE_AVATAR } from "../../constants/config";
 import {
@@ -25,6 +26,7 @@ import {
 } from "../../reducers/actions/UsersManagement";
 import { getComment } from "../../reducers/actions/MovieDetail";
 import usersApi from "../../api/usersApi";
+import reviewsApi from "../../api/billsApi";
 import { getAllTicket } from "../../reducers/actions/Ticket";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -35,6 +37,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { getBillsChuaThanhToan, getBillsUserId } from "../../reducers/actions/Bill";
 import formatDate from "../../utilities/formatDate";
+import eventsApi from "../../api/eventsApi";
+import "./styles.scss"
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import DetailPopup from "./PopUp/PopUp";
+import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -107,7 +114,7 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-export default function Index({placeholder}) {
+export default function Index({ placeholder }) {
   const history = useHistory();
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
@@ -124,7 +131,7 @@ export default function Index({placeholder}) {
   // console.log("Vé đã đặt",ticketList);
   // console.log("Bill đã đặt",billList);
 
-  
+
 
   // const [dataShort, setdataShort] = useState({
   //   ticket: 0,
@@ -150,11 +157,21 @@ export default function Index({placeholder}) {
   const [image, setImage] = useState(successInfoUser?.data?.image)
   const [oldPass, setOldPass] = useState()
   const [newPass, setNewPass] = useState()
+  const [savedArticle, setSavedArticle] = useState([])
+  const [wroteArticle, setWroteArticle] = useState([])
+  const [ticketDetail, setTicketDetail] = useState({})
+  const [toggle, setToggle] = useState(false)
+
+  const getTicketDetail = (id) => {
+    reviewsApi.getBillByID(id).then((response) => { setTicketDetail(response.data); setToggle(true) })
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const handleLikeClick2 = ({ id }) => {
+    eventsApi.addSaveArticle({ userId: successInfoUser?.data?.id, articleId: id })
+  };
   useEffect(() => {
     dispatch(getInfoUser());
     dispatch(getBillsChuaThanhToan(successInfoUser?.data?.id));
@@ -165,6 +182,12 @@ export default function Index({placeholder}) {
     return () => dispatch(resetUserList());
   }, [successInfoUser?.data?.id]);
 
+  useEffect(() => {
+    successInfoUser?.data?.id && eventsApi.getAllSavedArticle(successInfoUser?.data?.id).then(res => setSavedArticle(res.data.data.content))
+  }, [successInfoUser?.data?.id])
+  useEffect(() => {
+    successInfoUser?.data?.id && eventsApi.getAll().then(res => setWroteArticle(res.data.data))
+  }, [successInfoUser?.data?.id])
   useEffect(() => {
     if (successUpdateUser) {
       Swal.fire({
@@ -226,10 +249,9 @@ export default function Index({placeholder}) {
       console.log("Thoát");
       return;
     }
-    if(pass.newpassword === pass.renewpassword)
-    {
+    if (pass.newpassword === pass.renewpassword) {
       dispatch(putUserChangePass(pass.newpassword, pass.oldpassword));
-    } else{
+    } else {
       Swal.fire({
         position: "center",
         icon: "error",
@@ -261,35 +283,34 @@ export default function Index({placeholder}) {
       settypePassword3("password");
     }
   };
-
-  const handleChangePassword = (o,n) =>{
-    console.log(o,n);
+  const handleChangePassword = (o, n) => {
+    console.log(o, n);
   };
 
   const getIdSeat = (danhSachGhe) => {
     return danhSachGhe?.reduce((listSeat, seat) => {
-        return [...listSeat, seat.name];
-      }, [])
+      return [...listSeat, seat.name];
+    }, [])
       .join(", ");
   };
 
-  const submitImage =() =>{
-    const data  = new FormData()
+  const submitImage = () => {
+    const data = new FormData()
     data.append("file", image)
     data.append("upload_preset", "hh37brtc")
     data.append("cloud_name", "dfb5p3kus")
 
     fetch("https://api.cloudinary.com/v1_1/dfb5p3kus/image/upload", {
       method: "post",
-      body:data
+      body: data
     })
-    .then((res) => res.json())
-    .then((data) =>{
-      setImage(data.secure_url)
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        setImage(data.secure_url)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   const handlerChangAvatar = () => {
@@ -298,14 +319,14 @@ export default function Index({placeholder}) {
 
   useEffect(() => {
     usersApi.getChiTietTaiKhoan(successInfoUser?.data?.username)
-    .then((response) => {
-      console.log("Chi tiết USER: ",response);
-      setImage(response.data?.data?.image)
-    })
-    .catch((err) => {
-      console.log(err);
-      return;
-    })
+      .then((response) => {
+        console.log("Chi tiết USER: ", response);
+        setImage(response.data?.data?.image)
+      })
+      .catch((err) => {
+        console.log(err);
+        return;
+      })
   }, []);
 
   const handlerError = () => {
@@ -318,6 +339,7 @@ export default function Index({placeholder}) {
     setOpen(true);
   };
 
+  console.log(ticketList)
   const handleChangeAnh = (image) => {
     const user = {
       username: successInfoUser?.data?.username ?? "",
@@ -328,7 +350,7 @@ export default function Index({placeholder}) {
       image: image ?? "",
     }
     dispatch(putUserUpdate(user));
-    console.log("vateee:",user);
+    console.log("vateee:", user);
     setOpen(false);
   };
 
@@ -336,27 +358,27 @@ export default function Index({placeholder}) {
     setOpen(false);
   };
 
-  console.log("avt cập nhật: ",image);
+  console.log("avt cập nhật: ", image);
 
   return (
-    <div className="bootstrap snippet mb-5 mx-4" style={{"backgroundColor":"black"}}>
+    <div className="bootstrap snippet mb-5 mx-4" style={{ "backgroundColor": "black" }}>
       <br />
       <div className="row">
         <div className="col-sm-2">
-          <div className="text-center" style={{marginTop:"15px"}}>
+          <div className="text-center" style={{ marginTop: "15px" }}>
             <img
               src={successInfoUser?.data?.image ? successInfoUser?.data?.image : FAKE_AVATAR}
               // className={`avatar rounded-circle img-thumbnail ${
               //   isDesktop ? "w-60" : "w-30"
               // }`}
               style={{
-                width:"100%",
-                height:"100%",
-                marginBottom:"1rem"
+                width: "100%",
+                height: "100%",
+                marginBottom: "1rem"
               }}
               alt="avatar"
             />
-            <div className="text-center mb-2" style={{paddingTop:"0.5"}}>
+            <div className="text-center mb-2" style={{ paddingTop: "0.5" }}>
               <Fab
                 variant="extended"
                 color="secondary"
@@ -373,26 +395,26 @@ export default function Index({placeholder}) {
               onClose={handleClose}
               aria-describedby="alert-dialog-slide-description"
             >
-            <DialogTitle>{"Chọn ảnh đại diện mà bạn thích nhất"}</DialogTitle>
+              <DialogTitle>{"Chọn ảnh đại diện mà bạn thích nhất"}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
                   <input type="file" className="form-control" onChange={(e) => {
 
-                      setImage(e.target.files[0])
-                      // formikProp.setFieldValue("smallImageURl", srcImage)
-                      }}/>
+                    setImage(e.target.files[0])
+                    // formikProp.setFieldValue("smallImageURl", srcImage)
+                  }} />
                 </DialogContentText>
               </DialogContent>
 
               <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                  <div style={{textAlign:"center"}}>
+                  <div style={{ textAlign: "center" }}>
                     <img
                       src={image ? image : FAKE_AVATAR}
                       style={{
-                        width:"40%",
-                        height:"40%",
-                        marginBottom:"1rem",
+                        width: "40%",
+                        height: "40%",
+                        marginBottom: "1rem",
                       }}
                       // className={`avatar rounded-circle img-thumbnail center${
                       //   isDesktop ? "w-30" : "w-30"
@@ -420,7 +442,7 @@ export default function Index({placeholder}) {
                 <Button onClick={(e) => handleChangeAnh(image)}>Đồng ý</Button>
               </DialogActions>
             </Dialog>
-            <h1 className="my-2" style={{"color":"white"}}>{successInfoUser?.data?.username}</h1>
+            <h1 className="my-2" style={{ "color": "white" }}>{successInfoUser?.data?.username}</h1>
           </div>
           {successInfoUser?.data?.role === "[ROLE_ADMIN]" && (
             <div className="text-center mb-2">
@@ -487,7 +509,7 @@ export default function Index({placeholder}) {
           </ul> */}
         </div>
         <div className={`col-sm-10 py-3 px-0`}>
-          <AppBar className={classes.appBar} position="static" style={{backgroundColor:"orange", color:"white"}}>
+          <AppBar className={classes.appBar} position="static" style={{ backgroundColor: "orange", color: "white" }}>
             <Tabs value={value} onChange={handleChange} centered={!isDesktop}>
               <Tab
                 disableRipple
@@ -513,15 +535,32 @@ export default function Index({placeholder}) {
                 }}
                 label="Đổi mật khẩu"
               />
-              <Tab
+              {/* <Tab
                 disableRipple
                 classes={{
                   root: classes.tabButton,
                   selected: classes.tabSelected,
                 }}
                 label="Thanh toán hoá đơn"
+              /> */}
+              <Tab
+                disableRipple
+                classes={{
+                  root: classes.tabButton,
+                  selected: classes.tabSelected,
+                }}
+                label="Bài viết đã lưu"
+              />
+              <Tab
+                disableRipple
+                classes={{
+                  root: classes.tabButton,
+                  selected: classes.tabSelected,
+                }}
+                label="Bài viết đã viết"
               />
             </Tabs>
+
           </AppBar>
           {/* -------------caapj nhật thong tin---------- */}
           <TabPanel value={value} index={0}>
@@ -557,7 +596,7 @@ export default function Index({placeholder}) {
                     />
                   </div> */}
 
-                  <div className="form-group" style={{"color":"white"}}>
+                  <div className="form-group" style={{ "color": "white" }}>
                     <label>Tài khoản&nbsp;</label>
                     <ErrorMessage
                       name="username"
@@ -598,7 +637,7 @@ export default function Index({placeholder}) {
                       )}
                     </div>
                   </div> */}
-                  <div className="form-group"  style={{"color":"white"}}>
+                  <div className="form-group" style={{ "color": "white" }}>
                     <label>Tên&nbsp;</label>
                     <ErrorMessage
                       name="name"
@@ -614,7 +653,7 @@ export default function Index({placeholder}) {
                     />
                   </div>
 
-                  <div className="form-group"  style={{"color":"white"}}>
+                  <div className="form-group" style={{ "color": "white" }}>
                     <label>Email&nbsp;</label>
                     <ErrorMessage
                       name="email"
@@ -623,7 +662,7 @@ export default function Index({placeholder}) {
                       )}
                     />
                     <Field
-                       disabled
+                      disabled
                       name="email"
                       type="email"
                       className="form-control"
@@ -667,10 +706,10 @@ export default function Index({placeholder}) {
           </TabPanel>
 
           {/* này bên cái bảng kia */}
-          <TabPanel
+          {/* <TabPanel
             value={value}
             index={1}
-            style={{ padding: isDesktop ? "0px 0px" : "0px 16px", backgroundColor:"white", borderRadius: "5px"}}
+            style={{ padding: isDesktop ? "0px 0px" : "0px 16px", backgroundColor: "white", borderRadius: "5px" }}
             isDesktop={isDesktop}
           >
             <div className="table-responsive">
@@ -686,20 +725,19 @@ export default function Index({placeholder}) {
                     <th scope="col">Rạp</th>
                     <th scope="col">Mã vé</th>
                     <th scope="col">Ghế</th>
-                    {/* <th scope="col">Cost(vnđ)</th> */}
                     <th scope="col">VNĐ</th>
                     <th scope="col">QR Code</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {ticketList === [] ? handlerError() : 
-                  ticketList?.data?.map((sticket, i) => (
+                  {ticketList === [] ? handlerError() :
+                    ticketList?.data?.map((sticket, i) => (
                       <tr key={sticket?.id} className={classes.td}>
                         <th scope="row">{i + 1}</th>
                         <td>
-                          <a class="btn btn-primary" 
-                              href={`/phim/${sticket?.schedule?.movie?.id}/write-review`} 
-                              role="button">Viết Review
+                          <a class="btn btn-primary"
+                            href={`/phim/${sticket?.schedule?.movie?.id}/write-review`}
+                            role="button">Viết Review
                           </a>
                         </td>
                         <td>{sticket?.schedule?.movie?.name}</td>
@@ -708,18 +746,16 @@ export default function Index({placeholder}) {
                         <td>
                           {new Date(sticket?.bill?.createdTime).toLocaleDateString()},{" "}
                           {new Date(sticket?.bill?.createdTime).toLocaleTimeString(
-                            "en-US",
+                            "vi-VN",
                             { hour: "2-digit", minute: "2-digit" }
                           )}
                         </td>
                         <td>
                           {sticket?.schedule?.room?.name},{" "}
                           {sticket?.schedule?.branch?.name}
-          
-                          {/* {sticket?.schedule?.branch?.address} */}
+
                         </td>
                         <td>{sticket?.id}</td>
-                        {/* <td>{getIdSeat(sticket.seat)}</td> */}
                         <td>{sticket?.seat?.name}</td>
                         <td>
                           {new Intl.NumberFormat("it-IT", {
@@ -728,26 +764,20 @@ export default function Index({placeholder}) {
                         </td>
                         <td>
                           <img
-                          // src={sticket?.qrImageURL}
-                          style={{width:50, height:50}}
-                          src="https://www.1check.vn/qrcodegen/qr.png"
-                          alt="QR code"
+                            style={{ width: 50, height: 50 }}
+                            src="https://www.1check.vn/qrcodegen/qr.png"
+                            alt="QR code"
                           >
                           </img>
                         </td>
-                        {/* <td>
-                          {new Intl.NumberFormat("it-IT", {
-                            style: "decimal",
-                          }).format(sticket?.schedule?.price)}
-                        </td> */}
                       </tr>
                     ))
-                    .reverse()}
-                  
+                      .reverse()}
+
                 </tbody>
               </table>
             </div>
-          </TabPanel>
+          </TabPanel> */}
 
           {/* Đổi mật khẩu */}
           <TabPanel value={value} index={2}>
@@ -769,7 +799,7 @@ export default function Index({placeholder}) {
             >
               {(props) => (
                 <Form className={`${classes.field}`}>
-                  <div className={`form-group ${classes.password}`}  style={{"color":"white"}}>
+                  <div className={`form-group ${classes.password}`} style={{ "color": "white" }}>
                     <label>Mật khẩu cũ&nbsp;</label>
                     <ErrorMessage
                       name="oldpassword"
@@ -782,20 +812,20 @@ export default function Index({placeholder}) {
                       type={typePassword}
                       className="form-control"
                       onChange={props.handleChange}
-                      // value={this.props.values.oldpassword}
+                    // value={this.props.values.oldpassword}
                     />
                     <div
                       className={classes.eye}
                       onClick={handleToggleHidePassword}
                     >
                       {typePassword !== "password" ? (
-                        <i className="fa fa-eye-slash" style={{"color":"black"}}></i>
+                        <i className="fa fa-eye-slash" style={{ "color": "black" }}></i>
                       ) : (
-                        <i className="fa fa-eye" style={{"color":"black"}}></i>
+                        <i className="fa fa-eye" style={{ "color": "black" }}></i>
                       )}
                     </div>
                   </div>
-                  <div className={`form-group ${classes.password}`}  style={{"color":"white"}}>
+                  <div className={`form-group ${classes.password}`} style={{ "color": "white" }}>
                     <label>Mật khẩu mới&nbsp;</label>
                     <ErrorMessage
                       name="newpassword"
@@ -808,20 +838,20 @@ export default function Index({placeholder}) {
                       type={typePassword2}
                       className="form-control"
                       onChange={props.handleChange}
-                      // value={value.newpassword}
+                    // value={value.newpassword}
                     />
                     <div
                       className={classes.eye}
                       onClick={handleToggleHidePassword2}
                     >
                       {typePassword2 !== "password" ? (
-                        <i className="fa fa-eye-slash" style={{"color":"black"}}></i>
+                        <i className="fa fa-eye-slash" style={{ "color": "black" }}></i>
                       ) : (
-                        <i className="fa fa-eye" style={{"color":"black"}}></i>
+                        <i className="fa fa-eye" style={{ "color": "black" }}></i>
                       )}
                     </div>
                   </div>
-                  <div className={`form-group ${classes.password}`}  style={{"color":"white"}}>
+                  <div className={`form-group ${classes.password}`} style={{ "color": "white" }}>
                     <label>Nhập lại mật khẩu mới&nbsp;</label>
                     <ErrorMessage
                       name="renewpassword"
@@ -834,16 +864,16 @@ export default function Index({placeholder}) {
                       type={typePassword3}
                       className="form-control"
                       onChange={props.handleChange}
-                      // value={value.newpassword}
+                    // value={value.newpassword}
                     />
                     <div
                       className={classes.eye}
                       onClick={handleToggleHidePassword3}
                     >
                       {typePassword3 !== "password" ? (
-                        <i className="fa fa-eye-slash" style={{"color":"black"}}></i>
+                        <i className="fa fa-eye-slash" style={{ "color": "black" }}></i>
                       ) : (
-                        <i className="fa fa-eye" style={{"color":"black"}}></i>
+                        <i className="fa fa-eye" style={{ "color": "black" }}></i>
                       )}
                     </div>
                   </div>
@@ -852,7 +882,7 @@ export default function Index({placeholder}) {
                       type="submit"
                       className="btn btn-primary"
                       disable={loadingUpdateUser.toString()}
-                      // onClick={(e) => {handleChangePassword(value.oldpassword, value.newpassword)}}
+                    // onClick={(e) => {handleChangePassword(value.oldpassword, value.newpassword)}}
                     >
                       Đổi mật khẩu
                     </button>
@@ -867,14 +897,18 @@ export default function Index({placeholder}) {
             </Formik>
           </TabPanel>
 
-        {/* Thanh toán hóa đơn */}
+          {/* Thanh toán hóa đơn */}
           <TabPanel
             value={value}
-            index={3}
-            style={{ padding: isDesktop ? "0px 0px" : "0px 16px", backgroundColor:"white", borderRadius: "5px"}}
+            index={1}
+            style={{ padding: isDesktop ? "0px 0px" : "0px 16px", backgroundColor: "white", borderRadius: "5px" }}
             isDesktop={isDesktop}
           >
             <div className="table-responsive">
+              {toggle && <div style={{ position: "fixed", borderRadius: "10px", top: "15%", left: "10%", backgroundColor: "white", zIndex: "1000", width: "80%", height: "70%", overflow: "scroll" }}>
+                <DetailPopup ThongTin={ticketDetail} />
+                <div onClick={() => setToggle(false)} style={{ position: "absolute", right: "0px", top: "0px", backgroundColor: "red", padding: "10px", display: "flex", justifyContent: "center", alignItems: "center" }}><CloseFullscreenIcon /></div>
+              </div>}
               <table className="table table-striped table-hover table-bordered">
                 <thead>
                   <tr>
@@ -884,23 +918,21 @@ export default function Index({placeholder}) {
                     <th scope="col">Đặt lúc</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">VNĐ</th>
-                    {/* <th scope="col">Rạp</th>
-                    
-                    <th scope="col">Ghế</th> */}
-                    {/* <th scope="col">Cost(vnđ)</th> */}
-                    {/* <th scope="col">QR Code</th> */}
                   </tr>
                 </thead>
                 <tbody>
-                  {billListChuaTT === [] ? handlerError() : 
-                  billListChuaTT?.map((billListChua, i) => (
+                  {billListChuaTT === [] ? handlerError() :
+                    billListChuaTT?.map((billListChua, i) => (
                       <tr key={billListChua?.id} className={classes.td}>
                         <th scope="row">{i + 1}</th>
-                        <td>
-                          <a class="btn btn-warning" 
-                              href={`/payment/${billListChua?.id}/${billListChua.price}`} 
-                              role="button">Thanh toán
+                        <td style={{ display: "flex", gap: "5px" }}>
+                          <a class="btn btn-warning"
+                            href={`/payment/${billListChua?.id}/${billListChua.price}`}
+                            role="button">Thanh toán
                           </a>
+                          <button onClick={() => { getTicketDetail(billListChua?.id) }} class="btn btn-primary"
+                          >Xem chi tiết
+                          </button>
                         </td>
                         <td>{billListChua?.id}</td>
                         {/* <td>{sticket?.schedule?.movie?.name}</td>
@@ -913,14 +945,18 @@ export default function Index({placeholder}) {
                           )}
                         </td>
                         {/* <td> */}
-                          {/* {sticket?.schedule?.room?.name},{" "}
+                        {/* {sticket?.schedule?.room?.name},{" "}
                           {sticket?.schedule?.branch?.name} */}
-          
-                          {/* {sticket?.schedule?.branch?.address} */}
+
+                        {/* {sticket?.schedule?.branch?.address} */}
                         {/* </td> */}
                         {/* <td>{getIdSeat(sticket.seat)}</td> */}
                         {/* <td>{sticket?.seat?.name}</td> */}
-                        <td>{billListChua?.status}</td>
+                        <td>
+                          {billListChua?.status === "WAITING_PAYMENT" ? "Chờ thanh toán" : ""}
+                          {billListChua?.status === "SUCCESS" ? "Đã thanh toán" : ""}
+                          {billListChua?.status === "EXPIRATION" ? "Hết hạn thanh toán" : ""}
+                        </td>
                         <td>
                           {new Intl.NumberFormat("it-IT", {
                             style: "decimal",
@@ -942,10 +978,98 @@ export default function Index({placeholder}) {
                         </td> */}
                       </tr>
                     ))
-                    .reverse()}
-                  
+                      .reverse()}
+
                 </tbody>
               </table>
+            </div>
+          </TabPanel>
+
+          {/* Danh sách yêu thicc */}
+          <TabPanel
+            value={value}
+            index={4}
+            style={{ padding: isDesktop ? "0px 0px" : "0px 16px", backgroundColor: "white", borderRadius: "5px" }}
+            isDesktop={isDesktop}
+          >
+            <div className="table-responsive"><div className="article-container">
+              {savedArticle.length > 0 && savedArticle.map(item => {
+                return <>
+                  <NavLink
+                    className="items__text-link"
+                    to={`/review/${item?.id}`}
+                  >
+                    <div className="article-item">
+                      <img className="article-img" src={item.mainImage}></img>
+                      <div className="article-title">
+
+                        {item.title || (
+                          <SkeletonTheme color="#202020" highlightColor="#111111">
+                            <h2>
+                              <Skeleton count={3} duration={2} />
+                            </h2>
+                          </SkeletonTheme>
+                        )}
+                      </div>
+                      <div className="article-icon">
+                        <IconButton aria-label="comment" style={{ color: "red" }}
+                          onClick={() => {
+                            handleLikeClick2({ id: item.id });
+                          }}
+                        >
+                          <BookIcon />
+                        </IconButton>
+                      </div>
+                    </div>
+                  </NavLink>
+                </>
+              }
+              )}
+            </div>
+            </div>
+          </TabPanel>
+
+          {/* Danh sách bài đã viết */}
+          <TabPanel
+            value={value}
+            index={5}
+            style={{ padding: isDesktop ? "0px 0px" : "0px 16px", backgroundColor: "white", borderRadius: "5px" }}
+            isDesktop={isDesktop}
+          >
+            <div className="table-responsive"><div className="article-container">
+              {wroteArticle.length > 0 && wroteArticle.map(item => {
+                return <>
+                  <NavLink
+                    className="items__text-link"
+                    to={`/review/${item?.id}`}
+                  >
+                    <div className="article-item">
+                      <img className="article-img" src={item.mainImage}></img>
+                      <div className="article-title">
+
+                        {item.title || (
+                          <SkeletonTheme color="#202020" highlightColor="#111111">
+                            <h2>
+                              <Skeleton count={3} duration={2} />
+                            </h2>
+                          </SkeletonTheme>
+                        )}
+                      </div>
+                      <div className="article-icon">
+                        <IconButton aria-label="comment" style={{ color: "red" }}
+                          onClick={() => {
+                            handleLikeClick2({ id: item.id });
+                          }}
+                        >
+                          <BookIcon />
+                        </IconButton>
+                      </div>
+                    </div>
+                  </NavLink>
+                </>
+              }
+              )}
+            </div>
             </div>
           </TabPanel>
 
@@ -1039,7 +1163,7 @@ export default function Index({placeholder}) {
             </Formik> */}
           </TabPanel>
         </div>
-      </div>
+      </div >
       {loadingInfoUser && (
         <div
           style={{
@@ -1055,8 +1179,9 @@ export default function Index({placeholder}) {
         >
           <CircularProgress style={{ margin: "auto" }} />
         </div>
-      )}
+      )
+      }
       {/* <ShowtimeUser /> */}
-    </div>
+    </div >
   );
 }

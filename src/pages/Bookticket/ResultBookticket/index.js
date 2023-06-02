@@ -1,15 +1,33 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useSelector } from 'react-redux'
 
 import useStyles from './style'
 import { colorTheater } from '../../../constants/theaterData'
+import usersApi from '../../../api/usersApi'
 
 export default function SuccessBooking() {
   const { isMobile, amount, email, phone, paymentMethod, listSeatSelected, successBookingTicketMessage, errorBookTicketMessage, danhSachPhongVe: { thongTinPhim }, thongTinPhongVe } = useSelector((state) => state.bookTicketReducer)
   const { currentUser } = useSelector((state) => state.authReducer)
   // const classes = useStyles({ thongTinPhongVe, color: colorTheater[thongTinPhongVe?.setRap.slice(0, 3).toUpperCase()], isMobile })
   const classes = useStyles({ thongTinPhongVe, isMobile })
+
+  const [userThongTin, setUserThongTin] = useState()
+
+  useEffect(() =>{
+    usersApi.getThongTinTaiKhoan()
+    .then((response) =>{
+      console.log(response);
+      setUserThongTin(response);
+      // dispatch({
+      //   type: LOGIN_SUCCESS,
+      //   payload:{ data : response.data.data }
+      // })
+    })
+    .catch((err) => {
+      // console.log(err);
+    })
+  },[])
 
   return (
     <div className={classes.resultBookticket}>
@@ -43,12 +61,12 @@ export default function SuccessBooking() {
       </div>
       <div>
         <div>
-          <h3 className={classes.infoResult_label}>Ticket Information</h3>
+          <h3 className={classes.infoResult_label}>Thông tin vé</h3>
           <table className={`${classes.table} table`}>
             <tbody>
               <tr>
-                <td valign='top' >Name:</td>
-                <td>{currentUser?.data?.hoTen}</td>
+                <td valign='top' >Tên:</td>
+                <td>{userThongTin?.data?.data?.name}</td>
               </tr>
               {/* <tr>
                 <td valign='top'>Phone:</td>
@@ -59,10 +77,10 @@ export default function SuccessBooking() {
                 <td>{email}</td>
               </tr>
               <tr>
-                <td valign='top'>Status:</td>
+                <td valign='top'>Trạng thái:</td>
                 <td>
-                  {successBookingTicketMessage && <span>Booking ticket Successfully <span className={classes.paymentColor}>{paymentMethod}</span></span>}
-                  {errorBookTicketMessage && <span>Booking ticket Fail: <span className={classes.errorColor}>{errorBookTicketMessage}</span></span>}
+                  {successBookingTicketMessage && <span>Chưa thanh toán <span className={classes.paymentColor}>{paymentMethod}</span></span>}
+                  {errorBookTicketMessage && <span>Đặt vé thấy bại: <span className={classes.errorColor}>{errorBookTicketMessage}</span></span>}
                 </td>
               </tr>
               <tr>
@@ -71,7 +89,7 @@ export default function SuccessBooking() {
               </tr>
             </tbody>
           </table>
-          {successBookingTicketMessage && <p className={classes.noteresult}>Check this ticket into your information!</p>}
+          {successBookingTicketMessage && <p className={classes.noteresult}>Vui lòng kiểm tra thông tin đặt vé!</p>}
         </div>
       </div>
     </div>

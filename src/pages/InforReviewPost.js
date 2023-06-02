@@ -1,6 +1,6 @@
 
 import { Button, CardActions, IconButton, Typography } from '@material-ui/core';
-import { Comment as CommentIcon, Share as ShareIcon, Favorite as FavoriteIcon } from '@material-ui/icons';
+import { Comment as CommentIcon, Share as ShareIcon, Favorite as FavoriteIcon , Visibility as VisibilityIcon} from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postCommentBaiViet, postLikeUnlikeBaiViet } from '../reducers/actions/Interaction';
@@ -41,7 +41,8 @@ export default function InforReviewHomepage({ idReviewPost,
   onClickBtnMuave,
   isMobile,
   onIncreaseQuantityComment,
-  uniqueKey
+  uniqueKey,
+  soView
   }) {
 
   const [commentList, setCommentList] = useState()
@@ -345,6 +346,10 @@ export default function InforReviewHomepage({ idReviewPost,
           <Typography>{soCmt}</Typography>
         </IconButton>
       </div>
+      <IconButton aria-label="Xem (icon hình con mắt)" style={{ color: "grey" }}>
+        <VisibilityIcon />
+        <Typography>{soView}</Typography>
+      </IconButton>
         {/* <Comment
         isPaneOpen={isPaneOpen}
         onClose={() => {

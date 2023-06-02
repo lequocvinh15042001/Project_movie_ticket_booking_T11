@@ -27,6 +27,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import ChooseByBranch from "./ChooseByBranch";
 import ChooseByDate from "./ChooseByDate";
+import ChatBox from "./ChatBox";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -40,7 +41,7 @@ function TabPanel(props) {
       aria-labelledby={`action-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3}}>{children}</Box>}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </Typography>
   );
 }
@@ -139,12 +140,12 @@ export default function Carousel() {
           );
         })}
       </Slider>
-
-        <Box
+      <div style={{ position: "fixed", right: "20px", bottom: "20px", zIndex: "1000" }}><ChatBox /></div>
+      <Box
         sx={{
           // bgcolor: "background.paper",
-          width: 1024,  
-          height:"100%",
+          width: 1024,
+          height: "100%",
           position: "relative",
           // left:"13%",
           textAlign: "center",
@@ -173,13 +174,13 @@ export default function Carousel() {
           onChangeIndex={handleChangeIndex}
         >
           <TabPanel value={value} index={0} >
-            <Choose/>
+            <Choose />
           </TabPanel>
           <TabPanel value={value} index={1} >
-            <ChooseByBranch/> 
+            <ChooseByBranch />
           </TabPanel>
           <TabPanel value={value} index={2} >
-            <ChooseByDate/>
+            <ChooseByDate />
           </TabPanel>
         </SwipeableViews>
       </Box>

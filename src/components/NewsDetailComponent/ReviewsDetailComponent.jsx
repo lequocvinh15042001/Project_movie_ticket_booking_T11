@@ -68,7 +68,7 @@ export default function ReviewsDetailComponent(props) {
             <h6 className="items__text-title">
               <NavLink
                 className="items__text-link"
-                to={`/review/${tinTuc.id}`}
+                to={`/review/${tinTuc.slug}`}
               >
                 {tinTuc?.brief || (
                   <SkeletonTheme color="#202020" highlightColor="#111111">
@@ -119,7 +119,7 @@ export default function ReviewsDetailComponent(props) {
             <div className="social--item mr-2">
               {/* <ThumbUpAltIcon style={{ marginRight: "5px" }} />
               <span>{tinTuc?.likes}</span> */}
-                <InforReviewDetail idReviewPost={tinTuc?.data?.id}/>
+                <InforReviewDetail idReviewPost={tinTuc?.data?.id} soView={tinTuc?.data?.view}/>
             </div>
             {/* <div className="social--item">
               <ShareIcon style={{ marginRight: "5px" }} />

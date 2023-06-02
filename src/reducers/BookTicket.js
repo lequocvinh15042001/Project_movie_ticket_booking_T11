@@ -35,6 +35,7 @@ const initialState = {
   // payment
   email: '',
   phone: '',
+  name: '',
   paymentMethod: '',
   isReadyPayment: false,
   activeStep: 0,

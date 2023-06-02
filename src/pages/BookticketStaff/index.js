@@ -291,6 +291,7 @@ export default function Index() {
         hoTen:cUser?.data?.data?.name,
         taiKhoanNguoiDung: cUser?.data?.data?.id,
         email: cUser?.data?.data?.email,
+        name: cUser?.data?.data?.name,
         phone: "0376621299",
         thongTinPhongVe: thongTin.content,
       },

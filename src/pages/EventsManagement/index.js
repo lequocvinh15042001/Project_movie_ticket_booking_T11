@@ -409,7 +409,7 @@ export default function MoviesManagement() {
     <div style={{ height: "80vh", width: "100%", backgroundColor:"white"}}>
       <div className={classes.control}>
         <div className="row">
-          <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
+          <div className={`col-3 col-md-4 ${classes.itemCtro}`}>
             <Button
               variant="contained"
               color="primary"
@@ -420,6 +420,9 @@ export default function MoviesManagement() {
             >
               Thêm sự kiện, khuyến mãi
             </Button>
+          </div>
+          <div className={`col-12 col-md-2 ${classes.itemCtro}`} onClick={handleReload}>
+            <RefreshButton />
           </div>
           <div className={`col-12 col-md-4 ${classes.itemCtro}`}>
             <div className={classes.search}>
@@ -437,9 +440,7 @@ export default function MoviesManagement() {
               />
             </div>
           </div>
-          <div className={`col-12 col-md-2 ${classes.itemCtro}`} onClick={handleReload}>
-            <RefreshButton />
-          </div>
+
         </div>
       </div>
       <DataGrid

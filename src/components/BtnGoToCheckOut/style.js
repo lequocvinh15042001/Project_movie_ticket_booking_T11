@@ -10,12 +10,17 @@ const useStyles = makeStyles({
     borderRadius: "5px",
     color: "white",
     border: "1px solid #e4e4e4",
-    '&:hover :first-child': {
-      color: "black",
+    '&:hover ': {
+      backgroundColor: "black",
     },
     fontSize: 15,
   },
   inTime: {
+    fontSize: 15,
+    fontWeight: 500,
+    color: "white",
+  },
+  outTime: {
     fontSize: 15,
     fontWeight: 500,
     color: "white",

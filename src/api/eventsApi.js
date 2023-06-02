@@ -38,6 +38,30 @@ const eventsApi = {
     return axiosClient.put(path, event);
   },
 
+  addSaveArticle: (param) => {
+    const path = `/article/user/addSaveArticle?userId=${param.userId}&articleId=${param.articleId}`;
+    return axiosClient.post(path);
+  },
+
+  checkSaveArticle: (param) => {
+    const path = `/article/user/checkSaveArticle?userId=${param.userId}&articleId=${param.articleId}`;
+    return axiosClient.get(path);
+  },
+
+  checkSaveArticle: (param) => {
+    const path = `/article/user/checkSaveArticle?userId=${param.userId}&articleId=${param.articleId}`;
+    return axiosClient.get(path);
+  },
+
+  getAllSavedArticle: (param) => {
+    const path = `/article/user/saveArticle/getAll?userId=${param}&page=0&size=20`;
+    return axiosClient.get(path);
+  },
+
+  getAll: (id) => {
+    const path = `/article/user/getAll`;
+    return axiosClient.get(path);
+  },
 };
 
 export default eventsApi;

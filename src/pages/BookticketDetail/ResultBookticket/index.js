@@ -6,17 +6,34 @@ import useStyles from './style'
 import { colorTheater } from '../../../constants/theaterData'
 import bookingApi from '../../../api/bookingApi'
 import { useParams } from 'react-router-dom'
+import usersApi from '../../../api/usersApi'
 
 export default function SuccessBooking() {
   const { isMobile, amount, email, phone, paymentMethod, listSeatSelected, successBookingTicketMessage, errorBookTicketMessage, danhSachPhongVe: { thongTinPhim }, thongTinPhongVe } = useSelector((state) => state.bookTicketReducer)
   const { currentUser } = useSelector((state) => state.authReducer)
   // const classes = useStyles({ thongTinPhongVe, color: colorTheater[thongTinPhongVe?.setRap.slice(0, 3).toUpperCase()], isMobile })
   const classes = useStyles({ thongTinPhongVe, isMobile })
-
   const [thongTin, setThongTin] = useState()
   const param = useParams();
 
-  console.log(param.maPhim, param.maRap, param.ngayChieu, param.gioChieu, param.maPhong);
+  const [userThongTin, setUserThongTin] = useState()
+
+  useEffect(() =>{
+    usersApi.getThongTinTaiKhoan()
+    .then((response) =>{
+      console.log(response);
+      setUserThongTin(response);
+      // dispatch({
+      //   type: LOGIN_SUCCESS,
+      //   payload:{ data : response.data.data }
+      // })
+    })
+    .catch((err) => {
+      // console.log(err);
+    })
+  },[])
+
+  console.log(userThongTin);
   useEffect(() => {
     // lấy thongTinPhim và danhSachGhe
     // dispatch(getListSeat(param.maLichChieu));
@@ -61,7 +78,7 @@ export default function SuccessBooking() {
                 <td>{thongTin?.data?.content[0]?.room?.name}</td>
               </tr>
               <tr>
-                <td valign='top'>Ghế(s):</td>
+                <td valign='top'>Ghế:</td>
                 <td>{listSeatSelected?.join(", ")}</td>
               </tr>
             </tbody>
@@ -75,7 +92,7 @@ export default function SuccessBooking() {
             <tbody>
               <tr>
                 <td valign='top' >Tên:</td>
-                <td>{currentUser?.data?.name}</td>
+                <td>{userThongTin?.data?.data?.name}</td>
               </tr>
               {/* <tr>
                 <td valign='top'>Phone:</td>
@@ -88,7 +105,7 @@ export default function SuccessBooking() {
               <tr>
                 <td valign='top'>Trạng thái:</td>
                 <td>
-                  {successBookingTicketMessage && <span>Đặt vé thành công</span>}
+                  {successBookingTicketMessage && <span>Chưa thành công</span>}
                   {errorBookTicketMessage && <span>Đặt vé thất bại: <span className={classes.errorColor}>{errorBookTicketMessage}</span></span>}
                 </td>
               </tr>
