@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 
 import { useSelector } from 'react-redux'
@@ -114,7 +113,7 @@ export default function DetailPopup({ ThongTin }) {
                                 {/* <td>{ThongTin?.seats?.name?.join(", ")}</td> */}
                                 <td>
                                     {ThongTin?.seats?.map((seat, index) => (
-                                        <span key={index}>{seat.name}{", "}</span>
+                                        <span key={index}>{seat.name}{" "}</span>
                                     ))}
                                 </td>
                             </tr>
@@ -162,4 +161,3 @@ export default function DetailPopup({ ThongTin }) {
         </div>
     )
 }
-
