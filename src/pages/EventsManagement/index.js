@@ -203,27 +203,9 @@ export default function MoviesManagement() {
   };
 
   const onUpdate = (movieObj, hinhAnh, fakeImage) => {
-  //   if (loadingUpdateEvent || loadingUpdateNoneImageMovie) {
-  //   if (loadingUpdateEvent) {
-  //     return undefined;
-  //   }
-  //   setOpenModal(false);
-  //   newImageUpdate.current = fakeImage;
-  //   if (typeof hinhAnh === "string") {
-  //     // nếu dùng updateMovieUpload sẽ bị reset danhGia về 10
-  //     const movieUpdate = eventListDisplay?.find(
-  //       (event) => event.id === fakeImage.id
-  //     ); // lẩy ra url gốc, tránh gửi base64 tới backend
-  //     movieObj.smallImageURl = movieUpdate.smallImageURl;
-  //     dispatch(putEventUpdate(movieObj));
-  //     return undefined;
-  //   }
-  //   // return undefined;
-  //   // dispatch(updateMovieUpload(movieObj));
-  // };
-  
   dispatch(putEventUpdate(movieObj));
-  enqueueSnackbar("Thành công", { variant: "success" });
+  setOpenModal(false);
+  // enqueueSnackbar("Thành công", { variant: "success" });
   }
 
   const handleReload = () => {
@@ -234,7 +216,7 @@ export default function MoviesManagement() {
     console.log("Dữ liệu event thêm: ", movieObj);
     if (!loadingAddEvent) {
       dispatch(postAddEvent(movieObj));
-      enqueueSnackbar("Thành công", { variant: "success" });
+      // enqueueSnackbar("Thành công", { variant: "success" });
     }
     setOpenModal(false);
   };

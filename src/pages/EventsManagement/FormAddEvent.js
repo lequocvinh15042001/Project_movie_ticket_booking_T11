@@ -44,19 +44,11 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
 
   // const movieSchema = yup.object().shape({
   //   name: yup.string().required("*Not be empty!"),
-  //   smallImageURl: yup.string().required("*Please choose image!"),
-  //   largeImageURL: yup.string().required("*Please choose image!"),
-  //   shortDescription: yup.string().required("*Not be empty!").min(50, "Mô tả cần 100 ký tự trở lên!"),
-  //   longDescription: yup.string().required("*Not be empty!").min(50, "Mô tả cần 100 ký tự trở lên!"),
-  //   director: yup.string().required("*Not be empty!"),
-  //   actors: yup.string().required("*Not be empty!"),
-  //   categories: yup.string().required("*Not be empty!"),
-  //   releaseDate: yup.string().required("*Please choose release date!"),
-  //   duration: yup.string().required("*Not be empty!"),
-  //   trailerURL: yup.string().required("*Not be empty!").matches(/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/, "*URL youtube not valid"),
-  //   language: yup.string().required("*Not be empty!"),
-  //   rated: yup.string().required("*Not be empty!"),
-  //   isShowing: yup.string().required("*Not be empty!"),
+  //   mainImage: yup.string().required("*Please choose image!"),
+  //   title: yup.string().required("*Not be empty!"),
+  //   brief: yup.string().required("*Not be empty!"),
+  //   description: yup.string().required("*Not be empty!"),
+  //   keyword: yup.string().required("*Not be empty!"),
   //   // rated: yup.number().required("*Not be empty!").min(0, "*Điểm đánh giá phải từ 0 đến 10").integer("*Điểm đánh giá phải từ 0 đến 10").max(10, "*Điểm đánh giá phải từ 0 đến 10"),
   // })
 

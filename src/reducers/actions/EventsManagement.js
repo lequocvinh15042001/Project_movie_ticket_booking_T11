@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import eventsApi from '../../api/eventsApi';
 import { ADD_EVENT_FAIL, ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, DELETE_EVENT_FAIL, DELETE_EVENT_REQUEST, DELETE_EVENT_SUCCESS, GET_EVENT_DETAIL_FAIL, GET_EVENT_DETAIL_REQUEST, GET_EVENT_DETAIL_SUCCESS, GET_EVENT_LIST_FAIL, GET_EVENT_LIST_REQUEST, GET_EVENT_LIST_SUCCESS, RESET_EVENT_LIST, SET_IS_EXIST_EVENT_MODIFIED, UPDATE_EVENT_FAIL, UPDATE_EVENT_REQUEST, UPDATE_EVENT_SUCCESS } from '../constants/EventsManagement';
 
@@ -142,6 +143,7 @@ export const putEventUpdate = (event) => {
     })
     eventsApi.putEditEvent(event)
       .then(result => {
+        Swal.fire('Chỉnh sửa thành công!', '', 'success')
         console.log("Cập nhật: ", result);
         dispatch({
           type: UPDATE_EVENT_SUCCESS,
@@ -151,6 +153,8 @@ export const putEventUpdate = (event) => {
       )
       .catch(
         error => {
+          // console.log(error.response);
+        Swal.fire("Tên bài viết đã được sử dụng", '', 'info')
           dispatch({
             type: UPDATE_EVENT_FAIL,
             payload: { error: error.response?.data ? error.response.data : error.message, }
@@ -167,12 +171,14 @@ export const postAddEvent = (event) => {
     })
     eventsApi.postAddEvent(event)
       .then(result => {
+        Swal.fire('Thêm thành công!', '', 'success')
         dispatch({
           type: ADD_EVENT_SUCCESS,
           payload: { data: result.data }
         })
       })
       .catch(error => {
+        Swal.fire('Không được bỏ trống!', '', 'info')
         dispatch({
           type: ADD_EVENT_FAIL,
           // payload: { error: error.response?.data ? error.response.data : error.message, }
