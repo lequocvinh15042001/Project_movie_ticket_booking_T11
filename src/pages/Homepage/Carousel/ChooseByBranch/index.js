@@ -444,7 +444,7 @@ export default function ChooseByBranch() {
       });
   },[data, data.setSuatChieu])
 
-  console.log(thongTinPhongVe);
+  console.log(data.cumPhim);
 
   if (errorMovieList) {
     return <p>{errorMovieList}</p>;
@@ -526,9 +526,29 @@ export default function ChooseByBranch() {
                     : "Không phim nào, vui lòng chọn rạp khác!"
                 }`
               : "Vui lòng chọn rạp!"} */}
-              {data.setRap
+
+            {/* {data.setRap
+              ? `${
+                  data?.startRequest
+                    ? data?.errorCallApi
+                      ? data?.errorCallApi 
+                      : "Đang tìm phim!"
+                    : ""
+                }`
+              : "Vui lòng chọn rạp khác!"} */}
+            {/* {
+              data.setRap && data?.cumPhim === [] ? "Đang tìm phim" : ""
+            } */}
+            {
+              data.setRap && data?.cumPhim?.length === 0 ? "Không phim nào, vui lòng chọn rạp khác" : null
+            }
+            {
+              !data.setRap && "Vui lòng chọn rạp!"
+            }
+
+              {/* {data.setRap
               ? ""
-              : "Vui lòng chọn rạp!"}
+              : "Vui lòng chọn rạp!"} */}
           </MenuItem>
           {data?.cumPhim?.map((item) => (
             <MenuItem
