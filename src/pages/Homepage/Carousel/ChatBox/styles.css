@@ -3,6 +3,7 @@
     text-align: center;
     width: 280px;
     border-radius: 5px;
+    z-index: 1000;
     height: 600px;
     padding: 20px 20px 0px;
     background-color: black;
@@ -44,7 +45,36 @@
     border-radius: 50%;
     object-fit: contain;
 }
-
+.img-toggle{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: contain;
+    border: 1px solid white;
+    background-color:rgb(22, 12, 12);
+    cursor: pointer;
+    box-shadow: 10px 12px 18px -13px rgba(99, 72, 72, 0.59);
+        -webkit-box-shadow: 10px 12px 18px -13px rgba(99, 72, 72, 0.59);
+        -moz-box-shadow: 10px 12px 18px -13px rgba(99, 72, 72, 0.59);
+    animation: mymove 2s infinite;
+}
+@keyframes mymove {
+    0% {
+        transform: rotateX(0deg);
+    }
+    50% {
+        transform: rotateX(40deg);
+    }
+    100% {
+        transform: rotateX(0deg);
+    }
+}
+.close-icon{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
 .img11 {
     width: 20px;
     height: 20px;

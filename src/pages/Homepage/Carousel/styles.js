@@ -2,12 +2,12 @@ import { makeStyles } from "@material-ui/core"
 const useStyles = makeStyles((theme) => ({
   carousel: {
     position: 'relative',
-    zIndex: 1,
+    zIndex: 3,
   },
   itemSlider: {
     position: 'relative'
   },
-  img: { height: "16rem", width: "100%"},
+  img: { height: "16rem", width: "100%" },
   backgroundLinear: {
     position: "absolute",
     width: "100%",
