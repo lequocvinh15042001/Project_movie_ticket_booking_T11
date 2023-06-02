@@ -40,6 +40,6 @@
   }
   
   .search-inner {
-    /* display: flex; */
+    display: flex;
     padding: 4px;
   }

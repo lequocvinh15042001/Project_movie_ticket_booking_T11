@@ -32,7 +32,7 @@ const reviewsApi = {
     return axiosClient.get(path);
   },
 
-  postThanhToan:(id) =>{
+  postThanhToan: (id) => {
     const path = `/bills/payment?id=${id}`;
     return axiosClient.post(path);
   },
@@ -91,6 +91,12 @@ const reviewsApi = {
     const path = `/`;
     return axiosClient.put(path);
   },
+
+  getBillByID: (id) => {
+    const path = `/bills/${id}`;
+    return axiosClient.get(path);
+  },
+
 
 };
 

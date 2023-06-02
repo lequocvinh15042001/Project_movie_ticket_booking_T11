@@ -26,6 +26,7 @@ import {
 } from "../../reducers/actions/UsersManagement";
 import { getComment } from "../../reducers/actions/MovieDetail";
 import usersApi from "../../api/usersApi";
+import reviewsApi from "../../api/billsApi";
 import { getAllTicket } from "../../reducers/actions/Ticket";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -39,6 +40,8 @@ import formatDate from "../../utilities/formatDate";
 import eventsApi from "../../api/eventsApi";
 import "./styles.scss"
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import DetailPopup from "./PopUp/PopUp";
+import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -156,6 +159,12 @@ export default function Index({ placeholder }) {
   const [newPass, setNewPass] = useState()
   const [savedArticle, setSavedArticle] = useState([])
   const [wroteArticle, setWroteArticle] = useState([])
+  const [ticketDetail, setTicketDetail] = useState({})
+  const [toggle, setToggle] = useState(false)
+
+  const getTicketDetail = (id) => {
+    reviewsApi.getBillByID(id).then((response) => { setTicketDetail(response.data); setToggle(true) })
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -525,14 +534,14 @@ export default function Index({ placeholder }) {
                 }}
                 label="Đổi mật khẩu"
               />
-              <Tab
+              {/* <Tab
                 disableRipple
                 classes={{
                   root: classes.tabButton,
                   selected: classes.tabSelected,
                 }}
                 label="Thanh toán hoá đơn"
-              />
+              /> */}
               <Tab
                 disableRipple
                 classes={{
@@ -696,7 +705,7 @@ export default function Index({ placeholder }) {
           </TabPanel>
 
           {/* này bên cái bảng kia */}
-          <TabPanel
+          {/* <TabPanel
             value={value}
             index={1}
             style={{ padding: isDesktop ? "0px 0px" : "0px 16px", backgroundColor: "white", borderRadius: "5px" }}
@@ -715,7 +724,6 @@ export default function Index({ placeholder }) {
                     <th scope="col">Rạp</th>
                     <th scope="col">Mã vé</th>
                     <th scope="col">Ghế</th>
-                    {/* <th scope="col">Cost(vnđ)</th> */}
                     <th scope="col">VNĐ</th>
                     <th scope="col">QR Code</th>
                   </tr>
@@ -745,10 +753,8 @@ export default function Index({ placeholder }) {
                           {sticket?.schedule?.room?.name},{" "}
                           {sticket?.schedule?.branch?.name}
 
-                          {/* {sticket?.schedule?.branch?.address} */}
                         </td>
                         <td>{sticket?.id}</td>
-                        {/* <td>{getIdSeat(sticket.seat)}</td> */}
                         <td>{sticket?.seat?.name}</td>
                         <td>
                           {new Intl.NumberFormat("it-IT", {
@@ -757,18 +763,12 @@ export default function Index({ placeholder }) {
                         </td>
                         <td>
                           <img
-                            // src={sticket?.qrImageURL}
                             style={{ width: 50, height: 50 }}
                             src="https://www.1check.vn/qrcodegen/qr.png"
                             alt="QR code"
                           >
                           </img>
                         </td>
-                        {/* <td>
-                          {new Intl.NumberFormat("it-IT", {
-                            style: "decimal",
-                          }).format(sticket?.schedule?.price)}
-                        </td> */}
                       </tr>
                     ))
                       .reverse()}
@@ -776,7 +776,7 @@ export default function Index({ placeholder }) {
                 </tbody>
               </table>
             </div>
-          </TabPanel>
+          </TabPanel> */}
 
           {/* Đổi mật khẩu */}
           <TabPanel value={value} index={2}>
@@ -899,11 +899,15 @@ export default function Index({ placeholder }) {
           {/* Thanh toán hóa đơn */}
           <TabPanel
             value={value}
-            index={3}
+            index={1}
             style={{ padding: isDesktop ? "0px 0px" : "0px 16px", backgroundColor: "white", borderRadius: "5px" }}
             isDesktop={isDesktop}
           >
             <div className="table-responsive">
+              {toggle && <div style={{ position: "fixed", borderRadius: "10px", top: "15%", left: "10%", backgroundColor: "white", zIndex: "1000", width: "80%", height: "70%", overflow: "scroll" }}>
+                <DetailPopup ThongTin={ticketDetail} />
+                <div onClick={() => setToggle(false)} style={{ position: "absolute", right: "0px", top: "0px", backgroundColor: "red", padding: "10px", display: "flex", justifyContent: "center", alignItems: "center" }}><CloseFullscreenIcon /></div>
+              </div>}
               <table className="table table-striped table-hover table-bordered">
                 <thead>
                   <tr>
@@ -913,11 +917,6 @@ export default function Index({ placeholder }) {
                     <th scope="col">Đặt lúc</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">VNĐ</th>
-                    {/* <th scope="col">Rạp</th>
-                    
-                    <th scope="col">Ghế</th> */}
-                    {/* <th scope="col">Cost(vnđ)</th> */}
-                    {/* <th scope="col">QR Code</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -925,11 +924,14 @@ export default function Index({ placeholder }) {
                     billListChuaTT?.map((billListChua, i) => (
                       <tr key={billListChua?.id} className={classes.td}>
                         <th scope="row">{i + 1}</th>
-                        <td>
+                        <td style={{ display: "flex", gap: "5px" }}>
                           <a class="btn btn-warning"
                             href={`/payment/${billListChua?.id}/${billListChua.price}`}
                             role="button">Thanh toán
                           </a>
+                          <button onClick={() => { getTicketDetail(billListChua?.id) }} class="btn btn-primary"
+                          >Xem chi tiết
+                          </button>
                         </td>
                         <td>{billListChua?.id}</td>
                         {/* <td>{sticket?.schedule?.movie?.name}</td>
@@ -1156,7 +1158,7 @@ export default function Index({ placeholder }) {
             </Formik> */}
           </TabPanel>
         </div>
-      </div>
+      </div >
       {loadingInfoUser && (
         <div
           style={{
@@ -1172,8 +1174,9 @@ export default function Index({ placeholder }) {
         >
           <CircularProgress style={{ margin: "auto" }} />
         </div>
-      )}
+      )
+      }
       {/* <ShowtimeUser /> */}
-    </div>
+    </div >
   );
 }
