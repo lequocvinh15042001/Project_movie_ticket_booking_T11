@@ -239,7 +239,7 @@ function App() {
               </AuthLayout>
             </Route>
 
-            {/* <Route exact path={["/admin"]}>
+             <Route exact path={["/admin"]}>
               <AuthLayoutAdmin>
                 <Route exact path="/admin" component={LoginAdmin} />
               </AuthLayoutAdmin>
@@ -249,7 +249,7 @@ function App() {
               <AuthLayoutStaff>
                 <Route exact path="/staff" component={LoginStaff} />
               </AuthLayoutStaff>
-            </Route> */}
+            </Route>
 
             <Route component={NotFound} />
           </Switch>

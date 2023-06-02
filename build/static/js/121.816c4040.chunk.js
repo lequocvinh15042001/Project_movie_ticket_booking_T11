@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkstandard=self.webpackChunkstandard||[]).push([[121],{80121:function(n,t,e){e.r(t);var r=e(1413),a=e(45987),u=(e(72791),e(79271)),c=e(16789),s=e(80184),o=["component"];t.default=function(n){var t=(0,c.v9)((function(n){return n.authReducer})).currentUser,e=n.component,d=(0,a.Z)(n,o);return(0,s.jsx)(u.Route,(0,r.Z)((0,r.Z)({},d),{},{render:function(n){return t?(0,s.jsx)(e,(0,r.Z)({},n)):(0,s.jsx)(u.Redirect,{to:{pathname:"/dangnhap",state:n.location.state}})}}))}}}]);
+//# sourceMappingURL=121.816c4040.chunk.js.map
