@@ -23,7 +23,8 @@ const useStyles = makeStyles(theme => ({
 
   },
   bgBlueColor: {
-    backgroundImage: "linear-gradient(to bottom,rgba(200, 200, 0, 1),rgba(255, 67, 67,.9))",
+    // backgroundImage: "linear-gradient(to bottom,rgba(200, 200, 0, 1),rgba(255, 67, 67,.9))",
+    backgroundColor:"#7f1002",
     width: 700,
     height: "fit-content",
     [theme.breakpoints.down("sm")]: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 0,
     right: 0,
-    transform: "translate(50%,-50%)",
+    transform: "translate(-10%,10%)",
     border: '2px solid white',
     [theme.breakpoints.down("sm")]: {
       border: "none",
@@ -48,7 +49,7 @@ const useStyles = makeStyles(theme => ({
     '&:focus': {
       outline: 'none'
     },
-    '&:hover': { opacity: 0.7 },
+    '&:hover': { opacity: 0.5 },
     transition: "all .2s",
   },
 }));
