@@ -25,6 +25,13 @@ export class QuanLyPhimServices {
       method: "GET",
     });
   };
+
+  layChiTietTinTucSlug = (maTinTuc) => {
+    return axios({
+      url: `https://api-goldenticketnew.tiktzuki.com/api/article/getDetail/${maTinTuc}`,
+      method: "GET",
+    });
+  };
 }
 
 export const qLyPhimService = new QuanLyPhimServices();

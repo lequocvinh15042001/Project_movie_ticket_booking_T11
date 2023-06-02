@@ -44,6 +44,8 @@ export default function PaymentUser() {
                 .catch((err) =>{
                     console.log(err);
                     Swal.fire('Đã quá hạn thanh toán!', '', 'info')
+                    history.push("/")
+
                 })
             } else if (result.isDenied) {
               Swal.fire('Thanh toán sau!', '', 'info')

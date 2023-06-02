@@ -214,12 +214,12 @@ export default function Index() {
   useEffect(() =>{
     usersApi.getThongTinTaiKhoan()
     .then((response) =>{
-      // console.log(response);
+      console.log(response);
       setCUser(response);
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload:{ data : response.data.data }
-      })
+      // dispatch({
+      //   type: LOGIN_SUCCESS,
+      //   payload:{ data : response.data.data }
+      // })
     })
     .catch((err) => {
       // console.log(err);
@@ -290,6 +290,7 @@ export default function Index() {
         taiKhoanNguoiDung: cUser?.data?.data?.id,
         email: cUser?.data?.data?.email,
         phone: "0376621299",
+        name: cUser?.data?.data?.name,
         thongTinPhongVe: thongTin.content,
       },
     });

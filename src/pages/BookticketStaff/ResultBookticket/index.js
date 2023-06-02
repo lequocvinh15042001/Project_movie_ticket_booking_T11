@@ -6,6 +6,7 @@ import useStyles from './style'
 import { colorTheater } from '../../../constants/theaterData'
 import bookingApi from '../../../api/bookingApi'
 import { useParams } from 'react-router-dom'
+import usersApi from '../../../api/usersApi'
 
 export default function SuccessBooking() {
   const { isMobile, amount, email, phone, paymentMethod, listSeatSelected, successBookingTicketMessage, errorBookTicketMessage, danhSachPhongVe: { thongTinPhim }, thongTinPhongVe } = useSelector((state) => state.bookTicketReducer)
@@ -14,6 +15,23 @@ export default function SuccessBooking() {
 
   const [thongTin, setThongTin] = useState()
   const param = useParams();
+  const [userThongTin, setUserThongTin] = useState()
+
+  useEffect(() =>{
+    usersApi.getThongTinTaiKhoan()
+    .then((response) =>{
+      console.log(response);
+      setUserThongTin(response);
+      // dispatch({
+      //   type: LOGIN_SUCCESS,
+      //   payload:{ data : response.data.data }
+      // })
+    })
+    .catch((err) => {
+      // console.log(err);
+    })
+  },[])
+
 
   console.log(param.maPhim, param.maRap, param.ngayChieu, param.gioChieu, param.maPhong);
   useEffect(() => {
@@ -52,15 +70,15 @@ export default function SuccessBooking() {
           <table className={classes.table}>
             <tbody>
               <tr>
-                <td valign='top' >Showtime:</td>
+                <td valign='top' >Suất:</td>
                 <td valign='top'>{`${thongTin?.data?.content[0]?.startTime}, ${thongTin?.data?.content[0]?.startDate}`}</td>
               </tr>
               <tr>
-                <td valign='top'>Room:</td>
+                <td valign='top'>Phòng:</td>
                 <td>{thongTin?.data?.content[0]?.room?.name}</td>
               </tr>
               <tr>
-                <td valign='top'>Seat(s):</td>
+                <td valign='top'>Ghế:</td>
                 <td>{listSeatSelected?.join(", ")}</td>
               </tr>
             </tbody>
@@ -69,12 +87,12 @@ export default function SuccessBooking() {
       </div>
       <div>
         <div>
-          <h3 className={classes.infoResult_label}>Ticket Information</h3>
+          <h3 className={classes.infoResult_label}>Thông tin vé</h3>
           <table className={`${classes.table} table`}>
             <tbody>
               <tr>
-                <td valign='top' >Name:</td>
-                <td>{currentUser?.name}</td>
+                <td valign='top' >Tên:</td>
+                <td>{userThongTin?.data?.data?.name}</td>
               </tr>
               {/* <tr>
                 <td valign='top'>Phone:</td>
@@ -85,19 +103,19 @@ export default function SuccessBooking() {
                 <td>{email}</td>
               </tr>
               <tr>
-                <td valign='top'>Status:</td>
+                <td valign='top'>Trạng thái:</td>
                 <td>
-                  {successBookingTicketMessage && <span>Booking ticket Successfully <span className={classes.paymentColor}>{paymentMethod}</span></span>}
-                  {errorBookTicketMessage && <span>Booking ticket Fail: <span className={classes.errorColor}>{errorBookTicketMessage}</span></span>}
+                  {successBookingTicketMessage && <span>Chưa thanh toán <span className={classes.paymentColor}>{paymentMethod}</span></span>}
+                  {errorBookTicketMessage && <span>Đặt vé thất bại: <span className={classes.errorColor}>{errorBookTicketMessage}</span></span>}
                 </td>
               </tr>
               <tr>
-                <td valign='top' >Total:</td>
+                <td valign='top' >Tổng cộng:</td>
                 <td valign='top'><span>{`${amount.toLocaleString('vi-VI')} đ`}</span></td>
               </tr>
             </tbody>
           </table>
-          {successBookingTicketMessage && <p className={classes.noteresult}>Check this ticket into your information!</p>}
+          {successBookingTicketMessage && <p className={classes.noteresult}>Vui lòng kiểm tra thông tin đặt vé!</p>}
         </div>
       </div>
     </div>

@@ -37,7 +37,7 @@ const headMenu = [
     { nameLink: 'Tất cả Phim', id: "lichchieu" }, 
     { nameLink: 'Đặt vé', id: "schedule" }, 
     // { nameLink: 'Branch Theaters', id: "cumrap" }, 
-    { nameLink: 'Reviews và Events', id: "tintuc" }, 
+    { nameLink: 'Bài viết và Sự kiện', id: "tintuc" }, 
 
     // { nameLink: 'Đăng ký Content Creator', id: "ungdung" }
   ]

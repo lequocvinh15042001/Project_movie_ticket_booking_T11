@@ -37,10 +37,11 @@ export default function Modal() {
     successBookingTicketMessage || errorBookTicketMessage ? true : false;
 
   const handleReBooking = () => {
-    if (successBookingTicketMessage) {
-      dispatch(getListSeat(param.maLichChieu));
-    }
-    dispatch({ type: RESET_DATA_BOOKTICKET });
+    // if (successBookingTicketMessage) {
+    //   dispatch(getListSeat(param.maLichChieu));
+    // }
+    // dispatch({ type: RESET_DATA_BOOKTICKET });
+    handleCombackHome()
   };
   const handleTimeOut = () => {
     dispatch({ type: RESET_DATA_BOOKTICKET });
@@ -48,7 +49,7 @@ export default function Modal() {
   };
   const handleAlertOver10 = () => {
     dispatch({ type: RESET_ALERT_OVER10 });
-    window.location.reload()
+    // window.location.reload()
   };
 
   const handleCombackHome = () => {
@@ -103,13 +104,13 @@ export default function Modal() {
           <>
             <ResultBookticket />
             <div className={classes.spaceEvenly}>
-              <Button
+              {/* <Button
                 classes={{ root: classes.btnResult }}
                 onClick={handleReBooking}
               >
                 {successBookingTicketMessage && "Đặt thêm ghế cho phim này!"}
                 {errorBookTicketMessage && "Cố gắng thử lại"}
-              </Button>
+              </Button> */}
               <Button
                 classes={{ root: classes.btnResult }}
                 onClick={handleCombackHome}

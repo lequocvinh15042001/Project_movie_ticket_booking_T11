@@ -92,6 +92,7 @@ const handlerComfirm = () =>{
             .catch((err) =>{
                 console.log(err);
                 Swal.fire('Đã quá hạn thanh toán!', '', 'info')
+                history.push("/")
             })
         } else if (result.isDenied) {
           Swal.fire('Không thanh toán ngay!', '', 'info')
@@ -142,13 +143,13 @@ const handlerComfirm = () =>{
           <>
             <ResultBookticket />
             <div className={classes.spaceEvenly}>
-              <Button
+              {/* <Button
                 classes={{ root: classes.btnResult }}
                 onClick={handleReBooking}
               >
                 {successBookingTicketMessage && "Đặt thêm ghế cho phim này!"}
                 {errorBookTicketMessage && "Cố gắng thử lại"}
-              </Button>
+              </Button> */}
               <Button
                 classes={{ root: classes.btnResult }}
                 onClick={handlerThanhToan}
