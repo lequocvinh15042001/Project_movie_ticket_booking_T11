@@ -52,7 +52,7 @@ const items = [
   {
     href: '/staff/bills/',
     icon: PostAddIcon,
-    title: 'Thanh toán'
+    title: 'Quản lý hóa đơn, thanh toán'
   },
   {
     href: '/staff/book/',

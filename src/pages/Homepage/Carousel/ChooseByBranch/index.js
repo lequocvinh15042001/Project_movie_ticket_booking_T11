@@ -281,7 +281,7 @@ export default function ChooseByBranch() {
       console.log("all lịch chiếu: ",response?.data?.data?.content);
       data.lichChieuPhimData = response?.data?.data?.content
       const ngayChieuRender = data.lichChieuPhimData.map((item) => {
-        if(new Date(item.startDate).getTime() >= new Date().getTime())
+        // if(new Date(item.startDate).getTime() >= new Date().getTime())
         return item.startDate.slice(0, 10); // tạo mảng mới với item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
       });
       const ngayChieuRenderRemoveDuplicates = [...new Set(ngayChieuRender)]; // xóa đi phần tử trùng lặp để hiển thị

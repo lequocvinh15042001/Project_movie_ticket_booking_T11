@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMovieList } from "../../reducers/actions/Movie";
+import { getMovieList, getMovieSapChieuList } from "../../reducers/actions/Movie";
 import { getTheaters } from "../../reducers/actions/Theater";
 import News from "./News";
 import Carousel from "./Carousel";
@@ -15,6 +15,7 @@ import { LOGIN_FAIL, LOGIN_SUCCESS } from "../../reducers/constants/Auth";
 export default function Homepage() {
   const dispatch = useDispatch();
   const movieList = useSelector((state) => state.movieReducer.movieList);
+  const movieSapChieuList = useSelector((state) => state.movieReducer.movieSapChieuList);
   const theaterList = useSelector((state) => state.theaterReducer.theaterList);
   const [cUser , setCUser] = useState();
   useEffect(() => {
@@ -71,6 +72,9 @@ export default function Homepage() {
   useEffect(() => {
     if (!movieList.length) {
       dispatch(getMovieList());
+    }
+    if (!movieSapChieuList.length) {
+      dispatch(getMovieSapChieuList());
     }
     if (!theaterList.length) {
       dispatch(getTheaters());

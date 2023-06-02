@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   styleScrollToTop: {
-    position: "fixed",
+    position: "absolute",
     bottom: 30,
     right: 10,
     transitionTimingFunction: "linear",

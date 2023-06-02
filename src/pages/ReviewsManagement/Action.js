@@ -24,7 +24,8 @@ export default function ButtonDelete({ onXemQua, onDeleted, phimItem, onEdit, on
               type="button"
               className="btn btn-primary"
               style={{
-                margin:"0.3rem"
+                margin:"0.1rem",
+                fontSize:"12px"
               }}
             >
               Xem qua
@@ -40,7 +41,8 @@ export default function ButtonDelete({ onXemQua, onDeleted, phimItem, onEdit, on
               className="btn btn-danger"
               style={{
                 // padding:"0.1rem"
-                margin:"0.3rem"
+                margin:"0.1rem",
+                fontSize:"12px"
 
               }}
             >
@@ -57,7 +59,9 @@ export default function ButtonDelete({ onXemQua, onDeleted, phimItem, onEdit, on
               className="btn btn-success"
               style={{
                 // padding:"0.1rem" 
-                margin:"0.3rem"
+                margin:"0.1rem",
+                fontSize:"12px"
+
 
               }}
             >
@@ -74,7 +78,9 @@ export default function ButtonDelete({ onXemQua, onDeleted, phimItem, onEdit, on
               className="btn btn-secondary"
               style={{
                 // padding:"0.1rem"
-                margin:"0.3rem"
+                margin:"0.1rem",
+                fontSize:"12px"
+
               }}
             >
               Xoá

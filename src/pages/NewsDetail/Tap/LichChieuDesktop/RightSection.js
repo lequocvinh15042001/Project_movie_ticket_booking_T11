@@ -27,7 +27,7 @@ export default function RightSection({ branch, idRap }) {
       console.log("all lịch chiếu: ",response.data.data.content);
       const lichChieuPhimData = response.data.data.content
       const ngayChieuRender = lichChieuPhimData.map((item) => {
-        if(new Date(item.startDate).getTime() >= new Date().getTime())
+        // if(new Date(item.startDate).getTime() >= new Date().getTime())
         return (item.startDate); // tạo mảng mới với item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
       });
       const filteredArray = ngayChieuRender?.filter((element) => {

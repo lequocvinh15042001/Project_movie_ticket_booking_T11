@@ -485,7 +485,7 @@ console.log(reviewList);
     {
       field: "hanhDong",
       headerName: "Action",
-      width: 350,
+      width: 280,
       renderCell: (params) => (
         <Action
           onEdit={handleEdit}
@@ -512,7 +512,7 @@ console.log(reviewList);
     {
       field: "title",
       headerName: "Tiêu đề",
-      width: 200,
+      width: 280,
       headerAlign: "center",
       align: "left",
       headerClassName: "custom-header",

@@ -164,7 +164,7 @@ export default function NewsComponent() {
         <div className="news__header">
           <div className="overlay">
             <div className="title__description">
-                Latest Reviews
+                NHỮNG BÀI VIẾT NỔI BẬT
             </div>
           </div>
         </div>

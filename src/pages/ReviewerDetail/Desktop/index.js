@@ -56,21 +56,19 @@ export default function Desktop({ reviewerDetailShowtimes: data, reviewList: rev
             <p className={classes.movieName}>{data?.name}</p>
             <p>Email:{" "}{data?.email}</p>
             <p><span>Tên tài khoản:{" "}{data?.username}</span></p>
-            <p>Tiểu sử:{" "} {data?.bio ? data?.bio : "Không có tiểu sử"}</p>
+            {/* <p>Tiểu sử:{" "} {data?.bio ? data?.bio : "Không có tiểu sử"}</p> */}
             {/* <p>{`${thoiLuong ?? "120"} phút - ${danhGia}`} - 2D/Digital</p> */}
             {/* <button className={classes.btnMuaVe} onClick={handleBtnMuaVe}>{location?.state?.comingMovie ? "Thông tin phim" : "Mua vé"}</button> */}
           </div>
-          <div className={classes.rate}>
+          {/* <div className={classes.rate}>
             <div className={classes.circular}>
               <span className={classes.danhGia}>{data?.followers ? data?.followers: "0"}</span>
               <CircularProgress variant="determinate" size="100%" value={100} className={classes.behined} color="secondary" />
               <CircularProgress variant="determinate" size="100%" value={data?.followers * 10} className={classes.fabProgress} color="secondary" />
             </div>
-            {/* <div className={classes.rateStar}>
-              <Rating value={(danhGia * 5) / 10} precision={0.5} readOnly />
-            </div> */}
+
             <span>người theo dõi</span>
-          </div>
+          </div> */}
 
           <div className={classes.rate} style={{marginLeft:"1rem"}}>
             <div className={classes.circular}>

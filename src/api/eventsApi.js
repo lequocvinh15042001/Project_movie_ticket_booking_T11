@@ -34,6 +34,7 @@ const eventsApi = {
   },
 
   putEditEvent: (event) => {
+    // console.log(event);
     const path = `/article/update`;
     return axiosClient.put(path, event);
   },

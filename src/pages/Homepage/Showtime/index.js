@@ -59,6 +59,10 @@ export default function SimpleTabs() {
     (state) => state.movieReducer
   );
 
+  const { errorMovieSapChieuList, movieSapChieuList } = useSelector(
+    (state) => state.movieReducer
+  );
+
   // console.log('Selector DS Phim: ', movieList)
   const timeout = useRef(null);
   const [arrayData, setarrayData] = useState({
@@ -82,10 +86,13 @@ export default function SimpleTabs() {
     // let dailyMovieList = movieList.slice(0, halfIndex);
     let dailyMovieList = movieList;
     // let comingMovieList = movieList.slice(halfIndex, movieList.length - 1);
-    let comingMovieList = movieList;
+    let comingMovieList = movieSapChieuList;
     setarrayData({ dailyMovieList, comingMovieList });
   }, [movieList]);
 
+  console.log('====================================');
+  console.log(movieSapChieuList);
+  console.log('====================================');
   const handleChange = (e, newValue) => {
     setValue((value) => ({ ...value, notDelay: newValue, fade: false }));
     timeout.current = setTimeout(() => {
