@@ -9,19 +9,19 @@ export class QuanLyPhimServices {
   };
   layReviewChuaDuyet = () => {
     return axios({
-      url: "http://14.225.205.235:8080/api/article/getAll?status=CREATE",
+      url: "https://api-goldenticketnew.tiktzuki.com/api/article/getAll?status=CREATE",
       method: "GET",
     });
   };
   layReviewDuocDuyet = () => {
     return axios({
-      url: "http://14.225.205.235:8080/api/article/getAll?status=APPROVE",
+      url: "https://api-goldenticketnew.tiktzuki.com/api/article/getAll?status=APPROVE",
       method: "GET",
     });
   };
   layChiTietTinTuc = (maTinTuc) => {
     return axios({
-      url: `http://14.225.205.235:8080/api/article/getDetail?id=${maTinTuc}`,
+      url: `https://api-goldenticketnew.tiktzuki.com/api/article/getDetail?id=${maTinTuc}`,
       method: "GET",
     });
   };
