@@ -15,7 +15,7 @@ const branchApi = {
     return axiosClient.get(path);
   },
   schedule: (params) => {
-    const path = `/schedule?movieId=${params.id}&branchId=${params.branch}`;
+    const path = `/schedule?movieId=${params.id}&branchId=${params.branch}&startDate=${params.date}`;
     return axiosClient.get(path);
   },
 

@@ -988,13 +988,14 @@ export default function Index({ placeholder }) {
             <div className="table-responsive"><div className="article-container">
               {savedArticle.length > 0 && savedArticle.map(item => {
                 return <>
-                  <div className="article-item">
-                    <img className="article-img" src={item.mainImage}></img>
-                    <div className="article-title">
-                      <NavLink
-                        className="items__text-link"
-                        to={`/review/${item?.id}`}
-                      >
+                  <NavLink
+                    className="items__text-link"
+                    to={`/review/${item?.id}`}
+                  >
+                    <div className="article-item">
+                      <img className="article-img" src={item.mainImage}></img>
+                      <div className="article-title">
+
                         {item.title || (
                           <SkeletonTheme color="#202020" highlightColor="#111111">
                             <h2>
@@ -1002,18 +1003,18 @@ export default function Index({ placeholder }) {
                             </h2>
                           </SkeletonTheme>
                         )}
-                      </NavLink>
+                      </div>
+                      <div className="article-icon">
+                        <IconButton aria-label="comment" style={{ color: "red" }}
+                          onClick={() => {
+                            handleLikeClick2({ id: item.id });
+                          }}
+                        >
+                          <BookIcon />
+                        </IconButton>
+                      </div>
                     </div>
-                    <div className="article-icon">
-                      <IconButton aria-label="comment" style={{ color: "red" }}
-                        onClick={() => {
-                          handleLikeClick2({ id: item.id });
-                        }}
-                      >
-                        <BookIcon />
-                      </IconButton>
-                    </div>
-                  </div>
+                  </NavLink>
                 </>
               }
               )}
@@ -1031,13 +1032,14 @@ export default function Index({ placeholder }) {
             <div className="table-responsive"><div className="article-container">
               {wroteArticle.length > 0 && wroteArticle.map(item => {
                 return <>
-                  <div className="article-item">
-                    <img className="article-img" src={item.mainImage}></img>
-                    <div className="article-title">
-                      <NavLink
-                        className="items__text-link"
-                        to={`/review/${item?.id}`}
-                      >
+                  <NavLink
+                    className="items__text-link"
+                    to={`/review/${item?.id}`}
+                  >
+                    <div className="article-item">
+                      <img className="article-img" src={item.mainImage}></img>
+                      <div className="article-title">
+
                         {item.title || (
                           <SkeletonTheme color="#202020" highlightColor="#111111">
                             <h2>
@@ -1045,18 +1047,18 @@ export default function Index({ placeholder }) {
                             </h2>
                           </SkeletonTheme>
                         )}
-                      </NavLink>
+                      </div>
+                      <div className="article-icon">
+                        <IconButton aria-label="comment" style={{ color: "red" }}
+                          onClick={() => {
+                            handleLikeClick2({ id: item.id });
+                          }}
+                        >
+                          <BookIcon />
+                        </IconButton>
+                      </div>
                     </div>
-                    <div className="article-icon">
-                      <IconButton aria-label="comment" style={{ color: "red" }}
-                        onClick={() => {
-                          handleLikeClick2({ id: item.id });
-                        }}
-                      >
-                        <BookIcon />
-                      </IconButton>
-                    </div>
-                  </div>
+                  </NavLink>
                 </>
               }
               )}

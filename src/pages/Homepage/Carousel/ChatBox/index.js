@@ -5,18 +5,22 @@ import "./styles.css";
 import { useState } from "react";
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import moment from "moment/moment";
 
 let questionList2 = [{
+    label: "Đây là danh sách phim đang được chiếu",
     name: "Tôi muốn xem danh sách phim đang được chiếu",
     value: 0,
     checked: false
 }, {
+    label: "Đây là danh sách rạp",
     name: "Tôi muốn xem danh sách rạp",
     value: 1,
     checked: false
 },
 {
-    name: "Chọn suất chiếu",
+    label: "Đây là danh sách suất chiếu cho hôm nay",
+    name: "Chọn suất chiếu cho hôm nay",
     value: 2,
     checked: true
 },
@@ -27,7 +31,9 @@ let questionList2 = [{
 }
 ];
 export default function ChatBox() {
+    const date = new Date();
     const history = useHistory()
+    const [question, setQuestion] = useState("Xin chào! chúng tôi có thể giúp gì cho bạn ?");
     const [answer, setAnswer] = useState([]);
     const [toggle, setToggle] = useState(true);
     const [params, setParams] = useState({
@@ -37,6 +43,7 @@ export default function ChatBox() {
         maPhong: -1,
         ngayChieu: "",
         gioChieu: "",
+        date: moment(date).format('YYYY-MM-DD'),
     });
     const [data, setData] = useState([]);
     const [option, setOption] = useState(-1);
@@ -80,6 +87,7 @@ export default function ChatBox() {
         }
         setData([])
         if (option === 2) {
+            setQuestion("Cảm ơn bạn đã đặt vé")
             hanldeBooking()
             setOption(10)
         }
@@ -117,6 +125,12 @@ export default function ChatBox() {
                 branchApi.schedule(params)
                     .then((response) => {
                         // console.log(response.data.data, "response");
+                        if (response?.data.data.length === 0) {
+                            setQuestion("Rất xin lỗi, Hiện không có xuất chiếu phù hợp cho bạn")
+                            setAnswer([])
+                            questionList2.forEach(item => { item.value !== 3 ? item.checked = true : item.checked = false })
+                            return;
+                        }
                         setData(response?.data.data);
                     })
                     .catch((err) => {
@@ -129,7 +143,9 @@ export default function ChatBox() {
                     id: -10000000,
                     branch: -10000000,
                     sche: -10000000,
+                    date: moment(date).format('YYYY-MM-DD'),
                 })
+                setQuestion("Xin chào! chúng tôi có thể giúp gì cho bạn ?")
                 setAnswer([])
                 setData([])
         }
@@ -166,7 +182,7 @@ export default function ChatBox() {
                             </svg>
                         </div>
                         <div className="ch-1-2">
-                            Xin chào! chúng tôi có thể giúp gì cho bạn ?
+                            {question}
                         </div>
                     </div>
                 </div>
@@ -195,6 +211,7 @@ export default function ChatBox() {
                                 !item.checked && <div
                                     onClick={() => {
                                         option !== 2 && handleClick(item.id);
+                                        setQuestion("Bạn cần biết thêm thông tin khác không ?")
                                         setAnswer([...answer, `Tôi chọn ${item.name} `]);
                                         option === 2 && (
                                             setParams({
@@ -220,6 +237,7 @@ export default function ChatBox() {
                             return (
                                 !item.checked && <div
                                     onClick={() => {
+                                        setQuestion(item.label)
                                         setAnswer([...answer, item.name]);
                                         item.checked = true;
                                         setOption(item.value);
