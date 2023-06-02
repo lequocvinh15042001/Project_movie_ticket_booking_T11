@@ -8,13 +8,13 @@ import { useDispatch } from 'react-redux';
 
 import { LOADING_BACKTO_HOME } from '../../reducers/constants/Lazy';
 
-// const bgAuth = '/img/posterBG.jpg'
+const bgAuth = '/img/posterBG.jpg'
 
 const useStyles = makeStyles(theme => ({
   backgroundImage: {
     width: '100vw',
     height: '100vh',
-    // backgroundImage: `url(${bgAuth})`,
+    backgroundImage: `url(${bgAuth})`,
     backgroundColor:"white",
     backgroundSize: 'contain',
     backgroundPosition: 'center',
@@ -24,7 +24,8 @@ const useStyles = makeStyles(theme => ({
 
   },
   bgBlueColor: {
-    backgroundImage: "linear-gradient(to bottom,rgba(200, 150, 0, 1),rgba(255, 67, 67,.9))",
+    // backgroundImage: "linear-gradient(to bottom,rgba(200, 150, 0, 1),rgba(255, 67, 67,.9))",
+    backgroundColor:"#7f1002",
     width: 700,
     height: "fit-content",
     [theme.breakpoints.down("sm")]: {
@@ -39,8 +40,8 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 0,
     right: 0,
-    transform: "translate(50%,-50%)",
-    border: '2px solid black',
+    transform: "translate(-15%,15%)",
+    border: '2px solid white',
     [theme.breakpoints.down("sm")]: {
       border: "none",
       top: 19,
@@ -49,7 +50,7 @@ const useStyles = makeStyles(theme => ({
     '&:focus': {
       outline: 'none'
     },
-    '&:hover': { opacity: 0.7 },
+    '&:hover': { opacity: 0.5 },
     transition: "all .2s",
   },
 }));
@@ -74,7 +75,7 @@ export default function AuthLayout(props) {
       <div className={classes.bgBlueColor}>
         {props.children}
         <IconButton className={classes.closeButton} onClick={handleClose} >
-          <CloseIcon style={{ color: 'black' }} fontSize='small' />
+          <CloseIcon style={{ color: 'white' }} fontSize='small' />
         </IconButton>
       </div>
     </div>
