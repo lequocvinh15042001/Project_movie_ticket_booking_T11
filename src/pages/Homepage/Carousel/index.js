@@ -140,7 +140,7 @@ export default function Carousel() {
           );
         })}
       </Slider>
-      <div style={{ position: "fixed", right: "10px", top: "25%" }}><ChatBox /></div>
+      <div style={{ position: "fixed", right: "30px", top: "25%" }}><ChatBox /></div>
       <Box
         sx={{
           // bgcolor: "background.paper",

@@ -8,6 +8,9 @@
     background-color: black;
     color: white;
     border: 1px solid rgb(139, 125, 125);
+    box-shadow: 21px 19px 34px -7px rgba(99, 72, 72, 0.59);
+    -webkit-box-shadow: 21px 19px 34px -7px rgba(99, 72, 72, 0.59);
+    -moz-box-shadow: 21px 19px 34px -7px rgba(99, 72, 72, 0.59);
 }
 
 .t-1 {
@@ -39,7 +42,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .img11 {
