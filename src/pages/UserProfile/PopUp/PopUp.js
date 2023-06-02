@@ -112,6 +112,7 @@ export default function DetailPopup({ ThongTin }) {
                             <tr>
                                 <td valign='top'>Ghế:</td>
                                 {/* <td>{ThongTin?.seats?.name?.join(", ")}</td> */}
+                                {ThongTin?.status === "EXPIRATION" && <span>Trống các ghế: </span>}
                                 <td>
                                     {ThongTin?.seats?.map((seat, index) => (
                                         <span key={index}>{seat.name}{", "}</span>
