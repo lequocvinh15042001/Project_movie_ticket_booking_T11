@@ -339,6 +339,7 @@ export default function Index({ placeholder }) {
     setOpen(true);
   };
 
+  console.log(ticketList)
   const handleChangeAnh = (image) => {
     const user = {
       username: successInfoUser?.data?.username ?? "",
@@ -745,7 +746,7 @@ export default function Index({ placeholder }) {
                         <td>
                           {new Date(sticket?.bill?.createdTime).toLocaleDateString()},{" "}
                           {new Date(sticket?.bill?.createdTime).toLocaleTimeString(
-                            "en-US",
+                            "vi-VN",
                             { hour: "2-digit", minute: "2-digit" }
                           )}
                         </td>
@@ -951,7 +952,11 @@ export default function Index({ placeholder }) {
                         {/* </td> */}
                         {/* <td>{getIdSeat(sticket.seat)}</td> */}
                         {/* <td>{sticket?.seat?.name}</td> */}
-                        <td>{billListChua?.status}</td>
+                        <td>
+                          {billListChua?.status === "WAITING_PAYMENT" ? "Chờ thanh toán" : ""}
+                          {billListChua?.status === "SUCCESS" ? "Đã thanh toán" : ""}
+                          {billListChua?.status === "EXPIRATION" ? "Hết hạn thanh toán" : ""}
+                        </td>
                         <td>
                           {new Intl.NumberFormat("it-IT", {
                             style: "decimal",

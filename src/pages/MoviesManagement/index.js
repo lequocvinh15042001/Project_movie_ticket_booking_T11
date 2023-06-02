@@ -369,7 +369,7 @@ export default function MoviesManagement() {
     <div style={{ height: "80vh", width: "100%", backgroundColor:"white"}}>
       <div className={classes.control}>
         <div className="row">
-          <div className={`col-12 col-md-6 ${classes.itemCtro}`}>
+          <div className={`col-2 col-md-3 ${classes.itemCtro}`}>
             <Button
               variant="contained"
               color="primary"
@@ -380,6 +380,9 @@ export default function MoviesManagement() {
             >
               Thêm phim
             </Button>
+          </div>
+          <div className={`col-12 col-md-2 ${classes.itemCtro}`} onClick={handleReload}>
+            <RefreshButton />
           </div>
           <div className={`col-12 col-md-4 ${classes.itemCtro}`}>
             <div className={classes.search}>
@@ -396,9 +399,6 @@ export default function MoviesManagement() {
                 onChange={(evt) => handleInputSearchChange(evt.target.value)}
               />
             </div>
-          </div>
-          <div className={`col-12 col-md-2 ${classes.itemCtro}`} onClick={handleReload}>
-            <RefreshButton />
           </div>
         </div>
       </div>

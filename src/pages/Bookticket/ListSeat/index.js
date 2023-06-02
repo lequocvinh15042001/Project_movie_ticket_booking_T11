@@ -192,13 +192,13 @@ export default function ListSeat() {
                   className={classes.seatIcon}
                 />
                 {/* đường viền chỉ vùng ghế */}
-                {seat.label === "C8" &&(
+                {/* {seat.label === "C8" &&(
                   <img
                     className={classes.viewCenter}
                     src="/img/bookticket/seatcenter.png"
                     alt="seatcenter"
                   />
-                )}
+                )} */}
                 {/* vùng bắt sự kiện click */}
                 <div
                   className={classes.areaClick}
@@ -232,7 +232,7 @@ export default function ListSeat() {
             <p>Bought</p>
           </div>
         </div>
-        <div className={classes.positionView}>
+        {/* <div className={classes.positionView}>
           <span>
             <span className={classes.linecenter} />
             <span>Center</span>
@@ -241,7 +241,7 @@ export default function ListSeat() {
             <span className={classes.linebeautiful} />
             <span>Good View</span>
           </span>
-        </div>
+        </div> */}
       </div>
 
       {/* modalleft */}

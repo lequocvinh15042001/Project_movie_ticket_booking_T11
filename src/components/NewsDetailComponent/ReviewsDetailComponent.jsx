@@ -68,7 +68,7 @@ export default function ReviewsDetailComponent(props) {
             <h6 className="items__text-title">
               <NavLink
                 className="items__text-link"
-                to={`/review/${tinTuc.id}`}
+                to={`/review/${tinTuc.slug}`}
               >
                 {tinTuc?.brief || (
                   <SkeletonTheme color="#202020" highlightColor="#111111">

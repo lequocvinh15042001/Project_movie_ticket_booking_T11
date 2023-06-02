@@ -14,7 +14,7 @@ export default function DetailNews() {
   const history = useHistory();
 
   useMemo(() => {
-    qLyPhimService.layChiTietTinTuc(maTinTuc).then((result) => {
+    qLyPhimService.layChiTietTinTucSlug(maTinTuc).then((result) => {
       setTimeout(() => {
         setTinTuc(result.data);
         $loading(false);
