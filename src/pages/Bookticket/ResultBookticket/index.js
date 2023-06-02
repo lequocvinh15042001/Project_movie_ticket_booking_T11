@@ -33,7 +33,7 @@ export default function SuccessBooking() {
     <div className={classes.resultBookticket}>
       <div className={classes.infoTicked} >
         <div className={classes.infoTicked__img}>
-          <img src={thongTinPhongVe?.setPhim.smallImageURl}/>
+          <img style={{width:"150px"}}  alt=""  src={thongTinPhongVe?.setPhim.smallImageURl}/>
         </div>
         <div className={classes.infoTicked__txt}>
           <p className={classes.tenPhim}>

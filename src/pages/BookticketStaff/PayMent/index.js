@@ -235,9 +235,9 @@ export default function PayMent() {
           console.log("Gửi đi: ",userId, scheduleId, listSeatIds);
           dispatch(bookTicket({userId, scheduleId, listSeatIds} ));
         }
-        Swal.fire('Đã đặt!', '', 'success')
+        Swal.fire('Đặt vé thành công!', '', 'success')
       } else if (result.isDenied) {
-        Swal.fire('Okay, không đặt nó!', '', 'info')
+        Swal.fire('Okay, đã hủy đặt vé!', '', 'info')
       }
     })
 
