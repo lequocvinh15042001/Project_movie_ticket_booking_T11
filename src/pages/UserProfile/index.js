@@ -926,13 +926,18 @@ export default function Index({ placeholder }) {
                       <tr key={billListChua?.id} className={classes.td}>
                         <th scope="row">{i + 1}</th>
                         <td style={{ display: "flex", gap: "5px" }}>
-                          <a class="btn btn-warning"
-                            href={`/payment/${billListChua?.id}/${billListChua.price}`}
-                            role="button">Thanh toán
-                          </a>
-                          <button onClick={() => { getTicketDetail(billListChua?.id) }} class="btn btn-primary"
-                          >Xem chi tiết
+                          <button style={{fontSize:"15px"}} onClick={() => { getTicketDetail(billListChua?.id) }} class="btn btn-primary"
+                            >Xem chi tiết
                           </button>
+                          {
+                            billListChua?.status ==="WAITING_PAYMENT" ? 
+                            <a class="btn btn-warning"
+                            href={`/payment/${billListChua?.id}/${billListChua.price}`}
+                            role="button"
+                            style={{fontSize:"15px"}}
+                            >Thanh toán
+                            </a> : null
+                          }
                         </td>
                         <td>{billListChua?.id}</td>
                         {/* <td>{sticket?.schedule?.movie?.name}</td>

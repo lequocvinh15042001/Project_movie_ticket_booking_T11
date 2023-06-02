@@ -26,6 +26,9 @@ import {
   GET_SCHEDULE_LIST_SUCCESS2,
   GET_SCHEDULE_LIST_FAIL2,
   RESET_SCHEDULE_MANAGEMENT,
+  GET_MOVIE_LIST_SAP_REQUEST,
+  GET_MOVIE_LIST_SAP_SUCCESS,
+  GET_MOVIE_LIST_SAP_FAIL,
 } from "../constants/Movie";
 
 export const getMovieList = () => {
@@ -45,6 +48,31 @@ export const getMovieList = () => {
         type: GET_MOVIE_LIST_FAIL,
         payload: {
           errorMovieList: error.response?.data
+            ? error.response.data
+            : error.message,
+        },
+      });
+    }
+  };
+};
+
+export const getMovieSapChieuList = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: GET_MOVIE_LIST_SAP_REQUEST,
+    });
+    try {
+      const result = await moviesApi.getDanhSachPhimSapChieu();
+      // console.log(result);
+      dispatch({
+        type: GET_MOVIE_LIST_SAP_SUCCESS,
+        payload: { data: result.data },
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_MOVIE_LIST_SAP_FAIL,
+        payload: {
+          errorMovieSapChieuList: error.response?.data
             ? error.response.data
             : error.message,
         },

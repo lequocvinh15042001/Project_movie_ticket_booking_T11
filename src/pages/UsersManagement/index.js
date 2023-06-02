@@ -675,7 +675,7 @@ export default function UsersManagement() {
         {
           field: "username",
           headerName: "Tên tài khoản",
-          width: 160,
+          width: 180,
           editable: addUser.toggle,
           headerAlign: "center",
           align: "left",
@@ -715,7 +715,7 @@ export default function UsersManagement() {
         {
           field: "name",
           headerName: "Họ và tên",
-          width: 200,
+          width: 250,
           editable: true,
           headerAlign: "center",
           align: "left",
@@ -724,7 +724,7 @@ export default function UsersManagement() {
         {
           field: "email",
           headerName: "Email",
-          width: 250,
+          width: 300,
           editable: true,
           headerAlign: "center",
           align: "left",
@@ -761,16 +761,16 @@ export default function UsersManagement() {
           align: "center",
           headerClassName: "custom-header",
         },
-        {
-          field: "contentCreator",
-          headerName: "Content Creator",
-          width: 145,
-          editable: true,
-          type: "boolean",
-          headerAlign: "center",
-          align: "center",
-          headerClassName: "custom-header",
-        },
+        // {
+        //   field: "contentCreator",
+        //   headerName: "Content Creator",
+        //   width: 145,
+        //   editable: true,
+        //   type: "boolean",
+        //   headerAlign: "center",
+        //   align: "center",
+        //   headerClassName: "custom-header",
+        // },
         {
           field: "ismodify",
           width: 0,
@@ -862,7 +862,7 @@ export default function UsersManagement() {
               {addUser.toggle
                 ? addUser.isFilledIn
                   ? "THÊM NHÂN VIÊN"
-                  : "QUẢN LÝ USER"
+                  : "QUẢN LÝ NGƯỜI DÙNG"
                 : "THÊM NHÂN VIÊN"}
             </Button>
           </div>
@@ -896,7 +896,7 @@ export default function UsersManagement() {
               {addUser.toggle
                 ? addUser.isFilledIn
                   ? "THÊM KHÁCH HÀNG"
-                  : "QUẢN LÝ USER"
+                  : "QUẢN LÝ NGƯỜI DÙNG"
                 : "THÊM KHÁCH HÀNG"}
             </Button>
           </div>
@@ -910,7 +910,7 @@ export default function UsersManagement() {
                 setsortBy({ field: "role", sort: "asc" })
               }
             >
-              Users
+              tài khoản người dùng
             </Button>
           </div>
           {/* <div className="col-12 pt-3 col-sm-6 col-md-4 col-lg-3">

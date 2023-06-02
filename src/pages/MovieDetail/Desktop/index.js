@@ -56,7 +56,7 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
             </p>
             <button className={classes.btnMuaVe} onClick={handleBtnMuaVe}>{location?.state?.comingMovie ? "Thông tin phim" : "Mua vé"}</button>
           </div>
-          <div className={classes.rate}>
+          {/* <div className={classes.rate}>
             <div className={classes.circular}>
               <span className={classes.danhGia}>{danhGia}</span>
               <CircularProgress variant="determinate" size="100%" value={100} className={classes.behined} color="secondary" />
@@ -66,7 +66,7 @@ export default function Desktop({ movieDetailShowtimes: data, isMobile }) {
               <Rating value={(danhGia * 5) / 10} precision={0.5} readOnly />
             </div>
             <span>{quantityComment} người đánh giá</span>
-          </div>
+          </div> */}
         </div>
       </div>
       <Tap data={data} onClickBtnMuave={onClickBtnMuave} onIncreaseQuantityComment={onIncreaseQuantityComment} isMobile={isMobile} />

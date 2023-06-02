@@ -6,6 +6,11 @@ const moviesApi = {
     return axiosClient.get(path);
   },
 
+  getDanhSachPhimSapChieu: () => {
+    const path = `/movies/getList?page=0&size=40&isShowing=0`;
+    return axiosClient.get(path);
+  },
+
   getSearchPhim: (value) => {
     // console.log(value);
     const path = `/movies/showing/search?name=${value}`;

@@ -22,7 +22,7 @@ export default function LstGioChieu(props) {
   },[])
   // console.log(lstLichChieuTheoPhim);
   const mangChiChuaNgay = lstLichChieuTheoPhim?.content?.map(item => {  // tạo mảng mới chỉ chứa ngày
-    if(new Date(item.startDate).getTime() >= new Date().getTime())
+    // if(new Date(item.startDate).getTime() >= new Date().getTime())
     return item.startDate.slice(0, 10);// item là "2020-12-17" cắt ra từ 2020-12-17T10:10:00
   })
   // console.log(mangChiChuaNgay);

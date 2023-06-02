@@ -100,8 +100,8 @@ export default function BillsManagement() {
   //   };
   // }, []);
   useEffect(() => {
-    if (billList || billList?.length) {
-      const newBillListDisplay = billList?.map((bill, index) => ({
+    if (billListTTTaiQuay || billListTTTaiQuay?.length) {
+      const newBillListDisplay = billListTTTaiQuay?.map((bill, index) => ({
         ...bill,
         hanhDong: "",
         id: bill?.id,
@@ -110,6 +110,7 @@ export default function BillsManagement() {
         imageUser:bill?.user?.image,
         nameUser:bill?.user?.name,
         usernameUser:bill?.user?.username,
+        status:bill.status,
         createdTime:`${formatDate(bill?.createdTime.slice(
           0,
           10
@@ -289,142 +290,6 @@ export default function BillsManagement() {
     // setOpenModal(true);
   };
 
-  // const handleTuChoi = (billItem) => {
-  //   selectedPhim.current = billItem;
-  //   // console.log(selectedPhim.current);
-  //   const swalWithBootstrapButtons = Swal.mixin({
-  //     customClass: {
-  //       confirmButton: 'btn btn-success',
-  //       cancelButton: 'btn btn-danger'
-  //     },
-  //     buttonsStyling: false
-  //   })
-    
-  //   swalWithBootstrapButtons.fire({
-  //     title: 'Chắc chắn từ chối?',
-  //     text: "Hãy đọc kỹ nội dung!",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Bỏ duyệt ngay!',
-  //     cancelButtonText: 'Không, dừng lại!',
-  //     reverseButtons: true
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       if (!loadingDelete) {
-  //         billsApi.putTuChoiBill(billItem.id)
-  //         .then((res) =>{
-  //           window.location.reload();
-  //           console.log(res);
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //         })
-  //       }
-  //       swalWithBootstrapButtons.fire(
-  //         'Đã từ chối!',
-  //         'DONE.',
-  //         'success'
-  //       )
-  //     } else if (
-  //       /* Read more about handling dismissals below */
-  //       result.dismiss === Swal.DismissReason.cancel
-  //     ) {
-  //       swalWithBootstrapButtons.fire(
-  //         'Đã dừng',
-  //         'Kiểm tra thông tin và nội dung!',
-  //         'error'
-  //       )
-  //     }
-  //   })
-  //   // setOpenModal(true);
-  // };
-
-  // const handleDelete = (billItem) => {
-  //   selectedPhim.current = billItem;
-  //   // console.log(selectedPhim.current);
-  //   const swalWithBootstrapButtons = Swal.mixin({
-  //     customClass: {
-  //       confirmButton: 'btn btn-success',
-  //       cancelButton: 'btn btn-danger'
-  //     },
-  //     buttonsStyling: false
-  //   })
-    
-  //   swalWithBootstrapButtons.fire({
-  //     title: 'Chắc chắn Xoá?',
-  //     text: "Hãy đọc kỹ nội dung!",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Xoá ngay!',
-  //     cancelButtonText: 'Không, dừng lại!',
-  //     reverseButtons: true
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       if (!loadingDelete) {
-  //         billsApi.deleteBill(billItem.id)
-  //         .then((res) =>{
-  //           window.location.reload();
-  //           console.log(res);
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //         })
-  //       }
-  //       swalWithBootstrapButtons.fire(
-  //         'Đã Xoá!',
-  //         'DONE.',
-  //         'success'
-  //       )
-  //     } else if (
-  //       /* Read more about handling dismissals below */
-  //       result.dismiss === Swal.DismissReason.cancel
-  //     ) {
-  //       swalWithBootstrapButtons.fire(
-  //         'Đã dừng',
-  //         'Kiểm tra thông tin và nội dung!',
-  //         'error'
-  //       )
-  //     }
-  //   })
-  //   // setOpenModal(true);
-  // };
-
-  // const onUpdate = (movieObj, hinhAnh, fakeImage) => {
-  //   if (loadingUpdateBill || loadingUpdateNoneImageMovie) {
-  //   if (loadingUpdateBill) {
-  //     return undefined;
-  //   }
-  //   setOpenModal(false);
-  //   newImageUpdate.current = fakeImage;
-  //   if (typeof hinhAnh === "string") {
-  //     // nếu dùng updateMovieUpload sẽ bị reset danhGia về 10
-  //     const movieUpdate = billListDisplay?.find(
-  //       (bill) => bill.id === fakeImage.id
-  //     ); // lẩy ra url gốc, tránh gửi base64 tới backend
-  //     movieObj.smallImageURl = movieUpdate.smallImageURl;
-  //     dispatch(putBillUpdate(movieObj));
-  //     return undefined;
-  //   }
-  //   // return undefined;
-  //   // dispatch(updateMovieUpload(movieObj));
-  // };
-  // dispatch(putBillUpdate(movieObj));
-  // enqueueSnackbar("Thành công", { variant: "success" });
-  // }
-  // const onAddMovie = (movieObj) => {
-  //   console.log("Dữ liệu bill thêm: ", movieObj);
-  //   if (!loadingAddBill) {
-  //     // dispatch(postAddBill(movieObj));
-  //     enqueueSnackbar("Thành công", { variant: "success" });
-  //   }
-  //   setOpenModal(false);
-  // };
-  // const onXemQua = (movieObj) => {
-  //   console.log("Dữ liệu bill thêm: ", movieObj);
-  //   selectedPhim.current = movieObj
-  //   setOpen(true);
-  // };
-
   const [open, setOpen] = React.useState(false);
 
   // const handleClickOpen = () => {
@@ -497,15 +362,32 @@ export default function BillsManagement() {
       field: "hanhDong",
       headerName: "Thanh toán",
       width: 150,
-      renderCell: (params) => (
-        <Action
-          onEdit={handleEdit}
-          // onDeleted={handleDelete}
-          phimItem={params.row}
-          // onXemQua={onXemQua}
-          // onTuChoi={handleTuChoi}
-        />
-      ),
+      // renderCell: (params) => (
+      //   <Action
+      //     onEdit={handleEdit}
+      //     // onDeleted={handleDelete}
+      //     phimItem={params.row}
+      //     // onXemQua={onXemQua}
+      //     // onTuChoi={handleTuChoi}
+      //   />
+      // ),
+      renderCell: (params) => {
+        if (params.row.status === "WAITING_PAYMENT") {
+          return (
+            <Action
+              onEdit={handleEdit}
+              // onDeleted={handleDelete}
+              phimItem={params.row}
+              // onXemQua={onXemQua}
+              // onTuChoi={handleTuChoi}
+            />
+          );
+        } else if (params.row.status === "SUCCESS")
+        {
+          return "Đã thanh toán"
+        }
+        else return "Hết hạn thanh toán"
+      },
       headerAlign: "center",
       align: "left",
       headerClassName: "custom-header",
@@ -550,15 +432,24 @@ export default function BillsManagement() {
       hide: true,
     },
     
-    // {
-    //   field: "status",
-    //   headerName: "Trạng thái",
-    //   width: 180,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   headerClassName: "custom-header",
-    //   renderCell: RenderCellExpand,
-    // },
+    {
+      field: "status",
+      headerName: "Trạng thái",
+      width: 180,
+      headerAlign: "center",
+      align: "center",
+      headerClassName: "custom-header",
+      // renderCell: RenderCellExpand,
+      renderCell: (params) => {
+        if (params.row.status === "WAITING_PAYMENT") {
+          return "Chờ thanh toán"
+        } else if (params.row.status === "SUCCESS")
+        {
+          return "Đã thanh toán"
+        }
+        else return "Hết hạn thanh toán"
+      },
+    },
     {
       field: "id",
       headerName: "Mã bill",
@@ -576,6 +467,7 @@ export default function BillsManagement() {
       align: "center",
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
+      hide:true,
     },
     {
       field: "email",

@@ -58,7 +58,8 @@ export const getBillsTTTaiQuay = () => {
     dispatch({
       type: GET_BILL_LIST_REQUEST_TTTQ
     })
-    billsApi.getListBillChuThanhToan()
+    // billsApi.getListBillChuThanhToan()
+    billsApi.getListBillCuaStaff()
       .then(result => {
         console.log("TTTQ",result.data);
         dispatch({

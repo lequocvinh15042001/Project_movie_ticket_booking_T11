@@ -45,6 +45,11 @@ const items = [
     title: 'Quản lý chi nhánh rạp'
   }, 
   {
+    href: '/admin/bills/',
+    icon: PostAddIcon,
+    title: 'Quản lý hóa đơn, thanh toán'
+  },
+  {
     href: '/admin/reviews',
     icon: PostAddIcon,
     title: 'Quản lý Review'

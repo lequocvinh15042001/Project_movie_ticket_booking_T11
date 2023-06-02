@@ -42,13 +42,19 @@ const reviewsApi = {
     return axiosClient.get(path);
   },
 
-  getListBillChuThanhToan: () => {
-    const path = `/bills/getUserDashBoard?status=WAITING_PAYMENT`;
+  // getListBillChuThanhToan: () => {
+  //   const path = `/bills/getUserDashBoard?status=WAITING_PAYMENT`;
+  //   return axiosClient.get(path);
+  // },
+
+    getListBillCuaStaff: () => {
+    const path = `/bills/getAllBill`;
     return axiosClient.get(path);
   },
 
+  //Sửa lại cho profile
   getListBillChuaThanhToanBoiUser: (id) => {
-    const path = `/bills/getAllBill?status=WAITING_PAYMENT&userId=${id}`;
+    const path = `/bills/getAllBill?userId=${id}`;
     return axiosClient.get(path);
   },
 

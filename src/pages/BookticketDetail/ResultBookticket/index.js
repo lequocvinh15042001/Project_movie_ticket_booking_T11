@@ -105,7 +105,7 @@ export default function SuccessBooking() {
               <tr>
                 <td valign='top'>Trạng thái:</td>
                 <td>
-                  {successBookingTicketMessage && <span>Chưa thành công</span>}
+                  {successBookingTicketMessage && <span>Chưa thanh toán</span>}
                   {errorBookTicketMessage && <span>Đặt vé thất bại: <span className={classes.errorColor}>{errorBookTicketMessage}</span></span>}
                 </td>
               </tr>

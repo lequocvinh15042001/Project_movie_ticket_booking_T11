@@ -35,6 +35,9 @@ import {
   ADD_SCHEDULE_UPLOAD_SUCCESS,
   RESET_SCHEDULE_MANAGEMENT,
   ADD_SCHEDULE_UPLOAD_FAIL,
+  GET_MOVIE_LIST_SAP_REQUEST,
+  GET_MOVIE_LIST_SAP_SUCCESS,
+  GET_MOVIE_LIST_SAP_FAIL,
 } from "./constants/Movie";
 
 const initialState = {
@@ -42,6 +45,10 @@ const initialState = {
   loadingMovieList: false,
   errorMovieList: null,
   movieDetail: null,
+
+  movieSapChieuList: [],
+  loadingMovieSapChieuList: false,
+  errorMovieSapChieuList: null,
 
   movieList2: null,
   loadingMovieList2: false,
@@ -109,6 +116,29 @@ const movieReducer = (state = initialState, action) => {
         ...state,
         errorMovieList: action.payload.errorMovieList,
         loadingMovieList: false,
+      };
+    }
+
+    case GET_MOVIE_LIST_SAP_REQUEST: {
+      return {
+        ...state,
+        loadingMovieSapChieuList: true,
+        errorMovieSapChieuList: null,
+        // movieSapChieuDetail: null,
+      };
+    }
+    case GET_MOVIE_LIST_SAP_SUCCESS: {
+      return {
+        ...state,
+        movieSapChieuList: action.payload.data,
+        loadingMovieSapChieuList: false,
+      };
+    }
+    case GET_MOVIE_LIST_SAP_FAIL: {
+      return {
+        ...state,
+        errorMovieSapChieuList: action.payload.errorMovieList,
+        loadingMovieSapChieuList: false,
       };
     }
 

@@ -76,7 +76,11 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
       mainImage: movieObj.mainImage,
       title:movieObj.title,
       brief:movieObj.brief,
-      description:selectedNews
+      description:selectedNews,
+      shortDescription: "",
+      thumbnail: "",
+      categoryId: 0,
+      keyword: ""
     }
     if (selectedPhim.id) {
       // onUpdate(movieObj, smallImageURl, fakeImage)
@@ -141,6 +145,7 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
         id: selectedPhim.id,
         brief: selectedPhim.brief,
         description: selectedPhim.description,
+        shortDescription: selectedPhim.description,
         image1: selectedPhim.image1,
         title: selectedPhim.title,
         mainImage: selectedPhim.mainImage,
