@@ -15,6 +15,8 @@ import slugify from "slugify";
 // import Fab from "@material-ui/core/Fab";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import RefreshButton from "../../utilities/RefreshButton"
+import DetailPopup from "./PopUp/PopUp";
+import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 
 
 import { useStyles, DialogContent, DialogTitle } from "./styles";
@@ -37,6 +39,7 @@ import { DialogContentText } from "@mui/material";
 import Slide from '@mui/material/Slide';
 import billsApi from "../../api/billsApi";
 import formatDate from "../../utilities/formatDate";
+import reviewsApi from "../../api/billsApi";
 
 
 // const Transition = React.forwardRef(function Transition(props, ref) {
@@ -57,6 +60,8 @@ export default function BillsManagement() {
   // console.log("billListDisplay: ", billListDisplay);
   const classes = useStyles();
   const  {enqueueSnackbar}  = useSnackbar();
+  const [toggle, setToggle] = useState(false)
+
   let {
     billList,
     loadingBillList,
@@ -127,112 +132,12 @@ export default function BillsManagement() {
     }
 
   }, []);
+  const [ticketDetail, setTicketDetail] = useState({})
 
-  // useEffect(() => {
-  //     let newBillListLoc = billList?.data?.push((bill) => {
-  //       if(bill?.type === "REVIEWS") {
-  //         return bill
-  //       }
-  //       else {return}
-  //     });
-  //     setBillListLoc(newBillListLoc);
-  // }, []);
+  const getTicketDetail = (id) => {
+    reviewsApi.getBillByID(id).then((response) => { setTicketDetail(response.data); setToggle(true) })
+  }
 
-  // console.log(billListLoc);
-
-  // useEffect(() => {
-  //   // delete movie xong thì thông báo
-  //   if (errorDelete === "Delete Success but backend return error") {
-  //     successDelete = "Delete Success !";
-  //   }
-  //   if (successDelete) {
-  //     enqueueSnackbar(successDelete, { variant: "success" });
-  //     return;
-  //   }
-  //   if (errorDelete) {
-  //     enqueueSnackbar(errorDelete, { variant: "error" });
-  //   }
-  // }, [errorDelete, successDelete]);
-
-  // useEffect(() => {
-  //   if (successUpdate || successUpdateNoneImageMovie) {
-  //     callApiChangeImageSuccess.current = true;
-  //     enqueueSnackbar(
-  //       `Update successfully: ${successUpdateMovie.name ?? ""}${
-  //         successUpdateNoneImageMovie.name ?? ""
-  //       }`,
-  //       { variant: "success" }
-  //     );
-  //   }
-  //   if (errorUpdateMovie || errorUpdateNoneImageMovie) {
-  //     callApiChangeImageSuccess.current = false;
-  //     enqueueSnackbar(
-  //       `${errorUpdateMovie ?? ""}${errorUpdateNoneImageMovie ?? ""}`,
-  //       { variant: "error" }
-  //     );
-  //   }
-  // }, [
-  //   successUpdateMovie,
-  //   errorUpdateMovie,
-  //   successUpdateNoneImageMovie,
-  //   errorUpdateNoneImageMovie,
-  // ]);
-
-  // useEffect(() => {
-  //   if (successAddBill) {
-  //     enqueueSnackbar(
-  //       `Add new movie successfully: ${successAddBill.brief}`,
-  //       { variant: "success" }
-  //     );
-  //   }
-  //   if (errorAddBill) {
-  //     enqueueSnackbar(errorAddBill, { variant: "error" });
-  //   }
-  // }, [successAddBill, errorAddBill]);
-
-  // xóa một phim
-  // const handleDeleteOne = (maPhim) => {
-  //   const swalWithBootstrapButtons = Swal.mixin({
-  //     customClass: {
-  //       confirmButton: 'btn btn-success',
-  //       cancelButton: 'btn btn-danger'
-  //     },
-  //     buttonsStyling: false
-  //   })
-    
-  //   swalWithBootstrapButtons.fire({
-  //     title: 'Are you sure?',
-  //     text: "You won't be able to revert this!",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Yes, delete it!',
-  //     cancelButtonText: 'No, cancel!',
-  //     reverseButtons: true
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       if (!loadingDelete) {
-  //         // nếu click xóa liên tục một user
-  //         dispatch(deleteMovie(maPhim));
-  //         // window.location.reload();
-  //       }
-  //       swalWithBootstrapButtons.fire(
-  //         'Đã xoá!',
-  //         'Bạn đã xoá nó.',
-  //         'success'
-  //       )
-  //     } else if (
-  //       /* Read more about handling dismissals below */
-  //       result.dismiss === Swal.DismissReason.cancel
-  //     ) {
-  //       swalWithBootstrapButtons.fire(
-  //         'Đã huỷ',
-  //         'Huỷ đặt hàng này :)',
-  //         'error'
-  //       )
-  //     }
-  //   })
-
-  // };
   const handleEdit = (billItem) => {
     selectedPhim.current = billItem;
     // console.log(selectedPhim.current);
@@ -371,6 +276,23 @@ export default function BillsManagement() {
       //     // onTuChoi={handleTuChoi}
       //   />
       // ),
+      // renderCell: (params) => {
+      //   if (params.row.status === "WAITING_PAYMENT") {
+      //     return (
+      //       <Action
+      //         onEdit={handleEdit}
+      //         // onDeleted={handleDelete}
+      //         phimItem={params.row}
+      //         // onXemQua={onXemQua}
+      //         // onTuChoi={handleTuChoi}
+      //       />
+      //     );
+      //   } else if (params.row.status === "SUCCESS")
+      //   {
+      //     return "Đã thanh toán"
+      //   }
+      //   else return "Hết hạn thanh toán"
+      // },
       renderCell: (params) => {
         if (params.row.status === "WAITING_PAYMENT") {
           return (
@@ -382,12 +304,21 @@ export default function BillsManagement() {
               // onTuChoi={handleTuChoi}
             />
           );
-        } else if (params.row.status === "SUCCESS")
-        {
-          return "Đã thanh toán"
+        } else {
+          return (
+            <button
+              style={{ fontSize: "15px" }}
+              onClick={() => {
+                getTicketDetail(params.row.id);
+              }}
+              className="btn btn-primary"
+            >
+              Xem chi tiết
+            </button>
+          );
         }
-        else return "Hết hạn thanh toán"
       },
+
       headerAlign: "center",
       align: "left",
       headerClassName: "custom-header",
@@ -580,6 +511,11 @@ export default function BillsManagement() {
         // sort
         sortModel={[{ field: "nameUser", sort: "asc" }]}
       />
+
+      {toggle && <div style={{ position: "fixed", borderRadius: "5px", top: "15%", left: "10%", backgroundColor: "white", zIndex: "10000", width: "80%", height: "70%", overflow: "scroll", border:"2px solid black" }}>
+        <DetailPopup ThongTin={ticketDetail} />
+        <div onClick={() => setToggle(false)} style={{ position: "absolute", right: "0px", top: "0px", backgroundColor: "red", padding: "10px", display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}><CloseFullscreenIcon /></div>
+      </div>}
 
       <Dialog open={openModal}>
         <DialogTitle onClose={() => setOpenModal(false)}>

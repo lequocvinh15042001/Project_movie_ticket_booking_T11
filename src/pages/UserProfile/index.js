@@ -905,10 +905,14 @@ export default function Index({ placeholder }) {
             isDesktop={isDesktop}
           >
             <div className="table-responsive">
-              {toggle && <div style={{ position: "fixed", borderRadius: "10px", top: "15%", left: "10%", backgroundColor: "white", zIndex: "1000", width: "80%", height: "70%", overflow: "scroll" }}>
+              {/* {toggle && <div style={{ position: "fixed", borderRadius: "10px", top: "15%", left: "10%", backgroundColor: "white", zIndex: "1000", width: "80%", height: "70%", overflow: "scroll" }}>
                 <DetailPopup ThongTin={ticketDetail} />
                 <div onClick={() => setToggle(false)} style={{ position: "absolute", right: "0px", top: "0px", backgroundColor: "red", padding: "10px", display: "flex", justifyContent: "center", alignItems: "center" }}><CloseFullscreenIcon /></div>
-              </div>}
+              </div>} */}
+                {toggle && <div style={{ position: "fixed", borderRadius: "5px", top: "15%", left: "10%", backgroundColor: "white", zIndex: "10000", width: "80%", height: "70%", overflow: "scroll", border:"2px solid black" }}>
+                  <DetailPopup ThongTin={ticketDetail} />
+                  <div onClick={() => setToggle(false)} style={{ position: "absolute", right: "0px", top: "0px", backgroundColor: "red", padding: "10px", display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}><CloseFullscreenIcon /></div>
+                </div>}
               <table className="table table-striped table-hover table-bordered">
                 <thead>
                   <tr>
