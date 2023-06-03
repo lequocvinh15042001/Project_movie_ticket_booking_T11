@@ -232,6 +232,7 @@ export default function MoviesManagement() {
   };
   const onAddMovie = (movieObj) => {
     if (!loadingAddUploadMovie) {
+      console.log("Thêm mới phim này:", movieObj);
       dispatch(addMovieUpload(movieObj));
     }
     setOpenModal(false);

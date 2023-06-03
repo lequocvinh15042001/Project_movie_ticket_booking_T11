@@ -53,20 +53,20 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
   })
 
   const handleSubmit = (movieObj) => {
-    // console.log("Bay vô add: ", movieObj);
+    console.log("Bay vô add: ", movieObj);
     // let smallImageURl = movieObj.smallImageURl
     // let fakeImage = { srcImage, id: movieObj.id }
-    movieObj.isShowing = trangThai
     movieObj = { ...movieObj, releaseDate: movieObj.releaseDate.toLocaleDateString('fr-CA')}
 
     if(!movieObj.smallImageURl && !movieObj.largeImageURL){
       movieObj = { ...movieObj,
       smallImageURl: image,
       largeImageURL: image2,
-      isShowing: trangThai,
+      // isShowing: trangThai,
     }}
     if (selectedPhim.id) {
-      console.log("movieObj.isShowing", movieObj.isShowing);
+      // console.log("movieObj.isShowing", movieObj.isShowing);
+      movieObj.isShowing = trangThai
       // onUpdate(movieObj, smallImageURl, fakeImage)
       onUpdate(movieObj)
       return
@@ -75,6 +75,7 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     delete newMovieObj.id
     // delete newMovieObj.duration
     // delete newMovieObj.rated
+    console.log(newMovieObj);
     onAddMovie(newMovieObj)
   }
 
@@ -286,13 +287,13 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
           <Field name="rated" className="form-control" />
         </div>
         <div className="form-group">
-          <label>Trạng thái phim&nbsp;</label>
-          <ErrorMessage name="isShowing" render={msg => <span className="text-danger">{msg}</span>} />
-          {/* <Field name="isShowing" type="number"  className="form-control" /> */}
-          <FormControl sx={{ m: 1, minWidth: 120 }} className="form-control">
-  {/* <InputLabel htmlFor="grouped-select">Trạng thái</InputLabel> */}
+          <label>Trạng thái phim (Sắp chiếu: 0, Đang chiếu: 1, Đã chiếu: 2)&nbsp;</label>
+          {/* <ErrorMessage name="isShowing" render={msg => <span className="text-danger">{msg}</span>} /> */}
+          <Field  name="isShowing" type="number"  className="form-control"/>
+
+          {/* <FormControl sx={{ m: 1, minWidth: 120 }} className="form-control">
             <Select
-              name="isShowing"
+              // name="isShowing"
               defaultValue={selectedPhim.isShowing}
               id="grouped-select"
               label="Trạng thái"
@@ -302,7 +303,7 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
               <MenuItem value={1}>{selectedPhim.isShowing === 1 ? 'Đang chiếu' : 'Đang chiếu'}</MenuItem>
               <MenuItem value={2}>{selectedPhim.isShowing === 2 ? 'Đã chiếu' : 'Đã chiếu'}</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
         </div>
         <button type="submit" className="form-control">Gửi</button>
       </Form>
