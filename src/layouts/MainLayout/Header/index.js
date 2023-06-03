@@ -27,10 +27,13 @@ import { LOADING_BACKTO_HOME } from '../../../reducers/constants/Lazy';
 import { getMovieList } from '../../../reducers/actions/Movie';
 import { getTheaters } from '../../../reducers/actions/Theater';
 import Logo from "./../../../assets/LeafSVG";
-import Search from '../Search/Search';
+// import Search from '../Search/Search';
 import { getInfoUser } from '../../../reducers/actions/UsersManagement';
 
 import Swal from "sweetalert2";
+import SearchBar from '../SearchBar';
+
+
 
 
 const headMenu = [
@@ -186,7 +189,7 @@ export default function Header() {
             <span style={{ height: 50, color:"rgb(250, 82, 56)", fontWeight:"800" }}>GOLDENNEW TICKET</span>
           </div>
           {/* Tìm kiếm */}
-          <Search />
+          {/* <Search /> */}
           {/* Tìm kiếm */}
           <div className={classes.linkTobody}>
             <Grid
@@ -199,6 +202,9 @@ export default function Header() {
               {headMenu.map((link) => (
                 <span key={link.id} className={classes.link} onClick={() => handleClickLink(link.id)}>{link.nameLink}</span>
               ))}
+
+              <SearchBar/>
+
             </Grid>
           </div>
           {/* <div>
