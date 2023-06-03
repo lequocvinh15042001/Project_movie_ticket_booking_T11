@@ -1,7 +1,7 @@
 import { NavLink, useHistory } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { IconButton, makeStyles } from "@material-ui/core";
+import { IconButton, makeStyles, Typography } from "@material-ui/core";
 import * as yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import AppBar from "@material-ui/core/AppBar";
@@ -42,6 +42,9 @@ import "./styles.scss"
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import DetailPopup from "./PopUp/PopUp";
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
+
+import { Comment as CommentIcon, Gavel  as GavelIcon , Favorite as FavoriteIcon, Visibility as VisibilityIcon } from '@material-ui/icons';
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -183,11 +186,20 @@ export default function Index({ placeholder }) {
   }, [successInfoUser?.data?.id]);
 
   useEffect(() => {
-    successInfoUser?.data?.id && eventsApi.getAllSavedArticle(successInfoUser?.data?.id).then(res => setSavedArticle(res.data.data.content))
+    successInfoUser?.data?.id && 
+    eventsApi.getAllSavedArticle(successInfoUser?.data?.id)
+    .then(res => setSavedArticle(res?.data?.data?.content))
+
   }, [successInfoUser?.data?.id])
+
   useEffect(() => {
-    successInfoUser?.data?.id && eventsApi.getAll().then(res => setWroteArticle(res.data.data))
+    successInfoUser?.data?.id && eventsApi.getAll().then(res => setWroteArticle(res?.data?.data))
   }, [successInfoUser?.data?.id])
+
+  console.log('====================================');
+  console.log(wroteArticle);
+  console.log('====================================');
+
   useEffect(() => {
     if (successUpdateUser) {
       Swal.fire({
@@ -549,7 +561,7 @@ export default function Index({ placeholder }) {
                   root: classes.tabButton,
                   selected: classes.tabSelected,
                 }}
-                label="Bài viết đã lưu"
+                label="Bài viết đã viết"
               />
               <Tab
                 disableRipple
@@ -557,7 +569,7 @@ export default function Index({ placeholder }) {
                   root: classes.tabButton,
                   selected: classes.tabSelected,
                 }}
-                label="Bài viết đã viết"
+                label="Bài viết đã lưu"
               />
             </Tabs>
 
@@ -1002,21 +1014,21 @@ export default function Index({ placeholder }) {
             isDesktop={isDesktop}
           >
             <div className="table-responsive"><div className="article-container">
-              {savedArticle.length > 0 && savedArticle.map(item => {
+              {savedArticle?.length > 0 && savedArticle.map(item => {
                 return <>
                   <NavLink
                     className="items__text-link"
-                    to={`/review/${item?.id}`}
+                    to={`/review/${item?.slug}`}
                   >
                     <div className="article-item">
-                      <img className="article-img" src={item.mainImage}></img>
+                      <img className="article-img" src={item.mainImage} alt=""></img>
                       <div className="article-title">
 
                         {item.title || (
                           <SkeletonTheme color="#202020" highlightColor="#111111">
-                            <h2>
+                            <h4>
                               <Skeleton count={3} duration={2} />
-                            </h2>
+                            </h4>
                           </SkeletonTheme>
                         )}
                       </div>
@@ -1041,22 +1053,22 @@ export default function Index({ placeholder }) {
           {/* Danh sách bài đã viết */}
           <TabPanel
             value={value}
-            index={5}
+            index={3}
             style={{ padding: isDesktop ? "0px 0px" : "0px 16px", backgroundColor: "white", borderRadius: "5px" }}
             isDesktop={isDesktop}
           >
             <div className="table-responsive"><div className="article-container">
-              {wroteArticle.length > 0 && wroteArticle.map(item => {
+              {wroteArticle?.length > 0 && wroteArticle.map(item => {
                 return <>
                   <NavLink
                     className="items__text-link"
-                    to={`/review/${item?.id}`}
+                    to={item.status === "APPROVE" ? `/review/${item?.slug}` : "#"}
                   >
                     <div className="article-item">
-                      <img className="article-img" src={item.mainImage}></img>
+                      <img className="article-img" src={item?.mainImage} alt=""></img>
                       <div className="article-title">
 
-                        {item.title || (
+                        {item?.title || (
                           <SkeletonTheme color="#202020" highlightColor="#111111">
                             <h2>
                               <Skeleton count={3} duration={2} />
@@ -1064,13 +1076,39 @@ export default function Index({ placeholder }) {
                           </SkeletonTheme>
                         )}
                       </div>
-                      <div className="article-icon">
-                        <IconButton aria-label="comment" style={{ color: "red" }}
+                      <div className="article-icon" style={{backgroundColor:"rgba(255,255,255, 0.5)"}}>
+                        {/* <IconButton aria-label="comment" style={{ color: "red" }}
                           onClick={() => {
                             handleLikeClick2({ id: item.id });
                           }}
                         >
                           <BookIcon />
+                        </IconButton> */}
+                    
+
+                      <IconButton aria-label="duyet" style={{ color: "blue" }}>
+                        {/* <GavelIcon /> */}
+                        <Typography>
+                          {item.status === "DELETE" ? "Đã bị xóa":""}
+                          {item.status === "DENY" ? "Bị ẩn":""}
+                          {item.status === "CREATE" ? "Chờ duyệt":""}
+                          {item.status === "APPROVE" ? "Được đăng":""}
+                        </Typography>
+                      </IconButton>
+
+                      <IconButton aria-label="Xem (icon hình con mắt)" style={{ color: "black" }}>
+                        <VisibilityIcon />
+                        <Typography>{item.view}</Typography>
+                      </IconButton>
+
+                      <IconButton aria-label="add to favorites" style={{ color: "black" }}>
+                        <FavoriteIcon />
+                        <Typography>{item.totalLike}</Typography>
+                      </IconButton>
+
+                        <IconButton aria-label="comment" style={{ color: "black" }}>
+                          <CommentIcon />
+                          <Typography>{item.totalComment}</Typography>
                         </IconButton>
                       </div>
                     </div>
