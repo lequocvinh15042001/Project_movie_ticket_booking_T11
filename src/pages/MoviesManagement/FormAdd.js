@@ -14,6 +14,7 @@ import { useStyles } from './styles';
 import Swal from 'sweetalert2';
 import { useSnackbar } from 'notistack';
 import CircularIntegration from '../../utilities/CircularIntegration';
+import { MenuItem, Select } from '@material-ui/core';
 
 export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
   const classes = useStyles();
@@ -21,6 +22,7 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
   const [srcImage2, setSrcImage2] = useState(selectedPhim?.largeImageURL)
   const [image, setImage] = useState('')
   const [image2, setImage2] = useState('')
+  const [trangThai, setTrangThai] = useState(1)
   const  {enqueueSnackbar}  = useSnackbar();
 
   const setThumbnailPreviews = (e) => {
@@ -54,15 +56,17 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
     // console.log("Bay vô add: ", movieObj);
     // let smallImageURl = movieObj.smallImageURl
     // let fakeImage = { srcImage, id: movieObj.id }
-   
+    movieObj.isShowing = trangThai
     movieObj = { ...movieObj, releaseDate: movieObj.releaseDate.toLocaleDateString('fr-CA')}
 
     if(!movieObj.smallImageURl && !movieObj.largeImageURL){
       movieObj = { ...movieObj,
       smallImageURl: image,
       largeImageURL: image2,
+      isShowing: trangThai,
     }}
     if (selectedPhim.id) {
+      console.log("movieObj.isShowing", movieObj.isShowing);
       // onUpdate(movieObj, smallImageURl, fakeImage)
       onUpdate(movieObj)
       return
@@ -122,6 +126,7 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
   }
   console.log("SrcImage 1 : ", image);
   console.log("SrcImage 2: ", image2);
+  console.log("Trạng thái: ", trangThai);
   return (
     <Formik
       initialValues={{
@@ -281,11 +286,25 @@ export default function FormAdd({ selectedPhim, onUpdate, onAddMovie }) {
           <Field name="rated" className="form-control" />
         </div>
         <div className="form-group">
-          <label>Có đang chiếu không (nếu có chọn 1, ngược lại chọn 0)&nbsp;</label>
+          <label>Trạng thái phim&nbsp;</label>
           <ErrorMessage name="isShowing" render={msg => <span className="text-danger">{msg}</span>} />
-          <Field name="isShowing" type="number"  className="form-control" />
+          {/* <Field name="isShowing" type="number"  className="form-control" /> */}
+          <FormControl sx={{ m: 1, minWidth: 120 }} className="form-control">
+  {/* <InputLabel htmlFor="grouped-select">Trạng thái</InputLabel> */}
+            <Select
+              name="isShowing"
+              defaultValue={selectedPhim.isShowing}
+              id="grouped-select"
+              label="Trạng thái"
+              onChange={(event) => setTrangThai(event.target.value)} // Xử lý sự kiện onChange
+            >
+              <MenuItem value={0}>{selectedPhim.isShowing === 0 ? 'Sắp chiếu' : 'Sắp chiếu'}</MenuItem>
+              <MenuItem value={1}>{selectedPhim.isShowing === 1 ? 'Đang chiếu' : 'Đang chiếu'}</MenuItem>
+              <MenuItem value={2}>{selectedPhim.isShowing === 2 ? 'Đã chiếu' : 'Đã chiếu'}</MenuItem>
+            </Select>
+          </FormControl>
         </div>
-        <button type="submit" className="form-control">Submit</button>
+        <button type="submit" className="form-control">Gửi</button>
       </Form>
     )}</Formik>
   )

@@ -209,8 +209,16 @@ export default function MoviesManagement() {
     if (loadingUpdateMovie || loadingUpdateNoneImageMovie) {
       return undefined;
     }
+    console.log('====================================');
+    console.log("Trả về onUpdate: ", movieObj);
+    console.log('====================================');
     setOpenModal(false);
     newImageUpdate.current = fakeImage;
+    // movieObj.isShowing = trangThai
+    console.log('====================================');
+    console.log(movieObj);
+    console.log('====================================');
+
     if (typeof hinhAnh === "string") {
       // nếu dùng updateMovieUpload sẽ bị reset danhGia về 10
       const movieUpdate = movieListDisplay?.find(

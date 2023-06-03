@@ -29,6 +29,9 @@ import {
   GET_MOVIE_LIST_SAP_REQUEST,
   GET_MOVIE_LIST_SAP_SUCCESS,
   GET_MOVIE_LIST_SAP_FAIL,
+  GET_MOVIE_HETHONG_LIST_REQUEST,
+  GET_MOVIE_HETHONG_LIST_SUCCESS,
+  GET_MOVIE_HETHONG_LIST_FAIL,
 } from "../constants/Movie";
 
 export const getMovieList = () => {
@@ -48,6 +51,31 @@ export const getMovieList = () => {
         type: GET_MOVIE_LIST_FAIL,
         payload: {
           errorMovieList: error.response?.data
+            ? error.response.data
+            : error.message,
+        },
+      });
+    }
+  };
+};
+
+export const getMovieHeThongList = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: GET_MOVIE_HETHONG_LIST_REQUEST,
+    });
+    try {
+      const result = await moviesApi.getTatCaDanhSachPhimDangSapDaChieu();
+      console.log("Movie hệ thống: ",result);
+      dispatch({
+        type: GET_MOVIE_HETHONG_LIST_SUCCESS,
+        payload: { data: result.data },
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_MOVIE_HETHONG_LIST_FAIL,
+        payload: {
+          errorMovieHeThongList: error.response?.data
             ? error.response.data
             : error.message,
         },
@@ -87,7 +115,7 @@ export const getMovieListManagement = () => {
       type: GET_MOVIE_LIST_REQUEST2,
     });
     moviesApi
-      .getDanhSachPhim()
+      .getTatCaDanhSachPhimDangSapDaChieu()
       .then((result) => {
         dispatch({
           type: GET_MOVIE_LIST_SUCCESS2,
@@ -106,6 +134,7 @@ export const getMovieListManagement = () => {
       });
   };
 };
+
 
 export const getScheduleListManagement = (idRap) => {
   console.log(idRap);
@@ -198,12 +227,16 @@ export const updateMovieUpload = (phimObj) => {
     moviesApi
       .postCapNhatPhimUpload(phimObj)
       .then((result) => {
+        console.log("Thành công cập nhật: ",result.data);
         dispatch({
           type: POST_UPDATE_MOVIE_SUCCESS,
           payload: { data: result.data.data },
         });
       })
       .catch((error) => {
+        console.log('====================================');
+        console.log(error.response?.data);
+        console.log('====================================');
         dispatch({
           type: POST_UPDATE_MOVIE_FAIL,
           payload: {
