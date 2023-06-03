@@ -34,7 +34,7 @@ const theatersApi = {
   },
 
   getTatCaLichChieuAdmin: () => {
-    const path = "/schedule";
+    const path = "/schedule?isAdmin=1";
     return axiosClient.get(path);
   },
 

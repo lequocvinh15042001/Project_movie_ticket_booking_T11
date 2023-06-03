@@ -296,7 +296,7 @@ export const addMovieUpload = (movieObj) => {
           type: ADD_MOVIE_UPLOAD_FAIL,
           payload: {
             // error: error.response?.data ? error.response.data : error.message,
-            error: "Update fail! Don't be empty any field or Release Date was wrong!"
+            error: "Lỗi do ngày khởi chiếu không đúng!"
           },
         });
       });
