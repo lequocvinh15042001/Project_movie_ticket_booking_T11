@@ -35,7 +35,7 @@ export default function Desktop({ arrayData, value }) {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />
   };
-  // console.log("Arr Datta:", arrayData);
+  console.log("Arr Datta:", arrayData);
   return (
     <div className={classes.container}>
       <Slider {...settings}>

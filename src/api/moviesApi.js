@@ -6,8 +6,14 @@ const moviesApi = {
     return axiosClient.get(path);
   },
 
+  getTatCaDanhSachPhimDangSapDaChieu: () => {
+    console.log("Vào get movie hệ thống");
+    const path = `/movies/getList?page=0&size=30`;
+    return axiosClient.get(path);
+  },
+
   getDanhSachPhimSapChieu: () => {
-    const path = `/movies/getList?page=0&size=40&isShowing=0`;
+    const path = `/movies/getList?page=0&size=10&isShowing=0`;
     return axiosClient.get(path);
   },
 

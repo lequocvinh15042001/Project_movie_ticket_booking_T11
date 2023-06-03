@@ -38,6 +38,9 @@ import {
   GET_MOVIE_LIST_SAP_REQUEST,
   GET_MOVIE_LIST_SAP_SUCCESS,
   GET_MOVIE_LIST_SAP_FAIL,
+  GET_MOVIE_HETHONG_LIST_REQUEST,
+  GET_MOVIE_HETHONG_LIST_SUCCESS,
+  GET_MOVIE_HETHONG_LIST_FAIL,
 } from "./constants/Movie";
 
 const initialState = {
@@ -45,6 +48,10 @@ const initialState = {
   loadingMovieList: false,
   errorMovieList: null,
   movieDetail: null,
+
+  movieHeThongList: [],
+  loadingMovieHeThongList: false,
+  errorMovieHeThongList: null,
 
   movieSapChieuList: [],
   loadingMovieSapChieuList: false,
@@ -119,6 +126,29 @@ const movieReducer = (state = initialState, action) => {
       };
     }
 
+    case GET_MOVIE_HETHONG_LIST_REQUEST: {
+      return {
+        ...state,
+        loadingMovieHeThongList: true,
+        errorMovieHeThongList: null,
+        // movieDetail: null,
+      };
+    }
+    case GET_MOVIE_HETHONG_LIST_SUCCESS: {
+      return {
+        ...state,
+        movieHeThongList: action.payload.data,
+        loadingMovieHeThongList: false,
+      };
+    }
+    case GET_MOVIE_HETHONG_LIST_FAIL: {
+      return {
+        ...state,
+        errorMovieHeThongList: action.payload.errorMovieHeThongList,
+        loadingMovieHeThongList: false,
+      };
+    }
+
     case GET_MOVIE_LIST_SAP_REQUEST: {
       return {
         ...state,
@@ -137,7 +167,7 @@ const movieReducer = (state = initialState, action) => {
     case GET_MOVIE_LIST_SAP_FAIL: {
       return {
         ...state,
-        errorMovieSapChieuList: action.payload.errorMovieList,
+        errorMovieSapChieuList: action.payload.errorMovieSapChieuList,
         loadingMovieSapChieuList: false,
       };
     }
