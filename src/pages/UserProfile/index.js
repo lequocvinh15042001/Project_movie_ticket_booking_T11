@@ -196,9 +196,9 @@ export default function Index({ placeholder }) {
     successInfoUser?.data?.id && eventsApi.getAll().then(res => setWroteArticle(res?.data?.data))
   }, [successInfoUser?.data?.id])
 
-  console.log('====================================');
-  console.log(wroteArticle);
-  console.log('====================================');
+  // console.log('====================================');
+  // console.log(wroteArticle);
+  // console.log('====================================');
 
   useEffect(() => {
     if (successUpdateUser) {
