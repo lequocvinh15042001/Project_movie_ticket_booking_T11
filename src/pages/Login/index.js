@@ -72,7 +72,7 @@ export default function Login() {
     usernameOrEmail: yup.string().required("*Không được bỏ trống !"),
     password: yup.string().required("*Không được bỏ trống !"),
   });
-
+console.log(errorLogin);
 
   const handleSubmit = (user) => {
     // console.log('người dùng nhập user',user);
@@ -181,7 +181,7 @@ export default function Login() {
                 Đăng nhập
               </button>
               {/* error from api */}
-              {errorLogin && (
+              {errorLogin !== null && errorLogin !== "Request failed with status code 400" && (
                 <div className="alert alert-danger">
                   <span>Tài khoản hoặc mật khẩu không đúng!</span>
                 </div>
