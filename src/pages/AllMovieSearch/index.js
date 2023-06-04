@@ -18,12 +18,13 @@ export default function AllMovieSearch() {
   const params = useParams()
   var item = params.searchItem.toString()
 
+  console.log(listKetQua);
   useEffect(() =>{
     moviesApi.getSearchPhim(item)
     .then((res) =>{
-      if(res?.data?.data)
+      if(res.data.data)
       {
-        setListKetQua(res?.data?.data)
+        setListKetQua(res.data.data)
       } else {
         setListKetQua([])
       }
@@ -48,8 +49,8 @@ export default function AllMovieSearch() {
     <div className={classes.container}>
       
       <Slider {...settings}>
-        {listKetQua.length !== 0 ?   
-            (listKetQua.map((movie) => {
+        {listKetQua.length > 0 ?
+            (listKetQua?.map((movie) => {
               return (
                 <div className="px-1 align-top" key={movie.id}>
                   <MovieItem
@@ -57,7 +58,9 @@ export default function AllMovieSearch() {
                   />
                 </div>
               )
-          })):       
+          })): <h5><a href="/">❌ Không thấy, về trang chủ</a></h5>
+        }
+        {/* {listKetQua.length === 0 &&  
           Swal.fire({
             title: "Không tìm thấy phim!",
             icon: "warning",
@@ -70,7 +73,42 @@ export default function AllMovieSearch() {
                   history.push("/");
                   window.location.reload();
                 }
-              })
+          })
+        } */}
+        {/* {listKetQua.length === 0 && 
+           Swal.fire({
+            title: "Không tìm thấy phim!",
+            icon: "warning",
+            // showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Về trang chủ",
+            // cancelButtonText: "Không",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  history.push("/");
+                  window.location.reload();
+                }
+          })
+        }  */}
+      </Slider>   
+    </div>
+  );
+}
+
+        
+          // Swal.fire({
+          //   title: "Không tìm thấy phim!",
+          //   icon: "warning",
+          //   // showCancelButton: true,
+          //   confirmButtonColor: "#3085d6",
+          //   confirmButtonText: "Về trang chủ",
+          //   // cancelButtonText: "Không",
+          //     }).then((result) => {
+          //       if (result.isConfirmed) {
+          //         history.push("/");
+          //         window.location.reload();
+          //       }
+          //     })
           // <div style={{
           //   left:"50%",
           //   top:"50%",
@@ -82,8 +120,3 @@ export default function AllMovieSearch() {
           //   transform: "translate(-50%, -50%)",
           // }}
           // >Không tìm thấy kết quả!</div>  
-          } 
-      </Slider>   
-    </div>
-  );
-}
