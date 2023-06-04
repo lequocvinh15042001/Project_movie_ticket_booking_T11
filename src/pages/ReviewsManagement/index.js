@@ -180,7 +180,7 @@ console.log(reviewList);
   useEffect(() => {
     if (successAddReview) {
       enqueueSnackbar(
-        `Add new movie successfully: ${successAddReview.brief}`,
+        `Thêm mới thành công: ${successAddReview.brief}`,
         { variant: "success" }
       );
     }
@@ -200,7 +200,7 @@ console.log(reviewList);
     })
     
     swalWithBootstrapButtons.fire({
-      title: 'Are you sure?',
+      title: 'Bạn có chắc?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
@@ -566,7 +566,19 @@ console.log(reviewList);
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
-      renderCell: RenderCellExpand,
+      // renderCell: RenderCellExpand,
+      renderCell: (params) => {
+        if (params.row.status === "DENY") {
+          return "Bị từ chối"
+        } else if (params.row.status === "CREATE")
+        {
+          return "Chờ duyệt"
+        } else if (params.row.status === "DELETE")
+        {
+          return "Đã xóa"
+        }
+        else return "Đã được duyệt"
+      },
     },
     {
       field: "type",
