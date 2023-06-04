@@ -49,7 +49,7 @@ export default function Register() {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "You have successfully registered",
+        title: "Bạn đã đăng ký thành công!",
         showConfirmButton: false,
         timer: 2000,
       });
