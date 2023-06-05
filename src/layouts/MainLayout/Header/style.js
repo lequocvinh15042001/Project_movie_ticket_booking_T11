@@ -25,16 +25,27 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     cursor: "pointer",
-
+    height: 50,
+    color:"rgb(250, 82, 56)", 
+    fontWeight:"800",
+    [theme.breakpoints.down(899)]: {
+      fontSize:"11px",
+      fontWeight:"600",
+    },
   },
   linkTobody: {
     display: props => props.isDesktop ? "block" : "none",
     position: "fixed",
     // top: "50%",
-    left: "25%",
+    left: "30%",
     // transform: "translate(-50%, -50%)",
+    [theme.breakpoints.down(1040)]: {
+      left: "25%",
+      fontSize:"13px",
+    },
     [theme.breakpoints.down(899)]: {
       left: "25%",
+      fontSize:"12px",
     },
     [theme.breakpoints.down(773)]: {
       left: "25%",

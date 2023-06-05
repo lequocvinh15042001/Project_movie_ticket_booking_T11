@@ -144,7 +144,7 @@ export default function Carousel() {
       <Box
         sx={{
           // bgcolor: "background.paper",
-          width: 1024,
+          width: "71%",
           height: "100%",
           position: "relative",
           // left:"13%",
