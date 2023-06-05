@@ -3,12 +3,13 @@ import { customScrollbar } from '../../../../styles/materialUi';
 const useStyle = makeStyles({
   // search bar
   search: {
-    display: props => props.down992px ? "flex" : 'flex',
-    // display: props => props.down992px ? "none" : 'flex',
+    display: props => props.down992px ? "flex" : 'flex', //Hiệu ứng biến mất của tab
+    // display: props => props.down992px ? "none" : 'flex', //Ẩn hiệu ứng này
     maxWidth: "1024px",
     // margin: "auto",
     height: "120px",
     position: "relative", //phải để là relative này mới chỉnh được, chứ absolute là bị ẩn
+    // position: "absolute", //phải để là relative này mới chỉnh được, chứ absolute là bị ẩn
     bottom: "0",
     width: "120%",
     left: "50%",

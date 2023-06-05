@@ -186,7 +186,7 @@ export default function Header() {
           <div className={classes.logo} onClick={handleClickLogo}>
             <Logo fillColor={"rgb(250, 82, 56)"}/>
             {" "}
-            <span style={{ height: 50, color:"rgb(250, 82, 56)", fontWeight:"800" }}>GOLDENNEW TICKET</span>
+            <span>GOLDENNEW TICKET</span>
           </div>
           {/* Tìm kiếm */}
           {/* <Search /> */}
