@@ -171,9 +171,9 @@ export default function Login() {
                 Đăng nhập
               </button>
               {/* error from api */}
-              {errorLogin && (
+              {errorLogin !== null && errorLogin !== "Request failed with status code 400" && (
                 <div className="alert alert-danger">
-                  <span> {errorLogin}</span>
+                  <span>Tài khoản hoặc mật khẩu không đúng!</span>
                 </div>
               )}
             </Form>

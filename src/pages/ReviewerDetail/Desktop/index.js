@@ -79,7 +79,7 @@ export default function Desktop({ reviewerDetailShowtimes: data, reviewList: rev
             {/* <div className={classes.rateStar}>
               <Rating value={(danhGia * 5) / 10} precision={0.5} readOnly />
             </div> */}
-            <span>bài viết</span>
+            <span>bài viết đã viết</span>
           </div>
         </div>
       </div>

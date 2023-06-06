@@ -114,12 +114,12 @@ export default function Modal() {
                 {successBookingTicketMessage && "Đặt thêm ghế cho phim này!"}
                 {errorBookTicketMessage && "Cố gắng thử lại"}
               </Button> */}
-              <Button
+              {/* <Button
                 classes={{ root: classes.btnResult }}
                 onClick={handleCombackHome}
               >
                 Về trang chủ
-              </Button>
+              </Button> */}
               <Button
                 classes={{ root: classes.btnResult }}
                 onClick={handleThanhToan}

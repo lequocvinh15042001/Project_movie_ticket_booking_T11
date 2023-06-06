@@ -13,7 +13,7 @@ export default function Mobile({ movieDetailShowtimes: data, isMobile }) {
   console.log('==ĐT==', data);
   const [openVideo, setopenVideo] = useState(false)
   const param = useParams()
-  const { thoiLuong, danhGia } = useApiThoiLuongDanhGia(param.maPhim)
+  // const { thoiLuong, danhGia } = useApiThoiLuongDanhGia(param.maPhim)
   const classes = useStyles({ bannerImg: data?.smallImageURl, openVideo })
 
   return (
@@ -27,11 +27,12 @@ export default function Mobile({ movieDetailShowtimes: data, isMobile }) {
         {openVideo || <img src={BtnPlay} className={classes.btnPlay} onClick={() => setopenVideo(true)} alt="play" />}
       </div>
       <div className={classes.shortInfo}>
-        <p>{formatDate(data?.releaseDate?.slice(0, 10)).YyMmDd}</p>
-        <p><span className={classes.c18}>{data?.reated}</span></p>
+        <p>{formatDate(data?.releaseDate?.slice(0, 10)).dateFull}</p>
+        <p><span className={classes.c18}>{data?.categories}</span></p>
         <p className={classes.movieName}>{data?.name}</p>
         {/* <p>{`${thoiLuong ?? "120"} phút - ${danhGia} Tix`} - 2D/Digital</p> */}
         <p>Thời lượng: {data?.duration} phút</p>
+        <p>Thời lượng: {data?.shortDescription}</p>
       </div>
       <Tap data={data} isMobile={isMobile} />
     </div>

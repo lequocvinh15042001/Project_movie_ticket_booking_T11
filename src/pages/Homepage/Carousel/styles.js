@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   itemSlider: {
     position: 'relative'
   },
-  img: { height: "16rem", width: "100%" },
+  img: { height: "100%", width: "100%" },
   backgroundLinear: {
     position: "absolute",
     width: "100%",

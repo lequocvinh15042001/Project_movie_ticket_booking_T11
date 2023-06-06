@@ -31,6 +31,7 @@ import Swal from "sweetalert2";
 import { getEventsList, postAddEvent, putEventUpdate, resetEventList } from "../../reducers/actions/EventsManagement";
 import { Tooltip } from "@material-ui/core";
 import renderCellExpand from "./RenderCellExpand";
+import formatDate from "../../utilities/formatDate";
 
 function CustomLoadingOverlay() {
   return (
@@ -99,6 +100,10 @@ export default function MoviesManagement() {
         ...event,
         hanhDong: "",
         id: event.id,
+        createdAt:`${formatDate(event?.createdAt.slice(
+          0,
+          10
+        )).dateFull}, ${event?.createdAt.slice(11, 19)}`,
       }));
       setEventListDisplay(newEventListDisplay);
     }
@@ -145,7 +150,7 @@ export default function MoviesManagement() {
   useEffect(() => {
     if (successAddEvent) {
       enqueueSnackbar(
-        `Add new movie successfully: ${successAddEvent.brief}`,
+        `Thêm mới thành công: ${successAddEvent.brief}`,
         { variant: "success" }
       );
     }
@@ -165,12 +170,12 @@ export default function MoviesManagement() {
     })
     
     swalWithBootstrapButtons.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: 'Bạn có chắc không?',
+      text: "Bạn sẽ không thể trở về nếu chọn!",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!',
+      confirmButtonText: 'Vâng, xóa!',
+      cancelButtonText: 'Hủy!',
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
@@ -288,7 +293,7 @@ export default function MoviesManagement() {
     },
     {
       field: "brief",
-      headerName: "Name Event",
+      headerName: "Tên sự kiện",
       width: 250,
       headerAlign: "center",
       align: "left",
@@ -353,7 +358,20 @@ export default function MoviesManagement() {
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
-      renderCell: RenderCellExpand,
+      // renderCell: RenderCellExpand,
+      renderCell: (params) => {
+        if (params.row.status === "DENY") {
+          return "Bị từ chối"
+        } else if (params.row.status === "CREATE")
+        {
+          return "Chờ duyệt"
+        } else if (params.row.status === "DELETE")
+        {
+          return "Đã xóa"
+        }
+        else return "Đã được duyệt"
+      },
+      hide: true,
     },
     {
       field: "type",
@@ -363,6 +381,17 @@ export default function MoviesManagement() {
       align: "center",
       headerClassName: "custom-header",
       renderCell: RenderCellExpand,
+    },
+    {
+      field: "createdAt",
+      headerName: "Ngày tạo",
+      width: 280,
+      type: "dateTime",
+      headerAlign: "center",
+      align: "left",
+      headerClassName: "custom-header",
+      // renderCell: RenderCellExpand,
+      // hide: true,
     },
     // {
     //   field: "releaseDate",

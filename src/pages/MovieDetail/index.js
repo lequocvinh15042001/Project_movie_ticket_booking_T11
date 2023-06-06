@@ -28,10 +28,10 @@ export default function Index() {
   }
     return (
     <>
-      {/* {  isMobile ? <Mobile movieDetailShowtimes={movieDetail.data} isMobile={isMobile} /> 
-          :  */}
+      {  isMobile ? <Mobile movieDetailShowtimes={movieDetail.data} isMobile={isMobile} /> 
+          : 
             <Desktop movieDetailShowtimes={movieDetail.data} isMobile={isMobile} />
-            {/* } */}
+            }
     </>
   )
 }

@@ -34,7 +34,12 @@ export default function MainLayout(props) {
       <ScrollToTop showUnder={160}>
         <NavigationIcon 
         style={{color:"rgb(250, 82, 56)", width:"40px", height:"40px", 
-         borderRadius:"50%", backgroundColor:"white"}}/>
+         borderRadius:"50%", backgroundColor:"white",
+         position: "fixed",
+         bottom: "30px",
+         left: "30px", // Thay đổi giá trị right thành left
+        }}
+         />
       </ScrollToTop>
     </div>
   );

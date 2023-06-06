@@ -148,7 +148,7 @@ export default function MoviesManagement() {
   useEffect(() => {
     if (successAddUploadMovie) {
       enqueueSnackbar(
-        `Add new movie successfully: ${successAddUploadMovie.name}`,
+        `Thêm mới thành công: ${successAddUploadMovie.name}`,
         { variant: "success" }
       );
     }
@@ -168,12 +168,12 @@ export default function MoviesManagement() {
     })
     
     swalWithBootstrapButtons.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: 'Bạn có chắc không?',
+      text: "Bạn không thể trở lại sau khi xóa!",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!',
+      confirmButtonText: 'Vâng, xóa!',
+      cancelButtonText: 'Hủy!',
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
