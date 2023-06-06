@@ -9,13 +9,9 @@ import Select from "@material-ui/core/Select";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Button from "@material-ui/core/Button";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import CustomPopper from "./popper";
 
 import theatersApi from "../../../../api/theatersApi";
 import useStyles from "./styles";
-import formatDate from "../../../../utilities/formatDate";
 import { HIDDEN_SEARCHTICKET } from "../../../../constants/config";
 import { INIT_DATA } from "../../../../reducers/constants/BookTicket";
 
@@ -502,7 +498,7 @@ export default function ChooseByDate() {
       <FormControl focused={false} className={classes.itemFirst}>
         <input 
           type="date"
-          style={{ width: 300, height:"100%", fontSize:"1.5rem", fontWeight:"bold"}}
+          style={{ height:"100%", fontWeight:"bold", cursor:"pointer"}}
           min= {todayDate}
           max= {afterDate}
           required
@@ -590,16 +586,20 @@ export default function ChooseByDate() {
           <MenuItem
             value=""
             style={{
-              display: data?.rapRender?.length > 0 ? "none" : "block",
+              display: data?.cumPhimRender?.length > 0 ? "none" : "block",
             }}
             classes={{ root: classes.menu__item }}
           >
-            Không có phim được chiếu!
+            {/* {data?.lichChieuPhimData?.length === 0 && "Không có phim được chiếu!"} */}
+            {/* {
+            data.setRap && data.cumPhim.length === 0 ? "Không phim nào, vui lòng chọn rạp khác" : null
+            } */}
+            Không có lịch chiếu!
           </MenuItem>
-          {data?.cumPhim?.map((ngayChieu) => (
+          {data?.cumPhimRender?.map((phim) => (
             <MenuItem
-              value={ngayChieu}
-              key={ngayChieu}
+              value={phim}
+              key={phim}
               classes={{
                 root: classes.menu__item,
                 selected: classes["menu__item--selected"],
@@ -607,9 +607,10 @@ export default function ChooseByDate() {
             >
               {/* <div>{formatDate(ngayChieu).dayToday}</div>
               <div>{formatDate(ngayChieu).dateShort}</div> */}
-              {ngayChieu}
+              {phim}
             </MenuItem>
           ))}
+
         </Select>
       </FormControl>
 
