@@ -15,6 +15,7 @@ import {
 } from "../../../reducers/constants/BookTicket";
 import { getListSeat } from "../../../reducers/actions/BookTicket";
 import { LOADING_BACKTO_HOME } from "../../../reducers/constants/Lazy";
+import Swal from "sweetalert2";
 
 export default function Mobile(cPhim) {
   const {
@@ -29,6 +30,8 @@ export default function Mobile(cPhim) {
     successBookingTicketMessage,
     errorBookTicketMessage,
   } = useSelector((state) => state.bookTicketReducer);
+  const currentUser = useSelector((state) => state.authReducer.currentUser);
+
   const history = useHistory();
   const dispatch = useDispatch();
   const isDisableBtnRight =
@@ -37,7 +40,7 @@ export default function Mobile(cPhim) {
   const classes = useStyles({ isDisableBtnRight });
   const param = useParams();
 
-  const steps = ["CHỌN GHẾ", "THANH TOÁN", "KẾT QUẢ ĐẶT VÉ"];
+  const steps = ["CHỌN GHẾ", "THANH TOÁN", "TICKET!"];
 
   const handleCombackHome = () => {
     dispatch({ type: RESET_DATA_BOOKTICKET });
@@ -46,24 +49,66 @@ export default function Mobile(cPhim) {
       history.push("/");
     }, 50);
   };
+
   const handleNext = () => {
-    if (activeStep === 0) {
-      dispatch({ type: SET_STEP, payload: { activeStep: 1 } });
-    }
-    // chỉ thực hiện dispatch đặt vé một lần
-    if (
-      activeStep === 1 &&
-      isReadyPayment &&
-      !loadingBookingTicket &&
-      !successBookingTicketMessage &&
-      !errorBookTicketMessage
-    ) {
-      dispatch(bookTicket({ maLichChieu, danhSachVe, taiKhoanNguoiDung }));
-    }
+    // if (activeStep === 0) {
+    //   dispatch({ type: SET_STEP, payload: { activeStep: 1 } });
+    // }
+    // // chỉ thực hiện dispatch đặt vé một lần
+    // if (
+    //   activeStep === 1 &&
+    //   isReadyPayment &&
+    //   !loadingBookingTicket &&
+    //   !successBookingTicketMessage &&
+    //   !errorBookTicketMessage
+    // ) {
+    //   dispatch(bookTicket({ maLichChieu, danhSachVe, taiKhoanNguoiDung }));
+    // }
     if (activeStep === 2) {
       handleCombackHome();
     }
+    else {
+      Swal.fire({
+        title: 'Bạn có chắc muốn đặt?',
+        showDenyButton: true,
+        // showCancelButton: true,
+        confirmButtonText: 'Đặt ngay',
+        denyButtonText: 'Không!',
+        customClass: {
+          actions: 'my-actions',
+          cancelButton: 'order-1 right-gap',
+          confirmButton: 'order-2',
+          denyButton: 'order-3',
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (
+            isReadyPayment &&
+            !loadingBookingTicket &&
+            !successBookingTicketMessage &&
+            !errorBookTicketMessage
+          ) {
+            let userId = taiKhoanNguoiDung
+            let scheduleId = maLichChieu
+            // let list=[]
+            // for(var i=0;i<listSeatIds.length;i++){
+            //   list.push({id:listSeatIds[i]})
+            // }
+            let listSeatIds=[]
+            for(var i = 0;i < danhSachVe.length; i++){
+              listSeatIds.push(danhSachVe[i].id)
+            }
+            console.log("Gửi đi: ",userId, scheduleId, listSeatIds);
+            dispatch(bookTicket({userId, scheduleId, listSeatIds} ));
+          }
+          Swal.fire('Đặt vé thành công!', '', 'success')
+        } else if (result.isDenied) {
+          Swal.fire('Okay, đã hủy đặt vé!', '', 'info')
+        }
+      })
+    }
   };
+
   const handleBack = () => {
     if (activeStep === 1) {
       dispatch({ type: SET_STEP, payload: { activeStep: 0 } });
@@ -72,11 +117,18 @@ export default function Mobile(cPhim) {
       if (successBookingTicketMessage) {
         dispatch({ type: RESET_DATA_BOOKTICKET });
         dispatch(getListSeat(param.maLichChieu));
+
       }
       if (errorBookTicketMessage) {
         dispatch({ type: RESET_DATA_BOOKTICKET });
       }
     }
+  };
+
+  const handleThanhToan = () => {
+    // console.log(successBookingTicketMessage?.data?.id);
+    history.push(`/payment/${successBookingTicketMessage?.data?.id}/${successBookingTicketMessage?.data?.price}`);
+    console.log(successBookingTicketMessage);
   };
 
   const handleUser = () => {
@@ -90,7 +142,7 @@ export default function Mobile(cPhim) {
       case 1:
         return { left: "QUAY LẠI", right: "ĐẶT VÉ" };
       case 2:
-        return { left: "MUA THÊM VÉ PHIM NÀY", right: "QUAY VỀ TRANG CHỦ" };
+        return { left: "THANH TOÁN NGAY", right: "THANH TOÁN SAU" };
       default:
         return {};
     }
@@ -117,7 +169,7 @@ export default function Mobile(cPhim) {
         ))}
         <img
           onClick={handleUser}
-          src={FAKE_AVATAR}
+          src={currentUser?.data?.image ? currentUser?.data?.image : FAKE_AVATAR}
           alt="avatar"
           className={classes.avatar}
         />
@@ -144,7 +196,7 @@ export default function Mobile(cPhim) {
       <section className={classes.bottom}>
         <button
           className={`${classes.btnLeft} ${classes.btnBottom}`}
-          onClick={handleBack}
+          onClick={handleThanhToan}
           disabled={activeStep === 0}
         >
           {getContentBtn().left}
