@@ -78,6 +78,16 @@ const reviewsApi = {
   //   return axiosClient.post(path, review);
   // },
 
+  getThongTinCuaBill: (billId) => {
+    const path = `/bills/${billId}`;
+    return axiosClient.get(path);
+  },
+
+  postHuyBill: (billId) => {
+    const path = `/bills/delete?billId=${billId}`;
+    return axiosClient.post(path);
+  },
+
   deleteBill: (eventId) => {
     const path = `/`;
     return axiosClient.put(path);

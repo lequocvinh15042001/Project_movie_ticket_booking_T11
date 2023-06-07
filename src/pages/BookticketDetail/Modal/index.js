@@ -16,6 +16,8 @@ import { getListSeat } from "../../../reducers/actions/BookTicket";
 import { colorTheater } from "../../../constants/theaterData";
 import ResultBookticket from "../ResultBookticket";
 import bookingApi from "../../../api/bookingApi";
+import Swal from "sweetalert2";
+import billsApi from "../../../api/billsApi"
 
 export default function Modal() {
   const {
@@ -27,6 +29,8 @@ export default function Modal() {
     danhSachPhongVe: { thongTinPhim },
   } = useSelector((state) => state.bookTicketReducer);
   const dispatch = useDispatch();
+  const [duocHoan, setDuocHoan] = useState(true);
+  const [thongTinBill, setThongTinBill] = useState()
   const param = useParams(); // lấy dữ liệu param từ URL
   const history = useHistory();
   const classes = useStyles({
@@ -37,12 +41,107 @@ export default function Modal() {
   const isBookticket =
     successBookingTicketMessage || errorBookTicketMessage ? true : false;
 
+    useEffect(() => {
+
+      billsApi.getThongTinCuaBill(successBookingTicketMessage?.data?.id)
+      .then((response) =>{
+        console.log("thông tin bill: ",response);
+        setThongTinBill(response?.data)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+
+      const currentTime = new Date(); // Lấy thời gian hiện tại
+    // const targetTime = new Date(thongTinBill?.schedule?.startDate +"T"+ thongTinBill?.schedule?.startTime); // Thời điểm cho trước
+
+    // const startDate = thongTinBill?.schedule?.startDate;
+    // const startTime = thongTinBill?.schedule?.startTime;
+
+    // Tách các thành phần ngày, tháng, năm từ startDate
+    // const [year, month, day] = startDate?.split('-');
+
+    // // Tách các thành phần giờ, phút, giây từ startTime
+    // const [hours, minutes, seconds] = startTime?.split(':');
+
+    // Tạo đối tượng Date từ các thành phần trên
+    // const targetTime = new Date(year, month - 1, day, hours, minutes, seconds);
+
+    const targetTime = new Date("2023-06-07T10:15:00")
+    console.log(targetTime);
+
+    // Tính khoảng thời gian cách thời điểm cho trước (tính bằng phút)
+    const timeDiff = Math.round((targetTime - currentTime) / (1000 * 60));
+
+    console.log(timeDiff);
+    if (timeDiff >= 60) {
+      setDuocHoan(true); // Thời gian cách thời điểm cho trước là 60 phút trở lên
+    } else {
+      setDuocHoan(false); // Thời gian cách thời điểm cho trước là dưới 60 phút
+    }
+
+    }, []);
+    
+  const handleTinh = () => {
+    // const currentTime = new Date(); // Lấy thời gian hiện tại
+    // // const targetTime = new Date(thongTinBill?.schedule?.startDate +"T"+ thongTinBill?.schedule?.startTime); // Thời điểm cho trước
+
+    // // const startDate = thongTinBill?.schedule?.startDate;
+    // // const startTime = thongTinBill?.schedule?.startTime;
+
+    // // Tách các thành phần ngày, tháng, năm từ startDate
+    // // const [year, month, day] = startDate?.split('-');
+
+    // // // Tách các thành phần giờ, phút, giây từ startTime
+    // // const [hours, minutes, seconds] = startTime?.split(':');
+
+    // // Tạo đối tượng Date từ các thành phần trên
+    // // const targetTime = new Date(year, month - 1, day, hours, minutes, seconds);
+
+    // const targetTime = new Date("2023-06-03T18:00:00")
+    // console.log(targetTime);
+
+    // // Tính khoảng thời gian cách thời điểm cho trước (tính bằng phút)
+    // const timeDiff = Math.round((targetTime - currentTime) / (1000 * 60));
+
+    // console.log(timeDiff);
+    // if (timeDiff >= 60) {
+    //   setDuocHoan(true); // Thời gian cách thời điểm cho trước là 60 phút trở lên
+    // } else {
+    //   setDuocHoan(false); // Thời gian cách thời điểm cho trước là dưới 60 phút
+    // }
+  }
   const handleReBooking = () => {
     // if (successBookingTicketMessage) {
     //   dispatch(getListSeat(param.maLichChieu));
     // }
     // dispatch({ type: RESET_DATA_BOOKTICKET });
     handleCombackHome();
+    // handleTinh();
+    console.log("Hủy nha", duocHoan);
+    if(duocHoan === false)
+    {
+      Swal.fire({
+        title: 'Đã ngoài thời gian 60 phút trước khi chiếu có thể giữ vé!',
+        text: "Bạn không thể dùng chức năng thanh toán sau!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Thanh toán ngay!',
+        cancelButtonText: 'Hủy vé đã đặt!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleThanhToan()
+        }
+        else {
+          //api hủy bill (bill)
+          Swal.fire('Đã hủy thanh toán sau!', '', 'success')
+          console.log("API Hủy bill: ", successBookingTicketMessage?.data?.id);
+          handleHuyBill(successBookingTicketMessage?.data?.id)
+        }
+      })
+    }
   };
   const handleTimeOut = () => {
     dispatch({ type: RESET_DATA_BOOKTICKET });
@@ -53,6 +152,16 @@ export default function Modal() {
     // window.location.reload()
   };
 
+  const handleHuyBill = (billId) => {
+    billsApi.postHuyBill(billId)
+    .then((response) =>{
+      console.log(response);
+      console.log("Đã hủy bill");
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
   const handleCombackHome = () => {
     dispatch({ type: RESET_DATA_BOOKTICKET });
     dispatch({ type: LOADING_BACKTO_HOME });
@@ -64,6 +173,8 @@ export default function Modal() {
     history.push(`/payment/${successBookingTicketMessage?.data?.id}/${successBookingTicketMessage?.data?.price}`);
     console.log(successBookingTicketMessage);
   };
+
+  
 
   return (
     <Dialog
