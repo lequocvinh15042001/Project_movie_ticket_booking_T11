@@ -34,12 +34,12 @@ export default function AnnotationTemplate(annotation) {
         <tspan className="capital" dx="5">{formatNumber(data?.incomeAmount)}</tspan>
         <tspan dy="14" x="0" className="caption"
           style={{fontWeight: "500"}}
-        >Ticket Amount:</tspan>
+        >Số lượng vé:</tspan>
         <tspan className="population" dx="5">{data?.ticketAmount}</tspan>
         <tspan dx="5">vé</tspan>
         <tspan dy="14" x="0" className="caption" style={{fontWeight: "500"}}>Giao dịch:</tspan>
         <tspan className="area" dx="5">{data?.transactionCount}</tspan>
-        <tspan dx="5">lần</tspan>
+        {/* <tspan dx="5">lần</tspan> */}
       </text>
     </svg>
   );

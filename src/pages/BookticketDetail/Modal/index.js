@@ -20,7 +20,6 @@ import Swal from "sweetalert2";
 import billsApi from "../../../api/billsApi"
 import moviesApi from "../../../api/moviesApi";
 
-const moment = require('moment-timezone');
 
 export default function Modal() {
   const {
@@ -74,24 +73,24 @@ export default function Modal() {
     
     // console.log(thongTinBill);
 
-  const handleTinh = () => {
-    const currentTime = moment().tz('Asia/Ho_Chi_Minh');
-    console.log(currentTime);
+  // const handleTinh = () => {
+  //   const currentTime = moment().tz('Asia/Ho_Chi_Minh');
+  //   console.log(currentTime);
 
-    const targetTime = param?.ngayChieu + "T" + param?.gioChieu
+  //   const targetTime = param?.ngayChieu + "T" + param?.gioChieu
 
-    const targetTime2 = moment(targetTime, 'YYYY-MM-DDTHH:mm:ss');
-    console.log(targetTime2);
+  //   const targetTime2 = moment(targetTime, 'YYYY-MM-DDTHH:mm:ss');
+  //   console.log(targetTime2);
 
-    const timeDiff = Math.round((targetTime2 - currentTime) / (10000 * 60));
-    console.log(timeDiff);
+  //   const timeDiff = Math.round((targetTime2 - currentTime) / (10000 * 60));
+  //   console.log(timeDiff);
 
-    if (timeDiff >= 60) {
-      setDuocHoan(true); // Thời gian cách thời điểm cho trước là 60 phút trở lên
-    } else {
-      setDuocHoan(false); // Thời gian cách thời điểm cho trước là dưới 60 phút
-    }
-  }
+  //   if (timeDiff >= 60) {
+  //     setDuocHoan(true); // Thời gian cách thời điểm cho trước là 60 phút trở lên
+  //   } else {
+  //     setDuocHoan(false); // Thời gian cách thời điểm cho trước là dưới 60 phút
+  //   }
+  // }
   const handleReBooking = () => {
     // if (successBookingTicketMessage) {
     //   dispatch(getListSeat(param.maLichChieu));

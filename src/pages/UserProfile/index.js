@@ -930,7 +930,7 @@ export default function Index({ placeholder }) {
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Action</th>
-                    <th scope="col">Mã vé</th>
+                    <th scope="col">Mã thanh toán</th>
                     <th scope="col">Đặt lúc</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">VNĐ</th>
@@ -1090,9 +1090,9 @@ export default function Index({ placeholder }) {
                         {/* <GavelIcon /> */}
                         <Typography>
                           {item.status === "DELETE" ? "Đã bị xóa":""}
-                          {item.status === "DENY" ? "Bị ẩn":""}
+                          {item.status === "DENY" ? "Chưa được duyệt":""}
                           {item.status === "CREATE" ? "Chờ duyệt":""}
-                          {item.status === "APPROVE" ? "Được đăng":""}
+                          {item.status === "APPROVE" ? "Đã được duyệt":""}
                         </Typography>
                       </IconButton>
 

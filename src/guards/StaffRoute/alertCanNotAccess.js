@@ -9,7 +9,7 @@ export default function AlertCanNotAccess() {
       allowOutsideClick: false,
       icon: 'error',
       title: 'Oops...',
-      text: 'Bạn không có quyền truy cập trang Admin!',
+      text: 'Bạn không có quyền truy cập trang Nhân viên!',
       confirmButtonText: `Trở về`,
     }).then((result) => {
       if (result.isConfirmed) {

@@ -383,8 +383,8 @@ export default function BillsManagement() {
     },
     {
       field: "id",
-      headerName: "Mã bill",
-      width: 100,
+      headerName: "Mã hóa đơn",
+      width: 130,
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",

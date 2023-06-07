@@ -61,7 +61,7 @@ export default function UserDash() {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Số lượng khách hàng đăng ký</Title>
+      <Title>Số lượng người dùng đăng ký</Title>
       <Typography component="p" variant="h4">
         {/* {data2?.totalIncome}VND */}
         {usersList?.data?.length}{" "}người
@@ -70,10 +70,10 @@ export default function UserDash() {
         Từ 01/12/2022 - 01/12/2023
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
-        Số user dùng dịch vụ: <span style={{color:"red"}}>{data3?.length}{" "} người</span>
+        Số người dùng dùng dịch vụ: <span style={{color:"red"}}>{data3?.length}{" "} người</span>
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
-        Số user chưa đặt vé: <span style={{color:"red"}}>{usersList?.data?.length - data3?.length}{" "} người</span>
+        Số người dùng chưa đặt vé: <span style={{color:"red"}}>{usersList?.data?.length - data3?.length}{" "} người</span>
       </Typography>
 
       <Chart

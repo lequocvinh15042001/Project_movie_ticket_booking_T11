@@ -73,6 +73,7 @@ export default function BookByStaff() {
 
   const handleChange = (event) => {
     setBranch(event.target.value);
+    dispatch(getScheduleListManagement(event?.target?.value?.toString()))
   };
 
   // console.log("Rạp: ", branch);
@@ -395,7 +396,7 @@ export default function BookByStaff() {
 
     {
       field: "idRoom",
-      headerName: "idRoom",
+      headerName: "Mã phòng",
       width: 110,
       headerAlign: "center",
       align: "left",
