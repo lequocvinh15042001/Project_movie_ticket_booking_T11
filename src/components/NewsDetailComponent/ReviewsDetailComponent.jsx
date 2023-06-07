@@ -110,7 +110,7 @@ export default function ReviewsDetailComponent(props) {
                 {" "}{tinTuc?.data?.createdBy}
             </NavLink>
               <span className="info--days" style={{color:"blue"}}>
-                Updated lúc {" "}
+                Cập nhật lúc {" "}
                 {moment(tinTuc.dayupload).format("hh:mm DD/MM/yyyy")}
               </span>
             </div>

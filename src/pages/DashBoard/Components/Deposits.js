@@ -61,7 +61,7 @@ export default function Deposits() {
         {/* {`${data?.totalTicket?.toLocaleString("vi-VI")} đ`} */}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
-        Số GD thành công: <span style={{color:"red"}}>{data?.totalTransaction}{" "} lần</span>
+        Số GD thành công: <span style={{color:"red"}}>{data?.totalTransaction}</span>
       </Typography>
       {/* <div>
         <Link color="primary" href="javascript:;">

@@ -107,18 +107,18 @@ export default function NewsComponent() {
         <div className="news__header">
           <div className="overlay">
             <div className="title__description">
-                Latest News and Reviews
+                Bài viết mới nhất và liên quan
             </div>
           </div>
         </div>
         <div className="news__container container">
           <div className="news__content row">
             <div className="news__left col-md-8 col-sm-12">
-              <h3 className="news__title">Reviews</h3>
+              <h3 className="news__title">Bài viết mới nhất</h3>
               {renderTinTuc()}
             </div>
             <div className="news__right col-md-4 col-sm-12">
-              <h3 className="news__title">Hot News</h3>
+              <h3 className="news__title">Liên quan</h3>
               {renderTinTucHot()}
             </div>
           </div>

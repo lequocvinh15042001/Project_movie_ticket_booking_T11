@@ -77,7 +77,7 @@ export default function Deposits() {
         Từ 01/12/2022 - 01/12/2023
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
-        GD không thành công: <span style={{color:"red"}}>{data2?.totalTransaction}{" "}lần</span>
+        GD không thành công: <span style={{color:"red"}}>{data2?.totalTransaction}</span>
       </Typography>
 
       <Typography color="textSecondary" className={classes.depositContext} variant="h6">
