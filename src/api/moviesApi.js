@@ -77,6 +77,11 @@ const moviesApi = {
     const path = `/movies/${maPhim}`;
     return axiosClient.delete(path);
   },
+
+  getLichChieuLayThongTin: (movieId, branchId, startDate, startTime, roomId) => {
+    const path = `/schedule/getAll?page=0&size=20&movieId=${movieId}&branchId=${branchId}&startDate=${startDate}&startTime=${startTime}&roomId=${roomId}`;
+    return axiosClient.get(path);
+  },
 };
 
 export default moviesApi;

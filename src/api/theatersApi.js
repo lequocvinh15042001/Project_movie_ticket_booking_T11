@@ -64,14 +64,14 @@ const theatersApi = {
   getThongTinLichChieuPhim: (maPhim, branchId) => {
     // console.log("mã phim đang xem lịch chiếu: ", maPhim);
     // console.log("mã rạp đang xem lịch chiếu: ", branchId);
-    if(branchId === undefined){
-      const path = `schedule/getAll?page=0&size=300&movieId=${maPhim}`;
-      return axiosClient.get(path);
-    }
-    else{
+    // if(branchId === undefined){
+    //   const path = `schedule/getAll?page=0&size=300&movieId=${maPhim}`;
+    //   return axiosClient.get(path);
+    // }
+    // else{
       const path = `schedule/getAll?page=0&size=300&movieId=${maPhim}&branchId=${branchId}`;
       return axiosClient.get(path);
-    }
+    // }
   },
   
   // getThongTinLichChieuPhimKhongLayTruocDo: (maPhim, branchId) => {
